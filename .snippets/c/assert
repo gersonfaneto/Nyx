@@ -1,0 +1,32 @@
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+static inline void __assert__(const bool condition, const char* format, ...)
+{
+    if (condition) return;
+
+    va_list vargs;
+
+    va_start(vargs, format);
+
+    vfprintf(stderr, format, vargs);
+    fprintf(stderr, "\n");
+
+    va_end(vargs);
+
+    abort();
+}
+
+#ifndef __FUNCTION__
+#define __FUNCTION__ __func__
+#endif // ! __FUNCTION__
+
+#ifdef __DEBUG__
+    #define __assert __assert__
+    #define __todo(...) __assert__(false, "TODO :: `%s` at `%s:%d`", __FUNCTION__, __FILE__, __LINE__)
+#else
+    #define __assert(...) ((void) 0)
+    #define __todo(...) ((void) 0)
+#endif // ! __DEBUG__
