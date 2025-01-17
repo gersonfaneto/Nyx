@@ -1,5 +1,16 @@
 local M = {}
 
+---Only checks whether treesitter highlighting is active in `buf`
+---Should be faster than `utils.ts.active()`
+---@param buf integer? default: current buffer
+---@return boolean
+function M.hl_active(buf)
+  if not buf or buf == 0 then
+    buf = vim.api.nvim_get_current_buf()
+  end
+  return vim.treesitter.highlighter.active[buf] ~= nil
+end
+
 ---Returns whether treesitter is active in `buf`
 ---@param buf integer? default: current buffer
 ---@return boolean
@@ -47,8 +58,6 @@ end
 ---@param pos { [1]: integer, [2]: integer }? (1, 0)-indexed cursor position
 ---@param buf integer?
 ---@return string?
----@param buf integer?
----@return string?
 function M.lang(pos, buf)
   if buf and not vim.api.nvim_buf_is_valid(buf) then
     return
@@ -68,13 +77,13 @@ function M.lang(pos, buf)
 
   pos = pos or vim.api.nvim_win_get_cursor(0)
   return parser
-      :language_for_range({
-        pos[1] - 1,
-        pos[2],
-        pos[1] - 1,
-        pos[2],
-      })
-      :lang()
+    :language_for_range({
+      pos[1] - 1,
+      pos[2],
+      pos[1] - 1,
+      pos[2],
+    })
+    :lang()
 end
 
 return M
