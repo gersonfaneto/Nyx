@@ -13,7 +13,13 @@ local preview_request_last_timestamp = 0
 ---@param dir string
 ---@return nil
 local function lcd(dir)
-  local ok = pcall(vim.cmd.lcd, dir)
+  local ok = pcall(vim.cmd.lcd, {
+    dir,
+    mods = {
+      silent = true,
+      emsg_silent = true,
+    },
+  })
   if not ok then
     vim.notify('[oil.nvim] failed to cd to ' .. dir, vim.log.levels.WARN)
   end
@@ -28,9 +34,9 @@ local function preview_finish(oil_win)
   local preview_win = preview_wins[oil_win]
   local preview_buf = preview_bufs[oil_win]
   if
-      preview_win
-      and vim.api.nvim_win_is_valid(preview_win)
-      and vim.fn.winbufnr(preview_win) == preview_buf
+    preview_win
+    and vim.api.nvim_win_is_valid(preview_win)
+    and vim.fn.winbufnr(preview_win) == preview_buf
   then
     vim.api.nvim_win_close(preview_win, true)
   end
@@ -107,10 +113,10 @@ local function preview_set_lines(win, all)
     lines = preview_show_msg('Invalid path', win_height, win_width)
   elseif stat.type == 'directory' then
     for i, line in
-    ipairs(vim.fn.systemlist('ls -lhA ' .. vim.fn.shellescape(path)))
+      ipairs(vim.fn.systemlist('ls -lhA ' .. vim.fn.shellescape(path)))
     do
       lines[i] = vim.fn.match(line, '\\v^[-dpls][-rwx]{9}') == -1 and line
-          or line:sub(1, 1) .. ' ' .. line:sub(2)
+        or line:sub(1, 1) .. ' ' .. line:sub(2)
     end
   elseif stat.size == 0 then
     vim.b[buf]._oil_preview_msg_shown = bufname
@@ -121,12 +127,12 @@ local function preview_set_lines(win, all)
   else
     vim.b[buf]._oil_preview_syntax = bufname
     lines = vim
-        .iter(io.lines(path))
-        :take(all and preview_max_lines or win_height)
-        :map(function(line)
-          return (line:gsub('\x0d$', ''))
-        end)
-        :totable()
+      .iter(io.lines(path))
+      :take(all and preview_max_lines or win_height)
+      :map(function(line)
+        return (line:gsub('\x0d$', ''))
+      end)
+      :totable()
   end
 
   vim.bo[buf].modifiable = true
@@ -138,14 +144,6 @@ end
 ---Disable window options, e.g. spell, number, signcolumn, etc. in given window
 ---@param win integer? default to current window
 local function preview_disable_win_opts(win)
-  vim.api.nvim_win_call(win or 0, function()
-    vim.opt_local.spell = false
-    vim.opt_local.number = false
-    vim.opt_local.relativenumber = false
-    vim.opt_local.signcolumn = 'no'
-    vim.opt_local.foldcolumn = '0'
-    vim.opt_local.winbar = ''
-  end)
   vim.api.nvim_win_call(win or 0, function()
     vim.opt_local.spell = false
     vim.opt_local.number = false
@@ -185,10 +183,10 @@ local function preview()
   local preview_win = preview_wins[oil_win]
   local preview_buf = preview_bufs[oil_win]
   if
-      not preview_win
-      or not preview_buf
-      or not vim.api.nvim_win_is_valid(preview_win)
-      or not vim.api.nvim_buf_is_valid(preview_buf)
+    not preview_win
+    or not preview_buf
+    or not vim.api.nvim_win_is_valid(preview_win)
+    or not vim.api.nvim_buf_is_valid(preview_buf)
   then
     local oil_win_height = vim.api.nvim_win_get_height(oil_win)
     local oil_win_width = vim.api.nvim_win_get_width(oil_win)
@@ -209,7 +207,7 @@ local function preview()
     vim.api.nvim_set_current_win(oil_win)
   end
 
-  -- Preview buffer already has contents of file to preview
+  -- Preview buffer already contains contents of file to preview
   local preview_bufname = vim.fn.bufname(preview_buf)
   local preview_bufnewname = 'oil_preview://' .. fpath
   if preview_bufname == preview_bufnewname then
@@ -258,9 +256,9 @@ local function preview()
   vim.api.nvim_buf_call(preview_buf, function()
     vim.treesitter.stop(preview_buf)
     vim.bo.syntax = ''
-    -- Because we are reusing the same preview buffer for the different files, we
-    -- need to clear the `big file` flag so that we can enable treesitter when
-    -- previewing smaller files after previewing big files.
+    -- Because we are reusing the same preview buffer for different files, we
+    -- need to clear the `bigfile` flag so that we can enable treesitter
+    -- when previewing smaller files after previewing big files.
     vim.b.bigfile = nil
   end)
 
@@ -349,27 +347,27 @@ local function preview()
         hi def link OilDirPreviewSocketHidden OilSocketHidden
       ]])
     end)
-  elseif vim.b[preview_buf]._oil_preview_syntax == preview_bufname then
+  elseif vim.b[preview_buf]._oil_preview_syntax == preview_bufnewname then
     local ft = vim.filetype.match({
       buf = preview_buf,
       filename = fpath,
     })
     if
-        ft
-        -- If file size is larger than the max size for treesitter, don't
-        -- start in the preview buffer to prevent highlight change after
-        -- actually loading the file
-        and (
-          stat
+      ft
+      -- If file size is larger than the max size for treesitter, don't
+      -- start it in preview buffer to prevent highlight change after
+      -- actually loading the file
+      and (
+        stat
           and stat.size
           and _G.bigfile_max_size
           and stat.size > _G.bigfile_max_size
-          or not pcall(vim.treesitter.start, preview_buf, ft)
-        )
+        or not pcall(vim.treesitter.start, preview_buf, ft)
+      )
     then
       vim.bo[preview_buf].syntax = ft
     end
-  elseif vim.b[preview_buf]._oil_preview_msg_shown == preview_bufname then
+  elseif vim.b[preview_buf]._oil_preview_msg_shown == preview_bufnewname then
     -- Set some window options if showing messages instead of preview
     preview_disable_win_opts(preview_win)
     vim.api.nvim_win_call(preview_win, function()
@@ -526,7 +524,7 @@ oil.setup({
         return hls
       end,
     },
-    { 'size',  highlight = 'Number' },
+    { 'size', highlight = 'Number' },
     { 'mtime', highlight = 'String' },
     {
       'icon',
@@ -702,17 +700,17 @@ vim.api.nvim_create_autocmd('BufEnter', {
       local config = require('oil.config')
       local view = require('oil.view')
       if
-          not config.view_options.show_hidden
-          and config.view_options.is_hidden_file(
-            basename,
-            (function()
-              for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-                if vim.api.nvim_buf_get_name(buf) == basename then
-                  return buf
-                end
+        not config.view_options.show_hidden
+        and config.view_options.is_hidden_file(
+          basename,
+          (function()
+            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+              if vim.api.nvim_buf_get_name(buf) == basename then
+                return buf
               end
-            end)()
-          )
+            end
+          end)()
+        )
       then
         view.toggle_hidden()
       end
