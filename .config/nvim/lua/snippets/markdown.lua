@@ -7,8 +7,6 @@ local sn = ls.snippet_node
 local t = ls.text_node
 local i = ls.insert_node
 local d = ls.dynamic_node
-local l = require('luasnip.extras').lambda
-local dl = require('luasnip.extras').dynamic_lambda
 
 M.math = require('snippets.tex.math')
 
@@ -18,16 +16,30 @@ M.snippets = {
     { trig = 'h1' },
   }, {
     t('# '),
-    dl(
-      1,
-      l.TM_FILENAME
-        :gsub('^%d*_', '')
-        :gsub('_', ' ')
-        :gsub('^%l', string.upper)
-        :gsub(' %l', string.upper)
-        :gsub('%..*', ''),
-      {}
-    ),
+    d(1, function()
+      local fname = vim.api.nvim_buf_get_name(0)
+      if fname == '' then
+        return sn(nil, i(nil))
+      end
+
+      local title = vim.fn.fnamemodify(fname, ':t:r')
+          :gsub('^%d*_*', '')
+          :gsub('_', ' ')
+          :gsub('-', ' ')
+      local title_words = vim.fn.split(title, '\\W\\zs', 0)
+      for idx, word in ipairs(title_words) do
+        local word_lower = word:lower()
+        local word_lower_trimmed = vim.trim(word_lower)
+        title_words[idx] = (
+              idx == 1 -- first word should always be capitalized
+              or #word_lower_trimmed >= 3
+              and not _G._title_lowercase_words[word_lower_trimmed]
+            )
+            and word_lower:gsub('^%l', string.upper)
+            or word_lower
+      end
+      return sn(nil, i(1, table.concat(title_words)))
+    end),
   }),
   us.snr({ trig = 'h2' }, { t('## '), i(0) }),
   us.snr({ trig = 'h3' }, { t('### '), i(0) }),
@@ -57,11 +69,11 @@ M.snippets = {
     {
       trig = '*',
       condition = conds.in_normalzone
-        * conds.before_pattern('%*')
-        * conds.after_pattern('%*'),
+          * conds.before_pattern('%*')
+          * conds.after_pattern('%*'),
       show_condition = conds.in_normalzone
-        * conds.before_pattern('%*')
-        * conds.after_pattern('%*'),
+          * conds.before_pattern('%*')
+          * conds.after_pattern('%*'),
     },
   }, { t('*'), i(0), t('*') }),
   us.msn({
@@ -73,7 +85,7 @@ M.snippets = {
     d(1, function()
       return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':e') == 'ipynb'
           and sn(nil, i(1, 'python'))
-        or sn(nil, i(1))
+          or sn(nil, i(1))
     end, {}),
     t({ '', '' }),
     un.body(2, 0),
