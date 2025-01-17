@@ -182,7 +182,7 @@ local hlgroups = {
   -- Syntax {{{2
   Comment = { fg = c_faint },
   Constant = { fg = c_faded },
-  String = { fg = c_faded },
+  String = { fg = c_popout },
   DocumentKeyword = { link = 'Keyword' },
   Character = { fg = c_critical },
   Number = { fg = c_faded },
@@ -240,7 +240,7 @@ local hlgroups = {
   ['@markup.list'] = { link = 'Delimiter' },
   ['@string'] = { link = 'String' },
   ['@string.regexp'] = { link = 'String' },
-  ['@string.escape'] = { fg = c_popout },
+  ['@string.escape'] = { fg = c_critical },
   ['@character'] = { link = 'Character' },
   ['@character.special'] = { link = 'SpecialChar' },
   ['@boolean'] = { link = 'Boolean' },
