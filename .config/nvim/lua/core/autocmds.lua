@@ -46,11 +46,13 @@ augroup('BigFile', {
     end,
   },
 }, {
-  { 'BufEnter', 'BufReadPre' },
+  { 'BufEnter', 'BufReadPre', 'FileType', 'TextChanged' },
   {
     once = true,
     desc = 'Prevent treesitter and LSP from attaching to big files.',
-    callback = function()
+    callback = function(info)
+      vim.api.nvim_del_autocmd(info.id)
+
       local ts_get_parser = vim.treesitter.get_parser
       local ts_foldexpr = vim.treesitter.foldexpr
       local lsp_start = vim.lsp.start
@@ -202,9 +204,9 @@ augroup('AutoCwd', {
       local client = vim.lsp.get_client_by_id(info.data.client_id)
       local root_dir = client and client.config and client.config.root_dir
       if
-        not root_dir
-        or root_dir == vim.fs.normalize('~')
-        or root_dir == vim.fs.dirname(root_dir)
+          not root_dir
+          or root_dir == vim.fs.normalize('~')
+          or root_dir == vim.fs.dirname(root_dir)
       then
         return
       end
@@ -248,7 +250,7 @@ augroup('AutoCwd', {
       end
 
       local root_dir = lsp_root_dir
-        or vim.fs.root(info.file, fs_utils.root_patterns)
+          or vim.fs.root(info.file, fs_utils.root_patterns)
 
       if not root_dir or root_dir == vim.uv.os_homedir() then
         root_dir = vim.fs.dirname(info.file)
@@ -350,9 +352,9 @@ augroup('FixCmdLineIskeyword', {
     pattern = '[:>/?=@]',
     callback = function()
       if
-        vim.g._isk_lisp_buf
-        and vim.api.nvim_buf_is_valid(vim.g._isk_lisp_buf)
-        and vim.g._isk_save ~= vim.b[vim.g._isk_lisp_buf].isk
+          vim.g._isk_lisp_buf
+          and vim.api.nvim_buf_is_valid(vim.g._isk_lisp_buf)
+          and vim.g._isk_save ~= vim.b[vim.g._isk_lisp_buf].isk
       then
         vim.bo[vim.g._isk_lisp_buf].isk = vim.g._isk_save
         vim.bo[vim.g._isk_lisp_buf].lisp = vim.g._lisp_save
@@ -430,8 +432,8 @@ augroup('SessionCloseEmptyWins', {
           local buf = vim.api.nvim_win_get_buf(win)
           local line_count = vim.api.nvim_buf_line_count(buf)
           if
-            line_count == 0
-            or line_count == 1
+              line_count == 0
+              or line_count == 1
               and vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] == ''
               and not vim.uv.fs_stat(vim.api.nvim_buf_get_name(buf))
           then
@@ -513,7 +515,7 @@ augroup('ColorSchemeRestore', {
             vim.schedule(function()
               local data = json.read(colors_file)
               if
-                data.colors_name ~= vim.g.colors_name or data.bg ~= vim.go.bg
+                  data.colors_name ~= vim.g.colors_name or data.bg ~= vim.go.bg
               then
                 data.colors_name = vim.g.colors_name
                 data.bg = vim.go.bg
