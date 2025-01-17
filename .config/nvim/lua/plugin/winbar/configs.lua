@@ -12,7 +12,7 @@ M.opts = {
       bar = {
         separator = vim.g.has_nf and icons.ui.AngleRight or ' > ',
         extends = vim.opt.listchars:get().extends
-          or vim.trim(icons.ui.Ellipsis),
+            or vim.trim(icons.ui.Ellipsis),
       },
       menu = {
         separator = ' ',
@@ -40,7 +40,7 @@ M.opts = {
         prev_win = symbol.bar.win
         entries_source = symbol.opts.siblings
         init_cursor = symbol.opts.sibling_idx
-          and { symbol.opts.sibling_idx, 0 }
+            and { symbol.opts.sibling_idx, 0 }
         if symbol.bar.in_pick_mode then
           ---@param tbl number[]
           local function tbl_sum(tbl)
@@ -54,15 +54,15 @@ M.opts = {
           win_configs.win = vim.api.nvim_get_current_win()
           win_configs.row = 0
           win_configs.col = symbol.bar.padding.left
-            + tbl_sum(vim.tbl_map(
-              function(component)
-                return component:displaywidth()
-                  + symbol.bar.separator:displaywidth()
-              end,
-              vim.tbl_filter(function(component)
-                return component.bar_idx < symbol.bar_idx
-              end, symbol.bar.components)
-            ))
+              + tbl_sum(vim.tbl_map(
+                function(component)
+                  return component:displaywidth()
+                      + symbol.bar.separator:displaywidth()
+                end,
+                vim.tbl_filter(function(component)
+                  return component.bar_idx < symbol.bar_idx
+                end, symbol.bar.components)
+              ))
         end
       elseif symbol.entry and symbol.entry.menu then -- If inside a menu
         prev_win = symbol.entry.menu.win
@@ -95,7 +95,7 @@ M.opts = {
           local menu_indicator_on_click = nil
           if not sym.children or vim.tbl_isempty(sym.children) then
             menu_indicator_icon =
-              string.rep(' ', vim.fn.strdisplaywidth(menu_indicator_icon))
+                string.rep(' ', vim.fn.strdisplaywidth(menu_indicator_icon))
             menu_indicator_on_click = false
           end
           return menu.winbar_menu_entry_t:new({
@@ -148,8 +148,8 @@ M.opts = {
         local win_height = vim.api.nvim_win_get_height(win)
         local topline = range.start.line - math.floor(win_height / 4)
         if
-          topline > view.topline
-          and topline + win_height < vim.fn.line('$')
+            topline > view.topline
+            and topline + win_height < vim.fn.line('$')
         then
           view.topline = topline
           vim.fn.winrestview(view)
@@ -160,25 +160,24 @@ M.opts = {
   bar = {
     ---@type boolean|fun(buf: integer, win: integer): boolean
     enable = function(buf, win)
-      return not vim.b.bigfile
-        and not vim.w[win].winbar_no_attach
-        and not vim.b[buf].winbar_no_attach
-        and vim.fn.win_gettype(win) == ''
-        and vim.bo[buf].bt ~= 'terminal'
-        and vim.bo[buf].bt ~= 'quickfix'
-        and vim.bo[buf].bt ~= 'prompt'
-        and vim.bo[buf].ft ~= 'help'
-        and vim.bo[buf].ft ~= 'diff'
-        and not vim.startswith(vim.bo[buf].ft, 'git')
-        and not utils.opt.winbar:last_set_loc()
-        and (
-          vim.bo[buf].ft == 'markdown'
-          or utils.ts.active(buf)
-          or not vim.tbl_isempty(vim.lsp.get_clients({
-            bufnr = buf,
-            method = 'textDocument/documentSymbol',
-          }))
-        )
+      return not vim.w[win].winbar_no_attach
+          and not vim.b[buf].winbar_no_attach
+          and vim.fn.win_gettype(win) == ''
+          and vim.bo[buf].bt ~= 'terminal'
+          and vim.bo[buf].bt ~= 'quickfix'
+          and vim.bo[buf].bt ~= 'prompt'
+          and vim.bo[buf].ft ~= 'help'
+          and vim.bo[buf].ft ~= 'diff'
+          and not vim.startswith(vim.bo[buf].ft, 'git')
+          and not utils.opt.winbar:last_set_loc()
+          and (
+            vim.bo[buf].ft == 'markdown'
+            or utils.ts.active(buf)
+            or not vim.tbl_isempty(vim.lsp.get_clients({
+              bufnr = buf,
+              method = 'textDocument/documentSymbol',
+            }))
+          )
     end,
     attach_events = {
       'BufEnter',
@@ -211,12 +210,12 @@ M.opts = {
     sources = function(buf)
       local sources = require('plugin.winbar.sources')
       return vim.bo[buf].ft == 'markdown' and { sources.markdown }
-        or {
-          utils.source.fallback({
-            sources.lsp,
-            sources.treesitter,
-          }),
-        }
+          or {
+            utils.source.fallback({
+              sources.lsp,
+              sources.treesitter,
+            }),
+          }
     end,
     padding = {
       left = 1,
@@ -301,19 +300,19 @@ M.opts = {
       relative = 'win',
       win = function(menu)
         return menu.prev_menu and menu.prev_menu.win
-          or vim.fn.getmousepos().winid
+            or vim.fn.getmousepos().winid
       end,
       row = function(menu)
         return menu.prev_menu
             and menu.prev_menu.clicked_at
             and menu.prev_menu.clicked_at[1] - vim.fn.line('w0')
-          or 0
+            or 0
       end,
       ---@param menu winbar_menu_t
       col = function(menu)
         if menu.prev_menu then
           return menu.prev_menu._win_configs.width
-            + (menu.prev_menu.scrollbar and 1 or 0)
+              + (menu.prev_menu.scrollbar and 1 or 0)
         end
         local mouse = vim.fn.getmousepos()
         local bar = utils.bar.get({ win = menu.prev_win })
@@ -329,7 +328,7 @@ M.opts = {
           math.min(
             #menu.entries,
             vim.go.pumheight ~= 0 and vim.go.pumheight
-              or math.ceil(vim.go.lines / 4)
+            or math.ceil(vim.go.lines / 4)
           )
         )
       end,
@@ -362,7 +361,7 @@ M.opts = {
       -- word with optional prefix and suffix: [#~!@\*&.]*[[:keyword:]]\+!\?
       -- word separators: \(->\)\+\|-\+\|\.\+\|:\+\|\s\+
       name_regex = [=[[#~!@\*&.]*[[:keyword:]]\+!\?]=]
-        .. [=[\(\(\(->\)\+\|-\+\|\.\+\|:\+\|\s\+\)\?[#~!@\*&.]*[[:keyword:]]\+!\?\)*]=],
+          .. [=[\(\(\(->\)\+\|-\+\|\.\+\|:\+\|\s\+\)\?[#~!@\*&.]*[[:keyword:]]\+!\?\)*]=],
       -- The order matters! The first match is used as the type
       -- of the treesitter symbol and used to show the icon
       -- Types listed below must have corresponding icons
