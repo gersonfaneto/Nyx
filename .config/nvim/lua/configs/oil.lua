@@ -213,7 +213,7 @@ local function preview()
   if preview_bufname == preview_bufnewname then
     return
   end
-  vim.api.nvim_buf_set_name(preview_buf, preview_bufnewname)
+  pcall(vim.api.nvim_buf_set_name, preview_buf, preview_bufnewname)
 
   local stat = vim.uv.fs_stat(fpath)
   if (stat or {}).type == 'directory' then
