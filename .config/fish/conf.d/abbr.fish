@@ -56,8 +56,10 @@ __command_abbr nv          'nvim'
 __command_abbr sudoe       'sudo -E'
 __command_abbr tree        'tree -N'
 __command_abbr x           'trash'
-__command_abbr la          'ls -A'
-__command_abbr lla         'll -A'
+__command_abbr ls          'ls --color=auto'
+__command_abbr ll          'ls --color=auto -lhX --group-directories-first'
+__command_abbr la          'ls --color=auto -AX --group-directories-first'
+__command_abbr lla         'ls --color=auto -lhAX --group-directories-first'
 
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim
