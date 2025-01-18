@@ -20,10 +20,10 @@ augroup('BigFile', {
   {
     desc = 'Detect big files.',
     callback = function(info)
-      _G.bigfile_max_size = _G.bigfile_max_size or 1048576
+      vim.g.bigfile_max_size = vim.g.bigfile_max_size or 1048576
 
       local stat = vim.uv.fs_stat(info.match)
-      if stat and stat.size > _G.bigfile_max_size then
+      if stat and stat.size > vim.g.bigfile_max_size then
         vim.b[info.buf].bigfile = true
       end
     end,
@@ -33,20 +33,20 @@ augroup('BigFile', {
   {
     desc = 'Detect big files.',
     callback = function(info)
-      _G.bigfile_max_lines = _G.bigfile_max_lines or 32768
+      vim.g.bigfile_max_lines = vim.g.bigfile_max_lines or 32768
 
       local buf = info.buf
       if vim.b[buf].bigfile then
         return
       end
 
-      if vim.api.nvim_buf_line_count(buf) > _G.bigfile_max_lines then
+      if vim.api.nvim_buf_line_count(buf) > vim.g.bigfile_max_lines then
         vim.b[buf].bigfile = true
       end
     end,
   },
 }, {
-  { 'FileType' },
+  'FileType',
   {
     once = true,
     desc = 'Prevent treesitter and LSP from attaching to big files.',
@@ -119,7 +119,7 @@ augroup('BigFile', {
       if vim.b[buf].bigfile and require('utils.ts').hl_active(buf) then
         vim.treesitter.stop(buf)
         vim.bo[buf].syntax = vim.filetype.match({ buf = buf })
-            or vim.bo[buf].bt
+          or vim.bo[buf].bt
       end
     end,
   },
@@ -197,9 +197,9 @@ augroup('AutoCwd', {
       local client = vim.lsp.get_client_by_id(info.data.client_id)
       local root_dir = client and client.config and client.config.root_dir
       if
-          not root_dir
-          or root_dir == vim.fs.normalize('~')
-          or root_dir == vim.fs.dirname(root_dir)
+        not root_dir
+        or root_dir == vim.fs.normalize('~')
+        or root_dir == vim.fs.dirname(root_dir)
       then
         return
       end
@@ -243,7 +243,7 @@ augroup('AutoCwd', {
       end
 
       local root_dir = lsp_root_dir
-          or vim.fs.root(info.file, fs_utils.root_patterns)
+        or vim.fs.root(info.file, fs_utils.root_patterns)
 
       if not root_dir or root_dir == vim.uv.os_homedir() then
         root_dir = vim.fs.dirname(info.file)
@@ -345,9 +345,9 @@ augroup('FixCmdLineIskeyword', {
     pattern = '[:>/?=@]',
     callback = function()
       if
-          vim.g._isk_lisp_buf
-          and vim.api.nvim_buf_is_valid(vim.g._isk_lisp_buf)
-          and vim.g._isk_save ~= vim.b[vim.g._isk_lisp_buf].isk
+        vim.g._isk_lisp_buf
+        and vim.api.nvim_buf_is_valid(vim.g._isk_lisp_buf)
+        and vim.g._isk_save ~= vim.b[vim.g._isk_lisp_buf].isk
       then
         vim.bo[vim.g._isk_lisp_buf].isk = vim.g._isk_save
         vim.bo[vim.g._isk_lisp_buf].lisp = vim.g._lisp_save
@@ -425,8 +425,8 @@ augroup('SessionCloseEmptyWins', {
           local buf = vim.api.nvim_win_get_buf(win)
           local line_count = vim.api.nvim_buf_line_count(buf)
           if
-              line_count == 0
-              or line_count == 1
+            line_count == 0
+            or line_count == 1
               and vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] == ''
               and not vim.uv.fs_stat(vim.api.nvim_buf_get_name(buf))
           then
@@ -440,11 +440,14 @@ augroup('SessionCloseEmptyWins', {
 })
 
 augroup('ColorSchemeRestore', {
-  'UIEnter',
+  { 'UIEnter', 'OptionSet' },
   {
-    once = true,
     nested = true, -- invoke Colorscheme event for winbar plugin to clear bg for nvim < 0.11
-    callback = function()
+    callback = function(info)
+      if info.event == 'OptionSet' and info.match ~= 'termguicolors' then
+        return
+      end
+
       ---@param colors_name string
       ---@return nil
       local function load_colorscheme(colors_name)
@@ -468,10 +471,13 @@ augroup('ColorSchemeRestore', {
 
       -- Colorschemes other than the default colorscheme looks bad when the terminal
       -- does not support truecolor
-      if not vim.go.termguicolors then
+      if info.event == 'UIEnter' and not vim.go.termguicolors then
         load_colorscheme('default')
         return
       end
+
+      -- Make sure to restore colorscheme only once
+      pcall(vim.api.nvim_del_autocmd, info.id)
 
       local json = require('utils.json')
       local colors_file = vim.fs.joinpath(
@@ -508,7 +514,7 @@ augroup('ColorSchemeRestore', {
             vim.schedule(function()
               local data = json.read(colors_file)
               if
-                  data.colors_name ~= vim.g.colors_name or data.bg ~= vim.go.bg
+                data.colors_name ~= vim.g.colors_name or data.bg ~= vim.go.bg
               then
                 data.colors_name = vim.g.colors_name
                 data.bg = vim.go.bg
@@ -523,8 +529,6 @@ augroup('ColorSchemeRestore', {
           end,
         },
       })
-
-      return true
     end,
   },
 })
