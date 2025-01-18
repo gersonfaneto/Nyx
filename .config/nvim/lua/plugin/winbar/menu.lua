@@ -241,6 +241,16 @@ function winbar_menu_t:del()
   end
 end
 
+---Retrieves the root menu (first menu opened from winbar)
+---@return winbar_menu_t?
+function winbar_menu_t:root()
+  local current = self
+  while current and current.prev_menu do
+    current = current.prev_menu
+  end
+  return current
+end
+
 ---Evaluate window configurations
 ---Side effects: update self._win_configs
 ---@return nil
@@ -401,7 +411,7 @@ function winbar_menu_t:make_buf()
     -- Pad lines with spaces to the width of the window
     -- This is to make sure hl-WinBarMenuCurrentContext colors
     -- the entire line
-    -- Also pad the last symbol's name so that the cursor is always
+    -- Also pad the last symbol's name so that cursor is always
     -- on at least one symbol when inside the menu
     local width_diff = self._win_configs.width - entry:displaywidth()
     if width_diff > 0 then
