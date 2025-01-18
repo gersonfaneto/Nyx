@@ -8,25 +8,6 @@ return {
     end
   },
   {
-    'williamboman/mason.nvim',
-    build = function()
-      ---@diagnostic disable-next-line: param-type-mismatch
-      pcall(vim.cmd, 'MasonUpdate')
-    end,
-    config = function()
-      require('mason').setup({
-        ui = {
-          icons = {
-            package_installed = '✓',
-            package_pending = '➜',
-            package_uninstalled = '✗',
-          },
-          border = 'rounded',
-        },
-      })
-    end,
-  },
-  {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
     keys = {
