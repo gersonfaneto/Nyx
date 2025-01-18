@@ -7,9 +7,11 @@ betterlockscreen
 bluetui
 boomer-git
 brightnessctl
+clang
 cmake
 docker
 docker-compose
+efm-langserver
 fd
 feh
 figlet
@@ -24,6 +26,9 @@ imagemagick
 jdk-openjdk
 jq
 less
+llvm-libs
+lua-language-server
+luacheck
 ly
 man-db
 man-pages
@@ -44,6 +49,7 @@ rustup
 scc
 stow
 strace
+stylua
 texlive-basic
 texlive-bibtexextra
 texlive-binextra
