@@ -6,12 +6,4 @@ return {
       require('configs.clangd_extensions')
     end,
   },
-
-  {
-    'nvim-java/nvim-java',
-    ft = { 'java' },
-    config = function()
-      require('configs.java')
-    end
-  }
 }
