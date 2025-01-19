@@ -194,14 +194,6 @@ return {
   },
 
   {
-    'akinsho/git-conflict.nvim',
-    event = 'BufReadPre',
-    config = function()
-      require('configs.git-conflict')
-    end,
-  },
-
-  {
     'NvChad/nvim-colorizer.lua',
     event = {
       'BufNew',
