@@ -70,9 +70,14 @@ function M.start(config, opts)
         M.default_config.root_patterns or {}
       )
     )
-  ) or validate(vim.fs.dirname(bufname))
-  if not root_dir then
-    return
+  )
+
+  if
+    not root_dir
+    or require('utils.fs').is_home_dir(root_dir)
+    or require('utils.fs').is_root_dir(root_dir)
+  then
+    root_dir = validate(vim.fs.dirname(bufname))
   end
 
   return vim.lsp.start(
