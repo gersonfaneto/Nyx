@@ -39,8 +39,7 @@ M.opts = {
       if symbol.bar then -- If symbol inside a winbar
         prev_win = symbol.bar.win
         entries_source = symbol.opts.siblings
-        init_cursor = symbol.opts.sibling_idx
-          and { symbol.opts.sibling_idx, 0 }
+        init_cursor = symbol.opts.sibling_idx and { symbol.opts.sibling_idx, 0 }
         if symbol.bar.in_pick_mode then
           ---@param tbl number[]
           local function tbl_sum(tbl)
@@ -169,7 +168,7 @@ M.opts = {
         and not utils.opt.winbar:last_set_loc()
         and (
           vim.bo[buf].ft == 'markdown'
-          or utils.ts.active(buf)
+          or utils.ts.is_active(buf)
           or not vim.tbl_isempty(vim.lsp.get_clients({
             bufnr = buf,
             method = 'textDocument/documentSymbol',

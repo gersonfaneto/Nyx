@@ -9,7 +9,7 @@ local utils = require('utils')
 function M.in_codeblock_regex(lnum, buf)
   buf = buf or 0
   lnum = lnum or vim.api.nvim_win_get_cursor(0)[1]
-  local lines = vim.api.nvim_buf_get_lines(buf, 0, lnum - 1, false)
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, lnum, false)
   local lang = false
   local in_codeblock = false
   local in_codeblock_next = false
@@ -36,12 +36,12 @@ end
 function M.in_codeblock(lnum, buf)
   buf = buf or 0
   lnum = lnum or vim.api.nvim_win_get_cursor(0)[1]
-  if utils.ts.active(buf) then
+  if utils.ts.is_active(buf) then
     if
-        not utils.ts.in_node('code_fence_content', {
-          pos = { lnum - 1, 0 },
-          bufnr = buf,
-        })
+      not utils.ts.in_node('code_fence_content', {
+        pos = { lnum - 1, 0 },
+        bufnr = buf,
+      })
     then
       return false
     end
@@ -58,7 +58,7 @@ function M.in_codeinline(cursor, buf)
   cursor = cursor or vim.api.nvim_win_get_cursor(0)
   buf = buf or 0
   local line =
-      vim.api.nvim_buf_get_lines(buf, cursor[1] - 1, cursor[1], false)[1]
+    vim.api.nvim_buf_get_lines(buf, cursor[1] - 1, cursor[1], false)[1]
   local idx = 0
   local inside = false
   while idx ~= cursor[2] do

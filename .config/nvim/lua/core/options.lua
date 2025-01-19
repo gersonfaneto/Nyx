@@ -78,7 +78,7 @@ vim.api.nvim_create_autocmd('FileType', {
     end
 
     local ts = require('utils.ts')
-    if not ts.active(buf) then
+    if not ts.is_active(buf) then
       return
     end
 

@@ -139,7 +139,7 @@ end
 ---@param cursor integer[] cursor position
 ---@return winbar_symbol_t[] symbols winbar symbols
 local function get_symbols(buf, win, cursor)
-  if not utils.ts.active(buf) then
+  if not utils.ts.is_active(buf) then
     return {}
   end
 
@@ -162,6 +162,7 @@ local function get_symbols(buf, win, cursor)
     end
     node = node:parent()
   end
+
   return symbols
 end
 

@@ -116,10 +116,9 @@ augroup('BigFile', {
     desc = 'Stop treesitter in big files.',
     callback = function(info)
       local buf = info.buf
-      if vim.b[buf].bigfile and require('utils.ts').hl_active(buf) then
+      if vim.b[buf].bigfile and require('utils.ts').hl_is_active(buf) then
         vim.treesitter.stop(buf)
-        vim.bo[buf].syntax = vim.filetype.match({ buf = buf })
-          or vim.bo[buf].bt
+        vim.bo[buf].syntax = vim.filetype.match({ buf = buf }) or vim.bo[buf].bt
       end
     end,
   },
@@ -239,8 +238,7 @@ augroup('AutoCwd', {
         return root
       end)()
 
-      local root_dir = lsp_root_dir
-        or vim.fs.root(file, fs_utils.root_patterns)
+      local root_dir = lsp_root_dir or vim.fs.root(file, fs_utils.root_patterns)
 
       if
         not root_dir
@@ -481,10 +479,8 @@ augroup('ColorSchemeRestore', {
       pcall(vim.api.nvim_del_autocmd, info.id)
 
       local json = require('utils.json')
-      local colors_file = vim.fs.joinpath(
-        vim.fn.stdpath('state') --[[@as string]],
-        'colors.json'
-      )
+      local colors_file =
+        vim.fs.joinpath(vim.fn.stdpath('state') --[[@as string]], 'colors.json')
 
       -- 1. Restore dark/light background and colorscheme from json so that nvim
       --    "remembers" the background and colorscheme when it is restarted.
