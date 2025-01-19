@@ -4,6 +4,7 @@ vim.g.has_display = vim.g.has_ui and vim.env.DISPLAY ~= nil
 vim.g.has_nf = vim.env.TERM ~= 'linux' and vim.env.NVIM_NF and true or false
 
 vim.opt.shell = '/usr/bin/fish'
+vim.opt.exrc = true
 vim.opt.confirm = true
 vim.opt.timeout = false
 vim.opt.colorcolumn = '+1'
