@@ -35,10 +35,7 @@ local function tsj_split_recursive()
 end
 
 -- stylua: ignore start
-vim.keymap.set('n', '<M-C-K>', tsj.join, { desc = 'Join current treesitter node' })
-vim.keymap.set('n', '<M-C-Up>', tsj.join, { desc = 'Join current treesitter node' })
-vim.keymap.set('n', '<M-NL>', tsj.split, { desc = 'Split current treesitter node' })
-vim.keymap.set('n', '<M-C-Down>', tsj.split, { desc = 'Split current treesitter node' })
-vim.keymap.set('n', 'g<M-NL>', tsj_split_recursive, { desc = 'Split current treesitter node recursively' })
-vim.keymap.set('n', 'g<M-C-Down>', tsj_split_recursive, { desc = 'Split current treesitter node recursively' })
+vim.keymap.set('n', 'gsj', tsj.join, { desc = 'Join current treesitter node' })
+vim.keymap.set('n', 'gss', tsj.split, { desc = 'Split current treesitter node' })
+vim.keymap.set('n', 'gsS', tsj_split_recursive, { desc = 'Split current treesitter node recursively' })
 -- stylua: ignore end
