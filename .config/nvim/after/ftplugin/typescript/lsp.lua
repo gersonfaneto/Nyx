@@ -10,6 +10,8 @@ if
   or vim.bo.ft == 'jsonc'
   or vim.bo.ft == 'javascript'
   or vim.bo.ft == 'typescript'
+  or vim.bo.ft == 'javascriptreact'
+  or vim.bo.ft == 'typescriptreact'
 then
   formatter = lsp.start({
     cmd = { 'biome', 'lsp-proxy' },
@@ -65,6 +67,8 @@ if not formatter then
         languages = {
           -- Setup all supported languages because this lsp config file
           -- is shared between all these filetypes
+          javascriptreact = prettier_lang_settings,
+          typescriptreact = prettier_lang_settings,
           javascript = prettier_lang_settings,
           typescript = prettier_lang_settings,
           jsonc = prettier_lang_settings,
@@ -145,7 +149,12 @@ if eslint_cmd then
   formatter = formatter or eslint
 end
 
-if vim.bo.ft == 'typescript' or vim.bo.ft == 'javascript' then
+if
+  vim.bo.ft == 'javascript'
+  or vim.bo.ft == 'typescript'
+  or vim.bo.ft == 'javascriptreact'
+  or vim.bo.ft == 'typescriptreact'
+then
   lsp.start({
     cmd = { 'typescript-language-server', '--stdio' },
     root_patterns = {
