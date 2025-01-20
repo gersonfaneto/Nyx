@@ -123,19 +123,19 @@ vim.api.nvim_create_autocmd('UIEnter', {
       -- stylua: ignore end
 
       -- Wisely exit terminal mode with <Esc>
-      vim.keymap.set(
-      't',
-      '<Esc>',
-      [[v:lua.require'utils.term'.running_tui() ? "<Esc>" : "<CMD>stopi<CR>"]],
-      { expr = true, replace_keycodes = false, desc = 'Exit terminal mode' }
+      map(
+        't',
+        '<Esc>',
+        [[v:lua.require'utils.term'.running_tui() ? "<Esc>" : "<CMD>stopi<CR>"]],
+        { expr = true, replace_keycodes = false, desc = 'Exit terminal mode' }
       )
 
       -- Use <C-\><C-r> to insert contents of a register in terminal mode
       map(
-      't',
-      [[<C-\><C-r>]],
-      [['<C-\><C-n>"' . nr2char(getchar()) . 'pi']],
-      { expr = true, desc = 'Insert contents in a register' }
+        't',
+        [[<C-\><C-r>]],
+        [['<C-\><C-n>"' . nr2char(getchar()) . 'pi']],
+        { expr = true, desc = 'Insert contents in a register' }
       )
 
       -- Delete selection in select mode
@@ -202,14 +202,14 @@ vim.api.nvim_create_autocmd('UIEnter', {
       -- 'E11: Invalid in command-line window; <CR> executes, CTRL-C quits'
       -- in command window
       map(
-      { 'n', 'x' },
-      '<C-l>',
-      [['<CMD>ec|noh|sil! dif<CR>' . (v:hlsearch ? '' : '<C-l>')]],
-      {
-        expr = true,
-        replace_keycodes = false,
-        desc = 'Clear and redraw screen',
-      }
+        { 'n', 'x' },
+        '<C-l>',
+        [['<CMD>ec|noh|sil! dif<CR>' . (v:hlsearch ? '' : '<C-l>')]],
+        {
+          expr = true,
+          replace_keycodes = false,
+          desc = 'Clear and redraw screen',
+        }
       )
 
       -- Don't include extra spaces around quotes
