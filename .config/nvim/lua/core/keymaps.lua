@@ -201,7 +201,11 @@ vim.api.nvim_create_autocmd('UIEnter', {
       -- Use `:sil! dif` to suppress error
       -- 'E11: Invalid in command-line window; <CR> executes, CTRL-C quits'
       -- in command window
-      map(
+      --
+      -- Don't use `map` here because `<C-l>` is already defined as nvim's
+      -- default keymap before loading this config and we want to override
+      -- it
+      vim.keymap.set(
         { 'n', 'x' },
         '<C-l>',
         [['<CMD>ec|noh|sil! dif<CR>' . (v:hlsearch ? '' : '<C-l>')]],
