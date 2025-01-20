@@ -7,6 +7,7 @@ return {
       require('configs.harpoon')
     end,
   },
+
   {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
@@ -273,6 +274,14 @@ return {
     end,
     config = function()
       require('configs.oil')
+    end,
+  },
+
+  {
+    'stevearc/quicker.nvim',
+    ft = 'qf',
+    config = function()
+      require('configs.quicker')
     end,
   },
 
