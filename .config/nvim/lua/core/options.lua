@@ -3,7 +3,6 @@ vim.g.has_gui = vim.fn.has('gui_running') == 1
 vim.g.has_display = vim.g.has_ui and vim.env.DISPLAY ~= nil
 vim.g.has_nf = vim.env.TERM ~= 'linux' and vim.env.NVIM_NF and true or false
 
-vim.opt.shell = '/usr/bin/fish'
 vim.opt.exrc = true
 vim.opt.confirm = true
 vim.opt.timeout = false
@@ -14,7 +13,6 @@ vim.opt.helpheight = 10
 vim.opt.showmode = false
 vim.opt.mousemoveevent = true
 vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.ruler = true
 vim.opt.pumheight = 16
 vim.opt.scrolloff = 4
@@ -22,7 +20,6 @@ vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = 'yes:1'
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-vim.opt.inccommand = 'split'
 vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.wrap = false
@@ -31,11 +28,6 @@ vim.opt.breakindent = true
 vim.opt.smoothscroll = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.softtabstop = 2
-vim.opt.expandtab = true
-vim.opt.smartindent = true
 vim.opt.completeopt = 'menuone'
 vim.opt.jumpoptions = 'stack,view'
 
