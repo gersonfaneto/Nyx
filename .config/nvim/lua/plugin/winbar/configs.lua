@@ -39,7 +39,8 @@ M.opts = {
       if symbol.bar then -- If symbol inside a winbar
         prev_win = symbol.bar.win
         entries_source = symbol.opts.siblings
-        init_cursor = symbol.opts.sibling_idx and { symbol.opts.sibling_idx, 0 }
+        init_cursor = symbol.opts.sibling_idx
+          and { symbol.opts.sibling_idx, 0 }
         if symbol.bar.in_pick_mode then
           ---@param tbl number[]
           local function tbl_sum(tbl)
@@ -184,7 +185,7 @@ M.opts = {
     -- request is received within this time, the previous request will be
     -- cancelled, this improves the performance when the user is holding
     -- down a key (e.g. 'j') to scroll the window
-    update_debounce = 32,
+    update_debounce = 16,
     update_events = {
       win = {
         'CursorMoved',
