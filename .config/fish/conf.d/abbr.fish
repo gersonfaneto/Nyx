@@ -52,7 +52,6 @@ __command_abbr d           'dot'
 __command_abbr lc          'wc -l'
 __command_abbr mkdir       'mkdir -p'
 __command_abbr mv          'mv -i'
-__command_abbr nv          'nvim'
 __command_abbr sudoe       'sudo -E'
 __command_abbr tree        'tree -N'
 __command_abbr x           'trash'
@@ -74,3 +73,17 @@ function __command_abbr_v_fn --description 'Abbreviation function for `v`'
 end
 
 abbr --add 'v' --position command --function __command_abbr_v_fn
+
+function __command_abbr_nv_fn --description 'Abbreviation function for `nv`'
+    if command -q nvim
+        echo "NVIM_NO3RD=false nvim"
+        return
+    end
+    if command -q vim
+        echo vim
+        return
+    end
+    echo vi
+end
+
+abbr --add 'nv' --position command --function __command_abbr_nv_fn
