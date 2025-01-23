@@ -11,14 +11,14 @@ local d = ls.dynamic_node
 M.math = require('snippets.tex.math')
 
 M.snippets = {
-  us.msnr({
+  us.msn({
+    { trig = 'h1' },
     {
       trig = '# ',
       snippetType = 'autosnippet',
-      condition = conds.at_line_end,
-      show_condition = conds.at_line_end,
+      condition = conds.at_line_start * conds.at_line_end,
+      show_condition = conds.at_line_start * conds.at_line_end,
     },
-    { trig = 'h1' },
   }, {
     t('# '),
     d(1, function()
@@ -27,11 +27,8 @@ M.snippets = {
         return sn(nil, i(nil))
       end
 
-      local title = vim.fn
-        .fnamemodify(fname, ':t:r')
-        :gsub('^%d*_*', '')
-        :gsub('_', ' ')
-        :gsub('-', ' ')
+      local title =
+        vim.fn.fnamemodify(fname, ':t:r'):gsub('^%d*_*', ''):gsub('_', ' ')
       local title_words = vim.fn.split(title, '\\W\\zs', 0)
       for idx, word in ipairs(title_words) do
         local word_lower = word:lower()
@@ -47,11 +44,11 @@ M.snippets = {
       return sn(nil, i(1, table.concat(title_words)))
     end),
   }),
-  us.snr({ trig = 'h2' }, { t('## '), i(0) }),
-  us.snr({ trig = 'h3' }, { t('### '), i(0) }),
-  us.snr({ trig = 'h4' }, { t('#### '), i(0) }),
-  us.snr({ trig = 'h5' }, { t('##### '), i(0) }),
-  us.snr({ trig = 'h6' }, { t('###### '), i(0) }),
+  us.ssn({ trig = 'h2' }, { t('## '), i(0) }),
+  us.ssn({ trig = 'h3' }, { t('### '), i(0) }),
+  us.ssn({ trig = 'h4' }, { t('#### '), i(0) }),
+  us.ssn({ trig = 'h5' }, { t('##### '), i(0) }),
+  us.ssn({ trig = 'h6' }, { t('###### '), i(0) }),
 
   us.sn('pkgs', {
     t({ '---', '' }),
