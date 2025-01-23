@@ -1,8 +1,5 @@
 require('utils.lsp').start({
-  cmd = {
-    'clangd',
-    '--fallback-style=WebKit',
-  },
+  cmd = { 'clangd' },
   root_patterns = {
     '.clangd',
     '.clang-tidy',
