@@ -45,7 +45,7 @@ function M.ts_active()
 end
 
 ---Returns whether current cursor is in a comment
----@param type string
+---@param type string|string[]
 ---@param opts vim.treesitter.get_node.Opts?
 ---@return snip_cond_t
 function M.in_tsnode(type, opts)
@@ -136,8 +136,9 @@ function M.next_line_matches(pattern)
     if lnum >= vim.api.nvim_buf_line_count(0) then
       return false
     end
-    return vim.api.nvim_buf_get_lines(0, lnum, lnum + 1, true)[1]:match(pattern)
-      ~= nil
+    return vim.api
+      .nvim_buf_get_lines(0, lnum, lnum + 1, true)[1]
+      :match(pattern) ~= nil
   end)
 end
 
