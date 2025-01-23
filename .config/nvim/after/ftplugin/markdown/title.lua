@@ -5,7 +5,7 @@ if vim.g.md_fmt_title == nil then
 end
 
 -- Export the word list to global so that other parts of the config
--- (e.g. markdown snippets) can access it 
+-- (e.g. markdown snippets) can access it
 _G._title_lowercase_words = {
   ['a'] = true,
   ['an'] = true,
@@ -43,9 +43,9 @@ _G._title_lowercase_words = {
 ---@return nil
 local function format_title()
   if
-      vim.bo.filetype ~= 'markdown'
-      or vim.b.md_fmt_title == false
-      or (vim.g.md_fmt_title == false and vim.b.md_fmt_title == nil)
+    vim.bo.filetype ~= 'markdown'
+    or vim.b.md_fmt_title == false
+    or (vim.g.md_fmt_title == false and vim.b.md_fmt_title == nil)
   then
     return
   end
@@ -54,9 +54,9 @@ local function format_title()
   local line = vim.api.nvim_get_current_line()
   local lnum = vim.fn.line('.')
   if
-      not line:match('^#+%s')
-      or utils.ft.markdown.in_codeblock(lnum)
-      or utils.ft.markdown.in_codeinline(cursor)
+    not line:match('^#+%s')
+    or utils.ft.markdown.in_codeblock(lnum)
+    or utils.ft.markdown.in_codeinline(cursor)
   then
     return
   end
@@ -66,37 +66,22 @@ local function format_title()
     return
   end
 
-  local word_lower = word:lower()
   local is_first = line:match('^#+%s+([%w_]+)$') == word
-  if
-      #word < 3 and not is_first
-      or word_lower ~= word and _G._title_lowercase_words[word_lower]
-  then
-    vim.api.nvim_buf_set_text(
-      0,
-      cursor[1] - 1,
-      cursor[2] - #word,
-      cursor[1] - 1,
-      cursor[2],
-      { word_lower }
-    )
-    return
-  end
+  local should_upper = is_first
+    or not (_G._title_lowercase_words[word:lower()] or #word < 3)
 
-  local word_upper = word:sub(1, 1):upper() .. word:sub(2)
-  if
-      word_upper ~= word
-      and (is_first or not _G._title_lowercase_words[word_lower])
-  then
-    vim.api.nvim_buf_set_text(
-      0,
-      cursor[1] - 1,
-      cursor[2] - #word,
-      cursor[1] - 1,
-      cursor[2],
-      { word_upper }
-    )
-    return
+  if should_upper then
+    local word_upper = word:sub(1, 1):upper() .. word:sub(2)
+    if word_upper ~= word then
+      vim.api.nvim_buf_set_text(
+        0,
+        cursor[1] - 1,
+        cursor[2] - #word,
+        cursor[1] - 1,
+        cursor[2],
+        { word_upper }
+      )
+    end
   end
 end
 
