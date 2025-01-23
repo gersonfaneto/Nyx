@@ -34,7 +34,7 @@ local function is_nvim_lua()
   -- Check if the file contains 'vim.xxx' in surrounding 1000 lines
   local lnum = vim.api.nvim_win_get_cursor(0)[1]
   local content =
-      vim.api.nvim_buf_get_lines(0, math.max(0, lnum - 500), lnum + 500, false)
+    vim.api.nvim_buf_get_lines(0, math.max(0, lnum - 500), lnum + 500, false)
   for _, line in ipairs(content) do
     if line:match('vim%.') then
       vim.b._ls_is_nvim_lua = true
@@ -46,6 +46,25 @@ local function is_nvim_lua()
 end
 
 M.snippets = {
+  us.msns({
+    { trig = 'sb' },
+    { trig = '#!', snippetType = 'autosnippet' },
+    desc = 'Shebang',
+  }, {
+    t('#!'),
+    c(1, {
+      i(nil, '/usr/bin/env luajit'),
+      i(nil, '/usr/bin/env lua5.4'),
+      i(nil, '/usr/bin/env lua5.3'),
+      i(nil, '/usr/bin/env lua5.2'),
+      i(nil, '/usr/bin/env lua5.1'),
+      i(nil, '/usr/bin/luajit'),
+      i(nil, '/usr/bin/lua5.4'),
+      i(nil, '/usr/bin/lua5.3'),
+      i(nil, '/usr/bin/lua5.2'),
+      i(nil, '/usr/bin/lua5.1'),
+    }),
+  }),
   us.msn({
     { trig = 'lv' },
     { trig = 'lc' },
@@ -79,28 +98,28 @@ M.snippets = {
   }, {
     d(1, function()
       return (
-            uc.in_tsnode('field', { ignore_injections = false })()
-            or uc.in_tsnode('arguments', { ignore_injections = false })()
-            or uc.in_tsnode('assignment', { ignore_injections = false })()
-            or uc.in_tsnode('table_constructor', { ignore_injections = false })() -- unnamed function in list
-            or uc.in_tsnode('binary_expression', { ignore_injections = false })() -- <expression> and function ... end
-            or uc.in_tsnode(
-              'parenthesized_expression',
-              { ignore_injections = false }
-            )()
-          )
+        uc.in_tsnode('field', { ignore_injections = false })()
+        or uc.in_tsnode('arguments', { ignore_injections = false })()
+        or uc.in_tsnode('assignment', { ignore_injections = false })()
+        or uc.in_tsnode('table_constructor', { ignore_injections = false })() -- unnamed function in list
+        or uc.in_tsnode('binary_expression', { ignore_injections = false })() -- <expression> and function ... end
+        or uc.in_tsnode(
+          'parenthesized_expression',
+          { ignore_injections = false }
+        )()
+      )
           and sn(nil, {
             t('function('),
             r(1, 'params'),
             t({ ')', '' }),
           })
-          or sn(nil, {
-            t('function '),
-            i(1, 'func'),
-            t('('),
-            r(2, 'params'),
-            t({ ')', '' }),
-          })
+        or sn(nil, {
+          t('function '),
+          i(1, 'func'),
+          t('('),
+          r(2, 'params'),
+          t({ ')', '' }),
+        })
     end),
     un.body(2, 1),
     t({ '', 'end' }),
@@ -319,17 +338,14 @@ M.snippets = {
       inspect = d(2, function()
         return sn(
           nil,
-          c(1, {
+          c(1, is_nvim_lua() and {
+            i(nil, 'vim.inspect'),
+            i(nil, 'tostring'),
             i(nil, 'inspect'),
-            c(1, is_nvim_lua() and {
-              i(nil, 'vim.inspect'),
-              i(nil, 'tostring'),
-              i(nil, 'inspect'),
-            } or {
-              i(nil, 'inspect'),
-              i(nil, 'tostring'),
-              i(nil, 'vim.inspect'),
-            })
+          } or {
+            i(nil, 'inspect'),
+            i(nil, 'tostring'),
+            i(nil, 'vim.inspect'),
           })
         )
       end),
@@ -352,17 +368,14 @@ M.snippets = {
       inspect = d(2, function()
         return sn(
           nil,
-          c(1, {
+          c(1, is_nvim_lua() and {
+            i(nil, 'vim.inspect'),
+            i(nil, 'tostring'),
             i(nil, 'inspect'),
-            c(1, is_nvim_lua() and {
-              i(nil, 'vim.inspect'),
-              i(nil, 'tostring'),
-              i(nil, 'inspect'),
-            } or {
-              i(nil, 'inspect'),
-              i(nil, 'tostring'),
-              i(nil, 'vim.inspect'),
-            })
+          } or {
+            i(nil, 'inspect'),
+            i(nil, 'tostring'),
+            i(nil, 'vim.inspect'),
           })
         )
       end),
@@ -380,24 +393,21 @@ M.snippets = {
     un.fmtad('<spc>.. <q>, <v_esc>: <q> .. <inspect>(<v>)', {
       spc = f(function(_, snip, _)
         return snip.captures[1] == '' and snip.captures[2]
-            or snip.captures[1] .. ' '
+          or snip.captures[1] .. ' '
       end, {}, {}),
       q = un.qt(),
       v = i(1),
       inspect = d(2, function()
         return sn(
           nil,
-          c(1, {
+          c(1, is_nvim_lua() and {
+            i(nil, 'vim.inspect'),
+            i(nil, 'tostring'),
             i(nil, 'inspect'),
-            c(1, is_nvim_lua() and {
-              i(nil, 'vim.inspect'),
-              i(nil, 'tostring'),
-              i(nil, 'inspect'),
-            } or {
-              i(nil, 'inspect'),
-              i(nil, 'tostring'),
-              i(nil, 'vim.inspect'),
-            })
+          } or {
+            i(nil, 'inspect'),
+            i(nil, 'tostring'),
+            i(nil, 'vim.inspect'),
           })
         )
       end),
