@@ -1,17 +1,34 @@
 local cmp = require('cmp')
 local cmp_core = require('cmp.core')
-local luasnip = require('luasnip')
 local tabout = require('plugin.tabout')
 local icons = require('utils.static.icons')
 
----Hack: `nvim_lsp` and `nvim_lsp_signature_help` source still use
----deprecated `vim.lsp.buf_get_clients()`, which is slower due to
----the deprecation and version check in that function. Overwrite
----it using `vim.lsp.get_clients()` to improve performance.
----@diagnostic disable-next-line: duplicate-set-field
-function vim.lsp.buf_get_clients(bufnr)
-  return vim.lsp.get_clients({ buffer = bufnr })
-end
+-- Snippet engine structure, use LuaSnip if available,
+-- fallback to `vim.snippet`
+local snip = setmetatable({}, {
+  __index = function(self, key)
+    local has_luasnip, luasnip = pcall(require, 'luasnip')
+    if has_luasnip then
+      for k, v in pairs(luasnip) do
+        self[k] = v
+      end
+    else
+      -- Fallback to vim.snippet
+      self.lsp_expand = vim.snippet.expand
+      self.jumpable = function(direction)
+        return vim.snippet.active({ direction = direction or 1 })
+      end
+      self.jump = vim.snippet.jump
+      -- stylua: ignore start
+      self.jump_destination = function(_) return nil end
+      self.expandable = function() return false end
+      self.choice_active = function() return false end
+      self.change_choice = function(_) end
+      -- stylua: ignore off
+    end
+    return rawget(self, key)
+  end,
+})
 
 ---@type string?
 local last_key
@@ -86,9 +103,21 @@ end
 ---Check if a node has length larger than 0
 ---@param node table
 ---@return boolean
-local function node_has_length(node)
+local function snip_node_has_length(node)
   local start_pos, end_pos = node:get_buf_position()
   return start_pos[1] ~= end_pos[1] or start_pos[2] ~= end_pos[2]
+end
+
+---Convert a range into lsp format range
+---@param range integer[][] 0-based range
+---@return lsp_range_t
+local function range_convert(range)
+  local s = range[1]
+  local e = range[2]
+  return {
+    start = { line = s[1], character = s[2] },
+    ['end'] = { line = e[1], character = e[2] },
+  }
 end
 
 ---Check if range1 contains range2
@@ -97,54 +126,27 @@ end
 ---@param range2 integer[][] 0-based range
 ---@return boolean
 local function range_contains(range1, range2)
-  -- stylua: ignore start
-  return (
-    range2[1][1] > range1[1][1]
-    or (range2[1][1] == range1[1][1]
-        and range2[1][2] >= range1[1][2])
-    )
-    and (
-      range2[1][1] < range1[2][1]
-      or (range2[1][1] == range1[2][1]
-          and range2[1][2] <= range1[2][2])
-    )
-    and (
-      range2[2][1] > range1[1][1]
-      or (range2[2][1] == range1[1][1]
-          and range2[2][2] >= range1[1][2])
-    )
-    and (
-      range2[2][1] < range1[2][1]
-      or (range2[2][1] == range1[2][1]
-          and range2[2][2] <= range1[2][2])
-    )
-  -- stylua: ignore end
+  return require('utils.lsp').range_contains(
+    range_convert(range1),
+    range_convert(range2)
+  )
 end
 
 ---Check if the cursor position is in the given range
 ---@param range integer[][] 0-based range
----@param cursor integer[] 1,0-based cursor position
+---@param cursor integer[]? 1,0-based cursor position
 ---@return boolean
 local function in_range(range, cursor)
-  local cursor0 = { cursor[1] - 1, cursor[2] }
-  -- stylua: ignore start
-  return (
-    cursor0[1] > range[1][1]
-    or (cursor0[1] == range[1][1]
-        and cursor0[2] >= range[1][2])
-    )
-    and (
-      cursor0[1] < range[2][1]
-      or (cursor0[1] == range[2][1]
-          and cursor0[2] <= range[2][2])
-    )
-  -- stylua: ignore end
+  return require('utils.lsp').range_contains_cursor(
+    range_convert(range),
+    cursor
+  )
 end
 
 ---Find the parent (a previous node that contains the current node) of the node
 ---@param node table current node
 ---@return table|nil
-local function node_find_parent(node)
+local function snip_node_find_parent(node)
   local range_start, range_end = node:get_buf_position()
   local prev = node.parent.snippet and node.parent.snippet.prev.prev
   while prev do
@@ -162,7 +164,7 @@ local function node_find_parent(node)
 end
 
 ---Jump to the closer destination between a snippet and tabout
----@param snip_dest number[]
+---@param snip_dest number[]?
 ---@param tabout_dest number[]?
 ---@param direction number 1 or -1
 ---@return boolean true if a jump is performed
@@ -175,7 +177,7 @@ local function jump_to_closer(snip_dest, tabout_dest, direction)
   if vim.deep_equal(dest, tabout_dest) then
     tabout.jump(direction)
   else
-    luasnip.jump(direction)
+    snip.jump(direction)
   end
   return true
 end
@@ -303,7 +305,7 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      require('luasnip').lsp_expand(args.body)
+      snip.lsp_expand(args.body)
     end,
   },
   mapping = {
@@ -318,12 +320,18 @@ cmp.setup({
         end
       end,
       ['i'] = function(fallback)
-        if luasnip.locally_jumpable(-1) then
-          local prev = luasnip.jump_destination(-1)
-          local _, snip_dest_end = prev:get_buf_position()
-          snip_dest_end[1] = snip_dest_end[1] + 1 -- (1, 0) indexed
+        if snip.jumpable(-1) then
           local tabout_dest = tabout.get_jump_pos(-1)
-          if not jump_to_closer(snip_dest_end, tabout_dest, -1) then
+          local snip_dest = (function()
+            local prev = snip.jump_destination(-1)
+            if not prev then
+              return
+            end
+            local _, dest = prev:get_buf_position()
+            dest[1] = dest[1] + 1 -- (1, 0) indexed
+            return dest
+          end)()
+          if not jump_to_closer(snip_dest, tabout_dest, -1) then
             fallback()
           end
         else
@@ -342,20 +350,30 @@ cmp.setup({
         end
       end,
       ['i'] = function(fallback)
-        if luasnip.expandable() then
-          luasnip.expand()
-        elseif luasnip.locally_jumpable(1) then
-          local buf = vim.api.nvim_get_current_buf()
-          local current = luasnip.session.current_nodes[buf]
-          local parent = node_find_parent(current)
-          local range = node_has_length(current)
-              and { current:get_buf_position() }
-            or parent and { parent:get_buf_position() }
+        if snip.expandable() then
+          snip.expand()
+        elseif snip.jumpable(1) then
           local tabout_dest = tabout.get_jump_pos(1)
-          if range and tabout_dest and in_range(range, tabout_dest) then
+          local snip_range = (function()
+            local buf = vim.api.nvim_get_current_buf()
+            local node = snip.session
+              and snip.session.current_nodes
+              and snip.session.current_nodes[buf]
+            if not node then
+              return
+            end
+            local parent = snip_node_find_parent(node)
+            return snip_node_has_length(node) and { node:get_buf_position() }
+              or parent and { parent:get_buf_position() }
+          end)()
+          if
+            tabout_dest
+            and snip_range
+            and in_range(snip_range, tabout_dest)
+          then
             tabout.jump(1)
           else
-            luasnip.jump(1)
+            snip.jump(1)
           end
         else
           fallback()
@@ -367,8 +385,8 @@ cmp.setup({
       ['i'] = function()
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif luasnip.choice_active() then
-          luasnip.change_choice(-1)
+        elseif snip.choice_active() then
+          snip.change_choice(-1)
         else
           cmp.complete()
         end
@@ -379,8 +397,8 @@ cmp.setup({
       ['i'] = function()
         if cmp.visible() then
           cmp.select_next_item()
-        elseif luasnip.choice_active() then
-          luasnip.change_choice(1)
+        elseif snip.choice_active() then
+          snip.change_choice(1)
         else
           cmp.complete()
         end
@@ -531,10 +549,21 @@ cmp.setup.cmdline(':', {
   sources = {
     {
       name = 'cmdline',
-      option = {
-        ignore_cmds = {},
-      },
-      group_index = 2,
+      option = { ignore_cmds = {} },
+    },
+  },
+  sorting = {
+    comparators = {
+      ---@return boolean?
+      function(...)
+        -- For custom completions, keep original order
+        if cmdcompltype == '' or vim.startswith(cmdcompltype, 'custom') then
+          return cmp.config.compare.order(...)
+        end
+      end,
+      cmp.config.compare.score,
+      cmp.config.compare.exact,
+      cmp.config.compare.recently_used,
     },
   },
 })
