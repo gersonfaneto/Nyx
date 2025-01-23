@@ -1,5 +1,3 @@
-require('ultimate-autopair.utils').maxlines = 0
-
 ---Filetype options memoization
 ---@type table<string, table<string, string|integer|boolean|table>>
 local ft_opts = vim.defaulttable(function()
@@ -85,7 +83,7 @@ require('ultimate-autopair').setup({
     space = true,
   },
   -- Paring '$' and '*' are handled by snippets,
-  -- only use autopair to deleted matched pairs.
+  -- only use autopair to delete matched pairs here
   {
     '$',
     '$',
