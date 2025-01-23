@@ -339,10 +339,9 @@ M.snippets = {
       -- Use `iferr` to generate the corresponding error check
       -- for functions with different return values
       -- See https://github.com/koron/iferr
-      local boff = vim.fn.wordcount().cursor_bytes
       local o = vim
         .system(
-          { 'iferr', '-pos', boff },
+          { 'iferr', '-pos', vim.fn.wordcount().cursor_bytes },
           { stdin = vim.api.nvim_buf_get_lines(0, 0, -1, false) }
         )
         :wait()
@@ -519,23 +518,33 @@ M.snippets = {
     c(1, {
       un.fmtad(
         [[
-          go func() {
+          go func(<args>) {
           <body>
-          }()
+          }(<vals>)
         ]],
         {
-          body = un.body(1, 1),
+          vals = r(1, 'vals'),
+          args = r(2, 'args'),
+          body = un.body(3, 1),
         }
       ),
       un.fmtad(
         [[
-          go func() { <body> }()
+          go func(<args>) { <body> }(<vals>)
         ]],
         {
+          vals = r(1, 'vals'),
+          args = r(2, 'args'),
           body = un.body(1, 0),
         }
       ),
-    })
+    }),
+    {
+      stored = {
+        vals = i(),
+        args = i(),
+      },
+    }
   ),
   us.sn(
     {
