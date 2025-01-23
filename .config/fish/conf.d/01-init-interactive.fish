@@ -140,6 +140,14 @@ hash --add "$HOME/.go/bin"
 hash --add "$HOME/.bin"
 hash --add "$HOME/.local/bin"
 
+hash --add "$HOME/.ghcup/bin"
+
+hash --add "$HOME/.config/composer/vendor/bin"
+
+if test -f "$HOME/.config/composer/vendor/bin/laravel"
+    laravel completion fish | source
+end
+
 type -q zoxide; and zoxide init fish | source
 
 type -q nvim; and set -gx EDITOR nvim && set -gx MANPAGER 'nvim +Man!' \
