@@ -153,6 +153,9 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     event = 'BufReadPre',
+    keys = {
+      { '<Leader>gQ', desc = 'Git list repo hunks' },
+    },
     config = function()
       require('configs.gitsigns')
     end,
