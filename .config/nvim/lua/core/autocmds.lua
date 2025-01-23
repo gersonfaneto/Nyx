@@ -118,7 +118,8 @@ augroup('BigFile', {
       local buf = info.buf
       if vim.b[buf].bigfile and require('utils.ts').hl_is_active(buf) then
         vim.treesitter.stop(buf)
-        vim.bo[buf].syntax = vim.filetype.match({ buf = buf }) or vim.bo[buf].bt
+        vim.bo[buf].syntax = vim.filetype.match({ buf = buf })
+          or vim.bo[buf].bt
       end
     end,
   },
@@ -238,7 +239,8 @@ augroup('AutoCwd', {
         return root
       end)()
 
-      local root_dir = lsp_root_dir or vim.fs.root(file, fs_utils.root_patterns)
+      local root_dir = lsp_root_dir
+        or vim.fs.root(file, fs_utils.root_patterns)
 
       if
         not root_dir
@@ -362,15 +364,11 @@ augroup('FixCmdLineIskeyword', {
 })
 
 augroup('SpecialBufHl', {
-  { 'BufWinEnter', 'BufNew', 'FileType', 'TermOpen' },
+  { 'BufEnter', 'BufNew', 'FileType', 'TermOpen' },
   {
     desc = 'Set background color for special buffers.',
     callback = function(info)
       if vim.bo[info.buf].bt == '' then
-        return
-      end
-      local stat = vim.uv.fs_stat(vim.api.nvim_buf_get_name(info.buf))
-      if stat and stat.type == 'file' then
         return
       end
       -- Current window isn't necessarily the window of the buffer that
@@ -382,11 +380,11 @@ augroup('SpecialBufHl', {
       if winid == -1 then
         return
       end
+      local wintype = vim.fn.win_gettype(winid)
+      if wintype == 'popup' or wintype == 'autocmd' then
+        return
+      end
       vim.api.nvim_win_call(winid, function()
-        local wintype = vim.fn.win_gettype()
-        if wintype == 'popup' or wintype == 'autocmd' then
-          return
-        end
         vim.opt_local.winhl:append({
           Normal = 'NormalSpecial',
           EndOfBuffer = 'NormalSpecial',
@@ -479,8 +477,10 @@ augroup('ColorSchemeRestore', {
       pcall(vim.api.nvim_del_autocmd, info.id)
 
       local json = require('utils.json')
-      local colors_file =
-        vim.fs.joinpath(vim.fn.stdpath('state') --[[@as string]], 'colors.json')
+      local colors_file = vim.fs.joinpath(
+        vim.fn.stdpath('state') --[[@as string]],
+        'colors.json'
+      )
 
       -- 1. Restore dark/light background and colorscheme from json so that nvim
       --    "remembers" the background and colorscheme when it is restarted.
