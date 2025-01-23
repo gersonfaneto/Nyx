@@ -84,16 +84,14 @@ require('ultimate-autopair').setup({
     newline = true,
     space = true,
   },
+  -- Paring '$' and '*' are handled by snippets,
+  -- only use autopair to deleted matched pairs.
   {
     '$',
     '$',
     ft = { 'markdown', 'tex' },
-  },
-  {
-    '$$',
-    '$$',
-    newline = true,
-    ft = { 'markdown', 'tex' },
+    disable_start = true,
+    disable_end = true,
   },
   {
     '*',
