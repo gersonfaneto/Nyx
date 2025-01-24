@@ -168,8 +168,7 @@ local fnames = {}
 local function update_pdiffs(bufs)
   bufs = vim.tbl_filter(vim.api.nvim_buf_is_valid, bufs)
 
-  local path_diffs =
-    utils.fs.diff(vim.tbl_map(vim.api.nvim_buf_get_name, bufs))
+  local path_diffs = utils.fs.diff(vim.tbl_map(vim.api.nvim_buf_get_name, bufs))
 
   for i, buf in ipairs(bufs) do
     if path_diffs[i] ~= '' then
@@ -327,11 +326,7 @@ function _G._statusline.fname()
     -- show local cwd (often project root) after the file name
     local fname = vim.fs.basename(bname)
     if vim.b._stl_pdiff then
-      return string.format(
-        '%s [%s]',
-        utils.stl.escape(fname),
-        vim.b._stl_pdiff
-      )
+      return string.format('%s [%s]', utils.stl.escape(fname), vim.b._stl_pdiff)
     end
     return utils.stl.escape(fname)
   end
@@ -536,9 +531,8 @@ function _G._statusline.lsp_progress()
       vim.b.spinner_icon = spinner_icon_done
     end
   else
-    local spinner_icon_progress = spinner_icons[math.ceil(
-      now / spinner_progress_keep
-    ) % #spinner_icons + 1]
+    local spinner_icon_progress =
+      spinner_icons[math.ceil(now / spinner_progress_keep) % #spinner_icons + 1]
     if vim.b.spinner_icon ~= spinner_icon_done then
       vim.b.spinner_icon = spinner_icon_progress
     elseif allow_changing_state() then
@@ -622,19 +616,17 @@ local function set_default_hlgroups()
     local merged_attr = vim.tbl_deep_extend('keep', attr, default_attr)
     utils.hl.set_default(0, hlgroup_name, merged_attr)
   end
-  sethl('StatusLineGitAdded', { fg = 'GitSignsAdd' })
-  sethl('StatusLineGitChanged', { fg = 'GitSignsChange' })
-  sethl('StatusLineGitRemoved', { fg = 'GitSignsDelete' })
-  sethl('StatusLineDiagnosticHint', { fg = 'DiagnosticSignHint' })
-  sethl('StatusLineDiagnosticInfo', { fg = 'DiagnosticSignInfo' })
-  sethl('StatusLineDiagnosticWarn', { fg = 'DiagnosticSignWarn' })
-  sethl('StatusLineDiagnosticError', { fg = 'DiagnosticSignError' })
-  sethl('StatusLineHeader', { fg = 'TabLine', bg = 'fg', reverse = true })
-  sethl('StatusLineHeaderModified', {
-    fg = 'Special',
-    bg = 'fg',
-    reverse = true,
-  })
+  -- stylua: ignore start
+  sethl('StatusLineGitAdded', { fg = 'GitSignsAdd',  ctermfg = 'GitSignsAdd' })
+  sethl('StatusLineGitChanged', {  fg = 'GitSignsChange', ctermfg = 'GitSignsChange' })
+  sethl('StatusLineGitRemoved', {  fg = 'GitSignsDelete', ctermfg = 'GitSignsDelete' })
+  sethl('StatusLineDiagnosticHint', {  fg = 'DiagnosticSignHint', ctermfg = 'DiagnosticSignHint' })
+  sethl('StatusLineDiagnosticInfo', {  fg = 'DiagnosticSignInfo', ctermfg = 'DiagnosticSignInfo' })
+  sethl('StatusLineDiagnosticWarn', {  fg = 'DiagnosticSignWarn', ctermfg = 'DiagnosticSignWarn' })
+  sethl('StatusLineDiagnosticError', {  fg = 'DiagnosticSignError', ctermfg = 'DiagnosticSignError' })
+  sethl('StatusLineHeader', { fg = 'TabLine', bg = 'fg', ctermfg = 'TabLine', ctermbg = 'fg', reverse = true })
+  sethl('StatusLineHeaderModified', { fg = 'Special', bg = 'fg', ctermfg = 'Special', ctermbg = 'fg', reverse = true })
+  -- stylua: ignore off
 end
 
 set_default_hlgroups()

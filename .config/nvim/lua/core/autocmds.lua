@@ -118,8 +118,7 @@ augroup('BigFile', {
       local buf = info.buf
       if vim.b[buf].bigfile and require('utils.ts').hl_is_active(buf) then
         vim.treesitter.stop(buf)
-        vim.bo[buf].syntax = vim.filetype.match({ buf = buf })
-          or vim.bo[buf].bt
+        vim.bo[buf].syntax = vim.filetype.match({ buf = buf }) or vim.bo[buf].bt
       end
     end,
   },
@@ -239,8 +238,7 @@ augroup('AutoCwd', {
         return root
       end)()
 
-      local root_dir = lsp_root_dir
-        or vim.fs.root(file, fs_utils.root_patterns)
+      local root_dir = lsp_root_dir or vim.fs.root(file, fs_utils.root_patterns)
 
       if
         not root_dir
@@ -466,21 +464,12 @@ augroup('ColorSchemeRestore', {
         end
       end
 
-      -- Colorschemes other than the default colorscheme looks bad when the terminal
-      -- does not support truecolor
-      if info.event == 'UIEnter' and not vim.go.termguicolors then
-        load_colorscheme('default')
-        return
-      end
-
       -- Make sure to restore colorscheme only once
       pcall(vim.api.nvim_del_autocmd, info.id)
 
       local json = require('utils.json')
-      local colors_file = vim.fs.joinpath(
-        vim.fn.stdpath('state') --[[@as string]],
-        'colors.json'
-      )
+      local colors_file =
+        vim.fs.joinpath(vim.fn.stdpath('state') --[[@as string]], 'colors.json')
 
       -- 1. Restore dark/light background and colorscheme from json so that nvim
       --    "remembers" the background and colorscheme when it is restarted.
@@ -490,7 +479,7 @@ augroup('ColorSchemeRestore', {
       local saved = json.read(colors_file)
       saved.colors_name = saved.colors_name or 'macro'
 
-      if saved.bg then
+      if vim.go.termguicolors and saved.bg then
         vim.go.bg = saved.bg
       end
 
@@ -520,7 +509,9 @@ augroup('ColorSchemeRestore', {
                 end
               end
 
-              pcall(vim.system, { 'setbg', vim.go.bg })
+              if vim.g.termguicolors then
+                pcall(vim.system, { 'setbg', vim.go.bg })
+              end
               pcall(vim.system, { 'setcolor', vim.g.colors_name })
             end)
           end,
