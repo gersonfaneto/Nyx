@@ -266,13 +266,16 @@ vim.api.nvim_create_autocmd('UIEnter', {
       map('n', '<Leader>.', '<CMD>FZF<CR>', { desc = 'Find files' })
       map('n', '<Leader>ff', '<CMD>FZF<CR>', { desc = 'Find files' })
 
-      -- stylua: ignore start
       map({ 'n', 'x' }, ';', ':', { silent = false, noremap = true })
       map({ 'n', 'x' }, 'q;', 'q:', { silent = false, noremap = true })
 
       map('n', '<Leader>x', ':.lua<CR>', { desc = 'Run the current line' })
       map('v', '<Leader>x', ':lua<CR>', { desc = 'Run the current selection' })
-      -- stylua: ignore end
+
+      map('n', '>', '>>')
+      map('n', '<', '<<')
+      map('v', '>', '>><Esc>gv')
+      map('v', '<', '<<<Esc>gv')
 
       -- Abbreviations
       map('!a', 'ture', 'true')
