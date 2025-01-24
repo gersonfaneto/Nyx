@@ -11,7 +11,7 @@ local loaded_fts = {}
 ---@param ft string?
 ---@return nil
 local function load_snippets(ft)
-  if not ft or  loaded_fts[ft] then
+  if not ft or loaded_fts[ft] then
     return
   end
   loaded_fts[ft] = true

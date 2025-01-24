@@ -233,9 +233,7 @@ end
 ---@return nil
 local function detach(buf)
   if vim.b[buf].winbar_markdown_heading_parser_attached then
-    vim.api.nvim_del_autocmd(
-      vim.b[buf].winbar_markdown_heading_parser_attached
-    )
+    vim.api.nvim_del_autocmd(vim.b[buf].winbar_markdown_heading_parser_attached)
     vim.b[buf].winbar_markdown_heading_parser_attached = nil
     markdown_heading_buf_symbols[buf] = nil
   end

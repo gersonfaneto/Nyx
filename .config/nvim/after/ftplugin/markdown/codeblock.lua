@@ -74,7 +74,7 @@ local function refresh()
         })
 
         local start_line =
-            vim.api.nvim_buf_get_lines(bufnr, start_row, start_row + 1, false)[1]
+          vim.api.nvim_buf_get_lines(bufnr, start_row, start_row + 1, false)[1]
         local _, padding = start_line:find('^ +')
         local codeblock_padding = math.max((padding or 0) - left_offset, 0)
 

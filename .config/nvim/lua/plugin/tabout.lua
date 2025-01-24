@@ -162,14 +162,13 @@ end
 ---@return number[] cursor: 1,0-indexed cursor position
 local function get_cursor()
   return in_cmdline() and { 1, vim.fn.getcmdpos() - 1 }
-      or vim.api.nvim_win_get_cursor(0)
+    or vim.api.nvim_win_get_cursor(0)
 end
 
 ---Get current line, whether in cmdline or normal buffer
 ---@return string current_line: current line
 local function get_line()
-  return in_cmdline() and vim.fn.getcmdline()
-      or vim.api.nvim_get_current_line()
+  return in_cmdline() and vim.fn.getcmdline() or vim.api.nvim_get_current_line()
 end
 
 ---Getting the jump position for Tab
@@ -191,7 +190,7 @@ local function get_tabout_pos()
     if jump_offset then
       nearest_jump_offset = nearest_jump_offset
           and math.min(nearest_jump_offset, jump_offset)
-          or jump_offset
+        or jump_offset
     end
   end
 
@@ -225,15 +224,15 @@ local function get_tabin_offset_with_closing_pattern(leading, closing_pattern)
 
   -- Case 1
   local _, _, content, closing, trailing =
-      leading:find(fmt('%s(%%s*)(%s)(.*)$', opening_pattern, closing_pattern))
+    leading:find(fmt('%s(%%s*)(%s)(.*)$', opening_pattern, closing_pattern))
   if content == nil or closing == nil then
     _, _, content, closing, trailing =
-        leading:find(fmt('^(%%s*)(%s)(.*)$', closing_pattern))
+      leading:find(fmt('^(%%s*)(%s)(.*)$', closing_pattern))
   end
 
   if content and closing then
     return slen(trailing) + slen(closing) + math.floor(slen(content) / 2),
-        slen(closing) + math.floor(slen(content) / 2)
+      slen(closing) + math.floor(slen(content) / 2)
   end
 
   -- Case 2
@@ -243,7 +242,7 @@ local function get_tabin_offset_with_closing_pattern(leading, closing_pattern)
 
   if content == nil or closing == nil then
     _, _, closing, trailing =
-        leading:find(fmt('%%S(%%s*%s)(.*)$', closing_pattern))
+      leading:find(fmt('%%S(%%s*%s)(.*)$', closing_pattern))
   end
 
   return slen(trailing) + slen(closing), slen(closing)
@@ -260,7 +259,7 @@ local function get_tabin_offset(leading, prev_offset)
 
   for _, pattern in ipairs(closing_patterns[vim.bo.ft]) do
     local offset, closing_len =
-        get_tabin_offset_with_closing_pattern(leading, pattern)
+      get_tabin_offset_with_closing_pattern(leading, pattern)
     if offset > 0 then
       return get_tabin_offset(
         leading:sub(slen(leading) - offset + closing_len + 1),

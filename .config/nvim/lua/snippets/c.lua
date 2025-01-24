@@ -303,9 +303,9 @@ M.snippets = {
           local ext = vim.fn.fnamemodify(bufname, ':e')
           if ext == 'h' or ext == 'hpp' then
             local str = vim.fn
-                .fnamemodify(bufname, ':t')
-                :gsub('[^0-9a-zA-z_]+', '_')
-                :upper()
+              .fnamemodify(bufname, ':t')
+              :gsub('[^0-9a-zA-z_]+', '_')
+              :upper()
             return sn(nil, i(1, str))
           end
           return sn(nil, i(1))

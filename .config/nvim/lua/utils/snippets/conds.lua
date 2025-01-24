@@ -136,9 +136,8 @@ function M.next_line_matches(pattern)
     if lnum >= vim.api.nvim_buf_line_count(0) then
       return false
     end
-    return vim.api
-      .nvim_buf_get_lines(0, lnum, lnum + 1, true)[1]
-      :match(pattern) ~= nil
+    return vim.api.nvim_buf_get_lines(0, lnum, lnum + 1, true)[1]:match(pattern)
+      ~= nil
   end)
 end
 

@@ -39,8 +39,7 @@ M.opts = {
       if symbol.bar then -- If symbol inside a winbar
         prev_win = symbol.bar.win
         entries_source = symbol.opts.siblings
-        init_cursor = symbol.opts.sibling_idx
-          and { symbol.opts.sibling_idx, 0 }
+        init_cursor = symbol.opts.sibling_idx and { symbol.opts.sibling_idx, 0 }
         if symbol.bar.in_pick_mode then
           ---@param tbl number[]
           local function tbl_sum(tbl)
