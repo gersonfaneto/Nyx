@@ -134,23 +134,12 @@ type -q setcolors; and setcolors
 # affect other shells, e.g. `bash` that is nested in `fish`
 set -g VIRTUAL_ENV_DISABLE_PROMPT true
 
-set -gx GOPATH "$HOME/.go"
-hash --add "$HOME/.go/bin"
-
 hash --add "$HOME/.bin"
 hash --add "$HOME/.local/bin"
-
-hash --add "$HOME/.ghcup/bin"
-
-hash --add "$HOME/.config/composer/vendor/bin"
-
-if test -f "$HOME/.config/composer/vendor/bin/laravel"
-    laravel completion fish | source
-end
 
 type -q zoxide; and zoxide init fish | source
 
 type -q nvim; and set -gx EDITOR nvim && set -gx MANPAGER 'nvim +Man!' \
-    && fc-list - family | grep -q 'Symbols Nerd Font' && set -gx NVIM_NF true
+    && cat $HOME/.config/alacritty/alacritty.toml | grep -q 'Nerd Font' && set -gx NVIM_NF true
 
 set -gx SNIPPETS "$HOME/.snippets"
