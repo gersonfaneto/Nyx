@@ -9,8 +9,12 @@ function fish_right_prompt --description 'Write out the right prompt'
     set -l venv_info (test -n "$VIRTUAL_ENV"
         and echo (basename $VIRTUAL_ENV)
         or echo '')
+    set -l nix_info (test -n "$IN_NIX_SHELL"
+        and echo $IN_NIX_SHELL
+        or echo '')
 
-    set -l info (string join ', ' (string match -v '' $venv_info $vcs_info))
+    set -l info (string join ', ' (string match -v '' $nix_info $venv_info $vcs_info))
+
     if test -n "$info"
         echo -n -s (set_color $fish_color_vcs) '(' $info ')'
     end
