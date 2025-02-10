@@ -96,5 +96,10 @@ set fzf_fd_opts -p -H -L -td -tf -tl --mount -c=always
 
 # Fzf keybindings
 if type -q fzf_configure_bindings
-    fzf_configure_bindings --git_status=\e\cg --git_stash=\e\cs
+    fzf_configure_bindings
 end
+
+if type -q nvm
+    set --universal nvm_default_version v20.18.2
+    set --universal nvm_default_packages pnpm yarn
+end 
