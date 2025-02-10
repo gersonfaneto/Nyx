@@ -395,13 +395,8 @@ augroup('SpecialBufHl', {
   {
     desc = 'Set special buffer normal hl.',
     callback = function(info)
-      if info.event == 'OptionSet' then
-        if info.match ~= 'termguicolors' then
-          return
-        end
-        if vim.go.termguicolors then
-          pcall(vim.api.nvim_del_autocmd, info.id)
-        end
+      if info.event == 'OptionSet' and info.match ~= 'background' then
+        return
       end
       local hl = require('utils.hl')
       local blended = hl.blend('Normal', 'CursorLine')
@@ -444,8 +439,13 @@ augroup('ColorSchemeRestore', {
   {
     nested = true, -- invoke Colorscheme event for winbar plugin to clear bg for nvim < 0.11
     callback = function(info)
-      if info.event == 'OptionSet' and info.match ~= 'termguicolors' then
-        return
+      if info.event == 'OptionSet' then
+        if info.match ~= 'termguicolors' then
+          return
+        end
+        if vim.go.termguicolors then
+          pcall(vim.api.nvim_del_autocmd, info.id)
+        end
       end
 
       ---@param colors_name string
@@ -484,7 +484,6 @@ augroup('ColorSchemeRestore', {
       if c.colors_name and c.colors_name ~= vim.g.colors_name then
         load_colorscheme(c.colors_name)
       end
-
       if c.bg and vim.go.termguicolors then
         vim.go.bg = c.bg
       end
@@ -511,6 +510,7 @@ augroup('ColorSchemeRestore', {
               end
               if d.bg ~= vim.go.bg and vim.go.termguicolors then
                 d.bg = vim.go.bg
+                pcall(vim.system, { 'setbg', vim.go.bg })
               end
 
               json.write(colors_file, d)
