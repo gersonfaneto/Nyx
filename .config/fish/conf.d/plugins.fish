@@ -96,7 +96,14 @@ set fzf_fd_opts -p -H -L -td -tf -tl --mount -c=always
 
 # Fzf keybindings
 if type -q fzf_configure_bindings
-    fzf_configure_bindings
+    fzf_configure_bindings \
+        --directory=\eF    \
+        --git_log=\eL      \
+        --git_status=\eG   \
+        --git_stash=\eS   \
+        --history=\eR      \
+        --processes=\eP    \
+        --variables=\eV
 end
 
 if type -q nvm
