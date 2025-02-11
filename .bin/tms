@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+handle_duplicates() {
+    local -a sections=($(echo $1 | tr '/' ' ' | xargs))
+    local lenght=(${#sections[@]})
+
+    if [[ ! lenght -eq 6 ]]; then
+        echo $(basename $1)
+        exit
+    fi
+
+    if [[ ! ${sections[3]} == 'Exploring' ]]; then
+        echo $(basename $1)
+        exit
+    fi
+
+    echo "${sections[${lenght} - 2]}/${sections[${lenght} - 1]}"
+}
+
 main() {
     if [[ $# -eq 1 ]]; then
         if [[ $1 == '.' ]]; then
@@ -42,7 +59,7 @@ main() {
         exit 0
     fi
 
-    selected_name=$(basename "$selected" | tr . _)
+    selected_name=$(handle_duplicates "$selected" | tr . _)
     tmux_running=$(pgrep tmux)
 
     if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
