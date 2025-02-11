@@ -1,3 +1,5 @@
+# vim:ft=gitconfig
+
 [init]
   defaultBranch = main
   templatedir = ~/.config/git/template
@@ -40,19 +42,18 @@
 
 [alias]
   it = "!git init && git commit -m 'Ready... Set... Go!' --allow-empty"
-
   ci = commit
-  ca = "!git add --all && git commit"
-  ce = "!git commit --amend"
-  cj = "!git add --all && git commit --amend"
-
   br = branch
   co = checkout
-
   st = status
   ss = status --short --branch --untracked-files
 
-  f = fetch --prune origin
+  f = fetch --all
+
+  a = "!git status --short --untracked-files | awk '!/^[MADR] / {print substr($0, 4)}' | fzf --preview 'cat {}'| xargs --no-run-if-empty git add"
+
+  df = "!git status --short | awk '/^ M / {print substr($0, 4)}' | fzf --preview 'git diff {}' | xargs --no-run-if-empty git diff"
+  dc = "!git log --oneline | fzf |  awk '{print $1}' | xargs --no-run-if-empty -I {} git diff {}^ {}"
 
   ri = rebase --interactive
   rc = rebase --continue
@@ -63,7 +64,63 @@
   wa = worktree add
   wr = worktree remove
 
+  cl = "!git clean -fixd"
+
+  cm = "!git checkout main"
+  cd = "!git go dev"
+  cb = "!git go build"
+  cs = "!git go staging"
+
+  ca = "!git add --all && git commit"
+  ce = commit --amend
+  cj = "!git add --all && git commit --amend"
+
   ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
   pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
 
-# vim: set ft=gitconfig nospell :
+  cc = "!git log --oneline | fzf | awk '{print $1}' | xargs --no-run-if-empty git checkout"
+  sf = "!git log --oneline | fzf | awk '{print $1}' | xargs --no-run-if-empty git show --name-status --pretty='%C(yellow bold)%h%Creset%d %C(blue)%ar %C(white)%s %C(blue)(%an)'"
+
+  ba = branch --sort=-committerdate --format='%(HEAD) %(color:yellow bold)%(refname:short)%(color:reset) - %(contents:subject) %(color:blue)(%(committerdate:relative)) [%(authorname)]'
+
+  l = log --date=format:'%b %d, %Y' --pretty=format:'%C(yellow bold)%h%Creset%C(white)%d%Creset %s%n%C(blue)%aN <%ae> | %cd%n'
+  ll = log --graph --name-status --date=format:'%b %d, %Y | %H:%M' --pretty=format:'%C(yellow bold)%h%Creset%C(white)%d%Creset %s%n%C(blue)%aN <%ae> | %cd%n'
+  lg = log --graph --abbrev-commit --date=relative --decorate --boundary --color=always --pretty='%C(yellow bold)%h%Creset%d %C(blue)%ar %C(white)%s %C(blue)(%an)'
+  lr = log --since midnight --graph --abbrev-commit --date=relative --decorate --color=always --pretty='%C(yellow bold)%h%Creset%d %C(blue)%ar %C(white)%s %C(blue)(%an)'
+
+  last = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+
+  in = "!git fetch --quiet && git log --pretty=format:'%C(yellow bold)%h %Creset - %C(blue)%an %C(white)- %C(cyan)%d%Creset %s %C(blue)- %ar%Creset' ..@{u}"
+  out = "!git fetch --quiet && git log --pretty=format:'%C(yellow bold)%h %Creset - %C(blue)%an %C(white)- %C(cyan)%d%Creset %s %C(blue)- %ar%Creset' @{u}.."
+
+  unstage = "!git status --short | awk '{$1=\"\"; print substr($0,2)}' | fzf | xargs --no-run-if-empty git restore --staged"
+  undo = "!git status --short | awk '{$1=\"\"; print substr($0,2)}' | fzf | xargs --no-run-if-empty git restore"
+  rollback = reset --soft HEAD~1
+
+  rank = "!git log | grep Author | sort | uniq -c | sort -n -r"
+
+  go = "!f() {\
+    if git rev-parse --verify $1 >/dev/null 2>&1;\
+    then\
+    git checkout $1;\
+    else\
+    git checkout -b $1;\
+    fi;\
+    }; f"
+
+  bs = "!f() {\
+    DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'); \
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD); \
+    if [ \"$CURRENT_BRANCH\" = \"$DEFAULT_BRANCH\" ]; then \
+    COUNT_AHEAD=0; \
+    COUNT_BEHIND=0; \
+    echo \"The current branch is the default branch ($DEFAULT_BRANCH).\"; \
+    else \
+    COUNT_AHEAD=$(git log --oneline $CURRENT_BRANCH ^$DEFAULT_BRANCH | wc -l | xargs); \
+    COUNT_BEHIND=$(git log --oneline $DEFAULT_BRANCH ^$CURRENT_BRANCH | wc -l | xargs); \
+    echo \"The current branch is $COUNT_AHEAD commits ahead and $COUNT_BEHIND commits behind $DEFAULT_BRANCH.\"; \
+    fi \
+    }; f"
+
+  publish = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+  unpublish = "!git push origin :$(git rev-parse --abbrev-ref HEAD)"
