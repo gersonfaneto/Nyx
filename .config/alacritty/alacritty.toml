@@ -26,7 +26,8 @@ size = 12
 
 [font.normal]
 # family = "SF Mono"
-family = "GohuFont 11 Nerd Font Mono"
+family = "scientifica"
+# family = "GohuFont 11 Nerd Font Mono"
 
 [font.offset]
 x = 0 
