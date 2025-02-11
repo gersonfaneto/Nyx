@@ -9,6 +9,11 @@ set $ctrl Ctrl
 set $tab Tab
 set $shift Shift
 
+set $left h
+set $down j
+set $up k
+set $right l
+
 # Font families and sizes used along the system.
 
 set $font_family_general SF Mono
@@ -28,18 +33,18 @@ exec --no-startup-id "$HOME/.config/i3/bin/background"
 
 # Use `pactl` to control system volume and microphone.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym $alt+$shift+k exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym $alt+$shift+j exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym $alt+$shift+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-# bindsym $alt+$shift+v exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym $ctrl+$alt+k exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym $ctrl+$alt+j exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
+bindsym $ctrl+$alt+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym $ctrl+$alt+v exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Use `boomer` as a magnifying glass.
-bindsym $mod+z exec --no-startup-id boomer
+bindsym $mod+$ctrl+z exec --no-startup-id boomer
 
 # Use `playerctl` to control media.
-bindsym $alt+$shift+h exec --no-startup-id playerctl previous
-bindsym $alt+$shift+l exec --no-startup-id playerctl next
-bindsym $alt+$shift+p exec --no-startup-id playerctl play-pause
+bindsym $ctrl+$alt+$left exec --no-startup-id playerctl previous
+bindsym $ctrl+$alt+$right exec --no-startup-id playerctl next
+bindsym $ctrl+$alt+p exec --no-startup-id playerctl play-pause
 
 # Use `brightnessctl` to control screen brightness.
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
@@ -52,7 +57,10 @@ floating_modifier $mod
 bindsym $mod+d exec --no-startup-id dmenu_run -i -p 'run' -fn '$font_family_dmenu:regular:pixelsize=$font_size_dmenu'
 
 # Open screenshot tool.
-bindsym $mod+p exec --no-startup-id flameshot gui
+bindsym $mod+$ctrl+p exec --no-startup-id flameshot gui
+
+# Open color picker tool.
+bindsym --release $mod+$shift+p exec --no-startup-id xcolor --selection clipboard
 
 # Open the browser
 bindsym $mod+b exec firefox
@@ -65,23 +73,23 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+q kill
 
 # Change focus between windows.
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
 # Move currently focused window.
-bindsym $mod+$shift+h move left
-bindsym $mod+$shift+j move down
-bindsym $mod+$shift+k move up
-bindsym $mod+$shift+l move right
+bindsym $mod+$shift+$left move left
+bindsym $mod+$shift+$down move down
+bindsym $mod+$shift+$up move up
+bindsym $mod+$shift+$right move right
 
-# Move between workspaces.
-bindsym $mod+$ctrl+h workspace prev
-bindsym $mod+$ctrl+l workspace next
+# ...
+bindsym $mod+$ctrl+$left workspace prev
+bindsym $mod+$ctrl+$right workspace next
 bindsym $mod+$tab workspace back_and_forth
 
-# Quick window resizing.
+# ...
 bindsym $mod+$shift+m floating enable, resize set 1536 864, move position center
 bindsym $mod+$shift+f floating disable, resize set 1920 1080, move position 0 0 
 
@@ -93,7 +101,7 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # Change layout.
-# bindsym $mod+s layout stacking
+bindsym $mod+p layout stacking
 bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -105,7 +113,7 @@ bindsym $mod+space focus mode_toggle
 
 # Focus/Unfocus the parent container.
 bindsym $mod+a focus parent
-bindsym $mod+$shift+a focus child
+bindsym $mod+z focus child
 
 # Define names for default workspaces.
 set $ws1 "1"
@@ -157,15 +165,15 @@ bindsym $mod+$shift+r restart
 
 # Resize windows.
 mode "resize" {
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
+    bindsym $left resize shrink width 10 px or 10 ppt
+    bindsym $down resize grow height 10 px or 10 ppt
+    bindsym $up resize shrink height 10 px or 10 ppt
+    bindsym $right resize grow width 10 px or 10 ppt
 
-    bindsym $shift+h resize shrink width 25 px or 25 ppt
-    bindsym $shift+j resize grow height 25 px or 25 ppt
-    bindsym $shift+k resize shrink height 25 px or 25 ppt
-    bindsym $shift+l resize grow width 25 px or 25 ppt
+    bindsym $shift+$left resize shrink width 25 px or 25 ppt
+    bindsym $shift+$down resize grow height 25 px or 25 ppt
+    bindsym $shift+$up resize shrink height 25 px or 25 ppt
+    bindsym $shift+$right resize grow width 25 px or 25 ppt
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
