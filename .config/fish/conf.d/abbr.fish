@@ -33,9 +33,7 @@ end
 abbr --add spellfix --position anywhere \
      --regex '\S*' --function __spellfix_abbr_fn
 
-# Command abbreviations
 function __command_abbr --description 'Add an command abbreviation'
-    # $argv[1]: trigger
     abbr --add $argv[1] --position command $argv[2..-1]
 end
 
@@ -59,6 +57,13 @@ __command_abbr ls          'ls --color=auto'
 __command_abbr ll          'ls --color=auto -lhX --group-directories-first'
 __command_abbr la          'ls --color=auto -AX --group-directories-first'
 __command_abbr lla         'ls --color=auto -lhAX --group-directories-first'
+
+function __expr_abbr --description 'Add an expression abbreviation'
+    abbr --add $argv[1] --position anywhere $argv[2..-1]
+end
+
+__expr_abbr and          '&&'
+__expr_abbr or           '||'
 
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim
