@@ -1,11 +1,11 @@
 [general]
 import = [
-    "~/.config/alacritty/themes/macro-dark.toml",
-    "~/.config/alacritty/themes/dark.toml",
-    "~/.config/alacritty/theme.toml",
-    "$XDG_CONFIG_HOME/.config/alacritty/themes/macro-dark.toml",
-    "$XDG_CONFIG_HOME/.config/alacritty/themes/dark.toml",
-    "$XDG_CONFIG_HOME/.config/alacritty/theme.toml",
+  "~/.config/alacritty/themes/macro-dark.toml",
+  "~/.config/alacritty/themes/dark.toml",
+  "~/.config/alacritty/theme.toml",
+  "$XDG_CONFIG_HOME/.config/alacritty/themes/macro-dark.toml",
+  "$XDG_CONFIG_HOME/.config/alacritty/themes/dark.toml",
+  "$XDG_CONFIG_HOME/.config/alacritty/theme.toml",
 ]
 live_config_reload = true
 
@@ -43,3 +43,13 @@ y = 8
 
 [mouse]
 hide_when_typing = true
+
+[[keyboard.bindings]]
+key = "Escape"
+mods = "Control"
+action = "ToggleViMode"  
+
+[[keyboard.bindings]]
+key = "I"
+mode = "Vi|~Search"
+action = "ToggleViMode"  
