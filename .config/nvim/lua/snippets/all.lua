@@ -10,7 +10,7 @@ local d = ls.dynamic_node
 local c = ls.choice_node
 
 M.snippets = {
-  us.sn(
+  us.sN(
     {
       trig = 'date',
       desc = 'Current date and time',
