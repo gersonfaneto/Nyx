@@ -511,6 +511,17 @@ M.snippets = {
       }
     )
   ),
+  us.sn(
+    { trig = 'nf', desc = 'Disable black formatting' },
+    un.fmtad(
+      [[
+        # fmt: off
+        <body>
+        # fmt: on
+      ]],
+      { body = un.body(1, 0) }
+    )
+  ),
 }
 
 return M
