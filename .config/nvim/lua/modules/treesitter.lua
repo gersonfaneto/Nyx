@@ -56,9 +56,7 @@ return {
     'tronikelis/ts-autotag.nvim',
     event = 'InsertEnter',
     dependencies = 'nvim-treesitter/nvim-treesitter',
-    config = function()
-      require('configs.ts-autotag')
-    end,
+    config = true,
   },
 
   {
