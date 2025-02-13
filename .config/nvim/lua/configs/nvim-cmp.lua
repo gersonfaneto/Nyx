@@ -1,12 +1,40 @@
 local cmp = require('cmp')
 local cmp_core = require('cmp.core')
-local tabout = require('plugin.tabout')
 local icons = require('utils.static.icons')
+
+-- Tabout structure, use plugin.tabout if available,
+-- fallback to empty functions
+local tabout = setmetatable({}, {
+  __index = function(self, key)
+    if rawget(self, '_init') then
+      return
+    end
+    rawset(self, '_init', true)
+
+    local has_tabout, tabout_plugin = pcall(require, 'plugin.tabout')
+    if has_tabout then
+      for k, v in pairs(tabout_plugin) do
+        self[k] = v
+      end
+    else
+      -- Fallback to empty functions
+      self.setup = function() end
+      self.jump = function() end
+      self.get_jump_pos = function() end
+    end
+    return rawget(self, key)
+  end,
+})
 
 -- Snippet engine structure, use LuaSnip if available,
 -- fallback to `vim.snippet`
 local snip = setmetatable({}, {
   __index = function(self, key)
+    if rawget(self, '_init') then
+      return
+    end
+    rawset(self, '_init', true)
+
     local has_luasnip, luasnip = pcall(require, 'luasnip')
     if has_luasnip then
       for k, v in pairs(luasnip) do
@@ -19,12 +47,10 @@ local snip = setmetatable({}, {
         return vim.snippet.active({ direction = direction or 1 })
       end
       self.jump = vim.snippet.jump
-      -- stylua: ignore start
-      self.jump_destination = function(_) return nil end
-      self.expandable = function() return false end
-      self.choice_active = function() return false end
-      self.change_choice = function(_) end
-      -- stylua: ignore off
+      self.jump_destination = function() end
+      self.expandable = function() end
+      self.choice_active = function() end
+      self.change_choice = function() end
     end
     return rawget(self, key)
   end,
