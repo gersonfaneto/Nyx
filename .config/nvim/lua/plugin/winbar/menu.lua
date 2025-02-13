@@ -508,6 +508,13 @@ function winbar_menu_t:make_buf()
       self:update_hover_hl()
     end,
   })
+  vim.api.nvim_create_autocmd('WinLeave', {
+    group = groupid,
+    buffer = self.buf,
+    callback = function()
+      self:close()
+    end,
+  })
 end
 
 ---Open the popup window with win configs and opts,
