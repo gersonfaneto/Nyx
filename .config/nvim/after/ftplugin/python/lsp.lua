@@ -17,7 +17,11 @@ local ruff = lsp.start({
     { 'ruff.toml', '.ruff.toml' },
     root_patterns
   ),
-  settings = {},
+  on_attach = function(client)
+    -- Use language servers like pyright or pylsp for hover, avoid
+    -- 'No information available' message given by ruff
+    client.server_capabilities.hoverProvider = false
+  end,
 })
 
 -- Prefer ruff over pylint and black as linter and formatter
