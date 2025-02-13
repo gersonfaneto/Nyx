@@ -1528,12 +1528,7 @@ end
 local function setup_diagnostic_overrides()
   ---Filter out diagnostics that overlap with diagnostics from other sources
   ---For each diagnostic, checks if there exists another diagnostic from a different
-  ---namespace that:
-  ---
-  --- - is on the same line
-  --- - has the same start column
-  --- - has the same end column
-  --- - has the same end line
+  ---namespace that has the same start line and column
   ---
   ---If multiple diagnostics overlap, prefer the one with higher severity
   ---
@@ -1566,8 +1561,6 @@ local function setup_diagnostic_overrides()
               and d.namespace ~= diag.namespace
               and d.severity >= diag.severity
               and d.col == diag.col
-              and d.end_col == diag.end_col
-              and d.end_lnum == diag.end_lnum
           end)
 
         return not diag._hidden
