@@ -681,7 +681,6 @@ local hlgroups = {
 
 -- Highlight group overrides {{{1
 if vim.go.bg == 'dark' then
-  hlgroups.String = { fg = c_popout }
   hlgroups.CmpItemAbbrMatch = { fg = c_critical }
   hlgroups.DiffText = { fg = c_background, bg = c_faded }
   hlgroups.TelescopePreviewMatch = { fg = c_critical, bold = true }
