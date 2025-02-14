@@ -331,6 +331,7 @@ local hlgroups = {
   -- }}}2
 
   -- LSP {{{2
+  LspReferenceText = { link = 'Visual' },
   LspReferenceText = { link = 'Identifier' },
   LspReferenceRead = { link = 'LspReferenceText' },
   LspReferenceWrite = { link = 'LspReferenceText' },
