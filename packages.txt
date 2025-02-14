@@ -6,6 +6,7 @@ betterlockscreen
 bluetui
 boomer-git
 brightnessctl
+direnv
 dmenu
 docker
 docker-compose

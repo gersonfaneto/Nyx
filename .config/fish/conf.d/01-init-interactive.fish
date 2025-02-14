@@ -137,6 +137,8 @@ set -g VIRTUAL_ENV_DISABLE_PROMPT true
 hash --add "$HOME/.bin"
 hash --add "$HOME/.local/bin"
 
+type -q direnv; and direnv hook fish | source
+
 type -q zoxide; and zoxide init fish | source
 
 type -q nvim; and set -gx EDITOR nvim && set -gx MANPAGER 'nvim +Man!' \
