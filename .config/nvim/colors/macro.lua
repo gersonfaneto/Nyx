@@ -261,7 +261,6 @@ local hlgroups = {
   TabLineFill = { link = 'Normal' },
   TabLineSel = { link = 'StatusLine' },
   TermCursor = { fg = c_macroBg1, bg = c_macroRed },
-  TermCursorNC = { fg = c_macroBg1, bg = c_macroAsh },
   Title = { bold = true, fg = c_macroBlue1 },
   Underlined = { fg = c_macroTeal, underline = true },
   VertSplit = { link = 'WinSeparator' },

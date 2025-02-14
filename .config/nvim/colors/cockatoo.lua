@@ -178,7 +178,6 @@ local hlgroups = {
   DebugPC = { bg = c_purple_blend },
   lCursor = { link = 'Cursor' },
   TermCursor = { fg = c_space, bg = c_orange },
-  TermCursorNC = { fg = c_orange, bg = c_ocean },
   DiffAdd = { bg = c_aqua_blend },
   DiffAdded = { fg = c_tea, bg = c_aqua_blend },
   DiffChange = { bg = c_purple_blend },

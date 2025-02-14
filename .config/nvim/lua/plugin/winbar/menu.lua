@@ -399,6 +399,19 @@ function winbar_menu_t:make_buf()
     end
   end
 
+  -- Ensure menu width is sufficient after aligning symbol icons which can
+  -- increase symbol width
+  local max_entry_width = math.max(
+    0,
+    unpack(vim.tbl_map(function(entry)
+      local w = entry:displaywidth()
+      return w
+    end, self.entries))
+  )
+  if max_entry_width > self._win_configs.width then
+    self._win_configs.width = max_entry_width
+  end
+
   -- Get lines and highlights for each line
   local lines = {} ---@type string[]
   local hl_info = {} ---@type winbar_menu_hl_info_t[][]
@@ -426,13 +439,13 @@ function winbar_menu_t:make_buf()
   vim.api.nvim_buf_set_lines(self.buf, 0, -1, false, lines)
   for linenr, hl_line_info in ipairs(hl_info) do
     for _, hl_symbol_info in ipairs(hl_line_info) do
-      utils.hl.buf_add_hl(
+      vim.hl.range(
         self.buf,
-        hl_symbol_info.ns or -1,
+        hl_symbol_info.ns or vim.api.nvim_create_namespace('WinBar'),
         hl_symbol_info.hlgroup,
-        linenr - 1, -- 0-indexed
-        hl_symbol_info.start,
-        hl_symbol_info['end']
+        { linenr - 1, hl_symbol_info.start },
+        { linenr - 1, hl_symbol_info['end'] },
+        {}
       )
     end
   end
@@ -487,7 +500,7 @@ function winbar_menu_t:make_buf()
       if configs.opts.menu.quick_navigation then
         self:quick_navigation(cursor)
       else
-        self.prev_cursor = vim.api.nvim_win_get_cursor(o)
+        self.prev_cursor = vim.api.nvim_win_get_cursor(0)
       end
 
       self:update_hover_hl(self.prev_cursor)

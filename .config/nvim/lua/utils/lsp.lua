@@ -81,12 +81,22 @@ function M.start(config, opts)
     )
   )
 
+  -- Some language servers e.g. lua-language-server, refuse
+  -- to use home dir as its root dir and prints an error message
+  --
+  -- 99% of time we don't want have home dir or root dir as lsp root directory
+  -- anyway except when editing `~/.bashrc`, in which case we fallback to
+  -- the file's containing directory (the home directory)
   if
     not root_dir
     or require('utils.fs').is_home_dir(root_dir)
     or require('utils.fs').is_root_dir(root_dir)
   then
     root_dir = validate(vim.fs.dirname(bufname))
+  end
+
+  if not root_dir then
+    return
   end
 
   return vim.lsp.start(
@@ -118,7 +128,7 @@ function M.soft_stop(client_or_id, opts)
   opts.interval = opts.interval or 500
   opts.on_close = opts.on_close or function() end
 
-  if client.is_stopped() then
+  if client:is_stopped() then
     opts.on_close(client)
     return
   end
@@ -127,7 +137,7 @@ function M.soft_stop(client_or_id, opts)
     return
   end
 
-  client.stop(opts.retry == 0)
+  client:stop(opts.retry == 0)
   vim.defer_fn(function()
     opts.retry = opts.retry - 1
     M.soft_stop(client, opts)

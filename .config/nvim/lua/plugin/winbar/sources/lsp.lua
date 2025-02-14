@@ -102,7 +102,13 @@ end
 ---@param siblings lsp_document_symbol_t[]? siblings of the symbol
 ---@param idx integer? index of the symbol in siblings
 ---@return winbar_symbol_t
-local function convert_document_symbol(document_symbol, buf, win, siblings, idx)
+local function convert_document_symbol(
+  document_symbol,
+  buf,
+  win,
+  siblings,
+  idx
+)
   local kind = symbol_kind_names[document_symbol.kind]
   return bar.winbar_symbol_t:new(setmetatable({
     buf = buf,
@@ -247,7 +253,7 @@ local function update_symbols(buf, ttl)
     return
   end
 
-  client.request(
+  client:request(
     'textDocument/documentSymbol',
     { textDocument = vim.lsp.util.make_text_document_params(buf) },
     function(err, symbols, _)

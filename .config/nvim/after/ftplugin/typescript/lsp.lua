@@ -154,16 +154,6 @@ if eslint_cmd then
           end
           return 4 -- approved
         end,
-        ['eslint/probeFailed'] = function()
-          vim.notify(string.format('[%s] ESLint probe failed', eslint_cmd))
-          return {}
-        end,
-        ['eslint/noLibrary'] = function()
-          vim.notify(
-            string.format('[%s] Unable to find ESLint library', eslint_cmd)
-          )
-          return {}
-        end,
       },
       on_attach = function(client)
         if formatter then
@@ -173,10 +163,10 @@ if eslint_cmd then
           local buf = vim.api.nvim_get_current_buf()
           local request = require('utils.cmd').parse_cmdline_args(args.fargs).async
               and function(bufnr, method, params)
-                client.request(method, params, nil, bufnr)
+                client:request(method, params, nil, bufnr)
               end
             or function(bufnr, method, params)
-              client.request_sync(method, params, nil, bufnr)
+              client:request_sync(method, params, nil, bufnr)
             end
 
           request(0, 'workspace/executeCommand', {

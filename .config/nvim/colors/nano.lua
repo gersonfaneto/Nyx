@@ -159,7 +159,6 @@ local hlgroups = {
   TabLineFill = { fg = c_foreground, bg = c_subtle },
   TabLineSel = { fg = c_strong, bg = c_shaded, bold = true },
   TermCursor = { fg = c_subtle, bg = c_popout },
-  TermCursorNC = { fg = c_critical, bg = c_subtle },
   Title = { fg = c_foreground, bold = true },
   VertSplit = { fg = c_subtle },
   Visual = { bg = c_subtle },

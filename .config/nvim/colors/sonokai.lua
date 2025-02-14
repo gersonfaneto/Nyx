@@ -153,7 +153,6 @@ local hlgroups = {
   TabLineFill = { bg = c_bg1, fg = c_grey },
   TabLineSel = { bg = c_red, fg = c_bg0 },
   TermCursor = { bg = c_orange, fg = c_bg0 },
-  TermCursorNC = { bg = c_grey, fg = c_bg0 },
   Title = { bold = true, fg = c_red },
   Underlined = { underline = true },
   VertSplit = { fg = c_bg4 },

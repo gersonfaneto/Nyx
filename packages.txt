@@ -44,7 +44,7 @@ man-db
 man-pages
 mpv
 neofetch
-neovim
+neovim-nightly
 network-manager-applet
 networkmanager
 nvm
@@ -92,7 +92,6 @@ texlive-xetex
 tmux
 trash-cli
 tree
-tree-sitter
 tree-sitter-cli
 ttf-gohu-nerd
 unzip
