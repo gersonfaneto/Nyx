@@ -138,10 +138,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
         { expr = true, desc = 'Insert contents in a register' }
       )
 
-      -- Delete selection in select mode
-      map('s', '<BS>', '<C-o>s', { desc = 'Delete selection' })
-      map('s', '<C-h>', '<C-o>s', { desc = 'Delete selection' })
-
       -- More consistent behavior when &wrap is set
       -- stylua: ignore start
       map({ 'n', 'x' }, 'j', 'v:count ? "j" : "gj"', { expr = true, desc = 'Move down' })
@@ -151,6 +147,14 @@ vim.api.nvim_create_autocmd('UIEnter', {
       map({ 'i' }, '<Down>', '<CMD>norm! g<Down><CR>', { desc = 'Move down' })
       map({ 'i' }, '<Up>',   '<CMD>norm! g<Up><CR>',   { desc = 'Move up' })
       -- stylua: ignore end
+
+      -- Better vertical movement
+      -- stylua: ignore start
+      map({ 'n', 'x' }, '<C-d>', '<C-d>zz', { desc = 'Scroll window Downwards' });
+      map({ 'n', 'x' }, '<C-u>', '<C-u>zz', { desc = 'Scroll window Upwards'   });
+      map({ 'n', 'x' }, '<C-f>', '<C-f>zz', { desc = 'Scroll window Forwards'  });
+      map({ 'n', 'x' }, '<C-b>', '<C-b>zz', { desc = 'Scroll window Backwards' });
+      -- stylua: ignore off 
 
       -- Tabpages
       ---@param tab_action function
