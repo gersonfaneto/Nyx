@@ -43,7 +43,7 @@ else
   c_foreground = { '#495b64', 59  }
   c_background = { '#ffffff', 231 }
   c_highlight  = { '#f5f8fa', 255 }
-  c_critical   = { '#ff6f00', 208 }
+  c_critical   = { '#e0b153', 208 }
   c_salient    = { '#673ab7', 98  }
   c_strong     = { '#000000', 16  }
   c_popout     = { '#f09276', 216 }
