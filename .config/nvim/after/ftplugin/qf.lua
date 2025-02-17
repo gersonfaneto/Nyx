@@ -10,7 +10,7 @@ vim.opt_local.nu = false
 vim.opt_local.rnu = false
 vim.opt_local.signcolumn = 'no'
 vim.opt_local.statuscolumn = ''
-+vim.opt_local.winfixbuf = true
+vim.opt_local.winfixbuf = true
 
 -- Provides `:Cfilter` and `:Lfilter` commands
 vim.cmd.packadd({
