@@ -438,7 +438,7 @@ local hlgroups = {
   htmlLink = { fg = c_lotusBlue, underline = true },
   htmlSpecialChar = { link = 'SpecialChar' },
   htmlSpecialTagName = { fg = c_macroViolet },
-  htmlString = { fg = c_macroAsh },
+  htmlString = { link = 'String' },
   htmlTagName = { link = 'Tag' },
   htmlTitle = { link = 'Title' },
 
