@@ -133,7 +133,7 @@ function M.lang(pos, buf)
       buf = buf,
     })
   )
-  if not has_parser then
+  if not has_parser or not parser then
     return
   end
 
