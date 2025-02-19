@@ -6,6 +6,5 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'FileType' }, {
         asm = 'fasm',
       },
     })
-    return true
   end,
 })

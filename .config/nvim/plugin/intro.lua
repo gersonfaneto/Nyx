@@ -155,7 +155,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
     if not should_show_intro() then
       disable_intro()
       clear_intro()
-      return true
+      return
     end
 
     disable_intro()
@@ -174,7 +174,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
       vim.opt_local.winhl = 'NormalFloat:Normal,Search:,Incsearch:'
       vim.opt_local.spell = false
     end)
-    return true
   end,
 })
 
@@ -197,7 +196,6 @@ vim.api.nvim_create_autocmd({
   callback = function()
     disable_intro()
     clear_intro()
-    return true
   end,
 })
 

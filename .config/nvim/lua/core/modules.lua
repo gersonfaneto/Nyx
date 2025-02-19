@@ -183,7 +183,6 @@ local function enable_modules(module_names)
             vim.schedule(function()
               vim.api.nvim_exec_autocmds(info.event, {})
             end)
-            return true
           end,
         }
       )
@@ -196,7 +195,6 @@ local function enable_modules(module_names)
           vim.api.nvim_del_augroup_by_id(groupid)
           require('lazy.stats').on_ui_enter()
           vim.schedule(setup)
-          return true
         end,
       })
     end
