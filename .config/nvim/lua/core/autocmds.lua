@@ -209,7 +209,7 @@ augroup('AutoCwd', {
       local file = info.file
       local buf = info.buf
 
-      if file == '' then
+      if file == '' or vim.bo[buf].bt ~= '' then
         return
       end
 
