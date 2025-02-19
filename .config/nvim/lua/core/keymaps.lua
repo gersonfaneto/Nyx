@@ -137,10 +137,10 @@ vim.api.nvim_create_autocmd('UIEnter', {
 
     -- Better vertical movement
     -- stylua: ignore start
-    map({ 'n', 'x' }, '<C-d>', '<C-d>zz', { desc = 'Scroll window Downwards' });
-    map({ 'n', 'x' }, '<C-u>', '<C-u>zz', { desc = 'Scroll window Upwards'   });
-    map({ 'n', 'x' }, '<C-f>', '<C-f>zz', { desc = 'Scroll window Forwards'  });
-    map({ 'n', 'x' }, '<C-b>', '<C-b>zz', { desc = 'Scroll window Backwards' });
+    map({ 'n', 'x' }, '<C-d>', '<C-d>zz', { desc = 'Scroll window Downwards' })
+    map({ 'n', 'x' }, '<C-u>', '<C-u>zz', { desc = 'Scroll window Upwards'   })
+    map({ 'n', 'x' }, '<C-f>', '<C-f>zz', { desc = 'Scroll window Forwards'  })
+    map({ 'n', 'x' }, '<C-b>', '<C-b>zz', { desc = 'Scroll window Backwards' })
     -- stylua: ignore off 
 
     -- Tabpages

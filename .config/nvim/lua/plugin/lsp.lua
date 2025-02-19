@@ -1108,11 +1108,7 @@ local subcommands = {
     match = {
       ---@param args lsp_command_parsed_arg_t
       arg_handler = function(args)
-        return args.str,
-          args.pat,
-          args.groups,
-          args.severity_map,
-          args.defaults
+        return args.str, args.pat, args.groups, args.severity_map, args.defaults
       end,
       opts = {
         'str',

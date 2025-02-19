@@ -136,8 +136,7 @@ function M.list(input)
     return {}
   end
 
-  local o =
-    vim.system({ vim.env.SHELL, '-c', 'z -l ' .. argesc(input) }):wait()
+  local o = vim.system({ vim.env.SHELL, '-c', 'z -l ' .. argesc(input) }):wait()
   if o.code ~= 0 then
     vim.notify('[z] ' .. o.stderr or o.stdout)
     return {}

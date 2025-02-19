@@ -123,9 +123,8 @@ function M.spinner:spin(on_spin)
   end
 
   self.changed_tick = now
-  self.icon = self.opts.icons.progress[math.ceil(
-    now / self.opts.frame_interval
-  ) % #self.opts.icons.progress + 1]
+  self.icon =
+    self.opts.icons.progress[math.ceil(now / self.opts.frame_interval) % #self.opts.icons.progress + 1]
 
   -- Start timer if not already spinning
   if self.status ~= 'spinning' then

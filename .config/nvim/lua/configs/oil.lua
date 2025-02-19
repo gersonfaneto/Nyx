@@ -130,7 +130,8 @@ local function preview_set_lines(win, all)
         ))
         :take(num_lines)
         :map(function(line)
-          local result = vim.fn.match(line, '\\v^[-dpls][-rwxs]{9}') == -1 and line
+          local result = vim.fn.match(line, '\\v^[-dpls][-rwxs]{9}') == -1
+              and line
             or line:sub(1, 1) .. ' ' .. line:sub(2)
           return result
         end)

@@ -14,10 +14,7 @@ local linter, formatter
 local ruff = lsp.start({
   cmd = { 'ruff', 'server' },
   buf_support = false,
-  root_patterns = vim.list_extend(
-    { 'ruff.toml', '.ruff.toml' },
-    root_patterns
-  ),
+  root_patterns = vim.list_extend({ 'ruff.toml', '.ruff.toml' }, root_patterns),
 })
 
 -- Prefer ruff over pylint and black as linter and formatter
@@ -177,14 +174,9 @@ local function pyright_on_attach(name)
     if disable_formatting then
       disable_formatting(client)
     end
-    vim.api.nvim_buf_create_user_command(
-      0,
-      'PyrightOrganizeImports',
-      function()
-        pyright_organize_imports(client, name)
-      end,
-      { desc = 'Organize python imports' }
-    )
+    vim.api.nvim_buf_create_user_command(0, 'PyrightOrganizeImports', function()
+      pyright_organize_imports(client, name)
+    end, { desc = 'Organize python imports' })
     vim.api.nvim_buf_create_user_command(
       0,
       'PyrightSetPythonPath',

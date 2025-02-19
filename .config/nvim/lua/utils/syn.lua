@@ -36,4 +36,3 @@ function M.in_group(names)
 end
 
 return M
-
