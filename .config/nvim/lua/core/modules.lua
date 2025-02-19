@@ -5,7 +5,6 @@ end
 local conf_path = vim.fn.stdpath('config') --[[@as string]]
 local data_path = vim.fn.stdpath('data') --[[@as string]]
 local state_path = vim.fn.stdpath('state') --[[@as string]]
-local patches_path = vim.fs.joinpath(conf_path, 'patches')
 
 vim.g.package_path = vim.fs.joinpath(data_path, 'packages')
 vim.g.package_lock = vim.fs.joinpath(conf_path, 'package-lock.json')
@@ -19,7 +18,7 @@ vim.g.startup_file = vim.fs.joinpath(state_path, 'startup.json')
 local function system_sync(cmd, opts, loglev)
   local obj = vim.system(cmd, opts):wait()
   if obj.code ~= 0 then
-    vim.notify('[modules]: ' .. obj.stderr, loglev or vim.log.levels.WARN)
+    vim.notify('[modules] ' .. obj.stderr, loglev or vim.log.levels.WARN)
     return false
   end
   return true
@@ -35,7 +34,6 @@ local function bootstrap()
   end
 
   local json = require('utils.json')
-
   local startup_file = vim.fs.joinpath(state_path, 'startup.json')
   local startup_data = json.read(startup_file)
   if startup_data.bootstrap == false then
@@ -85,14 +83,6 @@ local function bootstrap()
       { 'git', 'checkout', commit },
       { cwd = lazy_path },
       vim.log.INFO
-    )
-  end
-  local lazy_patch_path =
-    vim.fs.joinpath(conf_path, 'patches', 'lazy.nvim.patch')
-  if vim.uv.fs_stat(lazy_patch_path) and vim.uv.fs_stat(lazy_path) then
-    system_sync(
-      { 'git', 'apply', '--ignore-space-change', lazy_patch_path },
-      { cwd = lazy_path }
     )
   end
   vim.notify(string.format("[modules] lazy.nvim cloned to '%s'", lazy_path))
@@ -202,7 +192,6 @@ local function enable_modules(module_names)
 
   defer(function()
     local icons = require('utils.static.icons')
-    require('lazy.view.config').keys.details = '='
     require('lazy').setup(specs, {
       root = vim.g.package_path,
       lockfile = vim.g.package_lock,
@@ -263,69 +252,6 @@ end
 if not bootstrap() then
   return
 end
-
-vim.api.nvim_create_autocmd('User', {
-  once = true,
-  desc = 'Preload modified lazy.nvim modules so that they will not be loaded unpatched later on package sync.',
-  pattern = {
-    'LazyInstallPre',
-    'LazyUpdatePre',
-    'LazySyncPre',
-    'LazyRestorePre',
-  },
-  callback = function()
-    require('lazy.manage.task.git')
-    return true
-  end,
-})
-
--- Reverse/Apply local patches on updating/installing plugins,
--- must be created before setting lazy to apply the patches properly
-vim.api.nvim_create_autocmd('User', {
-  desc = 'Reverse/Apply local patches on updating/intalling plugins.',
-  group = vim.api.nvim_create_augroup('LazyPatches', {}),
-  pattern = {
-    'LazyInstall*',
-    'LazyUpdate*',
-    'LazySync*',
-    'LazyRestore*',
-  },
-  callback = function(info)
-    -- In a lazy sync action:
-    -- -> LazySyncPre     <- restore packages
-    -- -> LazyInstallPre
-    -- -> LazyUpdatePre
-    -- -> LazyInstall
-    -- -> LazyUpdate
-    -- -> LazySync        <- apply patches
-    vim.g._lz_syncing = vim.g._lz_syncing or info.match == 'LazySyncPre'
-    -- Avoid applying and reverting patches multiple times on `:LazySync` while
-    -- still being able to apply and revert patches correctly for
-    -- `:LazyInstall` and `:LazyUpdate`
-    if vim.g._lz_syncing and not vim.startswith(info.match, 'LazySync') then
-      return
-    end
-    if info.match == 'LazySync' then
-      vim.g._lz_syncing = nil
-    end
-
-    for patch in vim.fs.dir(patches_path) do
-      local patch_path = vim.fs.joinpath(patches_path, patch)
-      local plugin_path =
-        vim.fs.joinpath(vim.g.package_path, (patch:gsub('%.patch$', '')))
-      if vim.uv.fs_stat(plugin_path) then
-        system_sync({ 'git', 'restore', '.' }, { cwd = plugin_path })
-        if not vim.endswith(info.match, 'Pre') then
-          vim.notify(string.format("[modules] applying patch '%s'", patch))
-          system_sync(
-            { 'git', 'apply', '--ignore-space-change', patch_path },
-            { cwd = plugin_path }
-          )
-        end
-      end
-    end
-  end,
-})
 
 -- If launched in vscode, only enable basic modules
 enable_modules(vim.g.vscode and { 'edit', 'treesitter' })
