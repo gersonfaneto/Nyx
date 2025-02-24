@@ -15,3 +15,5 @@
     #define __ASSERT__(...) ((void) 0)
     #define __TODO__(...) ((void) 0)
 #endif // ! __DEBUG__
+
+// vim: sw=4 ts=4 sts=4 et tw=80 nospell ft=c :
