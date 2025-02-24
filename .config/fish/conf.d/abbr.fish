@@ -92,3 +92,22 @@ function __command_abbr_nv_fn --description 'Abbreviation function for `nv`'
 end
 
 abbr --add 'nv' --position command --function __command_abbr_nv_fn
+
+function __pipe_command_abbr
+    switch (commandline -t)
+        case "l"
+            commandline -rt '| less'
+        case "h"
+            commandline -rt '| head'
+        case "t"
+            commandline -rt '| tail'
+        case "g"
+            commandline -rt '| grep -i'
+        case "w"
+            commandline -rt '| wc -l'
+        case "*"
+            commandline -i '| fzf'
+    end
+end
+
+bind \cs __pipe_command_abbr
