@@ -19,7 +19,7 @@ get-theme-variant() {
 setbg-alacritty() {
     # $1: 'light' or 'dark'
     (
-        cd "$CONFIG_HOME/alacritty"
+        cd "$CONFIG_HOME/alacritty" 2>/dev/null || return 1
         local theme_path="theme.toml"
         local config_path="alacritty.toml"
         local themes_dir="themes"
@@ -36,7 +36,7 @@ setbg-alacritty() {
 setbg-kitty() {
     # $1: 'light' or 'dark'
     (
-        cd "$CONFIG_HOME/kitty"
+        cd "$CONFIG_HOME/kitty" 2>/dev/null || return 1
         local theme_path="current-theme.conf"
         local themes_dir="themes"
         if [[ -z $1 ]]; then
@@ -55,7 +55,7 @@ setbg-kitty() {
 setbg-wezterm() {
     # $1: 'light' or 'dark'
     (
-        cd "$CONFIG_HOME/wezterm"
+        cd "$CONFIG_HOME/wezterm" 2>/dev/null || return 1
         local theme_path="theme.toml"
         local themes_dir="colors"
         # If $1 is empty, only need to ensure symlink to color theme file exists
@@ -70,7 +70,7 @@ setbg-wezterm() {
 setbg-highlight() {
     # $1: 'light' or 'dark'
     (
-        cd "$HOME/.highlight"
+        cd "$HOME/.highlight" 2>/dev/null || return 1
         local themes_dir="themes"
         local theme_path="highlight.theme"
         # If $1 is empty, only need to ensure symlink to color theme file exists
@@ -168,7 +168,7 @@ setbg-konsole-yakuake() {
 setbg-termux() {
     # $1: 'light' or 'dark'
     (
-        cd "$HOME/.termux"
+        cd "$HOME/.termux" 2>/dev/null || return 1
         local theme_path="colors.properties"
         local themes_dir="colors"
         if [[ -z $1 ]]; then
@@ -220,7 +220,7 @@ setbg-vscode() {
 setbg-fish() {
     # $1: 'light' or 'dark'
     (
-        cd "$CONFIG_HOME/fish/themes"
+        cd "$CONFIG_HOME/fish/themes" 2>/dev/null || return 1
         local theme_path="Current.theme"
         if [[ -z "$1" ]]; then
             ln -s "${DEFAULT_BG^}.theme" "$theme_path" 2>/dev/null

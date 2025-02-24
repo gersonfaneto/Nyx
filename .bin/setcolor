@@ -26,7 +26,7 @@ get-cap-theme-name() {
 setcolor-alacritty() {
     # $1: name of the colorscheme
     (
-        cd "$CONFIG_HOME/alacritty/themes"
+        cd "$CONFIG_HOME/alacritty/themes" 2>/dev/null || return 1
         local dark_theme_path="dark.toml"
         local light_theme_path="light.toml"
         # If $1 is empty, only need to ensure symlink to color theme files exists
@@ -45,7 +45,7 @@ setcolor-alacritty() {
 setcolor-kitty() {
     # $1: name of the colorscheme
     (
-        cd "$CONFIG_HOME/kitty/themes"
+        cd "$CONFIG_HOME/kitty/themes" 2>/dev/null || return 1
         local dark_theme_path="dark.conf"
         local light_theme_path="light.conf"
         # If $1 is empty, only need to ensure symlink to color theme files exists
@@ -67,7 +67,7 @@ setcolor-kitty() {
 setcolor-termux() {
     # $1: name of the colorscheme
     (
-        cd "$HOME/.termux/colors"
+        cd "$HOME/.termux/colors" 2>/dev/null || return 1
         local dark_color_path="dark.properties"
         local light_color_path="light.properties"
         # If $1 is empty, only need to ensure symlink to color theme files exists
@@ -87,7 +87,7 @@ setcolor-termux() {
 setcolor-wezterm() {
     # $1: name of the colorscheme
     (
-        cd "$CONFIG_HOME/wezterm/colors"
+        cd "$CONFIG_HOME/wezterm/colors" 2>/dev/null || return 1
         local dark_theme_path="dark.toml"
         local light_theme_path="light.toml"
         # If $1 is empty, only need to ensure stomlink to color theme files exists
@@ -106,7 +106,7 @@ setcolor-wezterm() {
 setcolor-highlight() {
     # $1: name of the colorscheme
     (
-        cd "$HOME/.highlight/themes"
+        cd "$HOME/.highlight/themes" 2>/dev/null || return 1
         local dark_theme_path="dark.theme"
         local light_theme_path="light.theme"
         # If $1 is empty, only need to ensure symlink to color theme files exists
@@ -190,7 +190,7 @@ setcolor-konsole-yakuake() {
 setcolor-fish() {
     # $1: name of the colorscheme
     (
-        cd "$CONFIG_HOME/fish/themes"
+        cd "$CONFIG_HOME/fish/themes" 2>/dev/null || return 1
         local dark_theme_path="Dark.theme"
         local light_theme_path="Light.theme"
         local default_theme_name=$(get-cap-theme-name "$DEFAULT_COLOR")
