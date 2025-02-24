@@ -3,3 +3,8 @@
 
 --ignore=.stowrc
 --ignore=packages.txt
+
+--ignore=.direnv
+--ignore=.envrc
+--ignore=flake.lock
+--ignore=flake.nix
