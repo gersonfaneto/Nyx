@@ -162,11 +162,13 @@ vim.api.nvim_create_autocmd('UIEnter', {
       end
     end
     -- stylua: ignore start
-    map({ 'n', 'x' }, 'L', tabswitch(vim.cmd.tabnext), { desc = 'Go to next tab' })
-    map({ 'n', 'x' }, 'H', tabswitch(vim.cmd.tabprev), { desc = 'Go to previous tab' })
-    map({ 'n', 'x' }, 'E', '<CMD>tabnew<CR>', {  desc = 'Open a new tab' })
-    map({ 'n', 'x' }, 'R', ':TabRename ', {  desc = 'Rename the current tab' })
-    map({ 'n', 'x' }, 'Q', '<CMD>tabclose<CR>', {  desc = 'Close the current tab' })
+    map({ 'n', 'x' }, '<Leader><Tab>l', tabswitch(vim.cmd.tabnext), { desc = 'Go to next tab' })
+    map({ 'n', 'x' }, '<Leader><Tab>h', tabswitch(vim.cmd.tabprev), { desc = 'Go to previous tab' })
+    map({ 'n', 'x' }, '<Leader><Tab>,', ':tabmove -1<CR>', { desc = 'Move tab to the left' })
+    map({ 'n', 'x' }, '<Leader><Tab>.', ':tabmove +1<CR>', { desc = 'Move tab to the right' })
+    map({ 'n', 'x' }, '<Leader><Tab>e', '<CMD>tabnew<CR>', {  desc = 'Open a new tab' })
+    map({ 'n', 'x' }, '<Leader><Tab>r', ':TabRename ', {  desc = 'Rename the current tab' })
+    map({ 'n', 'x' }, '<Leader><Tab>q', '<CMD>tabclose<CR>', {  desc = 'Close the current tab' })
 
     -- Correct misspelled word / mark as correct
     map('i', '<C-g>+', '<Esc>[szg`]a', { desc = 'Correct misspelled word before cursor' })
