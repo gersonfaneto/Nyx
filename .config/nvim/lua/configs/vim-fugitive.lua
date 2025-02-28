@@ -21,8 +21,16 @@ vim.api.nvim_create_autocmd('User', {
   pattern = 'FugitiveIndex',
   group = groupid,
   callback = function(info)
-    vim.keymap.set({ 'n', 'x' }, 'S', 's', { buffer = info.buf, remap = true })
-    vim.keymap.set({ 'n', 'x' }, 'x', 'X', { buffer = info.buf, remap = true })
+    local options = { buffer = info.buf, remap = true } --[[@as vim.keymap.set.Opts]]
+
+    vim.keymap.set({ 'n', 'x' }, 'S', 's', options)
+    vim.keymap.set({ 'n', 'x' }, 'x', 'X', options)
+
+    -- stylua: ignore start
+    vim.keymap.set({ 'n' }, '<Leader>p', function() vim.cmd.Git('push') end, options)
+    vim.keymap.set({ 'n' }, '<Leader>P', function() vim.cmd.Git({ 'pull', '--rebase' }) end, options)
+    vim.keymap.set({ 'n' }, "<Leader>t", function() vim.cmd.Git({ 'push', '-u', 'origin' }) end, options)
+    -- stylua: ignore off
   end,
 })
 
