@@ -272,3 +272,21 @@ if vim.bo.ft == 'typescript' or vim.bo.ft == 'javascript' then
     on_attach = formatter and disable_formatting,
   })
 end
+
+if vim.bo.ft == 'html' then
+  lsp.start({
+    cmd = { 'vscode-html-language-server', '--stdio' },
+    root_patterns = {
+      '.git',
+      'package.json',
+    },
+    settings = {
+      single_file_support = true,
+    },
+    init_options = {
+      provideFormatter = true,
+      embeddedLanguages = { css = true, javascript = true },
+      configurationSection = { 'html', 'css', 'javascript' },
+    },
+  })
+end
