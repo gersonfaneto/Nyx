@@ -147,3 +147,7 @@ type -q nvim; and set -gx EDITOR nvim && set -gx MANPAGER 'nvim +Man!' \
     && cat $HOME/.config/alacritty/alacritty.toml | grep -q 'Nerd Font' && set -gx NVIM_NF true
 
 set -gx SNIPPETS "$HOME/.snippets"
+
+hash --add "$HOME/.intelFPGA_lite/23.1std/quartus/bin"
+
+set -gx LM_LICENSE_FILE "$HOME/.licenses/LR-221836_License.dat"
