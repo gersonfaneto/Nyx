@@ -166,7 +166,7 @@ if vim.go.bg == 'dark' then
   vim.g.terminal_color_4  = c_macroBlue1[1]
   vim.g.terminal_color_5  = c_macroPink[1]
   vim.g.terminal_color_6  = c_macroAqua[1]
-  vim.g.terminal_color_7  = c_macroFg1[1]
+  vim.g.terminal_color_7  = c_macroFg0[1]
   vim.g.terminal_color_8  = c_macroBg4[1]
   vim.g.terminal_color_9  = c_waveRed[1]
   vim.g.terminal_color_10 = c_macroGreen0[1]
@@ -193,7 +193,7 @@ else
   vim.g.terminal_color_12 = c_springBlue[1]
   vim.g.terminal_color_13 = c_sumiInk6[1]
   vim.g.terminal_color_14 = c_waveAqua1[1]
-  vim.g.terminal_color_15 = c_macroFg0[1]
+  vim.g.terminal_color_15 = c_macroBg5[1]
   vim.g.terminal_color_16 = c_macroOrange0[1]
   vim.g.terminal_color_17 = c_macroOrange1[1]
 end
