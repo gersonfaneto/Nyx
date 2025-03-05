@@ -269,8 +269,8 @@ local hlgroups = {
   WarningMsg = { fg = c_roninYellow },
   Whitespace = { fg = c_macroBg4 },
   WildMenu = { link = 'Pmenu' },
-  WinBar = { bg = 'NONE', fg = c_macroFg1 },
-  WinBarNC = { link = 'WinBar' },
+  WinBar = { bg = c_macroBg0, fg = c_macroFg1 },
+  WinBarNC = { bg = c_macroBg0, fg = c_macroBg5 },
   WinSeparator = { fg = c_macroBg4 },
   lCursor = { link = 'Cursor' },
   -- }}}2
@@ -598,6 +598,8 @@ if vim.go.bg == 'light' then
   hlgroups.StatusLineHeader = { bg = c_macroFg0, fg = c_macroBg0 }
   hlgroups.StatusLineHeaderModified = { bg = c_macroRed, fg = c_macroBg0 }
   hlgroups.Visual = { bg = c_macroBg3 }
+  hlgroups.WinBar = { bg = c_macroBg0, fg = c_macroFg1 }
+  hlgroups.WinBarNC = { bg = c_macroBg2, fg = c_macroBg5 }
   hlgroups['@variable.parameter'] = { link = 'Identifier' }
 end
 -- }}}1
