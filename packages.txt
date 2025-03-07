@@ -20,6 +20,7 @@ fzf
 gd
 git
 github-cli
+gnu-netcat
 gst-plugin-pipewire
 htop
 i3-wm
@@ -57,6 +58,7 @@ pipewire-jack
 pipewire-pulse
 playerctl
 pulsemixer
+python-pdftotext
 python-pip
 qalculate-gtk
 reflector
@@ -67,6 +69,7 @@ scientifica-font
 smartmontools
 sof-firmware
 stow
+termshark
 texlab
 texlive-basic
 texlive-bibtexextra
