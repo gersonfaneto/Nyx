@@ -1,21 +1,14 @@
-{
-  description = "An empty flake template that you can adapt to your own environment";
+# Based on :: https://github.com/the-nix-way/dev-templates
 
-  # Flake inputs
+{
+  description = "Home by @gersonfaneto";
+
   inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1.*.tar.gz";
 
-  # Flake outputs
   outputs = { self, nixpkgs }:
     let
-      # The systems supported for this flake
-      supportedSystems = [
-        "x86_64-linux" # 64-bit Intel/AMD Linux
-        "aarch64-linux" # 64-bit ARM Linux
-        "x86_64-darwin" # 64-bit Intel macOS
-        "aarch64-darwin" # 64-bit ARM macOS
-      ];
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
 
-      # Helper to provide system-specific attributes
       forEachSupportedSystem = f: nixpkgs.lib.genAttrs supportedSystems (system: f {
         pkgs = import nixpkgs { inherit system; };
       });
@@ -23,8 +16,6 @@
     {
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
-          # The Nix packages provided in the environment
-          # Add any you need here
           packages = with pkgs; [
             lua
             stylua
@@ -32,13 +23,6 @@
             luajitPackages.luacheck
             efm-langserver
           ];
-
-          # Set any environment variables for your dev shell
-          env = { };
-
-          # Add any shell logic you want executed any time the environment is activated
-          shellHook = ''
-          '';
         };
       });
     };
