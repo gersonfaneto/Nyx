@@ -1,5 +1,11 @@
 return {
   {
+    'laytan/cloak.nvim',
+    config = function()
+      require('configs.cloak')
+    end,
+  },
+  {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
     keys = {
