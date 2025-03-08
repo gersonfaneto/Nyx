@@ -6,6 +6,15 @@ return {
     end,
   },
   {
+    'mbbill/undotree',
+    keys = {
+      { '<Leader>u', desc = 'Open Undotree' },
+    },
+    config = function()
+        vim.keymap.set("n", "<Leader>u", vim.cmd.UndotreeToggle)
+    end,
+  },
+  {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
     keys = {
