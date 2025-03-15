@@ -1,5 +1,4 @@
 alacritty
-apple-fonts
 base
 base-devel
 betterlockscreen
@@ -97,7 +96,6 @@ tmux
 trash-cli
 tree
 tree-sitter-cli
-ttf-gohu-nerd
 unzip
 urlview
 vim

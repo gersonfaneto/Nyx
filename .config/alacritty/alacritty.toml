@@ -22,12 +22,10 @@ draw_bold_text_with_bright_colors = true
 transparent_background_colors = true
 
 [font]
-size = 12
+size = 20
 
 [font.normal]
-# family = "SF Mono"
 family = "scientifica"
-# family = "GohuFont 11 Nerd Font Mono"
 
 [font.offset]
 x = 0 

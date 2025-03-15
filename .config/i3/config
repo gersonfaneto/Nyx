@@ -16,11 +16,11 @@ set $right l
 
 # Font families and sizes used along the system.
 
-set $font_family_general SF Mono
-set $font_size_general 8
+set $font_family_general scientifica
+set $font_size_general 12
 
-set $font_family_dmenu SF Mono
-set $font_size_dmenu 10
+set $font_family_dmenu scientifica
+set $font_size_dmenu 14
 
 # Font for window titles.
 font pango:$font_family_general $font_size_general

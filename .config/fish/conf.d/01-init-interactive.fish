@@ -144,7 +144,8 @@ type -q direnv; and direnv hook fish | source
 type -q zoxide; and zoxide init fish | source
 
 type -q nvim; and set -gx EDITOR nvim && set -gx MANPAGER 'nvim +Man!' \
-    && cat $HOME/.config/alacritty/alacritty.toml | grep -q 'Nerd Font' && set -gx NVIM_NF true
+    && fc-list - family | cut -d , -f 1 | sort | uniq | grep -q 'Nerd Font' \
+    && set -gx NVIM_NF true
 
 set -gx SNIPPETS "$HOME/.snippets"
 
