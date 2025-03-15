@@ -253,7 +253,7 @@ local hlgroups = {
   ['@lsp.type.macro'] = { link = '@const.macro' },
   ['@lsp.type.method'] = { link = '@method' },
   ['@lsp.type.modifier'] = { link = '@type.qualifier' },
-  ['@lsp.type.namespace'] = { link = '@namespace' },
+  ['@lsp.type.namespace'] = { link = '@module' },
   ['@lsp.type.number'] = { link = '@number' },
   ['@lsp.type.operator'] = { link = '@operator' },
   ['@lsp.type.parameter'] = { link = '@parameter' },
