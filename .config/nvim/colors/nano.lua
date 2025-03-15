@@ -601,7 +601,7 @@ local hlgroups = {
   texSymbol = { fg = c_critical },
   texTitleArg = { link = 'Title' },
   texVerbZone = { fg = c_foreground },
-  texZone = { fg = c_subtle },
+  texZone = { fg = c_popout },
   texMathArg = { fg = c_foreground },
   texMathCmd = { link = 'texCmd' },
   texMathSub = { fg = c_foreground },
