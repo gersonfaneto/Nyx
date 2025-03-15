@@ -182,7 +182,7 @@ local hlgroups = {
   Boolean = { link = 'Constant' },
   Array = { fg = c_critical },
   Float = { link = 'Number' },
-  Identifier = { fg = c_foreground },
+  Identifier = {},
   Builtin = { fg = c_foreground },
   Field = { link = 'None' },
   Enum = { fg = c_faded },

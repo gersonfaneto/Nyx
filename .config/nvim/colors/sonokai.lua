@@ -181,7 +181,7 @@ local hlgroups = {
   Exception = { fg = c_red },
   Float = { link = 'Number' },
   Function = { fg = c_green },
-  Identifier = { fg = c_fg },
+  Identifier = {},
   Keyword = { fg = c_red },
   Number = { fg = c_purple },
   Operator = { fg = c_red },

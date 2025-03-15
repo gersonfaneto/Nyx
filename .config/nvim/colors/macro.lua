@@ -285,7 +285,7 @@ local hlgroups = {
   Exception = { fg = c_macroRed },
   Float = { link = 'Number' },
   Function = { fg = c_macroBlue1 },
-  Identifier = { fg = c_macroFg0 },
+  Identifier = {},
   Keyword = { fg = c_macroViolet },
   Number = { fg = c_macroPink },
   Operator = { fg = c_macroRed },

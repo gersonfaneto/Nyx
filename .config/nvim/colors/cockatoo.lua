@@ -242,7 +242,7 @@ local hlgroups = {
   Boolean = { fg = c_ochre },
   Array = { fg = c_orange },
   Float = { link = 'Number' },
-  Identifier = { fg = c_smoke },
+  Identifier = {},
   Builtin = { fg = c_pink },
   Field = { fg = c_pigeon },
   Enum = { fg = c_ochre },
