@@ -17,10 +17,17 @@
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            # Lua
             lua
             stylua
             lua-language-server
             luajitPackages.luacheck
+
+            # Bash
+            shfmt
+            bash-language-server
+
+            # General
             efm-langserver
           ];
         };
