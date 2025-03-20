@@ -149,6 +149,6 @@ type -q nvim; and set -gx EDITOR nvim && set -gx MANPAGER 'nvim +Man!' \
 
 set -gx SNIPPETS "$HOME/.snippets"
 
-hash --add "$HOME/.intelFPGA_lite/23.1std/quartus/bin"
+hash --add "$HOME/.intelFPGA_lite/24.1std/quartus/bin"
 
-set -gx LM_LICENSE_FILE "$HOME/.licenses/LR-221836_License.dat"
+set -gx LM_LICENSE_FILE "$HOME/.licenses/LR-223410_License.dat"
