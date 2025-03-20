@@ -1,7 +1,6 @@
 local icons = require('utils.static.icons')
 local wk_win = require('which-key.win')
-local wk_plugin_regs = require('which-key.plugins.registers')
-local wk_plugin_marks = require('which-key.plugins.marks')
+local wk_trig = require('which-key.triggers')
 
 -- Hijack `which-key.win.show()` to fix gap to the right of which-key window
 -- when using helix preset
@@ -14,21 +13,19 @@ wk_win.show = (function(show_fn)
   end
 end)(wk_win.show)
 
----Hijack `fn` to hide descriptions in its returned items
----@param fn fun(...): wk.Plugin.item[]
----@return fun(...): wk.Plugin.item[]
-local function hide_desc(fn)
-  return function(...)
-    local items = fn(...)
-    for i, _ in ipairs(items) do
-      items[i].desc = ''
+-- `<M->` will be added as a trigger if keymap `<M->>` (aka alt + left-angle)
+-- is set, conflicting with the default visual mode keymap `<`
+-- TODO: report to upstream
+---@param add_fn function
+wk_trig.add = (function(add_fn)
+  ---@param trig wk.Trigger
+  return function(trig)
+    if trig.keys == '<M->' then
+      return
     end
-    return items
+    add_fn(trig)
   end
-end
-
-wk_plugin_regs.expand = hide_desc(wk_plugin_regs.expand)
-wk_plugin_marks.expand = hide_desc(wk_plugin_marks.expand)
+end)(wk_trig.add)
 
 local wk = require('which-key')
 wk.setup({
@@ -54,15 +51,10 @@ wk.setup({
     return ctx.mode == 'V' or ctx.mode == '<C-V>' or ctx.mode == 'v'
   end,
   plugins = {
+    marks = false,
+    registers = false,
     spelling = {
-      suggestions = (function()
-        for _, val in ipairs(vim.opt.spellsuggest:get()) do
-          local num_suggestions = tonumber(val)
-          if num_suggestions then
-            return num_suggestions
-          end
-        end
-      end)(),
+      enabled = false,
     },
   },
   icons = {
