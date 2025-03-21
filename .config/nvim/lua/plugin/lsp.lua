@@ -25,17 +25,17 @@ local function setup_keymaps()
   vim.keymap.set({ 'n', 'x' }, 'gd', function()
     return supports_method('textDocument/definition', 0)
         and '<Cmd>lua vim.lsp.buf.definition()<CR>'
-        or 'gd'
+      or 'gd'
   end, { expr = true, desc = 'Go to definition' })
   vim.keymap.set({ 'n', 'x' }, 'gsd', function()
     return supports_method('textDocument/definition', 0)
         and '<Cmd>vsplit | lua vim.lsp.buf.definition()<CR>'
-        or '<Cmd>vsplit | gd'
+      or '<Cmd>vsplit | gd'
   end, { expr = true, desc = 'Split to definition' })
   vim.keymap.set({ 'n', 'x' }, 'gD', function()
     return supports_method('textDocument/declaration', 0)
         and '<Cmd>lua vim.lsp.buf.declaration()<CR>'
-        or 'gD'
+      or 'gD'
   end, { expr = true, desc = 'Go to declaration' })
   vim.keymap.set(
     { 'n', 'x' },

@@ -3,5 +3,5 @@ require('utils.lsp').start({
   requires = { 'elixir-ls' },
   root_patterns = {
     'mix.exs',
-  }
+  },
 })
