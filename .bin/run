@@ -3,7 +3,7 @@
 build() {
     case "$1" in
     *.c) gcc "$1" -o "$2" ;;
-    *.cpp) g++ "$1" -o "$2" ;;
+    *.cpp|*.cc|*.cxx) g++ "$1" -o "$2" ;;
     *.rs) rustc "$1" -o "$2" ;;
     *.go) go build -o "$2" "$1" ;;
     esac
@@ -15,7 +15,7 @@ exec() {
 
 main() {
     local src=$(fullpath "$1")
-    local executable=$(echo "$src" | sed -E 's/\.(c|cpp|rs|go)$/.run/')
+    local executable=$(echo "$src" | sed -E 's/\.(c|cpp|cc|cxx|rs|go)$/.run/')
     if [[ "$src" == "$executable" ]]; then
         echo >&2 "run: error: file name cannot be the same as the run file name"
         exit 1
