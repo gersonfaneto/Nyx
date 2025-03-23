@@ -22,10 +22,10 @@ draw_bold_text_with_bright_colors = true
 transparent_background_colors = true
 
 [font]
-size = 12
+size = 10
 
 [font.normal]
-family = "scientifica"
+family = "SpaceMono Nerd Font"
 
 [font.offset]
 x = 0 
