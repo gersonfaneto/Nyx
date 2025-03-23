@@ -5,19 +5,25 @@ import subprocess
 import sys
 
 
-def get_current_music_title():
+def get_current_music_title(max_artist_length=20, max_title_length=30):
     title = subprocess.getoutput("playerctl metadata title")
     if "No players found" in title:
         return ""
     artist = subprocess.getoutput("playerctl metadata artist")
-    return f"{artist} - {title}"
 
+    # Truncate the artist if it exceeds the maximum length
+    if len(artist) > max_artist_length:
+        artist = artist[:max_artist_length] + "..."
+    # Truncate the title if it exceeds the maximum length
+    if len(title) > max_title_length:
+        title = title[:max_title_length] + "..."
+
+    return f"{artist} - {title}"
 
 def print_line(message):
     """Non-buffered printing to stdout."""
     sys.stdout.write(message + "\n")
     sys.stdout.flush()
-
 
 def read_line():
     """Interrupted respecting reader for stdin."""
@@ -31,7 +37,6 @@ def read_line():
     # exit on ctrl-c
     except KeyboardInterrupt:
         sys.exit()
-
 
 if __name__ == "__main__":
     # Skip the first line which contains the version header.
