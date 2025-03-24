@@ -68,7 +68,6 @@ local closing_patterns = fallback_tbl_t:new({
   content = {
     c = { '%*/' },
     cpp = { '%*/' },
-    rust = { '|', },
     cuda = { '>>>' },
     lua = { '%]=*%]' },
     python = { '"""', "'''" },
@@ -168,7 +167,8 @@ end
 ---Get current line, whether in cmdline or normal buffer
 ---@return string current_line: current line
 local function get_line()
-  return in_cmdline() and vim.fn.getcmdline() or vim.api.nvim_get_current_line()
+  return in_cmdline() and vim.fn.getcmdline()
+    or vim.api.nvim_get_current_line()
 end
 
 ---Getting the jump position for Tab
@@ -340,10 +340,17 @@ end
 ---Init tabout plugin
 ---@return nil
 local function setup()
-  -- stylua: ignore start
-  vim.keymap.set({ 'i', 'c' }, '<Tab>', function() require('plugin.tabout').jump(1) end, { desc = 'Tab out' })
-  vim.keymap.set({ 'i', 'c' }, '<S-Tab>', function() require('plugin.tabout').jump(-1) end, { desc = 'Tab in' })
-  -- stylua: ignore off
+  if vim.g.loaded_tabout ~= nil then
+    return
+  end
+  vim.g.loaded_tabout = true
+
+  vim.keymap.set({ 'i', 'c' }, '<Tab>', function()
+    jump(1)
+  end, { desc = 'Tab out' })
+  vim.keymap.set({ 'i', 'c' }, '<S-Tab>', function()
+    jump(-1)
+  end, { desc = 'Tab in' })
 end
 
 return {
