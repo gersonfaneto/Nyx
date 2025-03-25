@@ -1440,10 +1440,7 @@ local function setup_diagnostic_configs()
     jump = {
       float = true,
     },
-    virtual_text = {
-      spacing = 4,
-      prefix = vim.trim(utils.static.icons.AngleLeft),
-    },
+    virtual_text = false,
     signs = {
       text = {
         [vim.diagnostic.severity.ERROR] = icons.DiagnosticSignError,
