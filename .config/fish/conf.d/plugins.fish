@@ -116,3 +116,8 @@ if type -q nvm
     set --universal nvm_default_version v20.18.2
     set --universal nvm_default_packages pnpm yarn
 end 
+
+# Setup zoxide if z.fish is not available
+if type -q zoxide; and not type -q __z
+    zoxide init fish | source
+end
