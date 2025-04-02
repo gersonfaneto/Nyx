@@ -9,44 +9,44 @@
 -- LaTeX math environments that need not
 -- to be enclosed by double dollars ('$$')
 local math_env = {
-    [[\begin{align[*]?}]],
-    [[\begin{alignat[*]?}]],
-    [[\begin{equation[*]?}]],
-    [[\end{align[*]?}]],
-    [[\end{alignat[*]?}]],
-    [[\end{equation[*]?}]],
+	[[\begin{align[*]?}]],
+	[[\begin{alignat[*]?}]],
+	[[\begin{equation[*]?}]],
+	[[\end{align[*]?}]],
+	[[\end{alignat[*]?}]],
+	[[\end{equation[*]?}]],
 }
 
 -- Determine whether a string contains some substrings
 local function substr(str, patterns)
-    for _, pattern in ipairs(patterns) do
-        if str:find(pattern) then
-            return true
-        end
-    end
-    return false
+	for _, pattern in ipairs(patterns) do
+		if str:find(pattern) then
+			return true
+		end
+	end
+	return false
 end
 
 -- Given a pandoc math element, substitute it with its text (in LaTeX format)
 -- if it is already enclosed by a math environment defined above.
 local function math_filter(elem)
-    if substr(elem.text, math_env) then
-        return pandoc.RawInline('tex', elem.text)
-    end
-    return nil
+	if substr(elem.text, math_env) then
+		return pandoc.RawInline("tex", elem.text)
+	end
+	return nil
 end
 
 local function str_filter(elem)
-    if
-        elem.text == '[[TOC]]' -- Remove Markdown TOC
-        or elem.text:find(':%S+:') -- Remove emoji
-    then
-        return {}
-    end
-    return nil
+	if
+		elem.text == "[[TOC]]" -- Remove Markdown TOC
+		or elem.text:find(":%S+:") -- Remove emoji
+	then
+		return {}
+	end
+	return nil
 end
 
 return {
-    { Math = math_filter },
-    { Str = str_filter },
+	{ Math = math_filter },
+	{ Str = str_filter },
 }

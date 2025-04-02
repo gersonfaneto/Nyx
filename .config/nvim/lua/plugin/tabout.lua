@@ -167,8 +167,7 @@ end
 ---Get current line, whether in cmdline or normal buffer
 ---@return string current_line: current line
 local function get_line()
-  return in_cmdline() and vim.fn.getcmdline()
-    or vim.api.nvim_get_current_line()
+  return in_cmdline() and vim.fn.getcmdline() or vim.api.nvim_get_current_line()
 end
 
 ---Getting the jump position for Tab

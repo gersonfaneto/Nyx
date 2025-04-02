@@ -14,9 +14,7 @@ M.c = require('snippets.c').snippets
 ---@param node TSNode
 ---@return string?
 local function get_class_name(node)
-  return vim.treesitter
-    .get_node_text(node, 0)
-    :match('^%s*class%s*([A-Za-z_]+)')
+  return vim.treesitter.get_node_text(node, 0):match('^%s*class%s*([A-Za-z_]+)')
 end
 
 M.snippets = {

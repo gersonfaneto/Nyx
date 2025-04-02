@@ -116,8 +116,7 @@ augroup('BigFile', {
       local buf = info.buf
       if vim.b[buf].bigfile and require('utils.ts').hl_is_active(buf) then
         vim.treesitter.stop(buf)
-        vim.bo[buf].syntax = vim.filetype.match({ buf = buf })
-          or vim.bo[buf].bt
+        vim.bo[buf].syntax = vim.filetype.match({ buf = buf }) or vim.bo[buf].bt
       end
     end,
   },
@@ -280,8 +279,7 @@ augroup('AutoCwd', {
         return root
       end)()
 
-      local root_dir = lsp_root_dir
-        or vim.fs.root(file, fs_utils.root_patterns)
+      local root_dir = lsp_root_dir or vim.fs.root(file, fs_utils.root_patterns)
 
       if
         not root_dir
@@ -518,10 +516,8 @@ augroup('ColorSchemeRestore', {
       --    and system color consistent with the current nvim instance.
 
       local json = require('utils.json')
-      local colors_file = vim.fs.joinpath(
-        vim.fn.stdpath('state') --[[@as string]],
-        'colors.json'
-      )
+      local colors_file =
+        vim.fs.joinpath(vim.fn.stdpath('state') --[[@as string]], 'colors.json')
 
       local c = json.read(colors_file)
       c.colors_name = c.colors_name or 'macro'

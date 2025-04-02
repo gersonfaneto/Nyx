@@ -549,7 +549,7 @@ M.snippets = {
         stored = {
           type = i(nil, 'void'),
           func = i(nil, 'fn_name'),
-          params = i(nil)
+          params = i(nil),
         },
       },
     }
