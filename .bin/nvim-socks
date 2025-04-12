@@ -1,20 +1,33 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-RUNTIME_DIR="${XDG_RUNTIME_DIR:-${TMPDIR:-${TMP:-/run/user/$(id -u)}}}"
+# Determine runtime directory with fallbacks
+if [ -n "$XDG_RUNTIME_DIR" ]; then
+	RUNTIME_DIR="$XDG_RUNTIME_DIR"
+elif [ -n "$TMPDIR" ]; then
+	RUNTIME_DIR="$TMPDIR"
+elif [ -n "$TMP" ]; then
+	RUNTIME_DIR="$TMP"
+else
+	RUNTIME_DIR="/run/user/$(id -u)"
+fi
+
 APPNAME="${NVIM_APPNAME:-nvim}"
 
 has() {
-    command -v "$1" >/dev/null 2>&1
+	command -v "$1" >/dev/null 2>&1
 }
 
-if has fd; then
-    fd -a --base-directory "$RUNTIME_DIR" -t s -g "$APPNAME.*.0" 2>/dev/null
-    exit
+fd_cmd=$(has fd && echo fd || echo fdfind)
+if has "$fd_cmd"; then
+	"$fd_cmd" -a --base-directory "$RUNTIME_DIR" -t s -g "$APPNAME.*.0" 2>/dev/null
+	exit $?
 fi
 
 if has find; then
-    find "$RUNTIME_DIR" -type s -name "$APPNAME.*.0" 2>/dev/null
-    exit
+	find "$RUNTIME_DIR" -type s -name "$APPNAME.*.0" 2>/dev/null
+	exit $?
 fi
 
+# No suitable command found
+echo "Error: neither fd nor find command is available" >&2
 exit 1
