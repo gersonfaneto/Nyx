@@ -19,9 +19,7 @@ M.snippets = {
     t('#!'),
     c(1, {
       i(nil, '/usr/bin/env python3'),
-      i(nil, '/usr/bin/env python2'),
       i(nil, '/usr/bin/python3'),
-      i(nil, '/usr/bin/python2'),
     }),
   }),
   us.sn({
@@ -37,11 +35,45 @@ M.snippets = {
       expr = i(1),
     })
   ),
+  us.sn(
+    {
+      trig = 'o',
+      desc = 'open()',
+    },
+    un.fmtad('<fd> = open(<q><file><q>, encoding=<q><encoding><q><kwargs>)', {
+      fd = i(1, 'fd'),
+      q = un.qt(),
+      file = i(2, 'file'),
+      encoding = i(3, 'utf-8'),
+      kwargs = i(4),
+    })
+  ),
   us.msn(
     {
-      { trig = 'ck' },
-      { trig = 'check' },
-      common = { desc = 'Inspect through f-string' },
+      { trig = 'wo' },
+      { trig = 'wio' },
+      { trig = 'witho' },
+      common = { desc = 'with open() ...' },
+    },
+    un.fmtad(
+      [[
+        with open(<q><file><q>, encoding=<q><encoding><q><kwargs>) as <fd>:
+        <body>
+      ]],
+      {
+        q = un.qt(),
+        file = i(1, 'file'),
+        encoding = i(2, 'utf-8'),
+        kwargs = i(3),
+        fd = i(4, 'fd'),
+        body = un.body(5, 1, 'pass'),
+      }
+    )
+  ),
+  us.sn(
+    {
+      trig = 'ck',
+      desc = 'Inspect through f-string',
     },
     un.fmtad('f<q><expr_escaped>: {<expr>}<q>', {
       q = un.qt(),
@@ -52,11 +84,10 @@ M.snippets = {
       end, { 1 }),
     })
   ),
-  us.msn(
+  us.sn(
     {
-      { trig = 'pck' },
-      { trig = 'pcheck' },
-      common = { desc = 'Inspect through print()' },
+      trig = 'pck',
+      desc = 'Inspect through print()',
     },
     un.fmtad('print(f<q><expr_escaped>: {<expr>}<q><e>)', {
       q = un.qt(),
@@ -93,7 +124,6 @@ M.snippets = {
   ),
   us.msn({
     { trig = 'im' },
-    { trig = 'ip' },
     { trig = 'imp' },
     common = {
       desc = 'import statement',
@@ -105,8 +135,6 @@ M.snippets = {
   us.msn({
     { trig = 'fim' },
     { trig = 'imf' },
-    { trig = 'fip' },
-    { trig = 'ipf' },
     { trig = 'fimp' },
     { trig = 'impf' },
     common = {
@@ -120,7 +148,6 @@ M.snippets = {
   }),
   us.msn({
     { trig = 'ima' },
-    { trig = 'ipa' },
     { trig = 'impa' },
     common = {
       desc = 'import ... as ... statement',
@@ -311,7 +338,6 @@ M.snippets = {
       { trig = 'fn' },
       { trig = 'fun' },
       { trig = 'func' },
-      { trig = 'function' },
       { trig = 'def' },
       common = { desc = 'Function definition' },
     },
@@ -321,24 +347,35 @@ M.snippets = {
         <body>
       ]],
       {
-        name = r(1, 'fn_name'),
-        args = r(2, 'args'),
+        name = i(1, 'func'),
+        args = i(2),
         ret = i(3),
         body = un.body(4, 1, 'pass'),
       }
-    ),
+    )
+  ),
+  us.msn(
     {
-      common_opts = {
-        stored = {
-          fn_name = i(nil, 'func'),
-        },
-      },
-    }
+      { trig = 'mn' },
+      { trig = 'main' },
+      common = { desc = 'main function' },
+    },
+    un.fmtad(
+      [[
+        def main(<args>)<ret>:
+        <body>
+      ]],
+      {
+        args = i(1),
+        ret = i(2),
+        body = un.body(3, 1, 'pass'),
+      }
+    )
   ),
   us.msn(
     {
       { trig = 'me' },
-      { trig = 'method' },
+      { trig = 'meth' },
       common = { desc = 'Method definition' },
     },
     un.fmtad(
@@ -357,8 +394,6 @@ M.snippets = {
     {
       { trig = 'cls' },
       { trig = 'class' },
-      { trig = 'tp' },
-      { trig = 'type' },
       common = { desc = 'Class definition' },
     },
     un.fmtad(
@@ -432,26 +467,6 @@ M.snippets = {
     {
       { trig = 'tr' },
       { trig = 'try' },
-      common = { desc = 'try statement' },
-    },
-    un.fmtad(
-      [[
-        try:
-        <body>
-      ]],
-      {
-        body = un.body(1, 1, 'pass'),
-      }
-    )
-  ),
-  us.msn(
-    {
-      { trig = 'te' },
-      { trig = 'tex' },
-      { trig = 'tre' },
-      { trig = 'trex' },
-      { trig = 'trye' },
-      { trig = 'tryex' },
       common = { desc = 'try...except statement' },
     },
     un.fmtad(
@@ -468,37 +483,10 @@ M.snippets = {
       }
     )
   ),
-  us.msn(
+  us.sn(
     {
-      { trig = 'tef' },
-      { trig = 'texf' },
-      { trig = 'tref' },
-      { trig = 'trexf' },
-      { trig = 'tryef' },
-      { trig = 'tryexf' },
-      common = { desc = 'try...except...finally statement' },
-    },
-    un.fmtad(
-      [[
-        try:
-        <body>
-        except<exc>:
-        <idnt><exc_body>
-        finally:
-        <idnt>
-      ]],
-      {
-        body = un.body(1, 1),
-        exc = i(2),
-        exc_body = i(3),
-        idnt = un.idnt(1),
-      }
-    )
-  ),
-  us.msn(
-    {
-      { trig = 'exc' },
-      common = { desc = 'except statement' },
+      trig = 'exc',
+      desc = 'except statement',
     },
     un.fmtad(
       [[
