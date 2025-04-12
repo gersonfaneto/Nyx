@@ -33,18 +33,15 @@ exec --no-startup-id "$HOME/.config/i3/bin/background"
 
 # Use `pactl` to control system volume and microphone.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym $ctrl+$alt+k exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym $ctrl+$alt+j exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym $ctrl+$alt+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym $ctrl+$alt+v exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
-# Use `boomer` as a magnifying glass.
-bindsym $mod+$ctrl+z exec --no-startup-id boomer
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+# bindsym $shift+XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Use `playerctl` to control media.
-bindsym $ctrl+$alt+$left exec --no-startup-id playerctl previous
-bindsym $ctrl+$alt+$right exec --no-startup-id playerctl next
-bindsym $ctrl+$alt+p exec --no-startup-id playerctl play-pause
+bindsym $mod+$alt+$left exec --no-startup-id playerctl previous
+bindsym $mod+$alt+$right exec --no-startup-id playerctl next
+bindsym $mod+$alt+p exec --no-startup-id playerctl play-pause
 
 # Use `brightnessctl` to control screen brightness.
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
@@ -57,10 +54,10 @@ floating_modifier $mod
 bindsym $mod+d exec --no-startup-id dmenu_run -i -p 'run' -fn '$font_family_dmenu:regular:pixelsize=$font_size_dmenu'
 
 # Open screenshot tool.
-bindsym $mod+$ctrl+p exec --no-startup-id flameshot gui
+bindsym $mod+p exec --no-startup-id flameshot gui
 
-# Open color picker tool.
-bindsym --release $mod+$shift+p exec --no-startup-id xcolor --selection clipboard
+# Use `boomer` as a magnifying glass.
+bindsym $mod+z exec --no-startup-id boomer
 
 # Open the browser
 bindsym $mod+b exec firefox
@@ -101,9 +98,9 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # Change layout.
-bindsym $mod+p layout stacking
-bindsym $mod+t layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+$shift+p layout stacking
+bindsym $mod+$shift+t layout tabbed
+bindsym $mod+$shift+e layout toggle split
 
 # Toggle windows between the floating and tiled layout.
 bindsym $mod+$shift+space floating toggle
@@ -113,7 +110,7 @@ bindsym $mod+space focus mode_toggle
 
 # Focus/Unfocus the parent container.
 bindsym $mod+a focus parent
-bindsym $mod+z focus child
+bindsym $mod+$shift+a focus child
 
 # Define names for default workspaces.
 set $ws1 "1"
@@ -151,11 +148,11 @@ bindsym $mod+$shift+8 move container to workspace number $ws8
 bindsym $mod+$shift+9 move container to workspace number $ws9
 bindsym $mod+$shift+0 move container to workspace number $ws10
 
+# Cycle between scratchpad windows.
+bindsym $mod+minus scratchpad show
+
 # Make the currently focused window a scratchpad.
 bindsym $mod+$shift+minus move scratchpad
-
-# Show the first scratchpad window.
-bindsym $mod+minus scratchpad show
 
 # Reload `i3` configuration file.
 bindsym $mod+$shift+c reload
