@@ -146,7 +146,7 @@ vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach' }, {
 
 -- Recognize numbered lists when formatting text and
 -- continue comments on new lines
-vim.opt.formatoptions:append('nor')
+vim.opt.formatoptions:append('norm')
 
 -- Spell check
 vim.opt.spellsuggest = 'best,9'
