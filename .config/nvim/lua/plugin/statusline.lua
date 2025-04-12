@@ -168,8 +168,7 @@ local fnames = {}
 local function update_pdiffs(bufs)
   bufs = vim.tbl_filter(vim.api.nvim_buf_is_valid, bufs)
 
-  local path_diffs =
-    utils.fs.diff(vim.tbl_map(vim.api.nvim_buf_get_name, bufs))
+  local path_diffs = utils.fs.diff(vim.tbl_map(vim.api.nvim_buf_get_name, bufs))
 
   for i, buf in ipairs(bufs) do
     if path_diffs[i] ~= '' then
