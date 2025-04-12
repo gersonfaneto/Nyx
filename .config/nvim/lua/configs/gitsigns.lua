@@ -26,10 +26,10 @@ gs.setup({
 -- Setup keymaps
 -- Navigation
 -- stylua: ignore start
-vim.keymap.set({ 'n', 'x' }, '[c', function() gs.nav_hunk('prev') end, { desc = 'Go to previous git hunk' })
-vim.keymap.set({ 'n', 'x' }, ']c', function() gs.nav_hunk('next') end, { desc = 'Go to next git hunk' })
-vim.keymap.set({ 'n', 'x' }, '[C', function() gs.nav_hunk('first') end, { desc = 'Go to first git hunk' })
-vim.keymap.set({ 'n', 'x' }, ']C', function() gs.nav_hunk('last') end, { desc = 'Go to last git hunk' })
+vim.keymap.set({ 'n', 'x' }, '[g', function() gs.nav_hunk('prev') end, { desc = 'Go to previous git hunk' })
+vim.keymap.set({ 'n', 'x' }, ']g', function() gs.nav_hunk('next') end, { desc = 'Go to next git hunk' })
+vim.keymap.set({ 'n', 'x' }, '[G', function() gs.nav_hunk('first') end, { desc = 'Go to first git hunk' })
+vim.keymap.set({ 'n', 'x' }, ']G', function() gs.nav_hunk('last') end, { desc = 'Go to last git hunk' })
 -- stylua: ignore end
 
 -- Actions
@@ -60,6 +60,6 @@ end, { desc = 'Git reset current selection' })
 
 -- Text object
 -- stylua: ignore start
-vim.keymap.set({ 'o', 'x' }, 'ic', ':<C-U>Gitsigns select_hunk<CR>', { silent = true, desc = 'Select git hunk' })
-vim.keymap.set({ 'o', 'x' }, 'ac', ':<C-U>Gitsigns select_hunk<CR>', { silent = true, desc = 'Select git hunk' })
+vim.keymap.set({ 'o', 'x' }, 'ig', ':<C-u>Gitsigns select_hunk<CR>', { silent = true, desc = 'Select git hunk' })
+vim.keymap.set({ 'o', 'x' }, 'ag', ':<C-u>Gitsigns select_hunk<CR>', { silent = true, desc = 'Select git hunk' })
 -- stylua: ignore end
