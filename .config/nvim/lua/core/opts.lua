@@ -67,7 +67,8 @@ vim.opt.foldmethod = 'indent'
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('TSFolding', {}),
   desc = 'Set treesitter folding.',
-  callback = function(info)
+  -- Schedule to wait treesitter highlighter to attach
+  callback = vim.schedule_wrap(function(info)
     local buf = info.buf
     if not require('utils.ts').is_active(buf) then
       return
@@ -82,7 +83,7 @@ vim.api.nvim_create_autocmd('FileType', {
         end
       end
     end
-  end,
+  end),
 })
 
 -- Enable LSP folding
