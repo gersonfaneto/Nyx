@@ -88,3 +88,36 @@ end
 if not __bootstrap
     exit
 end
+
+# Plugin configs
+# Fzf configs
+# Use custom previewer script if available
+if type -q fzf-file-previewer
+    set -gx fzf_preview_dir_cmd fzf-file-previewer
+    set -gx fzf_preview_file_cmd fzf-file-previewer
+end
+
+# Include hidden files
+set fzf_fd_opts -p -H -L -td -tf -tl --mount -c=always
+
+# Fzf keybindings
+if type -q fzf_configure_bindings
+    fzf_configure_bindings \
+        --directory=\eF    \
+        --git_log=\eL      \
+        --git_status=\eG   \
+        --git_stash=\eS   \
+        --history=\eR      \
+        --processes=\eP    \
+        --variables=\eV
+end
+
+if type -q nvm
+    set --universal nvm_default_version v20.18.2
+    set --universal nvm_default_packages pnpm yarn
+end 
+
+# Setup zoxide if z.fish is not available
+if type -q zoxide; and not type -q __z
+    zoxide init fish | source
+end
