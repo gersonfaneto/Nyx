@@ -52,7 +52,16 @@ local function format_title()
 
   local cursor = vim.api.nvim_win_get_cursor(0)
   local line = vim.api.nvim_get_current_line()
-  if not utils.ts.find_node('heading') and not utils.syn.find_group('H%d$') then
+  -- Don't capitalize if not in a heading
+  -- Also, don't capitalize if inside inline code (``) or latex equations ($$)
+  if
+    not utils.ts.find_node('heading') and not utils.syn.find_group('H%d$')
+    or utils.ts.find_node(
+      { 'code_span', 'formula', 'equation', 'math' },
+      { ignore_injections = false }
+    )
+    or utils.syn.find_group({ 'Code', 'MathZone' })
+  then
     return
   end
 
@@ -108,11 +117,9 @@ vim.api.nvim_buf_create_user_command(
   function(args)
     local parsed_args = utils.cmd.parse_cmdline_args(args.fargs)
     local scope = vim[parsed_args.global and 'g' or 'b']
-
     if scope.md_fmt_title == nil then
       scope.md_fmt_title = vim.g.md_fmt_title
     end
-
     if args.bang or vim.tbl_contains(parsed_args, 'toggle') then
       scope.md_fmt_title = not scope.md_fmt_title
       return
