@@ -1,5 +1,25 @@
 return {
   {
+    'nvim-neo-tree/neo-tree.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    },
+    event = 'VeryLazy',
+    keys = {
+      {
+        '<C-p>',
+        ':Neotree toggle right<CR>',
+        silent = true,
+        desc = 'Float File Explorer',
+      },
+    },
+    config = function()
+      require('configs.neotree')
+    end,
+  },
+  {
     'laytan/cloak.nvim',
     config = function()
       require('configs.cloak')
