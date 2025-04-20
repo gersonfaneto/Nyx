@@ -1,5 +1,5 @@
 local dap = require('dap')
-local keymap = require('utils.keymap')
+local keymap = require('utils.key')
 local icons = require('utils.static.icons')
 
 local function set_cond_breakpoint()
