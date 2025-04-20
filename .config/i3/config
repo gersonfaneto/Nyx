@@ -31,6 +31,9 @@ exec --no-startup-id setxkbmap -layout br -variant thinkpad
 # Set the background using `feh` and `betterlockscreen`.
 exec --no-startup-id "$HOME/.config/i3/bin/background" 
 
+# Startup emacs daemon
+exec --no-startup-id emacs --fg-daemon
+
 # Use `pactl` to control system volume and microphone.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
@@ -65,6 +68,9 @@ bindsym $mod+$shift+b exec firefox --private-window
 
 # Open the terminal.
 bindsym $mod+Return exec alacritty
+
+# Open emacs
+bindsym $mod+e exec emacsclient -c
 
 # Kill the focused window.
 bindsym $mod+q kill
