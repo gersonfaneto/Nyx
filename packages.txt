@@ -49,6 +49,8 @@ neovim-nightly
 network-manager-applet
 networkmanager
 nvm
+openjdk21-doc
+openjdk21-src
 pandoc-bin
 pipes.sh
 pipewire
@@ -56,6 +58,7 @@ pipewire-alsa
 pipewire-jack
 pipewire-pulse
 playerctl
+prismlauncher
 pulsemixer
 python-pdftotext
 python-pip
@@ -106,6 +109,7 @@ wireless_tools
 wireplumber
 xclip
 xcolor
+xdg-desktop-portal-gtk
 xdg-utils
 xorg-xauth
 xsel
@@ -114,5 +118,6 @@ yay
 yay-debug
 zathura
 zathura-pdf-mupdf
+zed
 zoxide
 zram-generator
