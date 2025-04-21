@@ -6,4 +6,8 @@ return {
       require('configs.clangd_extensions')
     end,
   },
+  {
+    'mfussenegger/nvim-jdtls',
+    ft = { 'java' },
+  },
 }
