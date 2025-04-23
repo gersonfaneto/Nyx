@@ -488,7 +488,7 @@ M.snippets = {
       { trig = 'pck' },
       { trig = 'pcheck' },
     },
-    un.fmtad('print(<q><v_esc>: <q> .. <inspect>(<v>)<e>)', {
+    un.fmtad('print(<q><v_esc> :: <q> .. <inspect>(<v>)<e>)', {
       q = un.qt(),
       v = i(1),
       inspect = d(2, function()

@@ -22,7 +22,7 @@ M.snippets = {
       { trig = 'pcheck' },
       { trig = 'echeck' },
     },
-    un.fmtad('echom <q><v_esc>: <q> <v>', {
+    un.fmtad('echom <q><v_esc> :: <q> <v>', {
       q = un.qt(),
       v = i(1),
       v_esc = d(2, function(texts)

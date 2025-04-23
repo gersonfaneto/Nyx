@@ -151,7 +151,7 @@ M.snippets = {
       { trig = 'pcheck' },
       common = { desc = 'Check a value of a variable through fmt.Println()' },
     },
-    un.fmtad('fmt.Println("<expr_escaped>:", <expr>)', {
+    un.fmtad('fmt.Println("<expr_escaped> ::", <expr>)', {
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\"')
