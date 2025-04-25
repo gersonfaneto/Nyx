@@ -136,19 +136,12 @@ end
 # affect other shells, e.g. `bash` that is nested in `fish`
 set -g VIRTUAL_ENV_DISABLE_PROMPT true
 
-hash --add "$HOME/.bin"
-hash --add "$HOME/.local/bin"
+set -gx SNIPPETS "$HOME/.snippets"
 
-type -q direnv; and direnv hook fish | source
+hash --add "$HOME/.bin"
 
 type -q zoxide; and zoxide init fish | source
 
 type -q nvim; and set -gx EDITOR nvim && set -gx MANPAGER 'nvim +Man!' \
     && fc-list - family | cut -d , -f 1 | sort | uniq | grep -q 'Nerd Font' \
     && set -gx NVIM_NF true
-
-set -gx SNIPPETS "$HOME/.snippets"
-
-hash --add "$HOME/.intelFPGA_lite/24.1std/quartus/bin"
-
-set -gx LM_LICENSE_FILE "$HOME/.licenses/LR-223410_License.dat"
