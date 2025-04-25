@@ -4,6 +4,12 @@
 
 { config, lib, pkgs, ... }:
 
+let
+  unstable = import <nixos-unstable> {
+    config.allowUnfree = true;
+  };
+in
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -86,13 +92,23 @@
     ];
   };
 
-  programs.fish.enable = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
 
-  programs.firefox.enable = true;
-
-  programs.direnv = {
-    enable = true;
-    enableFishIntegration = true;
+  programs = {
+    fish = {
+      enable = true;
+    };
+    firefox = {
+      enable = true;
+    };
+    direnv = {
+      enable = true;
+      enableFishIntegration = true;
+    };
   };
 
   # List packages installed in system profile. To search, run:
@@ -117,7 +133,6 @@
     libgcc
     mpv
     neofetch
-    neovim
     nodejs_23
     playerctl
     prismlauncher
@@ -125,13 +140,13 @@
     pulsemixer
     python314
     qalculate-gtk
+    quartus-prime-lite
     ripgrep
     rsync
     scc
     stow
     tmux
     trash-cli
-    tree
     tree-sitter
     unzip
     vim
@@ -141,6 +156,9 @@
     xsel
     zathura
     zoxide
+
+    # From unstable
+    (unstable.neovim)
   ];
 
   virtualisation.docker = {
