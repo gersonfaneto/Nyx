@@ -14,7 +14,7 @@ WINIT_X11_SCALE_FACTOR = "1.0"
 TERM = "alacritty"
 
 [terminal.shell]
-program = "/usr/bin/fish"
+program = "/run/current-system/sw/bin/fish"
 args = ["--login", "--interactive"]
 
 [colors]
