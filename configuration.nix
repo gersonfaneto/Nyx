@@ -118,7 +118,6 @@ in
     betterlockscreen
     bluetui
     brightnessctl
-    direnv
     fd
     feh
     fish
