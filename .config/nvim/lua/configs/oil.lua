@@ -738,15 +738,15 @@ oil.setup({
         if not entry or not dir then
           return
         end
-        if vim.fn.executable('dragon-drop') == 0 then
+        if vim.fn.executable('dragon') == 0 then
           vim.notify(
-            '[oil] `dragon-drop` is not executable',
+            '[oil] `dragon` is not executable',
             vim.log.levels.WARN
           )
           return
         end
         vim.system({
-          'dragon-drop',
+          'dragon',
           vim.fs.joinpath(dir, entry.name),
         })
       end,

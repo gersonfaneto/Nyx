@@ -152,7 +152,7 @@ in
     vim
     wget
     xclip
-    xcolor
+    xdragon
     xsel
     zathura
     zoxide
