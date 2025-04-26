@@ -46,16 +46,12 @@ in
 
   # Enable the X11 windowing system.
   services.xserver = {
-	enable = true;
-	windowManager.i3.enable = true;
+    enable = true;
+    windowManager.i3.enable = true;
   };
 
   services.displayManager.ly = {
     enable = true;
-  };
-
-  services.libinput.touchpad = {
-    naturalScrolling = true;
   };
 
   # Configure keymap in X11
@@ -73,8 +69,18 @@ in
   #   pulse.enable = true;
   # };
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = true;
+    };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.gerson = {
@@ -159,6 +165,20 @@ in
     # From unstable
     (unstable.neovim)
   ];
+
+  fonts = {
+    packages = [
+      (unstable.nerd-fonts.space-mono)
+    ];
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        serif = [  "SpaceMono Nerd Font"  ];
+        sansSerif = [ "SpaceMono Nerd Font"  ];
+        monospace = [ "SpaceMono Nerd Font" ];
+      };
+    };
+  };
 
   virtualisation.docker = {
     enable = true;
