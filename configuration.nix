@@ -162,10 +162,9 @@ in
     xsel
     zathura
     zoxide
-
-    # From unstable
-    (unstable.neovim)
-  ];
+  ] ++ (with unstable; [
+    neovim
+  ]);
 
   fonts = {
     packages = [
@@ -233,4 +232,3 @@ in
   system.stateVersion = "24.11"; # Did you read the comment?
 
 }
-
