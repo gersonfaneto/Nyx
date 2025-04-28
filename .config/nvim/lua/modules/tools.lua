@@ -182,6 +182,7 @@ return {
     'tpope/vim-fugitive',
     cmd = {
       'G',
+      'GBrowse',
       'Gcd',
       'Gclog',
       'Gdiffsplit',
