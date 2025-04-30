@@ -154,10 +154,12 @@ in
     brightnessctl
     fd
     feh
+    file
     fish
     flameshot
     fzf
     gcc
+    gdb
     gh
     git
     htop
@@ -179,10 +181,12 @@ in
     rsync
     scc
     stow
+    strace
     tmux
     trash-cli
     tree-sitter
     unzip
+    valgrind
     vim
     wget
     xclip
@@ -258,5 +262,4 @@ in
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.11"; # Did you read the comment?
-
 }
