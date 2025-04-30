@@ -16,6 +16,18 @@ in
       ./hardware-configuration.nix
     ];
 
+  documentation = {
+    dev = {
+      enable = true;
+    };
+    man = {
+      generateCaches = true;
+    };
+    nixos = {
+      includeAllModules = true;
+    };
+  };
+
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
@@ -151,7 +163,8 @@ in
     htop
     jq
     less
-    libgcc
+    man-pages
+    man-pages-posix
     mpv
     neofetch
     nodejs_23
