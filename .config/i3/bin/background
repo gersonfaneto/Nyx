@@ -2,7 +2,7 @@
 
 set -ex
 
-BG="$HOME/.backgrounds/3840x2160.png"
+BG="$HOME/.local/share/backgrounds/3840x2160.png"
 
 feh --bg-fill $BG
 betterlockscreen --update $BG --fx
