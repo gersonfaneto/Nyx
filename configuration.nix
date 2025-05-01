@@ -174,7 +174,9 @@ in
     prismlauncher
     pulseaudio
     pulsemixer
-    python314
+    python312Full
+    python312Packages.pip
+    python312Packages.pipx
     qalculate-gtk
     quartus-prime-lite
     ripgrep
