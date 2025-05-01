@@ -169,15 +169,11 @@ in
     man-pages-posix
     mpv
     neofetch
-    nodejs_23
     pandoc
     playerctl
     prismlauncher
     pulseaudio
     pulsemixer
-    python312Full
-    python312Packages.pip
-    python312Packages.pipx
     qalculate-gtk
     quartus-prime-lite
     ripgrep
