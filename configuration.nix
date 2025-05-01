@@ -170,6 +170,7 @@ in
     mpv
     neofetch
     nodejs_23
+    pandoc
     playerctl
     prismlauncher
     pulseaudio
@@ -184,6 +185,7 @@ in
     scc
     stow
     strace
+    texlive.combined.scheme-full
     tmux
     trash-cli
     tree-sitter
