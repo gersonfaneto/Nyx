@@ -174,6 +174,7 @@ in
     prismlauncher
     pulseaudio
     pulsemixer
+    python3
     qalculate-gtk
     quartus-prime-lite
     ripgrep
