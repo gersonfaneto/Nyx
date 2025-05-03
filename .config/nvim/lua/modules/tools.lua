@@ -10,9 +10,7 @@ return {
     keys = {
       {
         '<C-p>',
-        ':Neotree toggle right<CR>',
-        silent = true,
-        desc = 'Float File Explorer',
+        desc = 'Open neo-tree at current file or working directory',
       },
     },
     config = function()
