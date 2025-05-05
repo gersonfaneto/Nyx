@@ -26,32 +26,32 @@ main() {
         fi
     else
         dirs=$(
-        find \
-            $HOME \
-            -mindepth 1 -maxdepth 1 \
-            -type d -not -name '.*'
+            find \
+                $HOME \
+                -mindepth 1 -maxdepth 1 \
+                -type d -not -name '.*'
         )
 
         dirs=$(
-        echo $dirs \
-            $(find \
-            ~/Developer/ \
-            -mindepth 1 -maxdepth 2 -type d)
+            echo $dirs \
+                $(find \
+                    ~/Developer/ \
+                    -mindepth 1 -maxdepth 2 -type d)
         )
 
         dirs=$(
-        echo $dirs \
-            $(find \
-            ~/Developer/Exploring \
-            -mindepth 1 -maxdepth 2 -type d)
+            echo $dirs \
+                $(find \
+                    ~/Developer/Exploring \
+                    -mindepth 1 -maxdepth 2 -type d)
         )
 
         selected=$(
-        echo "${dirs[@]}" |
-            tr ' ' '\n' |
-            sort |
-            uniq |
-            fzf
+            echo "${dirs[@]}" \
+                | tr ' ' '\n' \
+                | sort \
+                | uniq \
+                | fzf
         )
     fi
 
@@ -63,18 +63,18 @@ main() {
     tmux_running=$(pgrep tmux)
 
     if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-        tmux new-session -s $selected_name -c $selected 2>/dev/null
+        tmux new-session -s $selected_name -c $selected 2> /dev/null
         exit 0
     fi
 
-    if ! tmux has-session -t=$selected_name 2>/dev/null; then
-        tmux new-session -ds $selected_name -c $selected 2>/dev/null
+    if ! tmux has-session -t=$selected_name 2> /dev/null; then
+        tmux new-session -ds $selected_name -c $selected 2> /dev/null
     fi
 
     if [[ -z $TMUX ]]; then
-        tmux attach -t $selected_name 2>/dev/null
+        tmux attach -t $selected_name 2> /dev/null
     else
-        tmux switch-client -t $selected_name 2>/dev/null
+        tmux switch-client -t $selected_name 2> /dev/null
     fi
 }
 

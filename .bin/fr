@@ -3,20 +3,20 @@
 # Find a regex pattern using rg and fzf
 
 has() {
-    command -v "$1" >/dev/null 2>&1
+    command -v "$1" > /dev/null 2>&1
 }
 
 # $1: search root path
 main() {
     local preview_cmd=$(
-        has bat && echo 'bat --theme base16 --paging never --style numbers,header-filename --color always {1} --highlight-line {2}' ||
-            has batcat && echo 'batcat --theme base16 --paging never --style numbers,header-filename --color always {1} --highlight-line {2}' ||
-            has fzf-file-previewer && echo 'fzf-file-previewer {1} {2}' ||
-            has cat && echo 'cat {1}'
+        has bat && echo 'bat --theme base16 --paging never --style numbers,header-filename --color always {1} --highlight-line {2}' \
+            || has batcat && echo 'batcat --theme base16 --paging never --style numbers,header-filename --color always {1} --highlight-line {2}' \
+            || has fzf-file-previewer && echo 'fzf-file-previewer {1} {2}' \
+            || has cat && echo 'cat {1}'
     )
     local grep_cmd=$(
-        has rg && echo "rg --hidden --follow --smart-case --column --line-number --no-heading --color=always " ||
-            has grep && echo "grep -i -r -n -H -I --color=always "
+        has rg && echo "rg --hidden --follow --smart-case --column --line-number --no-heading --color=always " \
+            || has grep && echo "grep -i -r -n -H -I --color=always "
     )
     local editor=$(has nvim && echo 'nvim' || has vim && echo 'vim')
     local root_path="$1"
@@ -38,7 +38,7 @@ main() {
         --delimiter ':' \
         --header "$fuzzy_search_hint" \
         --preview "$preview_cmd" \
-        --preview-window '+{2}-6,~1' >"$output_file"
+        --preview-window '+{2}-6,~1' > "$output_file"
     # Entries in output file: {file}:{line}:{column}:{text}
     # Let vim read the output file as error file and jump to the first error
     if [[ -s "$output_file" ]]; then

@@ -3,7 +3,7 @@
 # Find a regex pattern using rg and fzf
 
 has() {
-    command -v "$1" >/dev/null 2>&1
+    command -v "$1" > /dev/null 2>&1
 }
 
 # Temporary files used by the script
@@ -21,7 +21,7 @@ trap cleanup HUP INT QUIT ABRT EXIT
 main() {
     # Set default root path to current directory if not provided
     root_path="${1:-.}"
-    shift 2>/dev/null
+    shift 2> /dev/null
 
     # Set preview command based on available tools
     if has bat; then
@@ -63,7 +63,7 @@ main() {
         --delimiter ':' \
         --header "$fuzzy_search_hint" \
         --preview "$preview_cmd" \
-        --preview-window '+{2}-6,~1' >"$OUTPUT_FILE"
+        --preview-window '+{2}-6,~1' > "$OUTPUT_FILE"
 
     # Let editor read the output file as error file and jump to the first error
     if [ -s "$OUTPUT_FILE" ]; then

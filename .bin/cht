@@ -4,10 +4,10 @@ topic_constraint="none"
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-    l | lang)
-        topic_constraint="lang"
-        shift
-        ;;
+        l | lang)
+            topic_constraint="lang"
+            shift
+            ;;
     esac
 done
 

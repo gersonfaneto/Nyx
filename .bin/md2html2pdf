@@ -19,25 +19,25 @@ main() {
     PDF_ENGINE="wkhtmltopdf"
     while getopts "lxmhp" OPT; do
         case $OPT in
-        l)
-            PDF_ENGINE="lualatex"
-            ;;
-        x)
-            PDF_ENGINE="xelatex"
-            ;;
-        m)
-            PDF_ENGINE="latexmk"
-            ;;
-        h)
-            PDF_ENGINE="wkhtmltopdf"
-            ;;
-        p)
-            PDF_ENGINE="pdflatex"
-            ;;
-        \?)
-            echo "Usage: $(basename $0) [-l|-x|-m|-h|-p] files" >&2
-            exit 1
-            ;;
+            l)
+                PDF_ENGINE="lualatex"
+                ;;
+            x)
+                PDF_ENGINE="xelatex"
+                ;;
+            m)
+                PDF_ENGINE="latexmk"
+                ;;
+            h)
+                PDF_ENGINE="wkhtmltopdf"
+                ;;
+            p)
+                PDF_ENGINE="pdflatex"
+                ;;
+            \?)
+                echo "Usage: $(basename $0) [-l|-x|-m|-h|-p] files" >&2
+                exit 1
+                ;;
         esac
     done
     shift $((OPTIND - 1))

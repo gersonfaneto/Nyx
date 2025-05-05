@@ -2,10 +2,10 @@
 
 build() {
     case "$1" in
-    *.c) gcc "$1" -o "$2" ;;
-    *.cpp|*.cc|*.cxx) g++ "$1" -o "$2" ;;
-    *.rs) rustc "$1" -o "$2" ;;
-    *.go) go build -o "$2" "$1" ;;
+        *.c) gcc "$1" -o "$2" ;;
+        *.cpp | *.cc | *.cxx) g++ "$1" -o "$2" ;;
+        *.rs) rustc "$1" -o "$2" ;;
+        *.go) go build -o "$2" "$1" ;;
     esac
 }
 

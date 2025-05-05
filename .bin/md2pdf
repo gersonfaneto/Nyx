@@ -19,39 +19,39 @@ main() {
     PDF_ENGINE="pdflatex"
     while :; do
         case $1 in
-        -l | --lualatex)
-            PDF_ENGINE="lualatex"
-            ;;
-        -x | --xelatex)
-            PDF_ENGINE="xelatex"
-            ;;
-        -m | --latexmk)
-            PDF_ENGINE="latexmk"
-            ;;
-        -w | --wkhtmltopdf)
-            PDF_ENGINE="wkhtmltopdf"
-            ;;
-        -p | --pdflatex)
-            PDF_ENGINE="pdflatex"
-            ;;
-        -h | --help | -\?)
-            echo "Usage: $(basename $0) [-l|-x|-m|-h|-p] files" >&2
-            exit 1
-            ;;
-        --pdf-engine=*)
-            PDF_ENGINE="${1#*=}"
-            ;;
-        --pdf_engine)
-            PDF_ENGINE="$2"
-            shift
-            ;;
-        --)
-            shift
-            break
-            ;;
-        *)
-            break
-            ;;
+            -l | --lualatex)
+                PDF_ENGINE="lualatex"
+                ;;
+            -x | --xelatex)
+                PDF_ENGINE="xelatex"
+                ;;
+            -m | --latexmk)
+                PDF_ENGINE="latexmk"
+                ;;
+            -w | --wkhtmltopdf)
+                PDF_ENGINE="wkhtmltopdf"
+                ;;
+            -p | --pdflatex)
+                PDF_ENGINE="pdflatex"
+                ;;
+            -h | --help | -\?)
+                echo "Usage: $(basename $0) [-l|-x|-m|-h|-p] files" >&2
+                exit 1
+                ;;
+            --pdf-engine=*)
+                PDF_ENGINE="${1#*=}"
+                ;;
+            --pdf_engine)
+                PDF_ENGINE="$2"
+                shift
+                ;;
+            --)
+                shift
+                break
+                ;;
+            *)
+                break
+                ;;
         esac
         shift
     done
@@ -59,12 +59,12 @@ main() {
     for file in "$@"; do
         # Pictures in markdown cannot be fetched if
         # we are not in the same directory.
-        cd $(dirname $(fullpath "$file")) >/dev/null 2>&1
+        cd $(dirname $(fullpath "$file")) > /dev/null 2>&1
         md2pdf $(basename "$file") || {
             echo >&2 "md2pdf: error: pandoc failed to convert $file with edit code $?"
             exit 1
         }
-        cd - >/dev/null 2>&1
+        cd - > /dev/null 2>&1
     done
 }
 

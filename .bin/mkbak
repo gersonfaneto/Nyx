@@ -4,7 +4,7 @@
 
 print_help() {
     local script_name=$(basename "$0")
-    cat <<EOF
+    cat << EOF
 ${script_name} - make backup
 Usage: ${script_name} <file>
 
