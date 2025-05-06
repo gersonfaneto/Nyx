@@ -25,7 +25,10 @@ tmux list-windows -aF '#S:#I (#W)' \
         sed 's/([^()]*)//g' | \
         sed 's/\s\+/\n/g' | \
         tac | \
-        xargs -I % tmux kill-window -t %)+reload(tmux list-windows -aF '#S:#I (#W)')" \
+        xargs -I % tmux kill-window -t %)+reload(tmux list-windows -aF '#S:#I (#W)' \
+        | sed -e 's/^\([^:]*\):/\x1b[34m\1\x1b[0m:/' \
+              -e 's/:\([0-9]\+\) /\:\x1b[32m\1\x1b[0m /' \
+              -e 's/(\(.*\))$/(\x1b[33m\1\x1b[0m)/')" \
     | tail -n1 \
     | sed 's/\s*(.*)$//' \
     | xargs -r tmux switch -t
