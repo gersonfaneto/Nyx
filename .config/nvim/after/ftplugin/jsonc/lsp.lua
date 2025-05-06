@@ -1,1 +1,1 @@
-typescript/lsp.lua
+../typescript/lsp.lua
