@@ -1,1 +1,1 @@
-../json/lsp.lua
+typescript/lsp.lua
