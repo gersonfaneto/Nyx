@@ -166,8 +166,8 @@ local hlgroups = {
   WarningMsg = { fg = c_popout },
   Whitespace = { link = 'NonText' },
   WildMenu = { link = 'PmenuSel' },
-  WinBar = { fg = c_foreground },
-  WinBarNC = { fg = c_faded },
+  WinBar = { fg = c_foreground, bg = c_highlight },
+  WinBarNC = { fg = c_faded, bg = c_highlight },
   WinSeparator = { link = 'VertSplit' },
   lCursor = { link = 'Cursor' },
   -- }}}2
