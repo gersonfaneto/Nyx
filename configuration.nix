@@ -158,8 +158,6 @@ in
     fish
     flameshot
     fzf
-    gcc
-    gdb
     gh
     git
     htop
@@ -174,20 +172,16 @@ in
     prismlauncher
     pulseaudio
     pulsemixer
-    python3
     qalculate-gtk
     quartus-prime-lite
     ripgrep
     rsync
-    scc
     stow
-    strace
     texlive.combined.scheme-full
     tmux
     trash-cli
     tree-sitter
     unzip
-    valgrind
     vim
     wget
     xclip
@@ -195,7 +189,29 @@ in
     xsel
     zathura
     zoxide
-  ] ++ (with unstable; [
+  ] ++ ([
+    # Lua
+    lua
+    stylua
+    lua-language-server
+    luajitPackages.luacheck
+
+    # C
+    gcc
+    gdb
+    strace
+    valgrind
+
+    # Python
+    python3
+
+    # Bash
+    shfmt
+    bash-language-server
+
+    # General
+    efm-langserver
+  ]) ++(with unstable; [
     neovim
   ]);
 
