@@ -34,6 +34,7 @@ vim.opt.smartcase = true
 vim.opt.completeopt = 'menuone'
 vim.opt.jumpoptions = 'stack,view'
 vim.opt.selection = 'old'
+vim.opt.tabclose = 'uselast'
 
 -- Defer shada reading
 local shada_augroup = vim.api.nvim_create_augroup('OptShada', {})
@@ -43,7 +44,6 @@ local function rshada()
   pcall(vim.api.nvim_del_augroup_by_id, shada_augroup)
 
   vim.opt.shada = vim.api.nvim_get_option_info2('shada', {}).default
-
   pcall(vim.cmd.rshada)
 end
 
@@ -186,6 +186,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 vim.api.nvim_create_autocmd('UIEnter', {
+  group = spell_augroup,
   once = true,
   callback = vim.schedule_wrap(spellcheck),
 })
@@ -322,6 +323,7 @@ load('plugin/rplugin.vim', 'loaded_remote_plugins', {
   'BufNew',
   'BufWritePost',
   'BufReadPre',
+  'CmdUndefined UpdateRemotePlugins'
 })
 load('provider/python3.vim', 'loaded_python3_provider', {
   'FileType python',

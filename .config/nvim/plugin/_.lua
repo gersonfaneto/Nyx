@@ -121,13 +121,12 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
 })
 
 -- z
-vim.api.nvim_create_autocmd(
-  { 'UIEnter', 'CmdlineEnter', 'CmdUndefined', 'DirChanged' },
-  {
+do
+  local opts = {
     group = vim.api.nvim_create_augroup('ZSetup', {}),
     desc = 'Init z plugin.',
     once = true,
-    callback = vim.schedule_wrap(function()
+    callback = function()
       if vim.g.loaded_z then
         return
       end
@@ -137,9 +136,21 @@ vim.api.nvim_create_autocmd(
       vim.keymap.set('n', '<Leader>z', z.select, {
         desc = 'Open a directory from z',
       })
-    end),
+    end,
   }
-)
+
+  vim.api.nvim_create_autocmd({ 'CmdlineEnter', 'DirChanged' }, opts)
+  vim.api.nvim_create_autocmd(
+    'UIEnter',
+    vim.tbl_deep_extend('force', opts, {
+      callback = vim.schedule_wrap(opts.callback),
+    })
+  )
+  vim.api.nvim_create_autocmd(
+    'CmdUndefined',
+    vim.tbl_deep_extend('force', opts, { pattern = 'Z*' })
+  )
+end
 
 -- addasync
 vim.api.nvim_create_autocmd('InsertEnter', {
