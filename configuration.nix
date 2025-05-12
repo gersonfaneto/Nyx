@@ -128,6 +128,10 @@ in
       enable = true;
       enableFishIntegration = true;
     };
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [];
+    };
   };
 
   environment.variables = rec {
