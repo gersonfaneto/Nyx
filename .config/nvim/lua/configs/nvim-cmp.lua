@@ -502,6 +502,7 @@ cmp.setup({
       },
     },
     { name = 'calc' },
+    { name = 'conjure' },
   },
   sorting = {
     ---@type table[]|function[]

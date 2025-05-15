@@ -26,6 +26,12 @@ return {
   },
 
   {
+    'PaterJason/cmp-conjure',
+    ft = { 'clojure' },
+    dependencies = 'hrsh7th/nvim-cmp',
+  },
+
+  {
     'hrsh7th/cmp-nvim-lsp-signature-help',
     event = 'LspAttach',
     dependencies = 'hrsh7th/nvim-cmp',
