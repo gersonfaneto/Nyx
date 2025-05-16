@@ -299,7 +299,7 @@ vim.api.nvim_create_autocmd('CmdlineEnter', {
     key.command_abbrev('git', '!git')
     key.command_abbrev('mkd', '!mkdir')
     key.command_abbrev('tree', '!tree')
-    key.command_abbrev('extr', '!extr')
+    key.command_abbrev('ae', '!ae')
     key.command_abbrev('mkdir', '!mkdir')
     key.command_abbrev('touch', '!touch')
     key.command_abbrev('chmod', '!chmod')
