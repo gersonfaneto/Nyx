@@ -158,6 +158,7 @@ in
     brightnessctl
     fd
     feh
+    ffmpeg
     file
     fish
     flameshot
@@ -187,6 +188,7 @@ in
     tree-sitter
     unzip
     vim
+    vlc
     wget
     xclip
     xdragon
