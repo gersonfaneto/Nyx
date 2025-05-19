@@ -755,10 +755,7 @@ oil.setup({
           return
         end
         if vim.fn.executable('dragon') == 0 then
-          vim.notify(
-            '[oil] `dragon` is not executable',
-            vim.log.levels.WARN
-          )
+          vim.notify('[oil] `dragon` is not executable', vim.log.levels.WARN)
           return
         end
         vim.system({

@@ -235,8 +235,7 @@ cmp.select_next_item = cmp_select_wrapper(cmp.select_next_item)
 ---Check if currently in command line/window
 ---@return boolean
 local function in_cmd()
-  return vim.startswith(vim.fn.mode(), 'c')
-    or vim.fn.win_gettype() == 'command'
+  return vim.startswith(vim.fn.mode(), 'c') or vim.fn.win_gettype() == 'command'
 end
 
 cmp.setup({

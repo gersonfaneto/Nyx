@@ -141,7 +141,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map({ 'n', 'x' }, '<C-u>', '<C-u>zz', { desc = 'Scroll window Upwards'   })
     map({ 'n', 'x' }, '<C-f>', '<C-f>zz', { desc = 'Scroll window Forwards'  })
     map({ 'n', 'x' }, '<C-b>', '<C-b>zz', { desc = 'Scroll window Backwards' })
-    -- stylua: ignore off 
+    -- stylua: ignore off
 
     -- Tabpages
     ---@param tab_action function
