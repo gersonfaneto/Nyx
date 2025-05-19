@@ -156,6 +156,7 @@ in
     betterlockscreen
     bluetui
     brightnessctl
+    fastfetch
     fd
     feh
     ffmpeg
@@ -171,7 +172,6 @@ in
     man-pages
     man-pages-posix
     mpv
-    neofetch
     pandoc
     playerctl
     prismlauncher
