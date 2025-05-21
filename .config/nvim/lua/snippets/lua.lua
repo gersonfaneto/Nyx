@@ -584,7 +584,7 @@ M.snippets = {
       { body = un.body(1, 0) }
     )
   ),
-  us.msn(
+  us.mssn(
     {
       { trig = 'M' },
       { trig = 'mod' },
