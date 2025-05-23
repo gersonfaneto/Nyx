@@ -102,6 +102,7 @@ wk.add({
   { '<Leader>fg', group = 'Git' },
   { '<Leader>gf', group = 'Find' },
   { '<Leader>fS', group = 'LSP' },
+  { '<Leader>t', group = 'Test' },
   { '<Leader>G', group = 'Debug' },
   { '<Leader>t', group = 'Table mode' },
   { '<Leader>td', group = 'Delete' },
