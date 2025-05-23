@@ -36,6 +36,8 @@ return {
     'dhruvasagar/vim-table-mode',
     lazy = true,
     init = function()
+      vim.g.table_mode_map_prefix = '<LocalLeader><Tab>'
+
       vim.api.nvim_create_autocmd('FileType', {
         desc = 'Defer loading vim-table-mode in markdown files.',
         group = vim.api.nvim_create_augroup('VimTableModeDeferLoading', {}),

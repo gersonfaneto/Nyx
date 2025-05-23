@@ -99,16 +99,17 @@ wk.setup({
 wk.add({
   { '<Leader>g', group = 'Git' },
   { '<Leader>f', group = 'Find' },
+  { '<Leader><Tab>', group = 'Tabs' },
   { '<Leader>fg', group = 'Git' },
   { '<Leader>gf', group = 'Find' },
   { '<Leader>fS', group = 'LSP' },
   { '<Leader>t', group = 'Test' },
   { '<Leader>G', group = 'Debug' },
-  { '<Leader>t', group = 'Table mode' },
-  { '<Leader>td', group = 'Delete' },
-  { '<Leader>ti', group = 'Insert' },
-  { '<Leader>tf', group = 'Formula' },
-  { '<LocalLeader>l', group = 'LaTex' },
+  { '<LocalLeader><Tab>', group = 'Table mode' },
+  { '<LocalLeader><Tab>d', group = 'Delete' },
+  { '<LocalLeader><Tab>i', group = 'Insert' },
+  { '<LocalLeader><Tab>f', group = 'Formula' },
+  { '<LocalLeader>l', group = 'TeX' },
 })
 
 ---Set default highlight groups for which-key.nvim
