@@ -10,9 +10,10 @@ local d = ls.dynamic_node
 local r = ls.restore_node
 
 M.snippets = {
-  us.sn({
-    trig = 'pkg',
-    desc = 'package statement',
+  us.msn({
+    { trig = 'pkg' },
+    { trig = 'pack' },
+    common = { desc = 'package statement' },
   }, {
     t('package '),
     i(1, 'main'),
@@ -132,11 +133,30 @@ M.snippets = {
       expr = i(1),
     })
   ),
-  us.msn(
+  us.sn(
     {
-      { trig = 'ck' },
-      { trig = 'check' },
-      common = { desc = 'Check a value of a variable' },
+      trig = 'l',
+      desc = 'testing.T.Log()',
+    },
+    un.fmtad('t.Log("<str>"<args>)', {
+      str = r(1, 'str'),
+      args = r(2, 'args'),
+    })
+  ),
+  us.sn(
+    {
+      trig = 'lf',
+      desc = 'testing.T.Logf()',
+    },
+    un.fmtad('t.Logf("<str>"<args>)', {
+      str = r(1, 'str'),
+      args = r(2, 'args'),
+    })
+  ),
+  us.sn(
+    {
+      trig = 'ck',
+      desc = 'Check a value of a variable',
     },
     un.fmtad('"<expr_escaped>:", <expr>', {
       expr = i(1),
@@ -145,13 +165,25 @@ M.snippets = {
       end, { 1 }),
     })
   ),
-  us.msn(
+  us.sn(
     {
-      { trig = 'pck' },
-      { trig = 'pcheck' },
-      common = { desc = 'Check a value of a variable through fmt.Println()' },
+      trig = 'pck',
+      desc = 'Check a value of a variable through fmt.Println()',
     },
-    un.fmtad('fmt.Println("<expr_escaped> ::", <expr>)', {
+    un.fmtad('fmt.Println("<expr_escaped>:", <expr>)', {
+      expr = i(1),
+      expr_escaped = d(2, function(texts)
+        local str = vim.fn.escape(texts[1][1], '\\"')
+        return sn(nil, i(1, str))
+      end, { 1 }),
+    })
+  ),
+  us.sn(
+    {
+      trig = 'lck',
+      desc = 'Check a value of a variable through testing.T.Log()',
+    },
+    un.fmtad('t.Log("<expr_escaped>:", <expr>)', {
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\"')
@@ -189,6 +221,26 @@ M.snippets = {
         i(nil, 'os.Stderr'),
         i(nil, 'os.Stdout'),
       }),
+      line = c(1, {
+        i(nil, '----------------------------------------'),
+        i(nil, '========================================'),
+        i(nil, '........................................'),
+        i(nil, '++++++++++++++++++++++++++++++++++++++++'),
+        i(nil, '****************************************'),
+        i(nil, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'),
+        i(nil, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'),
+        i(nil, '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'),
+        i(nil, '########################################'),
+        i(nil, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'),
+      }),
+    })
+  ),
+  us.sn(
+    {
+      trig = 'll',
+      desc = 'Log a line',
+    },
+    un.fmtad('t.Log("<line>")', {
       line = c(1, {
         i(nil, '----------------------------------------'),
         i(nil, '========================================'),
@@ -654,7 +706,6 @@ M.snippets = {
       { trig = 'fn' },
       { trig = 'fun' },
       { trig = 'func' },
-      { trig = 'function' },
       { trig = 'def' },
       common = { desc = 'Function definition' },
     },
@@ -730,7 +781,7 @@ M.snippets = {
   us.msn(
     {
       { trig = 'me' },
-      { trig = 'method' },
+      { trig = 'meth' },
       common = { desc = 'Method definition' },
     },
     un.fmtad(
@@ -750,12 +801,10 @@ M.snippets = {
   ),
   us.msn(
     {
-      { trig = 'cls' },
-      { trig = 'class' },
-      { trig = 'tp' },
-      { trig = 'type' },
       { trig = 'st' },
       { trig = 'struct' },
+      { trig = 'cls' },
+      { trig = 'class' },
       common = { desc = 'Struct definition' },
     },
     un.fmtad(
