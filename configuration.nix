@@ -209,7 +209,12 @@ in
     valgrind
 
     # Python
-    python3
+    python312
+    python312Packages.pip
+    python312Packages.mypy
+    python312Packages.pynvim
+    python312Packages.jupyter-client
+    python312Packages.jupytext
 
     # Bash
     shfmt
