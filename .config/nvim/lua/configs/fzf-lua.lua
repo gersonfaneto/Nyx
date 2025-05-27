@@ -25,20 +25,20 @@ local _mt_cmd_wrapper = core.mt_cmd_wrapper
 ---to ignore `opts.cwd` when generating the command string because once the
 ---cwd is hard-coded in the command string, `opts.cwd` will be ignored.
 ---
----This fixes the bug where `switch_cwd()` does not work if it is used after
+---This fixes the bug where `change_cwd()` does not work if it is used after
 ---`switch_provider()`:
 ---
 ---In `switch_provider()`, `opts.cwd` will be passed the corresponding fzf
 ---provider (file or grep) where it will be compiled in the command string,
 ---which will then be stored in `fzf.config.__resume_data.contents`.
 ---
----`switch_cwd()` internally calls the resume action to resume the last
+---`change_cwd()` internally calls the resume action to resume the last
 ---provider and reuse other info in previous fzf session (e.g. last query, etc)
 ---except `opts.cwd`, `opts.fn_selected`, etc. that needs to be changed to
 ---reflect the new cwd.
 ---
 ---Thus if `__resume_data.contents` contains information about the previous
----cwd, the new cwd in `opts.cwd` will be ignored and `switch_cwd()` will not
+---cwd, the new cwd in `opts.cwd` will be ignored and `change_cwd()` will not
 ---take effect.
 ---@param opts table?
 ---@diagnostic disable-next-line: duplicate-set-field
@@ -71,9 +71,9 @@ function actions.switch_provider()
   })
 end
 
----Switch cwd while preserving the last query
+---Change cwd while preserving the last query
 ---@return nil
-function actions.switch_cwd()
+function actions.change_cwd()
   local resume_data = vim.deepcopy(fzf.config.__resume_data)
   resume_data.opts = resume_data.opts or {}
 
@@ -96,7 +96,7 @@ function actions.switch_cwd()
     -- Append current dir './' to the result list to allow switching to home
     -- or root directory
     cmd = string.format(
-      [[%s | sed '1i ./']],
+      "%s | sed '1i\\\n ./\n'",
       (function()
         local fd_cmd = vim.fn.executable('fd') == 1 and 'fd'
           or vim.fn.executable('fdfind') == 1 and 'fdfind'
@@ -342,7 +342,7 @@ core.ACTION_DEFINITIONS[actions.toggle_dir] = {
       or 'Include dirs'
   end,
 }
-core.ACTION_DEFINITIONS[actions.switch_cwd] = { 'Change cwd', pos = 1 }
+core.ACTION_DEFINITIONS[actions.change_cwd] = { 'Change cwd', pos = 1 }
 core.ACTION_DEFINITIONS[actions.arg_del] = { 'delete' }
 core.ACTION_DEFINITIONS[actions.del_autocmd] = { 'delete autocmd' }
 core.ACTION_DEFINITIONS[actions.arg_search_add] = { 'add new file' }
@@ -352,7 +352,7 @@ core.ACTION_DEFINITIONS[actions.insert_register] = { 'insert register' }
 
 config._action_to_helpstr[actions.toggle_dir] = 'toggle-dir'
 config._action_to_helpstr[actions.switch_provider] = 'switch-provider'
-config._action_to_helpstr[actions.switch_cwd] = 'change-cwd'
+config._action_to_helpstr[actions.change_cwd] = 'change-cwd'
 config._action_to_helpstr[actions.arg_del] = 'delete'
 config._action_to_helpstr[actions.del_autocmd] = 'delete-autocmd'
 config._action_to_helpstr[actions.arg_search_add] = 'search-and-add-new-file'
@@ -474,15 +474,86 @@ function fzf.z(opts)
   )
 end
 
--- Fuzzy complete from registers in insert mode
+-- Select/remove sessions from the session plugin
+---@param opts table?
+function fzf.sessions(opts)
+  local has_session_plugin, session = pcall(require, 'plugin.session')
+  if not has_session_plugin then
+    vim.notify('[Fzf-lua] session plugin not found')
+    return
+  end
+
+  if vim.fn.executable('ls') == 0 then
+    vim.notify('[Fzf-lua] `ls` command not available')
+    return
+  end
+
+  ---Get keymap action
+  ---@param cb fun(path?: string) session operation function (load, remove, etc.)
+  ---@return fun(selected: string[])
+  local function action(cb)
+    return function(selected)
+      cb(vim.fs.joinpath(session.opts.dir, session.dir2session(selected[1])))
+    end
+  end
+
+  -- Register action descriptions
+  actions.load_session = action(session.load)
+  core.ACTION_DEFINITIONS[actions.load_session] = { 'load session' }
+  config._action_to_helpstr[actions.load_session] = 'load-session'
+
+  actions.remove_session = action(session.remove)
+  core.ACTION_DEFINITIONS[actions.remove_session] = { 'remove session' }
+  config._action_to_helpstr[actions.remove_session] = 'remove-session'
+
+  return fzf.fzf_exec(
+    string.format(
+      [[ls -1 %s | while read -r file; do mod="${file//%%//}"; echo "${mod//\/\//%%}"; done]],
+      session.opts.dir
+    ),
+    vim.tbl_deep_extend('force', opts or {}, {
+      prompt = 'Sessions: ',
+      actions = {
+        ['enter'] = actions.load_session,
+        ['ctrl-x'] = {
+          fn = actions.remove_session,
+          reload = true,
+        },
+      },
+      fzf_opts = {
+        ['--no-multi'] = true,
+      },
+    })
+  )
+end
+
+---Fuzzy complete cmdline command/search history
+---@param opts table?
+function fzf.complete_cmdline(opts)
+  opts = opts or {}
+  opts.query = vim.fn.getcmdline()
+  vim.api.nvim_feedkeys(vim.keycode('<C-\\><C-n>'), 'n', true)
+
+  local type = vim.fn.getcmdtype()
+  if type == ':' then
+    fzf.command_history(opts)
+    return
+  end
+  if type == '/' or type == '?' then
+    opts.reverse_search = type == '?'
+    fzf.search_history(opts)
+    return
+  end
+end
+
+---Fuzzy complete from registers in insert mode
 ---@param opts table?
 function fzf.complete_from_registers(opts)
   fzf.registers(vim.tbl_deep_extend('force', opts or {}, {
     actions = {
-      ['enter'] = actions.insert_register
-    }
-  }
-  ))
+      ['enter'] = actions.insert_register,
+    },
+  }))
 end
 
 fzf.setup({
@@ -713,7 +784,7 @@ fzf.setup({
   },
   files = {
     actions = {
-      ['alt-c'] = actions.switch_cwd,
+      ['alt-c'] = actions.change_cwd,
       ['alt-h'] = actions.toggle_hidden,
       ['alt-i'] = actions.toggle_ignore,
       ['alt-/'] = actions.toggle_dir,
@@ -784,7 +855,7 @@ fzf.setup({
   grep = {
     rg_glob = true,
     actions = {
-      ['alt-c'] = actions.switch_cwd,
+      ['alt-c'] = actions.change_cwd,
       ['alt-h'] = actions.toggle_hidden,
       ['alt-i'] = actions.toggle_ignore,
     },
@@ -831,12 +902,15 @@ fzf.setup({
 })
 
 -- stylua: ignore start
+vim.keymap.set('c', '<C-_>', fzf.complete_cmdline, { desc = 'Fuzzy complete command/search history' })
+vim.keymap.set('c', '<C-x><C-l>', fzf.complete_cmdline, { desc = 'Fuzzy complete command/search history' })
 vim.keymap.set('i', '<C-r>?', fzf.complete_from_registers, { desc = 'Fuzzy complete from registers' })
 vim.keymap.set('i', '<C-r><C-_>', fzf.complete_from_registers, { desc = 'Fuzzy complete from registers' })
 vim.keymap.set('i', '<C-r><C-r>', fzf.complete_from_registers, { desc = 'Fuzzy complete from registers' })
-vim.keymap.set('i', '<C-x><C-f>', fzf.complete_path , { desc = 'Fuzzy complete path' })
+vim.keymap.set('i', '<C-x><C-f>', fzf.complete_path, { desc = 'Fuzzy complete path' })
 vim.keymap.set('n', '<Leader>.', fzf.files, { desc = 'Find files' })
 vim.keymap.set('n', "<Leader>'", fzf.resume, { desc = 'Resume last picker' })
+vim.keymap.set('n', "<Leader>`", fzf.marks, { desc = 'Find marks' })
 vim.keymap.set('n', '<Leader>,', fzf.buffers, { desc = 'Find buffers' })
 vim.keymap.set('n', '<Leader>/', fzf.live_grep, { desc = 'Grep' })
 vim.keymap.set('n', '<Leader>?', fzf.help_tags, { desc = 'Find help tags' })
@@ -849,6 +923,7 @@ vim.keymap.set('n', '<Leader>:', fzf.commands, { desc = 'Find commands' })
 vim.keymap.set('n', '<Leader>F', fzf.builtin, { desc = 'Find all available pickers' })
 vim.keymap.set('n', '<Leader>o', fzf.oldfiles, { desc = 'Find old files' })
 vim.keymap.set('n', '<Leader>-', fzf.blines, { desc = 'Find lines in buffer' })
+vim.keymap.set('x', '<Leader>-', fzf.blines, { desc = 'Find lines in selection' })
 vim.keymap.set('n', '<Leader>=', fzf.lines, { desc = 'Find lines across buffers' })
 vim.keymap.set('n', '<Leader>n', fzf.treesitter, { desc = 'Find treesitter nodes' })
 vim.keymap.set('n', '<Leader>R', fzf.lsp_finder, { desc = 'Find symbol locations' })
@@ -891,10 +966,12 @@ vim.keymap.set('n', '<Leader>gfB', fzf.git_branches, { desc = 'Find git blame' }
 vim.keymap.set('n', '<Leader>fh', fzf.help_tags, { desc = 'Find help tags' })
 vim.keymap.set('n', '<Leader>fk', fzf.keymaps, { desc = 'Find keymaps' })
 vim.keymap.set('n', '<Leader>f-', fzf.blines, { desc = 'Find lines in buffer' })
+vim.keymap.set('x', '<Leader>f-', fzf.blines, { desc = 'Find lines in selection' })
 vim.keymap.set('n', '<Leader>f=', fzf.lines, { desc = 'Find lines across buffers' })
 vim.keymap.set('n', '<Leader>fm', fzf.marks, { desc = 'Find marks' })
 vim.keymap.set('n', '<Leader>fo', fzf.oldfiles, { desc = 'Find old files' })
 vim.keymap.set('n', '<Leader>fz', fzf.z, { desc = 'Find directories from z' })
+vim.keymap.set('n', '<Leader>fw', fzf.sessions, { desc = 'Find sessions (workspaces)' })
 vim.keymap.set('n', '<Leader>fn', fzf.treesitter, { desc = 'Find treesitter nodes' })
 vim.keymap.set('n', '<Leader>fs', fzf.symbols, { desc = 'Find lsp symbols or treesitter nodes' })
 vim.keymap.set('n', '<Leader>fSa', fzf.lsp_code_actions, { desc = 'Find code actions' })
