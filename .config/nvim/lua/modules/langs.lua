@@ -3,5 +3,8 @@ return {
     'mfussenegger/nvim-jdtls',
     ft = { 'java' },
   },
-  { 'Olical/conjure' },
+  {
+    'Olical/conjure',
+    ft = { 'clojure' },
+  },
 }
