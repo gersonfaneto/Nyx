@@ -215,6 +215,9 @@ in
     shfmt
     bash-language-server
 
+    # Node
+    nodejs_22
+
     # General
     efm-langserver
   ]) ++(with unstable; [
