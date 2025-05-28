@@ -178,7 +178,6 @@ in
     pulseaudio
     pulsemixer
     qalculate-gtk
-    quartus-prime-lite
     ripgrep
     rsync
     stow
