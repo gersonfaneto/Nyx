@@ -156,6 +156,7 @@ in
     betterlockscreen
     bluetui
     brightnessctl
+    diff-so-fancy
     fastfetch
     fd
     feh
@@ -164,7 +165,6 @@ in
     fish
     flameshot
     fzf
-    gh
     git
     htop
     jq
