@@ -54,7 +54,7 @@
 
 [push]
   default = current
-  gpgSign = true
+  ; gpgSign = true
   followTags = true
   autoSetupRemote = true
 
