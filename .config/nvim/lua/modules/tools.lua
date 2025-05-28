@@ -226,6 +226,17 @@ return {
       'tpope/vim-rhubarb',
       'shumphrey/fugitive-gitlab.vim',
     },
+    init = function()
+      vim.api.nvim_create_autocmd('CmdLineEnter', {
+        once = true,
+        callback = function()
+          local key = require('utils.key')
+          key.command_map('gs', 'Git')
+          key.command_map('go', 'Git | only')
+          key.command_map('gt', 'tabnew | Git | only')
+        end,
+      })
+    end,
     config = function()
       require('configs.vim-fugitive')
     end,
