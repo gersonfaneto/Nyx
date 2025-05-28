@@ -8,7 +8,6 @@ vim.cmd([[
 ]])
 
 -- stylua: ignore start
-vim.keymap.set('n', '<Leader>gg', '<Cmd>Git<CR>', { desc = 'Git status' })
 vim.keymap.set('n', '<Leader>gd', '<Cmd>Gdiff<CR>', { desc = 'Git diff current file' })
 vim.keymap.set('n', '<Leader>gD', '<Cmd>Git diff<CR>', { desc = 'Git diff entire repo' })
 vim.keymap.set('n', '<Leader>gB', '<Cmd>Git blame<CR>', { desc = 'Git blame current file' })

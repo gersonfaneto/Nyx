@@ -217,7 +217,6 @@ return {
       'Gwrite',
     },
     keys = {
-      { '<Leader>gg', desc = 'Git status' },
       { '<Leader>gL', desc = 'Git log entire repo' },
       { '<Leader>gD', desc = 'Git diff entire repo' },
     },
