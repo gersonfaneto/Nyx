@@ -100,7 +100,7 @@
 
 ; URL Shorthand's
 
-[url "git@github.com:gersonfaneto"]
+[url "git@github.com:gersonfaneto/"]
   insteadOf = "me:"
 
 [url "git@github.com:"]
