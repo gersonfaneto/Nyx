@@ -69,6 +69,15 @@
   autoStash = true
   missingCommitsCheck = warn
 
+[merge]
+  tool = vimdiff
+
+[mergetool]
+  keepBackup = false
+
+[mergetool "vimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
 ; Colors
 
 ; [color "decorate"]
