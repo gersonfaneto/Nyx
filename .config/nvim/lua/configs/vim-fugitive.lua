@@ -25,6 +25,15 @@ vim.api.nvim_create_autocmd('User', {
     vim.keymap.set({ 'n', 'x' }, 'S', 's', options)
     vim.keymap.set({ 'n', 'x' }, 'x', 'X', options)
 
+    vim.keymap.set({ 'n', 'x' }, '[g', '[c', {
+      buffer = info.buf,
+      remap = true,
+    })
+    vim.keymap.set({ 'n', 'x' }, ']g', ']c', {
+      buffer = info.buf,
+      remap = true,
+    })
+
     -- stylua: ignore start
     vim.keymap.set({ 'n' }, '<Leader>p', function() vim.cmd.Git('push') end, options)
     vim.keymap.set({ 'n' }, '<Leader>P', function() vim.cmd.Git({ 'pull', '--rebase' }) end, options)
