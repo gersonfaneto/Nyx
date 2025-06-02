@@ -217,7 +217,7 @@ function M.range_contains(range1, range2, strict)
           )
         )
       )
-  -- stylua: ignore off
+  -- stylua: ignore end
 end
 
 ---Check if cursor is in range
