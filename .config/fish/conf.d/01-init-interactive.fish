@@ -14,3 +14,13 @@ end
 # Also, shouldn't export this variable with `set -gx` as we don't want to to
 # affect other shells, e.g. `bash` that is nested in `fish`
 set -g VIRTUAL_ENV_DISABLE_PROMPT true
+
+set -gx SNIPPETS "$HOME/.snippets"
+
+hash --add "$HOME/.bin"
+
+type -q zoxide; and zoxide init fish | source
+
+type -q nvim; and set -gx EDITOR nvim && set -gx MANPAGER 'nvim +Man!' \
+    && fc-list - family | cut -d , -f 1 | sort | uniq | grep -q 'Nerd Font' \
+    && set -gx NVIM_NF true
