@@ -26,10 +26,12 @@ vim.api.nvim_create_autocmd('User', {
     vim.keymap.set({ 'n', 'x' }, 'x', 'X', options)
 
     vim.keymap.set({ 'n', 'x' }, '[g', '[c', {
+      desc = 'Go to previous hunk',
       buffer = info.buf,
       remap = true,
     })
     vim.keymap.set({ 'n', 'x' }, ']g', ']c', {
+      desc = 'Go to next hunk',
       buffer = info.buf,
       remap = true,
     })
