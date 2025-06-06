@@ -145,6 +145,7 @@ M.snippets = {
   us.msn(
     {
       { trig = 'sw' },
+      { trig = 'swi' },
       { trig = 'switch' },
       common = { desc = 'switch statement' },
     },
