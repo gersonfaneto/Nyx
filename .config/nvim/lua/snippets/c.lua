@@ -98,11 +98,10 @@ M.snippets = {
       }),
     })
   ),
-  us.msn(
+  us.sn(
     {
-      { trig = 'ck' },
-      { trig = 'check' },
-      common = { desc = 'Inspect through formatted string' },
+      trig = 'ck',
+      desc = 'Inspect through formatted string',
     },
     un.fmtad('"<expr_escaped>: <placeholder>\\n", <expr>', {
       expr = i(1),
@@ -124,13 +123,12 @@ M.snippets = {
       }),
     })
   ),
-  us.msn(
+  us.sn(
     {
-      { trig = 'pck' },
-      { trig = 'pcheck' },
-      common = { desc = 'Inspect through printf()' },
+      trig = 'pck',
+      desc = 'Inspect through printf()',
     },
-    un.fmtad('printf("<expr_escaped> :: <placeholder>\\n", <expr>);', {
+    un.fmtad('printf("<expr_escaped>: <placeholder>\\n", <expr>);', {
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\"')
@@ -150,13 +148,12 @@ M.snippets = {
       }),
     })
   ),
-  us.msn(
+  us.sn(
     {
-      { trig = 'dpck' },
-      { trig = 'dpcheck' },
-      common = { desc = 'Inspect through dbg_printf()' },
+      trig = 'dpck',
+      desc = 'Inspect through dbg_printf()',
     },
-    un.fmtad('dbg_printf("<expr_escaped> :: <placeholder>\\n", <expr>);', {
+    un.fmtad('dbg_printf("<expr_escaped>: <placeholder>\\n", <expr>);', {
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\"')
@@ -506,7 +503,6 @@ M.snippets = {
       { trig = 'fn' },
       { trig = 'fun' },
       { trig = 'func' },
-      { trig = 'function' },
       common = { desc = 'Function definition/declaration' },
     },
     c(1, {
@@ -624,6 +620,37 @@ M.snippets = {
   ),
   us.msn(
     {
+      { trig = 'en' },
+      { trig = 'enu' },
+      { trig = 'enum' },
+      common = { desc = 'Enum definition/declaration' },
+    },
+    c(1, {
+      un.fmtad(
+        [[
+          enum <name> {
+          <body>
+          };
+        ]],
+        {
+          name = r(1, 'name'),
+          body = un.body(2, 1),
+        }
+      ),
+      un.fmtad('enum <name>;', {
+        name = r(1, 'name'),
+      }),
+    }),
+    {
+      common_opts = {
+        stored = {
+          name = i(nil, 'enum_name'),
+        },
+      },
+    }
+  ),
+  us.msn(
+    {
       { trig = 'tp' },
       { trig = 'type' },
       { trig = 'typedef' },
@@ -725,59 +752,44 @@ M.snippets = {
       },
     }
   ),
-  us.sn(
+  us.msn(
     {
-      trig = 'bph',
-      desc = 'beecrowd problem header',
+      { trig = 'tpe' },
+      { trig = 'tpen' },
+      { trig = 'tpenu' },
+      { trig = 'tpenum' },
+      { trig = 'typedefe' },
+      { trig = 'typedefen' },
+      { trig = 'typedefenu' },
+      { trig = 'typedefenum' },
+      common = { desc = 'typedef enum definition/declaration statement' },
     },
-    un.fmtd(
-      [[
-      /*
-       * '{title}'
-       * {category} | Level {level}
-       *
-       * Author :: Gerson Ferreira <gersonfaneto.dev@gmail.com>
-       *
-       * Solved  @ {solved_at}
-       * Updated @ {updated_at}
-       *
-       * Details @ https://judge.beecrowd.com/en/problems/view/{id}
-       */
-      ]],
-      {
-        title = i(1),
-        category = c(2, {
-          i(nil, 'Beginner'),
-          i(nil, 'AD-HOC'),
-          i(nil, 'Strings'),
-          i(nil, 'Data Structures & Libraries'),
-          i(nil, 'Mathematics'),
-          i(nil, 'Paradigms'),
-          i(nil, 'Graph'),
-          i(nil, 'Computational Geometry'),
-          i(nil, 'SQL'),
-        }),
-        level = c(3, {
-          i(nil, '1'),
-          i(nil, '2'),
-          i(nil, '3'),
-          i(nil, '4'),
-          i(nil, '5'),
-          i(nil, '6'),
-          i(nil, '7'),
-          i(nil, '8'),
-          i(nil, '9'),
-          i(nil, '10'),
-        }),
-        solved_at = i(4),
-        updated_at = i(5),
-        id = d(6, function()
-          local bufname = vim.api.nvim_buf_get_name(0)
-          local str = vim.fn.fnamemodify(bufname, ':t:r')
-          return sn(nil, t(str))
-        end),
-      }
-    )
+    c(1, {
+      un.fmtad(
+        [[
+          typedef enum <name> {
+          <body>
+          } <alias>;
+        ]],
+        {
+          name = r(1, 'name'),
+          body = un.body(3, 1),
+          alias = r(2, 'alias'),
+        }
+      ),
+      un.fmtad('typedef enum <name> <alias>;', {
+        name = r(1, 'name'),
+        alias = r(2, 'alias'),
+      }),
+    }),
+    {
+      common_opts = {
+        stored = {
+          name = i(1, 'name'),
+          alias = i(2, 'alias'),
+        },
+      },
+    }
   ),
   us.sn(
     { trig = 'nf', desc = 'Disable clang-format' },
