@@ -247,7 +247,7 @@ local hlgroups = {
   PmenuSel = { bg = c_macroBg4, fg = 'NONE' },
   PmenuThumb = { bg = c_macroBg5 },
   Question = { link = 'MoreMsg' },
-  QuickFixLine = { bg = c_macroBg3 },
+  QuickFixLine = { bg = c_winterGreen },
   Search = { bg = c_macroBg4 },
   SignColumn = { fg = c_macroGray2 },
   SpellBad = { underdashed = true },
