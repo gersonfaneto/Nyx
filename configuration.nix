@@ -157,6 +157,7 @@ in
     bluetui
     brightnessctl
     diff-so-fancy
+    emacs
     fastfetch
     fd
     feh
@@ -172,6 +173,7 @@ in
     man-pages
     man-pages-posix
     mpv
+    neovim
     pandoc
     playerctl
     prismlauncher
@@ -224,8 +226,6 @@ in
 
     # General
     efm-langserver
-  ]) ++(with unstable; [
-    neovim
   ]);
 
   fonts = {
