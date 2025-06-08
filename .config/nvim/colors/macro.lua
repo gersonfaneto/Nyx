@@ -596,6 +596,7 @@ if vim.go.bg == 'light' then
   hlgroups.StatusLineGitAdded = { bg = c_macroBg0, fg = c_macroGreen1 }
   hlgroups.StatusLineGitChanged = { bg = c_macroBg0, fg = c_autumnYellow }
   hlgroups.StatusLineGitRemoved = { bg = c_macroBg0, fg = c_macroRed }
+  hlgroups.StatusLineGitBranch = { bg = c_macroBg0, fg = c_macroAsh }
   hlgroups.StatusLineHeader = { bg = c_macroFg0, fg = c_macroBg0 }
   hlgroups.StatusLineHeaderModified = { bg = c_macroRed, fg = c_macroBg0 }
   hlgroups.Visual = { bg = c_macroBg3 }
