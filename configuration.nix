@@ -139,9 +139,8 @@ in
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME   = "$HOME/.local/share";
     XDG_STATE_HOME  = "$HOME/.local/state";
-
-    # Not officially in the specification
     XDG_BIN_HOME    = "$HOME/.local/bin";
+
     PATH = [ 
       "${XDG_BIN_HOME}"
     ];
@@ -229,15 +228,18 @@ in
   ]);
 
   fonts = {
-    packages = [
-      (unstable.nerd-fonts.space-mono)
+    packages = with pkgs; [
+      noto-fonts-color-emoji
+      nerd-fonts.symbols-only
+      (iosevka-bin.override { variant = "SS07"; })
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
-        serif = [  "SpaceMono Nerd Font"  ];
-        sansSerif = [ "SpaceMono Nerd Font"  ];
-        monospace = [ "SpaceMono Nerd Font" ];
+        emoji = [ "Noto Emoji" ];
+        serif = [  "Iosevka SS07"  ];
+        sansSerif = [ "Iosevka SS07"  ];
+        monospace = [ "Iosevka SS07" ];
       };
     };
   };
