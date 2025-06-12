@@ -1,21 +1,5 @@
--- Modify & confirm test command before running
-vim.g['test#custom_strategies'] = {
-  confirm = function(cmd)
-    vim.ui.input({ prompt = 'Test command: ', default = cmd }, function(input)
-      cmd = input
-    end)
-    if not cmd then
-      return
-    end
-    return vim.fn['test#strategy#' .. (vim.g['test#confirm#strategy'] or 'basic')](
-      cmd
-    )
-  end,
-}
-
-vim.g['test#strategy'] = 'confirm'
-vim.g['test#confirm#strategy'] = 'neovim'
-vim.g['test#neovim#term_position'] = 'belowright'
+-- Use vim-dispatch to run test and populate qflist
+vim.g['test#strategy'] = 'dispatch'
 
 -- Lazy-load test configs for each filetype
 require('utils.ft').auto_load_once('testconfigs', function(ft, configs)
