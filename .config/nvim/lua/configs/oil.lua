@@ -754,12 +754,12 @@ oil.setup({
         if vim.tbl_isempty(entries) or not dir then
           return
         end
-        if vim.fn.executable('dragon') == 0 then
-          vim.notify('[oil] `dragon` is not executable', vim.log.levels.WARN)
+        if vim.fn.executable('dragon-drop') == 0 then
+          vim.notify('[oil] `dragon-drop` is not executable', vim.log.levels.WARN)
           return
         end
         vim.system({
-          'dragon',
+          'dragon-drop',
           unpack(vim
             .iter(entries)
             :map(function(entry)
