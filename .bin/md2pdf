@@ -1,0 +1,112 @@
+#!/usr/bin/env sh
+# vim: ft=sh ts=4 sw=4 sts=4 et :
+
+# Get absolute path without using realpath/readlink
+abs_path() {
+    case "$1" in
+    /*) printf '%s\n' "$1" ;;
+    *) printf '%s/%s\n' "$PWD" "$1" ;;
+    esac
+}
+
+md2pdf() {
+    pandoc \
+        --lua-filter="${HOME}/.pandoc/md2pdf_filter.lua" \
+        --pdf-engine="$PDF_ENGINE" \
+        -V block-headings \
+        -V colorlinks=true \
+        -V CJKmainfont="Source Han Serif CN" \
+        -V geometry:margin=1in \
+        -f markdown-implicit_figures \
+        -t pdf \
+        "$1" \
+        -o "${1%.md}.pdf"
+}
+
+usage() {
+    printf "Usage: %s [OPTIONS] files\n" "$(basename "$0")"
+    printf "Options:\n"
+    printf "  -l, --lualatex     Use lualatex engine\n"
+    printf "  -x, --xelatex      Use xelatex engine\n"
+    printf "  -m, --latexmk      Use latexmk engine\n"
+    printf "  -w, --wkhtmltopdf  Use wkhtmltopdf engine\n"
+    printf "  -p, --pdflatex     Use pdflatex engine (default)\n"
+    printf "  --pdf-engine=NAME  Use specified PDF engine\n"
+    printf "  -h, --help         Show this help message\n"
+}
+
+main() {
+    PDF_ENGINE="pdflatex"
+    while [ $# -gt 0 ]; do
+        case $1 in
+        -l | --lualatex)
+            PDF_ENGINE="lualatex"
+            ;;
+        -x | --xelatex)
+            PDF_ENGINE="xelatex"
+            ;;
+        -m | --latexmk)
+            PDF_ENGINE="latexmk"
+            ;;
+        -w | --wkhtmltopdf)
+            PDF_ENGINE="wkhtmltopdf"
+            ;;
+        -p | --pdflatex)
+            PDF_ENGINE="pdflatex"
+            ;;
+        -h | --help | -\?)
+            usage
+            exit 0
+            ;;
+        --pdf-engine=*)
+            PDF_ENGINE="${1#*=}"
+            ;;
+        --pdf-engine)
+            if [ -z "$2" ]; then
+                echo "Error: --pdf-engine requires an argument" >&2
+                exit 1
+            fi
+            PDF_ENGINE="$2"
+            shift
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -*)
+            echo "Error: unknown option '$1'" >&2
+            usage
+            exit 1
+            ;;
+        *)
+            break
+            ;;
+        esac
+        shift
+    done
+
+    if [ $# -eq 0 ]; then
+        echo "Error: no input files" >&2
+        usage
+        exit 1
+    fi
+
+    for file in "$@"; do
+        oldpwd=$PWD
+
+        # Pictures in markdown cannot be fetched if we are not in the same
+        # directory
+        cd "$(dirname "$(realpath "$file")")" >/dev/null 2>&1 || exit 1
+
+        if ! md2pdf "$(basename "$file")"; then
+            rc=$?
+            echo "md2pdf: error: pandoc failed to convert '$file' with exit code $rc" >&2
+            cd "$oldpwd" >/dev/null 2>&1
+            exit $rc
+        fi
+
+        cd "$oldpwd" >/dev/null 2>&1
+    done
+}
+
+main "$@"

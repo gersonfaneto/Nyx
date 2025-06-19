@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+# vim: ft=sh ts=4 sw=4 sts=4 et :
+
+md2html() {
+    pandoc \
+        --katex \
+        --standalone \
+        --embed-resources \
+        -f markdown-implicit_figures \
+        --css ~/.config/pandoc/css/paper.css \
+        -t html \
+        "$1" \
+        -o "${1%.md}.html"
+}
+
+main() {
+    for file in "$@"; do
+        oldpwd=$PWD
+
+        # Pictures in markdown cannot be fetched if we are not in the same
+        # directory
+        cd "$(dirname "$(realpath "$file")")" >/dev/null 2>&1 || exit 1
+
+        if ! md2html "$(basename "$file")"; then
+            echo "md2html: error: pandoc failed to convert '$file'" >&2
+            cd "$oldpwd" >/dev/null 2>&1
+            exit 1
+        fi
+
+        cd "$oldpwd" >/dev/null 2>&1
+    done
+}
+
+main "$@"

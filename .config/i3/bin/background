@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -ex
+
+BG="$HOME/.local/share/backgrounds/3840x2160.png"
+
+feh --bg-fill $BG
+betterlockscreen --update $BG --fx

@@ -1,0 +1,470 @@
+#!/usr/bin/env sh
+# vim: ft=sh ts=4 sw=4 sts=4 et :
+
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+DEFAULT_COLOR='macro'
+DEFAULT_BG='dark'
+
+has() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+get_theme_variant() {
+    # $1: name of the old theme
+    # $2: 'light' or 'dark'
+    case "$2" in
+    light) echo "$1" | sed 's/dark\|light/light/' | sed 's/Dark\|Light/Light/' ;;
+    dark) echo "$1" | sed 's/dark\|light/dark/' | sed 's/Dark\|Light/Dark/' ;;
+    esac
+}
+
+setbg_alacritty() {
+    # $1: 'light' or 'dark'
+    (
+        cd "$CONFIG_HOME/alacritty" 2>/dev/null || return 1
+        theme_path="theme.toml"
+        themes_dir="themes"
+        # If $1 is empty, only need to ensure symlink to color theme file exists
+        if [ -z "$1" ]; then
+            ln -s "$themes_dir/$DEFAULT_BG.toml" "$theme_path" 2>/dev/null
+        else
+            ln -sf "$themes_dir/$1.toml" "$theme_path"
+        fi
+    )
+    (
+        cd "$CONFIG_HOME/alacritty" 2>/dev/null || return 1
+        touch "alacritty.toml" # Force reload
+    )
+}
+
+setbg_foot() {
+    # $1: 'light' or 'dark'
+    (
+        cd "$CONFIG_HOME/foot" 2>/dev/null || return 1
+        theme_path="theme.ini"
+        themes_dir="themes"
+        if [ -z "$1" ]; then
+            ln -s "$themes_dir/$DEFAULT_BG.ini" "$theme_path" 2>/dev/null
+        else
+            ln -sf "$themes_dir/$1.ini" "$theme_path"
+        fi
+    )
+
+    # Reload config
+    config_path="$CONFIG_HOME/foot/foot.ini"
+    [ -e "$config_path" ] && touch "$config_path"
+}
+
+setbg_kitty() {
+    # $1: 'light' or 'dark'
+    (
+        cd "$CONFIG_HOME/kitty" 2>/dev/null || return 1
+        no_preference_theme_path="no-preference-theme.auto.conf"
+        current_theme_path="current-theme.conf"
+        # Kitty changes its theme automatically w.r.t.
+        # `{dark,light,no-preference}-theme.auto.conf` when OS switches to
+        # dark/light mode, see: https://sw.kovidgoyal.net/kitty/kittens/themes/#change-color-themes-automatically-when-the-os-switches-between-light-and-dark
+        if [ -z "$1" ]; then
+            ln -s "$DEFAULT_BG-theme.auto.conf" "$no_preference_theme_path" 2>/dev/null
+            ln -s "$DEFAULT_BG-theme.auto.conf" "$current_theme_path" 2>/dev/null
+        else
+            ln -sf "$1-theme.auto.conf" "$no_preference_theme_path"
+            ln -sf "$1-theme.auto.conf" "$current_theme_path"
+        fi
+        if has kitty; then
+            for pid in $(pgrep kitty); do
+                # Don't use `kill -SIGUSR1`, will cause error: 'kill: SIGUSR1: invalid signal specification'
+                # Source: https://unix.stackexchange.com/questions/630281/why-doesnt-kill-s-sigusr1-work-inside-script-but-works-on-command-line-re
+                kill -USR1 "$pid"
+            done
+        fi
+    )
+}
+
+setbg_wezterm() {
+    # $1: 'light' or 'dark'
+    (
+        cd "$CONFIG_HOME/wezterm" 2>/dev/null || return 1
+        theme_path="theme.toml"
+        themes_dir="colors"
+        if [ -z "$1" ]; then
+            ln -s "$themes_dir/$DEFAULT_BG.toml" "$theme_path" 2>/dev/null
+        else
+            ln -sf "$themes_dir/$1.toml" "$theme_path"
+        fi
+    )
+}
+
+setbg_highlight() {
+    # $1: 'light' or 'dark'
+    (
+        cd "$HOME/.highlight" 2>/dev/null || return 1
+        themes_dir="themes"
+        theme_path="highlight.theme"
+        if [ -z "$1" ]; then
+            ln -s "$themes_dir/$DEFAULT_BG.theme" "$theme_path" 2>/dev/null
+        else
+            ln -sf "$themes_dir/$1.theme" "$theme_path"
+        fi
+    )
+}
+
+setbg_nvim() {
+    # $1: 'light' or 'dark'
+    if [ -z "$1" ] || ! has nvim; then
+        return 1
+    fi
+
+    if ! has nvim-socks; then
+        echo "Error: script 'nvim-socks' not found, skip setting backgroud for nvim" >&2
+        return 1
+    fi
+
+    for sock in $(nvim-socks); do
+        # Notice: Don't use `--remote-send "<Cmd>...<CR>"` to send the command
+        # here because of nvim's bug where the string following `<Cmd>` will be
+        # interpreted as normal keys (not as part of a command) if nvim is in
+        # operator-pending/replace mode. This makes nvim unexpectedly insert
+        # the command string "f &bg ..." to the buffer, see:
+        # https://github.com/neovim/neovim/issues/31238
+        nvim --clean --headless --server "$sock" \
+            --remote-expr "execute(\"if &bg !=# '$1' && &tgc \
+                | let g:script_set_bg=1 | set bg=$1 | unlet g:script_set_bg \
+                | endif\")" \
+            +qa! 2>/dev/null & # prevent long-running nvim from blocking the script
+    done
+
+    if ! has jq; then
+        echo "Warning: 'jq' not executable, skip writing to nvim's colorscheme file" >&2
+    else
+        colors_json="$STATE_HOME/nvim/colors.json"
+        if [ ! -e "$colors_json" ]; then
+            touch "$colors_json"
+        fi
+        bg=$(jq -r '.bg' "$colors_json")
+        if [ "$bg" != "$1" ]; then
+            jq --arg bg "$1" '.bg = $bg' \
+                "$colors_json" >"$colors_json.tmp"
+            mv "$colors_json.tmp" "$colors_json"
+        fi
+    fi
+}
+
+setbg_macos() {
+    # $1: 'light' or 'dark'
+    if [ -z "$1" ]; then
+        return 1
+    fi
+
+    # Make sure apps' background sync with system background, see:
+    # - https://www.reddit.com/r/MacOS/comments/atty3g/dark_mode_is_broken_on_my_mac/
+    # - https://medium.com/@n1kk/how-to-tweak-macos-mojave-dark-mode-per-app-a5fab0574691
+    if has defaults; then
+        defaults delete -g NSRequiresAquaSystemAppearance 2>/dev/null
+    fi
+
+    # Ref: https://brettterpstra.com/2018/09/26/shell-tricks-toggling-dark-mode-from-terminal/
+    if has osascript; then
+        # Key does not exist if auto-switch is disabled and is 1 if auto-switch
+        # is enabled, saved for later restoration to keep auto-switch behavior
+        # after setting bg, see https://apple.stackexchange.com/a/391814
+        if has defaults; then
+            auto_switch=$(defaults read -g AppleInterfaceStyleSwitchesAutomatically 2>/dev/null)
+        fi
+
+        osascript <<EOF
+            tell application "System Events"
+                tell appearance preferences
+                    set dark mode to $([ "$1" = dark ] && echo true || echo false)
+                end tell
+            end tell
+EOF
+
+        # Restore auto-switch behavior
+        if [ -n "$auto_switch" ]; then
+            defaults write -g AppleInterfaceStyleSwitchesAutomatically \
+                "$auto_switch"
+        fi
+    fi
+}
+
+setbg_plasma() {
+    # $1: 'light' or 'dark'
+    if [ -z "$1" ]; then
+        return 1
+    fi
+    if has plasma-apply-desktoptheme; then
+        current_theme=$(plasma-get-current-desktoptheme)
+        new_theme=$(get_theme_variant "$current_theme" "$1")
+        if [ "$current_theme" != "$new_theme" ]; then
+            plasma-apply-desktoptheme "$new_theme" >/dev/null 2>&1
+        fi
+    fi
+    if has plasma-apply-colorscheme; then
+        current_scheme=$(plasma-get-current-colorscheme)
+        new_scheme=$(get_theme_variant "$current_scheme" "$1")
+        if [ "$current_scheme" != "$new_scheme" ]; then
+            plasma-apply-colorscheme "$new_scheme" >/dev/null 2>&1
+        fi
+    fi
+}
+
+setbg_gnome() {
+    # $1: 'light' or 'dark'
+    if [ -z "$1" ] || ! has gsettings; then
+        return 1
+    fi
+
+    current_theme=$(gsettings get org.gnome.desktop.interface gtk-theme | tr -d "'")
+    new_theme=$(get_theme_variant "$current_theme" "$1")
+
+    # Set global theme
+    gsettings set org.gnome.desktop.interface gtk-theme "$new_theme"
+
+    # Set preference for apps that support dark mode
+    case "$1" in
+    dark) gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' ;;
+    light) gsettings set org.gnome.desktop.interface color-scheme 'default' ;;
+    esac
+}
+
+get_new_profile_name() {
+    # $1: path to config file
+    # $2: 'light' or 'dark'
+    if ! has kreadconfig5; then
+        return 1
+    fi
+
+    current_profile=$(kreadconfig5 --file "$1" \
+        --group 'Desktop Entry' --key 'DefaultProfile')
+    current_profile_name=${current_profile%%.profile}
+    new_profile_name=$(get_theme_variant "$current_profile_name" "$2")
+    # If new profile name is empty, use default profile
+    [ -z "$new_profile_name" ] && {
+        case "$DEFAULT_BG" in
+        dark) new_profile_name="$DEFAULT_COLOR Dark" ;;
+        light) new_profile_name="$DEFAULT_COLOR Light" ;;
+        esac
+    }
+    echo "$new_profile_name"
+}
+
+konsole_switch_profile_bg() {
+    # $1: name of the app
+    # $2: 'light' or 'dark'
+    if ! has kreadconfig5 || ! has kwriteconfig5; then
+        return 1
+    fi
+    rc="$CONFIG_HOME/${1}rc"
+    new_profile_name=$(get_new_profile_name "$rc" "$2")
+    if [ -e "$DATA_HOME/konsole/$new_profile_name.profile" ]; then
+        kwriteconfig5 --file "$rc" \
+            --group 'Desktop Entry' \
+            --key DefaultProfile "$new_profile_name.profile"
+        qdbus-call-service-method "$1" setProfile "$new_profile_name"
+    fi
+}
+
+setbg_konsole_yakuake() {
+    # $1: 'light' or 'dark'
+    konsole_switch_profile_bg konsole "$1"
+    konsole_switch_profile_bg yakuake "$1"
+    konsole_switch_profile_bg dolphin "$1"
+    konsole_switch_profile_bg kate "$1"
+}
+
+setbg_termux() {
+    # $1: 'light' or 'dark'
+    (
+        cd "$HOME/.termux" 2>/dev/null || return 1
+        theme_path="colors.properties"
+        themes_dir="colors"
+        if [ -z "$1" ]; then
+            ln -s "$themes_dir/$DEFAULT_BG.properties" "$theme_path" 2>/dev/null
+        else
+            ln -sf "$themes_dir/$1.properties" "$theme_path"
+        fi
+        if has termux-reload-settings; then
+            termux-reload-settings
+        fi
+    )
+}
+
+setbg_okular() {
+    # $1: 'light' or 'dark'
+    if [ -z "$1" ] || ! has okular || ! has kwriteconfig5; then
+        return 1
+    fi
+    case "$1" in
+    dark) changecolors="true" ;;
+    light) changecolors="false" ;;
+    esac
+    kwriteconfig5 --file "$CONFIG_HOME/okularpartrc" \
+        --group Document \
+        --key ChangeColors "$changecolors"
+    qdbus-call-service-method okular slotSetChangeColors \
+        "$changecolors"
+}
+
+setbg_vscode() {
+    # $1: 'light' or 'dark'
+    rc="$CONFIG_HOME/Code/User/settings.json"
+    if [ -z "$1" ] || [ ! -e "$rc" ]; then
+        return 1
+    fi
+
+    if ! has jq; then
+        echo "Error: 'jq' not executable, skip writing to vscode's settings file" >&2
+        return 1
+    fi
+
+    # Skip if auto detect is enabled
+    auto_detect=$(jq -r '."window.autoDetectColorScheme"' "$rc")
+    if [ "$auto_detect" = "true" ]; then
+        return 0
+    fi
+
+    current_theme=$(jq -r '."workbench.colorTheme"' "$rc")
+    new_theme=$(get_theme_variant "$current_theme" "$1")
+    [ -z "$new_theme" ] && {
+        if [ "$1" = "dark" ]; then
+            new_theme=$(jq -r '."workbench.preferredDarkColorTheme"' "$rc")
+        else
+            new_theme=$(jq -r '."workbench.preferredLightColorTheme"' "$rc")
+        fi
+    }
+    if [ -z "$new_theme" ] || [ "$new_theme" = "null" ]; then
+        new_theme=$(get_theme_variant "Default ${DEFAULT_BG} Modern" "$1")
+    fi
+    if [ "$theme" != "$new_theme" ]; then
+        tmp=$(mktemp)
+        trap 'rm -f "$tmp"' EXIT
+        jq ".\"workbench.colorTheme\" = \"$new_theme\"" "$rc" >"$tmp" &&
+            mv "$tmp" "$rc"
+    fi
+}
+
+setbg_fish() {
+    # $1: 'light' or 'dark'
+    (
+        cd "$CONFIG_HOME/fish/themes" 2>/dev/null || return 1
+        theme_path="Current.theme"
+        if [ -z "$1" ]; then
+            case "$DEFAULT_BG" in
+            dark) ln -s "Dark.theme" "$theme_path" 2>/dev/null ;;
+            light) ln -s "Light.theme" "$theme_path" 2>/dev/null ;;
+            esac
+        else
+            case "$1" in
+            dark) ln -sf "Dark.theme" "$theme_path" ;;
+            light) ln -sf "Light.theme" "$theme_path" ;;
+            esac
+        fi
+        has fish &&
+            fish -c 'set -U __fish_reload_theme (head -c 16 /dev/urandom)'
+    )
+}
+
+setbg_libreoffice() {
+    if [ -z "$1" ]; then
+        return 1
+    fi
+
+    config="$CONFIG_HOME/libreoffice/4/user/registrymodifications.xcu"
+    if [ ! -e "$config" ]; then
+        mkdir -p "$(dirname "$config")"
+        echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<oor:items xmlns:oor=\"http://openoffice.org/2001/registry\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
+</oor:items>" >"$config"
+    fi
+
+    # Add symbol style config if not found in the config file
+    if ! grep -qE '<item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="SymbolStyle" oor:op="fuse"><value>[a-zA-Z0-9_-]+</value></prop></item>' "$config"; then
+        # Default style is 'breeze' or 'breeze_dark' depending on arg 1
+        case "$1" in
+        dark) theme="breeze_dark" ;;
+        light) theme="breeze" ;;
+        esac
+        # Different from GNU sed, BSD sed (on macOS)
+        # - Requires a non-empty extension following `-i` flag without spaces
+        # - Does not have GNU `i`/`a` command extension
+        # See: https://stackoverflow.com/a/14813278
+        #      https://www.gnu.org/software/sed/manual/html_node/Other-Commands.html#Other-Commands
+        sed -i'.bak' "/<\/oor:items>/i\\
+<item oor:path=\"/org.openoffice.Office.Common/Misc\"><prop oor:name=\"SymbolStyle\" oor:op=\"fuse\"><value>$theme</value></prop></item>
+" "$config"
+    fi
+
+    theme=$(awk '/SymbolStyle.*<value>/ { sub(/.*<value>/, ""); sub(/<\/value>.*/, ""); print; exit }' "$config")
+    theme_no_suffix=$(echo "$theme" | sed -E 's/(_dark)+//')
+    case "$1" in
+    dark) new_theme="${theme_no_suffix}_dark" ;;
+    light) new_theme="$theme_no_suffix" ;;
+    esac
+
+    tmp=$(mktemp)
+    trap 'rm -f "$tmp"' EXIT
+    awk -v new_theme="$new_theme" '
+        /<item oor:path="\/org.openoffice.Office.Common\/Misc"><prop oor:name="SymbolStyle" oor:op="fuse"><value>[a-zA-Z0-9_-]+<\/value><\/prop><\/item>/ {
+            sub(/<value>[a-zA-Z0-9_-]+<\/value>/, "<value>" new_theme "</value>");
+            print;
+            next;
+        }
+        { print }
+    ' "$config" >"$tmp" && mv "$tmp" "$config"
+}
+
+usage() {
+    echo "Usage: $(basename "$0") [light|dark]"
+    exit 0
+}
+
+main() {
+    bg=''
+    for arg in "$@"; do
+        case "$arg" in
+        light | dark)
+            bg="$arg"
+            shift
+            ;;
+        *)
+            usage
+            ;;
+        esac
+    done
+
+    # Called by `syncbg` to sync apps' background with system/desktop
+    # background, don't set system background
+    if [ -z "$SETBG_SKIP_SYSTEM" ]; then
+        setbg_macos "$bg" &
+        setbg_gnome "$bg" &
+        setbg_plasma "$bg" &
+
+        # Kitty and wezterm have their own mechanism to detect and sync with
+        # system background
+        # Fix kitty memory leak on KDE when `__syncbg` is running in the ground
+        setbg_kitty "$bg" &
+        setbg_wezterm "$bg" &
+
+        # Make sure system bg is set before setting apps' bg to avoid `__syncbg`
+        # daemon setting apps' bg back to old system bg, see:
+        # - `__syncbg`
+        # - `~/.config/autostart/__syncbg`
+        # - `~/Library/LaunchAgents/user.syncbg.plist`
+        wait
+    fi
+    setbg_alacritty "$bg" &
+    setbg_foot "$bg" &
+    setbg_highlight "$bg" &
+    setbg_nvim "$bg" &
+    setbg_konsole_yakuake "$bg" &
+    setbg_termux "$bg" &
+    setbg_okular "$bg" &
+    setbg_vscode "$bg" &
+    setbg_fish "$bg" &
+    setbg_libreoffice "$bg" &
+}
+
+main "$@"

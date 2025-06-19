@@ -1,0 +1,166 @@
+; vim:ft=gitconfig
+
+; Behaviour
+
+[init]
+  defaultBranch = main
+
+[user]
+  name = Gerson Ferreira
+  email = gersonfaneto.dev@gmail.com
+  ; signingKey = 
+
+[commit]
+  verbose = true
+  ; gpgSign = true
+
+[core]
+  autocrlf = input
+  whitespace = error
+  fsync = none
+  compression = 9
+  preloadindex = true
+
+[advice]
+  addEmptyPathSpec = false
+  pushNonFastFoward = false
+  statusHints = false
+
+[blame]
+  coloring = highlightRecent
+  date = relative
+
+[diff]
+  context = 3
+  renames = copies
+  interHunkContext = 10
+
+[log]
+  abbrevCommits = true
+  graphColors = blue,yellow,cyan,magenta,green,red
+
+[status]
+  branch = true
+  showStash = true
+  showUntrackedFiles = all
+
+[pager]
+  diff = diff-so-fancy | $PAGER
+  branch = false
+
+[interactive]
+  diffFilter = diff-so-fancy --patch
+  singleKey = true
+
+[push]
+  default = current
+  ; gpgSign = true
+  followTags = true
+  autoSetupRemote = true
+
+[pull]
+  default = current
+  rebase = true
+
+[submodule]
+  fetchJobs = 16
+
+[rebase]
+  autoStash = true
+  missingCommitsCheck = warn
+
+[merge]
+  tool = vimdiff
+
+[mergetool]
+  keepBackup = false
+
+[mergetool "vimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+; Colors
+
+; [color "decorate"]
+;   HEAD = red
+;   branch = blue
+;   tag = yellow
+;   remoteBranch = magenta
+
+[color "blame"]
+  highlightRecent = black bold,1 year ago,white,1 month ago,default,7 days ago,blue
+
+[color "diff"]
+  meta       = black bold
+  frag       = magenta
+  context    = white
+  whitespace = yellow reverse
+
+[color "branch"]
+  current  = magenta
+  local    = default
+  remote   = yellow
+  upstream = green
+  plain    = blue
+
+; Thirdy-Party
+
+[diff-so-fancy]
+  markEmptyLines = false
+
+; URL Shorthand's
+
+[url "git@github.com:gersonfaneto/"]
+  insteadOf = "me:"
+
+[url "git@github.com:"]
+  insteadOf = "gh:"
+
+; Aliases
+
+[alias]
+  i = "!git init && git commit -m 'Ready... Set... Go!' --allow-empty"
+
+  c  = commit
+  cm = commit --message
+  ca = commit --ammend
+  ce = commit --ammend --no-edit
+
+  b = branch
+
+  d = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
+  ds = df --cached
+
+  c  = checkout
+  cf = checkout --force
+
+  a   = add
+  aa  = add --all
+  ap  = add --patch
+  au  = add --update
+  aup = add --update --patch
+
+  s  = status
+  ss = status --short
+
+  f  = fetch
+  fa = fetch --all
+  fp = fetch --prune
+
+  ps = push
+  pl = pull
+
+  cl  = clone
+  cls = clone --depth=1
+  cln = clone --filter=blob:none
+  clr = clone --recursive
+
+  ri = rebase --interactive
+  rc = rebase --continue
+  ra = rebase --abort
+  rt = rebase --edit-todo
+
+  wl = worktree list
+  wa = worktree add
+  wr = worktree remove
+
+  lg = "!git log --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n'"
