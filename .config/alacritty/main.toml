@@ -1,0 +1,38 @@
+[general]
+live_config_reload = true
+
+[env]
+TERM = 'alacritty'
+
+[terminal.shell]
+program = "/run/current-system/sw/bin/fish"
+args = ["--login", "--interactive"]
+
+[colors]
+draw_bold_text_with_bright_colors = true
+transparent_background_colors = true
+
+[font]
+size = 12
+
+[font.normal]
+family = 'Iosevka SS07'
+
+[scrolling]
+history = 0
+
+[window]
+dynamic_padding = true
+opacity = 1
+option_as_alt = 'Both'
+
+[window.dimensions]
+columns = 112
+lines = 24
+
+[window.padding]
+x = 8
+y = 8
+
+[mouse]
+hide_when_typing = true

@@ -1,0 +1,216 @@
+#!/usr/bin/env sh
+# vim: ft=sh ts=4 sw=4 sts=4 et :
+# Extract files from archive, wisely
+
+# Check if a file/directory does not exist
+checkne() {
+    if [ -e "$1" ]; then
+        echo "Error: '$1' already exists"
+        return 1
+    fi
+    return 0
+}
+
+print_help() {
+    # No local in POSIX sh
+    scriptname=$(basename "$0")
+    cat <<EOF
+$scriptname - archive extractor
+Usage: $scriptname <file>
+
+Supported formats:
+  *.tar.Z    - compressed tar archive
+  *.Z        - compressed file
+  *.tar.bz2  - bzip2 tar archive
+  *.tbz2     - bzip2 tar archive
+  *.bz2      - bzip2 file
+  *.tar.gz   - gzip tar archive
+  *.tgz      - gzip tar archive
+  *.gz       - gzip file
+  *.tar.xz   - xz tar archive
+  *.txz      - xz tar archive
+  *.xz       - xz file
+  *.tar.lzma - lzma tar archive
+  *.lzma     - lzma file
+  *.tar.zst  - zstd tar archive
+  *.tzst     - zstd tar archive
+  *.zst      - zstd file
+  *.tar.lz4  - lz4 tar archive
+  *.lz4      - lz4 file
+  *.rar      - rar archive
+  *.tar      - tar archive
+  *.zip      - zip archive
+  *.7z       - 7-zip archive
+EOF
+}
+
+main() {
+    if [ -z "$1" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+        print_help
+        return 0
+    fi
+
+    if [ ! -f "$1" ]; then
+        echo "'$1' is not a valid file"
+        return 1
+    fi
+
+    fname=$(basename "$1")
+    case "$1" in
+    *.tar.Z)
+        froot="${fname%.tar.Z}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        tar xZf "$1" -C "$froot"
+        ;;
+    *.Z)
+        froot="${fname%.Z}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        uncompress -c "$1" >"$froot"
+        ;;
+    *.tar.bz2 | *.tbz2)
+        case "$1" in
+        *.tar.bz2) froot="${fname%.tar.bz2}" ;;
+        *.tbz2) froot="${fname%.tbz2}" ;;
+        esac
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        tar xjf "$1" -C "$froot"
+        ;;
+    *.bz2)
+        froot="${fname%.bz2}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        bunzip2 -c "$1" >"$froot"
+        ;;
+    *.tar.gz | *.tgz)
+        case "$1" in
+        *.tar.gz) froot="${fname%.tar.gz}" ;;
+        *.tgz) froot="${fname%.tgz}" ;;
+        esac
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        tar xzf "$1" -C "$froot"
+        ;;
+    *.gz)
+        froot="${fname%.gz}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        gunzip -c "$1" >"$froot"
+        ;;
+    *.tar.xz | *.txz)
+        case "$1" in
+        *.tar.xz) froot="${fname%.tar.xz}" ;;
+        *.txz) froot="${fname%.txz}" ;;
+        esac
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        tar xJf "$1" -C "$froot"
+        ;;
+    *.xz)
+        froot="${fname%.xz}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        unxz -c "$1" >"$froot"
+        ;;
+    *.tar.lzma)
+        froot="${fname%.tar.lzma}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        tar --lzma -xf "$1" -C "$froot"
+        ;;
+    *.lzma)
+        froot="${fname%.lzma}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        unlzma -c "$1" >"$froot"
+        ;;
+    *.tar.zst | *.tzst)
+        case "$1" in
+        *.tar.zst) froot="${fname%.tar.zst}" ;;
+        *.tzst) froot="${fname%.tzst}" ;;
+        esac
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        tar --zstd -xf "$1" -C "$froot"
+        ;;
+    *.zst)
+        froot="${fname%.zst}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        zstd -d "$1" -o "$froot"
+        ;;
+    *.tar.lz4)
+        froot="${fname%.tar.lz4}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        tar --use-compress-program=lz4 -xf "$1" -C "$froot"
+        ;;
+    *.lz4)
+        froot="${fname%.lz4}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        lz4 -dc "$1" >"$froot"
+        ;;
+    *.rar)
+        froot="${fname%.rar}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        unrar x "$1" "$froot"
+        ;;
+    *.tar)
+        froot="${fname%.tar}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        tar xf "$1" -C "$froot"
+        ;;
+    *.zip)
+        froot="${fname%.zip}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        unzip "$1" -d "$froot"
+        ;;
+    *.7z)
+        froot="${fname%.7z}"
+        if ! checkne "$froot"; then
+            return 1
+        fi
+        mkdir -p "$froot"
+        7z x "$1" -o"$froot"
+        ;;
+    *)
+        echo "'$1' cannot be extracted"
+        ;;
+    esac
+
+}
+
+main "$1"

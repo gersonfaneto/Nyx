@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+main() {
+    local selected=$(tmux list-sessions -F '#S' | fzf --reverse --no-preview)
+
+    if [[ -z $selected ]]; then
+        exit 0
+    fi
+
+    local tmux_running=$(pgrep tmux)
+
+    if [[ -z $TMUX ]]; then
+        tmux attach -t $selected 2> /dev/null
+    else
+        tmux switch-client -t $selected 2> /dev/null
+    fi
+}
+
+main "$@"

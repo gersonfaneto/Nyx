@@ -1,0 +1,31 @@
+# See :: $ man i3status
+
+general {
+  colors = true
+  interval = 5
+}
+
+order += "disk /"
+order += "battery all"
+order += "volume master"
+order += "tztime local"
+
+disk "/" {
+  format = "%avail"
+}
+
+battery all {
+  format = "%status %percentage"
+}
+
+volume master {
+  format = "VOL: %volume"
+  format_muted = "VOL: MUTED"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
+
+tztime local {
+  format = "%Y-%m-%d %H:%M:%S"
+}

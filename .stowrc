@@ -1,0 +1,10 @@
+--verbose=1
+--target=$HOME
+
+--ignore=.stowrc
+
+--ignore=.direnv
+--ignore=.envrc
+--ignore=flake.lock
+--ignore=flake.nix
+--ignore=configuration.nix
