@@ -118,17 +118,8 @@ in
   };
 
   programs = {
-    bash = {
-      blesh = {
-        enable = true;
-      };
-    };
     fish = {
       enable = true;
-    };
-    fzf = {
-      keybindings = true;
-      fuzzyCompletion = true;
     };
     firefox = {
       enable = true;
@@ -136,7 +127,6 @@ in
     direnv = {
       enable = true;
       enableFishIntegration = true;
-      enableBashIntegration = true;
     };
     nix-ld = {
       enable = true;
@@ -178,7 +168,6 @@ in
     fzf
     gh
     git
-    glow
     highlight
     htop
     jq
@@ -190,6 +179,7 @@ in
     pandoc
     playerctl
     poppler-utils
+    presenterm
     prismlauncher
     pulseaudio
     pulsemixer
@@ -232,16 +222,16 @@ in
     python312Packages.uv
     python312Packages.pip
 
-    pyright
-    python312Packages.ruff
-    python312Packages.pylint
-    python312Packages.flake8
-    python312Packages.mypy
-    python312Packages.isort
+    # pyright
+    # python312Packages.ruff
+    # python312Packages.pylint
+    # python312Packages.flake8
+    # python312Packages.mypy
+    # python312Packages.isort
 
-    python312Packages.pynvim
-    python312Packages.jupyter-client
-    python312Packages.jupytext
+    # python312Packages.pynvim
+    # python312Packages.jupyter-client
+    # python312Packages.jupytext
 
     # Bash
     shfmt
