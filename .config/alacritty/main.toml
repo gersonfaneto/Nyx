@@ -24,6 +24,7 @@ history = 0
 [window]
 dynamic_padding = true
 opacity = 1
+decorations = "None"
 
 [window.dimensions]
 columns = 112
