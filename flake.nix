@@ -27,6 +27,9 @@
             shfmt
             bash-language-server
 
+            # JSON
+            vscode-langservers-extracted
+
             # General
             efm-langserver
           ];
