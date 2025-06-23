@@ -1,14 +1,11 @@
-local autocmd = vim.api.nvim_create_autocmd
-local groupid = vim.api.nvim_create_augroup
-
 ---@param group string
 ---@vararg { [1]: string|string[], [2]: vim.api.keyset.create_autocmd }
 ---@return nil
 local function augroup(group, ...)
-  local id = groupid(group, {})
+  local id = vim.api.nvim_create_augroup(group, {})
   for _, a in ipairs({ ... }) do
     a[2].group = id
-    autocmd(unpack(a))
+    vim.api.nvim_create_autocmd(unpack(a))
   end
 end
 
@@ -168,7 +165,7 @@ augroup('LastPosJmp', {
   {
     desc = 'Last position jump.',
     callback = function(info)
-      autocmd('FileType', {
+      vim.api.nvim_create_autocmd('FileType', {
         once = true,
         buffer = info.buf,
         callback = function(i)
@@ -290,9 +287,14 @@ do
     {
       desc = 'Keep window ratio after resizing nvim.',
       callback = function()
-        vim.cmd.wincmd('=')
+        vim.g._vim_resized = true
+        vim.api.nvim_create_autocmd('WinResized', {
+          once = true,
+          callback = function()
+            vim.g._vim_resized = nil
+          end,
+        })
         require('utils.win').restore_ratio(win_ratio)
-        win_ratio = {}
       end,
     },
   }, {
@@ -301,15 +303,87 @@ do
       desc = 'Record window ratio.',
       callback = function()
         -- Don't record ratio if window resizing is caused by vim resizing
-        -- (changes in &lines or &columns)
-        local lines, columns = vim.go.lines, vim.go.columns
-        local _lines, _columns = vim.g._lines, vim.g._columns
-        if _lines and lines ~= _lines or _columns and columns ~= _columns then
-          vim.g._lines = lines
-          vim.g._columns = columns
+        if vim.g._vim_resized then
           return
         end
         require('utils.win').save_ratio(win_ratio, vim.v.event.windows)
+      end,
+    },
+  })
+end
+
+-- Fix bug where windows with fixed height are resized after opening/closing
+-- windows with winbar attached, see https://github.com/neovim/neovim/issues/30955
+--
+-- This does not fix windows with fixed height being resized on `<C-w>=` if
+-- multiple horizontal splits are opened/closed after the creation of the
+-- fixed-height window
+do
+  local win_heights = {}
+
+  ---Save heights for fixed-height widows
+  local function win_save_fixed_heights()
+    require('utils.win').save_heights(
+      win_heights,
+      vim
+        .iter(vim.api.nvim_tabpage_list_wins(0))
+        :filter(function(win)
+          return vim.wo[win].winfixheight
+        end)
+        :totable()
+    )
+  end
+
+  augroup('FixWinFixHeightWithWinBar', {
+    { 'WinNew', 'WinClosed' },
+    {
+      desc = 'Save heights for windows with a fixed height.',
+      callback = function()
+        -- Set flag to indicate that a new window is created or an existing
+        -- window is closed, so that we can distinguish between manual resizing
+        -- and resizing due to window creation/deletion
+        vim.g._win_list_changed = true
+        vim.schedule(function()
+          vim.g._win_list_changed = nil
+        end)
+
+        -- Schedule to wait for `winfixheight` to be set after opening a new
+        -- window
+        vim.schedule(win_save_fixed_heights)
+      end,
+    },
+  }, {
+    'OptionSet',
+    {
+      desc = 'Save heights for windows with a fixed height.',
+      pattern = 'winfixheight',
+      callback = win_save_fixed_heights,
+    },
+  }, {
+    'WinResized',
+    {
+      desc = 'Restore heights for windows with a fixed height.',
+      callback = function()
+        -- Update window height instead of restoring it on manual resizing,
+        -- else the fixed-height window will be restored to height before the
+        -- manual resizing after win open/close
+        if not vim.g._win_list_changed then
+          win_save_fixed_heights()
+          return
+        end
+        require('utils.win').restore_heights(win_heights)
+      end,
+    },
+  }, {
+    'FileType',
+    {
+      desc = 'Set quickfix window initial height.',
+      pattern = 'qf',
+      callback = function(info)
+        -- Quickfix window height can be incorrectly set to a value larger
+        -- than 10 (the default value) if there's vertical splits with winbar
+        -- attached above the quickfix window
+        vim.api.nvim_win_set_height(vim.fn.bufwinid(info.buf), 10)
       end,
     },
   })
@@ -559,72 +633,6 @@ do
 
           json.write(colors_file, d)
         end)
-      end,
-    },
-  })
-end
-
--- Fix bug where windows with fixed height are resized after opening/closing
--- windows with winbar attached, see https://github.com/neovim/neovim/issues/30955
---
--- This does not fix windows with fixed height being resized on `<C-w>=` if
--- multiple horizontal splits are opened/closed after the creation of the
--- fixed-height window
-do
-  local win_heights = {}
-
-  ---Save heights for fixed-height widows
-  local function win_save_fixed_heights()
-    require('utils.win').save_heights(
-      win_heights,
-      vim
-        .iter(vim.api.nvim_tabpage_list_wins(0))
-        :filter(function(win)
-          return vim.wo[win].winfixheight
-        end)
-        :totable()
-    )
-  end
-
-  augroup('FixWinFixHeightWithWinBar', {
-    { 'WinNew', 'WinClosed' },
-    {
-      desc = 'Save heights for windows with a fixed height.',
-      callback = function()
-        -- Set flag to indicate that a new window is created or an existing
-        -- window is closed, so that we can distinguish between manual resizing
-        -- and resizing due to window creation/deletion
-        vim.g._win_list_changed = true
-        vim.schedule(function()
-          vim.g._win_list_changed = nil
-        end)
-
-        -- Schedule to wait for `winfixheight` to be set after opening a new
-        -- window
-        vim.schedule(win_save_fixed_heights)
-      end,
-    },
-  }, {
-    'OptionSet',
-    {
-      desc = 'Save heights for windows with a fixed height.',
-      callback = win_save_fixed_heights,
-    },
-  }, {
-    'WinResized',
-    {
-      desc = 'Restore heights for windows with a fixed height.',
-      callback = function()
-        -- Update window height instead of restoring it on manual resizing,
-        -- else the fixed-height window will be restored to height before the
-        -- manual resizing after win open/close
-        if not vim.g._win_list_changed then
-          win_save_fixed_heights()
-          return
-        end
-
-        require('utils.win').restore_heights(win_heights)
-        win_heights = {}
       end,
     },
   })

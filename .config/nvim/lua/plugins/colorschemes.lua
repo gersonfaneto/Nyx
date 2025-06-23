@@ -7,7 +7,7 @@ return {
       vim.g.everforest_ui_contrast = 'high'
       vim.g.everforest_float_style = 'bright'
       vim.g.everforest_cursor = 'auto'
-      vim.g.everforest_better_performance = 1
+      -- vim.g.everforest_better_performance = 1
     end,
   },
   {
@@ -20,7 +20,7 @@ return {
       vim.g.gruvbox_material_float_style = 'bright'
       vim.g.gruvbox_material_statusline_style = 'material'
       vim.g.gruvbox_material_cursor = 'auto'
-      vim.g.gruvbox_material_better_performance = 1
+      -- vim.g.gruvbox_material_better_performance = 1
     end,
   },
 }
