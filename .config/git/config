@@ -125,13 +125,17 @@
   ca = commit --ammend
   ce = commit --ammend --no-edit
 
-  b = branch
+  b  = branch
+  bd = branch --delete
 
-  d = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
+  d  = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
   ds = df --cached
 
   c  = checkout
   cf = checkout --force
+
+  sw  = switch
+  swc = switch --create
 
   a   = add
   aa  = add --all
