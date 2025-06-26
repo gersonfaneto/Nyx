@@ -96,7 +96,7 @@ function actions.change_cwd()
     -- Append current dir './' to the result list to allow switching to home
     -- or root directory
     cmd = string.format(
-      "%s | sed '1i\\\n ./\n'",
+      "%s | sed '1i\\\n./\n'",
       (function()
         local fd_cmd = vim.fn.executable('fd') == 1 and 'fd'
           or vim.fn.executable('fdfind') == 1 and 'fdfind'
@@ -573,16 +573,17 @@ fzf.setup({
         \ let g:_fzf_splitkeep = &splitkeep | let &splitkeep = "topline" |
         \ let g:_fzf_cmdheight = &cmdheight | let &cmdheight = 0 |
         \ let g:_fzf_laststatus = &laststatus | let &laststatus = 0 |
+        \ let g:_fzf_height = 10 |
         \ let g:_fzf_qfclosed = win_gettype(winnr('$')) |
         \ if g:_fzf_qfclosed ==# 'loclist' || g:_fzf_qfclosed ==# 'quickfix' |
+        \   let g:_fzf_height = nvim_win_get_height(win_getid(winnr('$'))) - 1 |
         \   cclose |
         \   lclose |
         \ else |
         \   unlet g:_fzf_qfclosed |
         \ endif |
-        \ botright 10new |
-        \ exe 'resize' .
-          \ (10 + g:_fzf_cmdheight + (g:_fzf_laststatus ? 1 : 0)) |
+        \ exe printf('botright %dnew', g:_fzf_height) |
+        \ exe 'resize' . (g:_fzf_height + g:_fzf_cmdheight + (g:_fzf_laststatus ? 1 : 0)) |
         \ let w:winbar_no_attach = v:true |
         \ setlocal bt=nofile bh=wipe nobl noswf
     ]],
@@ -597,6 +598,12 @@ fzf.setup({
           desc = 'Insert contents in a register',
         }
       )
+      -- Sometimes windows will shift/change size after closing quickfix window
+      -- and reopening fzf, maybe related to https://github.com/neovim/neovim/issues/30955
+      if vim.g._fzf_qfclosed then
+        utils.win.restore_heights(_G._fzf_lua_win_heights)
+        utils.win.restore_views(_G._fzf_lua_win_views)
+      end
     end,
     on_close = function()
       ---@param name string
