@@ -11,7 +11,7 @@ abs_path() {
 
 md2pdf() {
     pandoc \
-        --lua-filter="${HOME}/.pandoc/md2pdf_filter.lua" \
+        --lua-filter="${HOME}/.config/pandoc/md2pdf_filter.lua" \
         --pdf-engine="$PDF_ENGINE" \
         -V block-headings \
         -V colorlinks=true \
