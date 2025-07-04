@@ -131,6 +131,7 @@ local eslint_lang_settings = {
       '%f(%l,%c): %tarning : %m',
     },
     lintSource = cmd,
+    lintAfterOpen = true,
     lintStdin = true,
     lintIgnoreExitCode = true,
     rootMarkers = vim.iter(root_markers):flatten():totable(),
@@ -140,6 +141,7 @@ local eslint_lang_settings = {
 return {
   filetypes = fts,
   cmd = { 'efm-langserver' },
+  requires = { cmd },
   name = cmd,
   init_options = {
     documentFormatting = true,
