@@ -157,6 +157,7 @@ in
     bluetui
     brightnessctl
     chafa
+    detach
     diff-so-fancy
     fastfetch
     fd
@@ -172,6 +173,8 @@ in
     htop
     jq
     less
+    libqalculate
+    libreoffice
     man-pages
     man-pages-posix
     mpv
