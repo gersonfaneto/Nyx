@@ -1,0 +1,138 @@
+#+TITLE: Minimal
+#+AUTHOR: Gerson Ferreira
+#+SUBTITLE: A simple configuration for Emacs.
+#+PROPERTY: header-args :tangle "~/.emacs.d/init.el"
+
+* Package Archives
+
+#+begin_src elisp
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                       ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                       ("elpa" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+(unless package-archive-contents
+(package-refresh-contents))
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+#+end_src
+
+* Navigation and completion
+
+** Vertico
+
+#+begin_src elisp
+  (use-package vertico
+     :ensure t
+     :init (vertico-mode))
+  
+  (use-package orderless
+     :ensure t
+     :custom
+     (completion-styles '(orderless basic))
+      (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+** Consult
+
+#+begin_src elisp
+  (use-package consult
+    :ensure t
+    :bind (
+           ("M-s b" . consult-buffer)
+           ("M-s g" . consult-grep)
+           ("M-s j" . consult-outline)
+           ))
+#+end_src
+
+* Styling
+
+** Theming
+
+#+begin_src elisp
+      (use-package gruber-darker-theme
+        :ensure t
+        :init (load-theme 'gruber-darker t))
+#+end_src
+
+** Elements
+
+#+begin_src elisp
+  (setq
+  ;; Disable startup message
+  inhibit-startup-message t
+
+  ;; Clear the initial scratch message
+  ;; initial-scratch-message nil
+
+  ;; Set Dired listing switches for more minimalist output
+  dired-listing-switches "-aghov --group-directories-first")
+
+  ;; Disable the menu bar
+  (menu-bar-mode 0)
+
+  ;; Disable the tool bar
+  (tool-bar-mode 0)
+
+  ;; Disable the scroll bar
+  (scroll-bar-mode 0)
+
+  ;; Highlight matching parentheses
+  (show-paren-mode 1)
+
+  ;; Display cursor location on status bar
+  (column-number-mode 1)
+
+  ;; Maximize the frame on startup
+  (toggle-frame-maximized)
+#+end_src
+
+** Font
+
+#+begin_src elisp
+(set-frame-font "scientifica 18" nil t)
+#+end_src
+
+* Behavior
+
+#+begin_src elisp
+(setq
+  ;; Disable backup files
+  make-backup-files nil
+
+  ;; Don't touch my 'init.el'!
+  custom-file "~/.emacs.d/custom.el")
+
+  (load custom-file)
+#+end_src
+
+* Org Mode
+
+#+begin_src elisp
+  (require 'org-id) ; for creating ids
+  (require 'org-tempo) ; for template expansion
+  
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cc" 'org-capture)
+  (global-set-key "\C-cb" 'org-switchb)
+  (global-set-key "\C-ct" 'org-todo-list)
+#+end_src
+
+* Coding
+
+#+begin_src elisp
+(setq display-line-numbers-type 'relative)
+
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+(global-set-key "\C-cc" 'compile)
+(global-set-key "\C-cr" 'recompile)
+#+end_src
+
+;; Local Variables: 
+;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Reload?")(load-file user-init-file))) nil t) 
+;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t) 
+;; End:
