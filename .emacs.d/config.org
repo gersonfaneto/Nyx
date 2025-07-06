@@ -110,6 +110,8 @@
 
 * Org Mode
 
+** General
+
 #+begin_src elisp
   (require 'org-id) ; for creating ids
   (require 'org-tempo) ; for template expansion
@@ -123,6 +125,8 @@
 
 * Coding
 
+** General
+
 #+begin_src elisp
 (setq display-line-numbers-type 'relative)
 
@@ -130,6 +134,13 @@
 
 (global-set-key "\C-cc" 'compile)
 (global-set-key "\C-cr" 'recompile)
+#+end_src
+
+** Haskell
+
+#+begin_src elisp
+    (use-package haskell-mode
+      :ensure t)
 #+end_src
 
 ;; Local Variables: 
