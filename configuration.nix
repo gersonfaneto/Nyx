@@ -77,10 +77,10 @@ in
   # Enable sound.
   # hardware.pulseaudio.enable = true;
   # OR
-  # services.pipewire = {
-  #   enable = true;
-  #   pulse.enable = true;
-  # };
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+  };
 
   hardware.bluetooth = {
     enable = true;
@@ -159,6 +159,7 @@ in
     chafa
     detach
     diff-so-fancy
+    emacs
     fastfetch
     fd
     feh

@@ -1,215 +1,494 @@
 #+TITLE:	Minimal
 #+AUTHOR:	Gerson Ferreira
-#+SUBTITLE:	A simple configuration for Emacs.
 #+PROPERTY:	header-args :tangle "~/.emacs.d/init.el"
+#+STARTUP:	show2levels indent hidestars
+#+PROPERTY:	header-args :tangle (let ((org-use-tag-inheritance t)) (if (member "INACTIVE" (org-get-tags)) "no" "~/.emacs.d/init.el"))
 
-* Package Archives
+* Documentation
+** Forewords
 
-#+begin_src elisp
-  (require 'package)
+This document is a literate configuration for GNU Emacs written in [[https://orgmode.org/][org]] format. It cannot be used directly and needs to be transformed to extract all the different code blocks into a single configuration file. This is done using the [[help:org-babel-tangle][org-babel-tangle]] function that "extract the bodies of all source code blocks from the current file into their own source-specific files". You can try by yourself by typing the sequence: =C-c C-v t= (org-babel-execute-subtree).
 
-  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-                          ("elpa" . "https://elpa.gnu.org/packages/")))
+However, on my Emacs (28.1), there seems to be a bug that prevent a proper tangling. You'll thus need to go to the [[Configuration]] section and execute it using =C-c C-v s= to fix this bug before tangling the file.
 
-  (package-initialize)
+Each subsection may be tagged with:
 
-  (unless package-archive-contents
-    (package-refresh-contents))
+- =:BINDING:=  The section defines some key binding
+- =:HOOK:=     The section installs some hook
+- =:ADVICE:=   The section installs some advice
+- =:FACE:=     The section modifies some face
+- =:MODE:=     The section activates a mode
+- =:DEFER:=    The content of the section is deferred (lazy load)
+- =:PERSONAL:= The content is personal and should be adapted
+- =:INACTIVE:= The content of the section won't be exported
+- =:BUGFIX:=   The section contains (temporary) bug fix code
+- =:OTHER:=    The section will be exported to a different file than default
+- =:TIMER:=    The section install a timer
+- =:OS:=       The section contains some system specific code
 
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
+There is also a configuration mode defined in the section below to ease the writing.
 
-  (require 'use-package)
+When tangled, the process will create the file [[file:~/.emacs.d/init.el][~/.emacs.org/init.el]]  [[file:~/.emacs.d/early-init.el][~/.emacs.org/early-init.el]] (from the [[Early init]] section).
 
-  (setq use-package-always-ensure t)
+Note also that the first time you will start emacs using this configuration, *it will take a long time* because a lof of packages will be dowloaded, installed and possibly compiled (if you use Emacs 28 and above). At next restart, the process should be very fast.
+
+** Unsorted :INACTIVE:
+
+#+begin_src emacs-lisp 
+
+(setq-default
+ ad-redefinition-action 'accept                   ; Silence warnings for redefinition
+ custom-unlispify-menu-entries nil                ; Prefer kebab-case for titles
+ custom-unlispify-tag-names nil                   ; Prefer kebab-case for symbols
+ (put 'downcase-region 'disabled nil)             ; Enable downcase-region
+ (put 'upcase-region 'disabled nil)               ; Enable upcase-region
+ native-comp-async-report-warnings-errors 'silent ; Skip compilation error buffers
+ read-process-output-max (* 1024 1024)            ; Increase read size per process
+
 #+end_src
 
-* Navigation and completion
+* Core
 
-** Vertico
+** Header 
 
-#+begin_src elisp
-  (use-package vertico
-     :ensure t
-     :init (vertico-mode))
+This will generate a header at the top of the tangled file to indicate it is generated and is not meant to be modified directly.
 
-  (use-package orderless
-     :ensure t
-     :custom
-     (completion-styles '(orderless basic))
-      (completion-category-overrides '((file (styles basic partial-completion)))))
+#+begin_src emacs-lisp :epilogue (format-time-string ";; Last generated on %c")
+
+;; -*- lexical-binding: t -*-
+;; This file has been generated from config.org file. DO NOT EDIT.
+;; Sources are available from https://github.com/gersonfaneto/Nyx
+
+;; Copyright (C) 2025 Gerson Ferreira
+
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; For a full copy of the GNU General Public License
+;; see <https://www.gnu.org/licenses/>.
+
 #+end_src
 
-** Consult
+#+begin_src emacs-lisp
 
-#+begin_src elisp
-  (use-package consult
-    :ensure t
-    :bind (
-           ("M-s b" . consult-buffer)
-           ("M-s g" . consult-grep)
-           ("M-s j" . consult-outline)
-           ))
+(defvar my/init-start-time (current-time) "Time when init.el was started")
+(defvar my/section-start-time (current-time) "Time when section was started")
+(defun my/report-time (section)
+  (message "%-36s %.2fs"
+           (concat section " " "section time: ")
+           (float-time (time-subtract (current-time) my/section-start-time))))
+(message "---------------------------------------------------------------")
+
 #+end_src
 
-* Styling
+** Early init :HOOK:OTHER:
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle "~/.emacs.d/early-init.el"
+:END:
 
-** Theming
+This code is meant to go to the [[file:early-init.el][early-init.el]] file.
 
-#+begin_src elisp
-  (use-package catppuccin-theme
-    :ensure t
-    :init  (setq catppuccin-flavor 'mocha) ; or 'latte, 'macchiato, or 'mocha
-    (load-theme 'catppuccin t))
+#+begin_src emacs-lisp
+
+(setq
+ site-run-file nil                         ; No site-wide run-time initializations. 
+ inhibit-default-init t                    ; No site-wide default library
+ gc-cons-threshold most-positive-fixnum    ; Very large threshold for garbage
+                                           ; collector during init
+ package-enable-at-startup nil)            ; We'll use straight.el
+
+(setq native-comp-eln-load-path
+      (list (expand-file-name "eln-cache" user-emacs-directory)))
+
+;; Reset garbage collector limit after init process has ended (8Mo)
+(add-hook 'after-init-hook
+          #'(lambda () (setq gc-cons-threshold (* 8 1024 1024))))
+
+#+end_src 
+
+** Packages management :PERSONAL:
+
+Using [[https://github.com/raxod502/straight.el][straight.el]] for package management and disable checking (for speedup).
+
+#+begin_src emacs-lisp
+
+(setq straight-check-for-modifications nil)
+
 #+end_src
 
-** Elements
+#+begin_src emacs-lisp
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-#+begin_src elisp
-  (setq
-   ;; Disable startup message
-   inhibit-startup-message t
-
-   ;; Clear the initial scratch message
-   initial-scratch-message nil
-
-   ;; Set Dired listing switches for more minimalist output
-   dired-listing-switches "-lhAX --group-directories-first")
-
-  ;; Disable backup files
-  make-backup-files nil
-
-  ;; Disable the menu bar
-  (menu-bar-mode 0)
-
-  ;; Disable the tool bar
-  (tool-bar-mode 0)
-
-  ;; Disable the scroll bar
-  (scroll-bar-mode 0)
-
-  ;; Highlight matching parentheses
-  (show-paren-mode 1)
-
-  ;; Display cursor location on status bar
-  (column-number-mode 1)
-
-  ;; Maximize the frame on startup
-  (toggle-frame-maximized)
 #+end_src
 
-** Font
+Library and theme load paths with a special case for mu4e (you may need to adapt this path).
 
-#+begin_src elisp
-  (set-frame-font "scientifica 18" nil t)
+#+begin_src emacs-lisp
+
+(add-to-list 'load-path
+             (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'custom-theme-load-path
+             (expand-file-name "theme" user-emacs-directory))
+;; (add-to-list 'load-path 
+;;   "/usr/local/Cellar/mu/1.6.10/share/emacs/site-lisp/mu/mu4e/mu4e.el")
+
 #+end_src
 
-* Behavior
+** Packages installation
 
-** General
+Packages used in this specific configuration. You may want to adapt this list. The first time this sequence will be executed, *it will take a long time*. Then, at next restart, it should be very fast (less than 1 second because it won't install anything basically).
 
-#+begin_src elisp
-  ;; Don't touch my 'init.el'!
-  (load (setq custom-file (locate-user-emacs-file "custom.el")) t)
+#+begin_src emacs-lisp
+
+(setq package-list
+      '(cape                ; Completion At Point Extensions
+        orderless           ; Completion style for matching regexps in any order
+        vertico             ; VERTical Interactive COmpletion
+        marginalia          ; Enrich existing commands with completion annotations
+        consult             ; Consulting completing-read
+        corfu               ; Completion Overlay Region FUnction
+        deft                ; Quickly browse, filter, and edit plain text notes
+        elpher              ; A friendly gopher and gemini client 
+        elfeed              ; Emacs Atom/RSS feed reader
+        elfeed-org          ; Configure elfeed with one or more org-mode files
+        f                   ; Modern API for working with files and directories
+        citar               ; Citation-related commands for org, latex, markdown
+        citeproc            ; A CSL 1.0.2 Citation Processor
+        flyspell-correct-popup ; Correcting words with flyspell via popup interface
+        flyspell-popup      ; Correcting words with Flyspell in popup menus
+        guess-language      ; Robust automatic language detection
+        helpful             ; A better help buffer
+        htmlize             ; Convert buffer text and decorations to HTML
+        mini-frame          ; Show minibuffer in child frame on read-from-minibuffer
+        imenu-list          ; Show imenu entries in a separate buffer
+        magit               ; A Git porcelain inside Emacs.
+        markdown-mode       ; Major mode for Markdown-formatted text
+        multi-term          ; Managing multiple terminal buffers in Emacs.
+        pinentry            ; GnuPG Pinentry server implementation
+        use-package         ; A configuration macro for simplifying your .emacs
+        vc-backup           ; VC backend for versioned backups
+        yaml-mode           ; YAML mode
+        consult-recoll      ; Consult interface for recoll query
+        org-auto-tangle     ; Tangle org file when it is saved
+        exec-path-from-shell; Get environment variables such as $PATH from the shell 
+        which-key))         ; Display available keybindings in popup
+
+;; Install packages that are not yet installed
+(dolist (package package-list)
+  (straight-use-package package))
+
+;; Special case for pdf-tools that has recently (2022) changed maintainer
+(straight-use-package
+ '(pdf-tools :type git :host github :repo "vedang/pdf-tools"))
+
+;; Denote not yet on ELPA (2022-06-19)
+(straight-use-package
+ '(denote :type git :host github :repo "protesilaos/denote"))
+
+
 #+end_src
 
-** Keys
+My personal packages
 
-#+begin_src elisp
-  (global-set-key (kbd "C-x C-p") 'previous-buffer)
-  (global-set-key (kbd "C-x C-n") 'next-buffer)
-  (global-set-key (kbd "C-x C-k") 'kill-current-buffer)
+#+begin_src emacs-lisp
 
-  (global-set-key (kbd "C-o") 'other-window)
-  (global-set-key (kbd "C-0") 'delete-window)
-  (global-set-key (kbd "C-1") 'delete-other-windows)
-  (global-set-key (kbd "C-2") 'split-window-bellow)
-  (global-set-key (kbd "C-3") 'split-window-right)
+;; Display org properties in the agenda buffer (modified version)
+(straight-use-package
+ '(org-agenda-property :type git :host github :repo "Malabarba/org-agenda-property"
+                       :fork (:host github :repo "rougier/org-agenda-property")))
 
-  (global-set-key (kbd "C-.") 'duplicate-line)
+;; NANO splash
+(straight-use-package
+ '(nano-splash :type git :host github :repo "rougier/nano-splash"))
+
+;; NANO theme
+(straight-use-package
+ '(nano-theme :type git :host github :repo "rougier/nano-theme"))
+
+;; NANO modeline
+(straight-use-package
+ '(nano-modeline :type git :host github :repo "rougier/nano-modeline"))
+
+;; NANO agenda
+(straight-use-package
+ '(nano-agenda :type git :host github :repo "rougier/nano-agenda"))
+
+;; NANO agenda
+(straight-use-package
+ '(minibuffer-header :type git :host github :repo "rougier/minibuffer-header"))
+
+;; SVG tags, progress bars & icons
+(straight-use-package
+ '(svg-lib :type git :host github :repo "rougier/svg-lib"))
+
+;; Replace keywords with SVG tags
+(straight-use-package
+ '(svg-tag-mode :type git :host github :repo "rougier/svg-tag-mode"))
+
+;; Dashboard for mu4e
+;; (straight-use-package
+;;  '(mu4e-dashboard :type git :host github :repo "rougier/mu4e-dashboard"))
+
+;; Folding mode for mu4e
+;; (straight-use-package
+;;  '(mu4e-folding :type git :host github :repo "rougier/mu4e-folding"))
+
+;; Relative date formatting
+(straight-use-package
+ '(relative-date :type git :host github :repo "rougier/relative-date"))
+
+;; org imenu
+(straight-use-package
+ '(org-imenu :type git :host github :repo "rougier/org-imenu"))
+
+;; pdf-drop-mode
+(straight-use-package
+ '(pdf-drop-mode :type git :host github :repo "rougier/pdf-drop-mode"))
+
+
+;; Bilbliography manager in org mode
+(straight-use-package
+  '(org-bib :type git :host github :branch "org-imenu" :repo "rougier/org-bib-mode"))
+
+#+end_src
+** Startup
+
+Emacs does a lot of things at startup and here, we disable pretty much everything.
+
+#+begin_src emacs-lisp
+
+(setq-default
+ inhibit-startup-screen t               ; Disable start-up screen
+ inhibit-startup-message t              ; Disable startup message
+ inhibit-startup-echo-area-message t    ; Disable initial echo message
+ initial-scratch-message ""             ; Empty the initial *scratch* buffer
+ initial-buffer-choice t)               ; Open *scratch* buffer at init
+
 #+end_src
 
-* Org Mode
+We'll use the [[help:bind-key][bind-key]] function (from use-package) for bindings. Then we can use [[help:describe-personal-keybindings][describe-personal-keybindings]] to check for personal bindings.
 
-** General
+#+begin_src emacs-lisp
 
-#+begin_src elisp
-  (require 'org-id)
-  (require 'org-tempo)
+;; (require 'bind-key)
 
-  (global-set-key (kbd "C-c l") 'org-store-link)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c c") 'org-capture)
-  (global-set-key (kbd "C-c b") 'org-switchb)
-  (global-set-key (kbd "C-c t") 'org-todo-list)
 #+end_src
 
-* Editing
+** Encoding
 
-** Multiple Cursors
+We tell emacs to use UTF-8 encoding as much as possible.
 
-#+begin_src elisp
-  (use-package multiple-cursors
-    :config
-    (setq mc/always-run-for-all 1)
-    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-    (define-key mc/keymap (kbd "<return>") nil))
+#+begin_src emacs-lisp
+
+(set-default-coding-systems 'utf-8)     ; Default to utf-8 encoding
+(prefer-coding-system       'utf-8)     ; Add utf-8 at the front for automatic detection.
+(set-terminal-coding-system 'utf-8)     ; Set coding system of terminal output
+(set-keyboard-coding-system 'utf-8)     ; Set coding system for keyboard input on TERMINAL
+(set-language-environment "English")    ; Set up multilingual environment
+
 #+end_src
 
-* Coding
+** Path :PERSONAL:
 
-** General
+Extending executable for recollq program
 
-#+begin_src elisp
-  (setq display-line-numbers-type 'relative)
+#+begin_src emacs-lisp
+(setenv "PATH" (concat (getenv "PATH") ":" "/Users/rougier/Applications/recoll.app/Contents/MacOS"))
+(setq exec-path (append exec-path '("/Users/rougier/Applications/recoll.app/Contents/MacOS")))
 
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-
-  (global-set-key (kbd "C-c c") 'compile)
-  (global-set-key (kbd "C-c r") 'recompile)
+(setenv "PATH" (concat (getenv "PATH") ":" "/Users/rougier/bin"))
+(setq exec-path (append exec-path '("/Users/rougier/bin")))
 #+end_src
 
-** Direnv
+** Recovery
 
-#+begin_src elisp
-  (use-package direnv
-    :config
-    (direnv-mode))
+If Emacs or the computer crashes, you can recover the files you were editing at the time of the crash from their auto-save files. To do this, start Emacs again and type the command ~M-x recover-session~. Here, we parameterize how files are saved in the background.
+
+#+begin_src emacs-lisp
+
+(setq auto-save-list-file-prefix ; Prefix for generating auto-save-list-file-name
+      (expand-file-name ".auto-save-list/.saves-" user-emacs-directory)
+      auto-save-default t        ; Auto-save every buffer that visits a file
+      auto-save-timeout 20       ; Number of seconds between auto-save
+      auto-save-interval 200)    ; Number of keystrokes between auto-saves
+
 #+end_src
 
-** Haskell
+** Backups
 
-#+begin_src elisp
-  (use-package haskell-mode
-    :ensure t)
+Emacs carefully copies the old contents to another file, called the “backup” file, before actually saving. Emacs makes a backup for a file only the first time the file is saved from a buffer. No matter how many times you subsequently save the file, its backup remains unchanged. However, if you kill the buffer and then visit the file again, a new backup file will be made. Here, we activate backup and parameterize the number of backups to keep.
 
-  (require 'haskell-interactive-mode)
+#+begin_src emacs-lisp
 
-  (require 'haskell-process)
 
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(setq backup-directory-alist       ; File name patterns and backup directory names.
+      `(("." . ,(expand-file-name "backups" user-emacs-directory)))
+      make-backup-files t          ; Backup of a file the first time it is saved.
+      vc-make-backup-files t       ; No backup of files under version contr
+      backup-by-copying t          ; Don't clobber symlinks
+      version-control t            ; Version numbers for backup files
+      delete-old-versions t        ; Delete excess backup files silently
+      kept-old-versions 6          ; Number of old versions to keep
+      kept-new-versions 9          ; Number of new versions to keep
+      delete-by-moving-to-trash t) ; Delete files to trash
 
-  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
-  (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
-  (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
-  (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
-  (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-  (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-  (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+;; Back
+(require 'vc-backup)
 
-  (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
-  (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-  (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
-
-  (custom-set-variables
-   '(haskell-process-type 'cabal-repl))
 #+end_src
 
-;; Local Variables:
-;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Reload?")(load-file user-init-file))) nil t)
-;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
-;; End:
+** Bookmarks
+
+#+begin_src emacs-lisp
+
+(setq bookmark-default-file (expand-file-name "bookmark" user-emacs-directory))
+
+#+end_src
+
+** Recent files
+
+50 Recents files with some exclusion (regex patterns).
+
+#+begin_src emacs-lisp
+
+(require 'recentf)
+
+(setq recentf-max-menu-items 10
+      recentf-max-saved-items 100
+      recentf-exclude '("/Users/rougier/Documents/Mail.+"
+                        "/Users/rougier/Documents/Notes.+"
+                        ))
+
+(let (message-log-max)
+  (recentf-mode 1))
+
+#+end_src
+
+** History :HOOK:
+
+Remove text properties for kill ring entries (see https://emacs.stackexchange.com/questions/4187). This saves a lot of time when loading it.
+
+ #+begin_src emacs-lisp 
+
+(defun unpropertize-kill-ring ()
+  (setq kill-ring (mapcar 'substring-no-properties kill-ring)))
+
+(add-hook 'kill-emacs-hook 'unpropertize-kill-ring)
+
+#+end_src
+
+We save every possible history we can think of.
+
+#+begin_src emacs-lisp 
+
+(require 'savehist)
+
+(setq kill-ring-max 50
+      history-length 50)
+
+(setq savehist-additional-variables
+      '(kill-ring
+        command-history
+        set-variable-value-history
+        custom-variable-history   
+        query-replace-history     
+        read-expression-history   
+        minibuffer-history        
+        read-char-history         
+        face-name-history         
+        bookmark-history
+        file-name-history))
+
+ (put 'minibuffer-history         'history-length 50)
+ (put 'file-name-history          'history-length 50)
+ (put 'set-variable-value-history 'history-length 25)
+ (put 'custom-variable-history    'history-length 25)
+ (put 'query-replace-history      'history-length 25)
+ (put 'read-expression-history    'history-length 25)
+ (put 'read-char-history          'history-length 25)
+ (put 'face-name-history          'history-length 25)
+ (put 'bookmark-history           'history-length 25)
+
+#+end_src
+
+No duplicates in history
+  
+#+begin_src emacs-lisp
+
+(setq history-delete-duplicates t)
+
+#+end_src
+  
+Start history mode.
+
+#+begin_src emacs-lisp
+
+(let (message-log-max)
+  (savehist-mode))
+
+#+end_src
+
+** Cursor
+
+Record cursor position from one session ot the other
+
+#+begin_src emacs-lisp
+
+(setq save-place-file (expand-file-name "saveplace" user-emacs-directory)
+      save-place-forget-unreadable-files t)
+
+(save-place-mode 1)
+
+#+end_src
+
+** Customization
+
+Since init.el will be generated from this file, we save customization in a dedicated file.
+
+#+begin_src emacs-lisp
+
+(setq custom-file (concat user-emacs-directory "custom.el"))
+
+(when (file-exists-p custom-file)
+  (load custom-file nil t))
+
+#+end_src
+
+** Server
+
+Server start.
+
+#+begin_src emacs-lisp
+
+(require 'server)
+
+(unless (server-running-p)
+  (server-start))
+
+#+end_src
+
+** Benchmark
+
+#+begin_src emacs-lisp
+
+(my/report-time "Core")
+
+#+end_src
