@@ -159,7 +159,6 @@ in
     chafa
     detach
     diff-so-fancy
-    emacs
     fastfetch
     fd
     feh
