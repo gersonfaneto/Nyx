@@ -1,6 +1,11 @@
 return {
   -- Haskell
   {
+    'mrcjkb/haskell-tools.nvim',
+    version = '^6', -- Recommended
+    ft = { 'haskell', 'cabal' },
+  },
+  {
     'neovimhaskell/haskell-vim',
     ft = { 'haskell', 'cabal' },
   },
