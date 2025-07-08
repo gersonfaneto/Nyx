@@ -1,6 +1,5 @@
 #+TITLE:	Minimal
 #+AUTHOR:	Gerson Ferreira
-#+PROPERTY:	header-args :tangle "~/.emacs.d/init.el"
 #+STARTUP:	show2levels indent hidestars
 #+PROPERTY:	header-args :tangle (let ((org-use-tag-inheritance t)) (if (member "INACTIVE" (org-get-tags)) "no" "~/.emacs.d/init.el"))
 

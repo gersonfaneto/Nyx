@@ -5,6 +5,3 @@
 !.gitignore
 !config.org
 !reference.org
-
-# ...even if they are in subdirectories
-!*/
