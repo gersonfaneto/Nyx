@@ -279,6 +279,8 @@ vim.api.nvim_create_autocmd('CmdlineEnter', {
     key.command_abbrev('bt', 'bot te')
     key.command_abbrev('ht', 'hor te')
     key.command_abbrev('vt', 'vert te')
+    key.command_abbrev('ae', '!ae')
+    key.command_abbrev('vr', '!vr')
     key.command_abbrev('rm', '!rm')
     key.command_abbrev('mv', '!mv')
     key.command_abbrev('git', '!git')
