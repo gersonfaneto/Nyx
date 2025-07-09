@@ -89,11 +89,11 @@
 [color "blame"]
   highlightRecent = black bold,1 year ago,white,1 month ago,default,7 days ago,blue
 
-[color "diff"]
-  meta       = black bold
-  frag       = magenta
-  context    = white
-  whitespace = yellow reverse
+; [color "diff"]
+;   meta       = black bold
+;   frag       = magenta
+;   context    = white
+;   whitespace = yellow reverse
 
 [color "branch"]
   current  = magenta
