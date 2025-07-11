@@ -118,37 +118,37 @@
 ; Aliases
 
 [alias]
-  i = "!git init && git commit -m 'Ready... Set... Go!' --allow-empty"
+  it = "![[ ! -d ".git/" ]] && ( git init && git commit -m 'Ready... Set... Go!' --allow-empty ) || ( echo 'Project already exists!' && exit 0  )"
 
-  c  = commit
-  cm = commit --message
-  ca = commit --ammend
-  ce = commit --ammend --no-edit
+  cm  = commit
+  cmm = commit --message
+  cma = commit --ammend
+  cme = commit --ammend --no-edit
 
-  b  = branch
-  bd = branch --delete
+  br  = branch
+  brd = branch --delete
 
-  d  = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
-  ds = df --cached
+  df  = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
+  dfs = df --cached
 
-  c  = checkout
-  cf = checkout --force
+  cc  = checkout
+  ccf = checkout --force
 
   sw  = switch
   swc = switch --create
 
-  a   = add
-  aa  = add --all
-  ap  = add --patch
-  au  = add --update
-  aup = add --update --patch
+  ad   = add
+  ada  = add --all
+  adp  = add --patch
+  adu  = add --update
+  adup = add --update --patch
 
-  s  = status
-  ss = status --short
+  st  = status
+  sts = status --short
 
-  f  = fetch
-  fa = fetch --all
-  fp = fetch --prune
+  ft  = fetch
+  fta = fetch --all
+  ftp = fetch --prune
 
   ps = push
   pl = pull
@@ -158,13 +158,15 @@
   cln = clone --filter=blob:none
   clr = clone --recursive
 
-  ri = rebase --interactive
-  rc = rebase --continue
-  ra = rebase --abort
-  rt = rebase --edit-todo
+  rb  = rebase
+  rbi = rebase --interactive
+  rbc = rebase --continue
+  rba = rebase --abort
+  rbt = rebase --edit-todo
 
-  wl = worktree list
-  wa = worktree add
-  wr = worktree remove
+  wt  = worktree
+  wtl = worktree list
+  wta = worktree add
+  wtr = worktree remove
 
   lg = "!git log --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n'"
