@@ -7,12 +7,7 @@ main() {
 		tmux list-sessions -F '#S' |
 			fzf --no-preview --ansi --color hl:reverse:-1,hl+:reverse:-1 \
 				--prompt '  Sessions :: ' \
-				--tmux center,border-native \
-				--bind "ctrl-x:execute(echo {+} | \
-            sed 's/([^()]*)//g' | \
-            sed 's/\\\\s\\\\+/\\\\n/g' | \
-            tac | \
-            xargs -I % tmux kill-window -t %)"
+				--tmux center,border-native
 	)
 
 	if [[ -z $selected ]]; then
