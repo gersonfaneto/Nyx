@@ -1,81 +1,83 @@
 #!/usr/bin/env bash
 
 handle_duplicates() {
-    local -a sections=($(echo $1 | tr '/' ' ' | xargs))
-    local lenght=(${#sections[@]})
+	local -a sections=($(echo $1 | tr '/' ' ' | xargs))
+	local lenght=(${#sections[@]})
 
-    if [[ ! lenght -eq 6 ]]; then
-        echo $(basename $1)
-        exit
-    fi
+	if [[ ! lenght -eq 6 ]]; then
+		echo $(basename $1)
+		exit
+	fi
 
-    if [[ ! ${sections[3]} == 'Exploring' ]]; then
-        echo $(basename $1)
-        exit
-    fi
+	if [[ ! ${sections[3]} == 'Exploring' ]]; then
+		echo $(basename $1)
+		exit
+	fi
 
-    echo "${sections[${lenght} - 2]}/${sections[${lenght} - 1]}"
+	echo "${sections[${lenght} - 2]}/${sections[${lenght} - 1]}"
 }
 
 main() {
-    if [[ $# -eq 1 ]]; then
-        if [[ $1 == '.' ]]; then
-            selected=$PWD
-        else
-            selected=$1
-        fi
-    else
-        dirs=$(
-            find \
-                $HOME \
-                -mindepth 1 -maxdepth 1 \
-                -type d -not -name '.*'
-        )
+	if [[ $# -eq 1 ]]; then
+		if [[ $1 == '.' ]]; then
+			selected=$PWD
+		else
+			selected=$1
+		fi
+	else
+		dirs=$(
+			find \
+				$HOME \
+				-mindepth 1 -maxdepth 1 \
+				-type d -not -name '.*'
+		)
 
-        dirs=$(
-            echo $dirs \
-                $(find \
-                    ~/Developer/ \
-                    -mindepth 1 -maxdepth 2 -type d)
-        )
+		dirs=$(
+			echo $dirs \
+				$(find \
+					~/Developer/ \
+					-mindepth 1 -maxdepth 2 -type d)
+		)
 
-        dirs=$(
-            echo $dirs \
-                $(find \
-                    ~/Developer/Exploring \
-                    -mindepth 1 -maxdepth 2 -type d)
-        )
+		dirs=$(
+			echo $dirs \
+				$(find \
+					~/Developer/Exploring \
+					-mindepth 1 -maxdepth 2 -type d)
+		)
 
-        selected=$(
-            echo "${dirs[@]}" \
-                | tr ' ' '\n' \
-                | sort \
-                | uniq \
-                | fzf
-        )
-    fi
+		selected=$(
+			echo "${dirs[@]}" |
+				tr ' ' '\n' |
+				sort |
+				uniq |
+				fzf --no-preview --ansi --color hl:reverse:-1,hl+:reverse:-1 \
+					--prompt '  Sessions :: ' \
+					--tmux center,border-native
+		)
+	fi
 
-    if [[ -z $selected ]]; then
-        exit 0
-    fi
+	if [[ -z $selected ]]; then
+		exit 0
+	fi
 
-    selected_name=$(handle_duplicates "$selected" | tr . _)
-    tmux_running=$(pgrep tmux)
+	selected_name=$(handle_duplicates "$selected" | tr . _)
+	tmux_running=$(pgrep tmux)
 
-    if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-        tmux new-session -s $selected_name -c $selected 2> /dev/null
-        exit 0
-    fi
+	if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+		tmux new-session -s $selected_name -c $selected 2>/dev/null
+		exit 0
+	fi
 
-    if ! tmux has-session -t=$selected_name 2> /dev/null; then
-        tmux new-session -ds $selected_name -c $selected 2> /dev/null
-    fi
+	if ! tmux has-session -t=$selected_name 2>/dev/null; then
+		tmux new-session -ds $selected_name -c $selected 2>/dev/null
+	fi
 
-    if [[ -z $TMUX ]]; then
-        tmux attach -t $selected_name 2> /dev/null
-    else
-        tmux switch-client -t $selected_name 2> /dev/null
-    fi
+	if [[ -z $TMUX ]]; then
+		tmux attach -t $selected_name 2>/dev/null
+	else
+		tmux switch-client -t $selected_name 2>/dev/null
+	fi
 }
 
 main "$@"

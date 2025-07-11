@@ -1,19 +1,31 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 main() {
-    local selected=$(tmux list-sessions -F '#S' | fzf --reverse --no-preview)
+	local selected
 
-    if [[ -z $selected ]]; then
-        exit 0
-    fi
+	selected=$(
+		tmux list-sessions -F '#S' |
+			fzf --no-preview --ansi --color hl:reverse:-1,hl+:reverse:-1 \
+				--prompt '  Sessions :: ' \
+				--tmux center,border-native \
+				--bind "ctrl-x:execute(echo {+} | \
+            sed 's/([^()]*)//g' | \
+            sed 's/\\\\s\\\\+/\\\\n/g' | \
+            tac | \
+            xargs -I % tmux kill-window -t %)"
+	)
 
-    local tmux_running=$(pgrep tmux)
+	if [[ -z $selected ]]; then
+		exit 0
+	fi
 
-    if [[ -z $TMUX ]]; then
-        tmux attach -t $selected 2> /dev/null
-    else
-        tmux switch-client -t $selected 2> /dev/null
-    fi
+	local tmux_running=$(pgrep tmux)
+
+	if [[ -z $TMUX ]]; then
+		tmux attach -t $selected 2>/dev/null
+	else
+		tmux switch-client -t $selected 2>/dev/null
+	fi
 }
 
 main "$@"
