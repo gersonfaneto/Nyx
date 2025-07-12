@@ -118,55 +118,55 @@
 ; Aliases
 
 [alias]
-  it = "![[ ! -d ".git/" ]] && ( git init && git commit -m 'Ready... Set... Go!' --allow-empty ) || ( echo 'Project already exists!' && exit 0  )"
+  i = "![[ ! -d ".git/" ]] && ( git init && git commit -m 'Ready... Set... Go!' --allow-empty ) || ( echo 'Project already exists!' && exit 0  )"
 
-  cm  = commit
-  cmm = commit --message
-  cma = commit --ammend
-  cme = commit --ammend --no-edit
+  c  = commit
+  cm = commit --message
+  ca = commit --ammend
+  ce = commit --ammend --no-edit
 
-  br  = branch
-  brd = branch --delete
+  b  = branch
+  bd = branch --delete
 
-  df  = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
-  dfs = df --cached
+  d  = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
+  ds = df --cached
 
-  cc  = checkout
-  ccf = checkout --force
+  k  = checkout
+  kf = checkout --force
 
-  sw  = switch
-  swc = switch --create
+  s  = switch
+  sc = switch --create
 
-  ad   = add
-  ada  = add --all
-  adp  = add --patch
-  adu  = add --update
-  adup = add --update --patch
+  a   = add
+  aa  = add --all
+  ap  = add --patch
+  au  = add --update
+  aup = add --update --patch
 
-  st  = status
-  sts = status --short
+  s  = status
+  ss = status --short
 
-  ft  = fetch
-  fta = fetch --all
-  ftp = fetch --prune
+  f  = fetch
+  fa = fetch --all
+  fp = fetch --prune
 
   ps = push
   pl = pull
 
-  cl  = clone
-  cls = clone --depth=1
-  cln = clone --filter=blob:none
-  clr = clone --recursive
+  g  = clone
+  gs = clone --depth=1
+  gn = clone --filter=blob:none
+  gr = clone --recursive
 
-  rb  = rebase
-  rbi = rebase --interactive
-  rbc = rebase --continue
-  rba = rebase --abort
-  rbt = rebase --edit-todo
+  r  = rebase
+  ri = rebase --interactive
+  rc = rebase --continue
+  ra = rebase --abort
+  rt = rebase --edit-todo
 
-  wt  = worktree
-  wtl = worktree list
-  wta = worktree add
-  wtr = worktree remove
+  w  = worktree
+  wl = worktree list
+  wa = worktree add
+  wr = worktree remove
 
-  lg = "!git log --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n'"
+  lg = "log --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n'"

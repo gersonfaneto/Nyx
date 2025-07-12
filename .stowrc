@@ -3,9 +3,4 @@
 
 --ignore=.stowrc
 
---ignore=.direnv
---ignore=.envrc
---ignore=flake.lock
---ignore=flake.nix
---ignore=config.org
 --ignore=configuration.nix
