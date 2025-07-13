@@ -200,7 +200,7 @@ local subcommands = {
   ---LSP subcommands
   ---@type table<string, subcommand_info_t>
   lsp = {
-    args = {
+    info = {
       opts = {
         'filter',
         ['filter.bufnr'] = subcommand_opt_vals.bufs,

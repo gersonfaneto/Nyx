@@ -137,7 +137,6 @@ in {
       chafa
       detach
       diff-so-fancy
-      emacs
       fastfetch
       fd
       feh
@@ -201,6 +200,7 @@ in {
       # C
       gcc
       gnumake
+      cmake
       gdb
       strace
       valgrind
@@ -240,10 +240,7 @@ in {
     packages = with pkgs; [
       nerd-fonts.symbols-only
       nerd-fonts.gohufont
-      nerd-fonts.geist-mono
-      nerd-fonts.terminess-ttf
       noto-fonts-color-emoji
-      scientifica
       (iosevka-bin.override {variant = "SS07";})
     ];
     fontconfig = {
@@ -266,11 +263,6 @@ in {
   };
 
   services = {
-    emacs = {
-      enable = true;
-      install = true;
-      startWithGraphical = true;
-    };
     openssh = {
       enable = true;
     };
