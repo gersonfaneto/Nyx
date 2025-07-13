@@ -90,7 +90,8 @@ local symbol_kind_names = setmetatable({
 local function symbol_type(symbols)
   if symbols[1] and symbols[1].location then
     return 'SymbolInformation'
-  elseif symbols[1] and symbols[1].range then
+  end
+  if symbols[1] and symbols[1].range then
     return 'DocumentSymbol'
   end
 end
@@ -128,7 +129,9 @@ local function convert_document_symbol(
           return convert_document_symbol(child, buf, win)
         end, document_symbol.children)
         return self.children
-      elseif k == 'siblings' then
+      end
+
+      if k == 'siblings' then
         if not siblings then
           return nil
         end
@@ -234,42 +237,53 @@ local function update_symbols(buf, ttl)
     return
   end
 
-  local function _defer_update()
+  local function defer_update()
     vim.defer_fn(function()
       update_symbols(buf, ttl - 1)
     end, configs.opts.sources.lsp.request.interval)
   end
 
-  local client = vim.tbl_filter(
-    function(client)
-      return client:supports_method('textDocument/documentSymbol')
-    end,
-    vim.lsp.get_clients({
-      bufnr = buf,
-    })
-  )[1]
+  ---@type vim.lsp.Client
+  local client = vim.lsp.get_clients({
+    bufnr = buf,
+    method = 'textDocument/documentSymbol',
+  })[1]
   if not client then
-    _defer_update()
+    defer_update()
     return
   end
 
-  client:request(
+  ---@diagnostic disable: param-type-mismatch, inject-field
+  -- Cancel previous request before making new request since
+  -- responses from outdated requests are not helpful, fix
+  -- https://github.com/Bekaboo/dropbar.nvim/issues/249
+  if client._winbar_request_id then
+    client:cancel_request(client._winbar_request_id)
+  end
+
+  local _, request_id = client:request(
     'textDocument/documentSymbol',
     { textDocument = vim.lsp.util.make_text_document_params(buf) },
     function(err, symbols, _)
       if err or not symbols or vim.tbl_isempty(symbols) then
-        _defer_update()
+        defer_update()
         return
       end
       lsp_buf_symbols[buf] = unify(symbols)
     end,
     buf
   )
+  client._winbar_request_id = request_id
+  ---@diagnostic enable: param-type-mismatch, inject-field
 end
 
 ---Attach LSP symbol getter to buffer
 ---@param buf integer buffer handler
 local function attach(buf)
+  if not vim.api.nvim_buf_is_valid(buf) then
+    return
+  end
+
   if vim.b[buf].winbar_lsp_attached then
     return
   end
@@ -288,6 +302,10 @@ end
 ---Detach LSP symbol getter from buffer
 ---@param buf integer buffer handler
 local function detach(buf)
+  if not vim.api.nvim_buf_is_valid(buf) then
+    return
+  end
+
   if vim.b[buf].winbar_lsp_attached then
     vim.api.nvim_del_autocmd(vim.b[buf].winbar_lsp_attached)
     vim.b[buf].winbar_lsp_attached = nil
@@ -305,14 +323,18 @@ local function init()
     return
   end
   initialized = true
+
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    local clients = vim.tbl_filter(function(client)
-      return client:supports_method('textDocument/documentSymbol')
-    end, vim.lsp.get_clients({ bufnr = buf }))
-    if not vim.tbl_isempty(clients) then
+    if
+      not vim.tbl_isempty(vim.lsp.get_clients({
+        bufnr = buf,
+        method = 'textDocument/documentSymbol',
+      }))
+    then
       attach(buf)
     end
   end
+
   vim.api.nvim_create_autocmd({ 'LspAttach' }, {
     desc = 'Attach LSP symbol getter to buffer when an LS that supports documentSymbol attaches.',
     group = groupid,
@@ -323,20 +345,23 @@ local function init()
       end
     end,
   })
+
   vim.api.nvim_create_autocmd({ 'LspDetach' }, {
     desc = 'Detach LSP symbol getter from buffer when no LS supporting documentSymbol is attached.',
     group = groupid,
-    callback = function(args)
+    -- Schedule to wait for lsp that triggers `LspDetach` to actually detach
+    callback = vim.schedule_wrap(function(args)
       if
-        vim.tbl_isempty(vim.tbl_filter(function(client)
-          return client:supports_method('textDocument/documentSymbol')
-            and client.id ~= args.data.client_id
-        end, vim.lsp.get_clients({ bufnr = args.buf })))
+        vim.tbl_isempty(vim.lsp.get_clients({
+          bufnr = args.buf,
+          method = 'textDocument/documentSymbol',
+        }))
       then
         detach(args.buf)
       end
-    end,
+    end),
   })
+
   vim.api.nvim_create_autocmd({ 'BufDelete', 'BufUnload', 'BufWipeOut' }, {
     desc = 'Detach LSP symbol getter from buffer on buffer delete/unload/wipeout.',
     group = groupid,
