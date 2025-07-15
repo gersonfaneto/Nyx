@@ -1,3 +1,6 @@
+-- LSP wrapper for typescript extension of vscode
+-- https://github.com/yioneko/vtsls
+
 return {
   filetypes = {
     'typescript',
@@ -5,10 +8,7 @@ return {
     'typescriptreact',
     'javascriptreact',
   },
-  cmd = {
-    'typescript-language-server',
-    '--stdio',
-  },
+  cmd = { 'vtsls', '--stdio' },
   root_markers = {
     {
       'tsconfig.json',

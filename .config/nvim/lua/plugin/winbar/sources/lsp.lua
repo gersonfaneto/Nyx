@@ -84,9 +84,11 @@ local symbol_kind_names = setmetatable({
 })
 -- stylua: ignore end
 
+---@alias lsp_symbol_type_t 'SymbolInformation'|'DocumentSymbol'
+
 ---Return type of the symbol table
 ---@param symbols lsp_symbol_t[] symbol table
----@return string? symbol type
+---@return lsp_symbol_type_t? type symbol type
 local function symbol_type(symbols)
   if symbols[1] and symbols[1].location then
     return 'SymbolInformation'
@@ -269,7 +271,23 @@ local function update_symbols(buf, ttl)
         defer_update()
         return
       end
+
+      -- Unify symbols to common format and sort by position since LSP
+      -- responses can be disordered i.e. later symbols can appear first
       lsp_buf_symbols[buf] = unify(symbols)
+
+      ---@param s1 lsp_document_symbol_t
+      ---@param s2 lsp_document_symbol_t
+      ---@return boolean precedes true if `s1` appears before `s2`
+      table.sort(lsp_buf_symbols[buf], function(s1, s2)
+        local l1, l2, c1, c2 =
+          s1.range.start.line,
+          s2.range.start.line,
+          s1.range.start.character,
+          s2.range.start.character
+
+        return l1 < l2 or l1 == l2 and c1 <= c2
+      end)
     end,
     buf
   )
@@ -386,6 +404,4 @@ local function get_symbols(buf, win, cursor)
   return result
 end
 
-return {
-  get_symbols = get_symbols,
-}
+return { get_symbols = get_symbols }
