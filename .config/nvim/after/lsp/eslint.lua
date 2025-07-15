@@ -97,9 +97,9 @@ if vim.endswith(cmd, 'language-server') then
       end
 
       -- Support flat config
-      if vim.iter(root_markers):any(file_exists) then
-        config.settings.experimental.useFlatConfig = true
-      end
+      -- if vim.iter(root_markers):any(file_exists) then
+      --   config.settings.experimental.useFlatConfig = true
+      -- end
 
       -- Support Yarn2 (PnP) projects
       if vim.iter({ '.pnp.cjs', '.pnp.js' }):any(file_exists) then
