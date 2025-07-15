@@ -218,6 +218,7 @@ in {
       python312Packages.isort
 
       python312Packages.pynvim
+      python312Packages.ipykernel
       python312Packages.jupyter-client
       python312Packages.jupytext
       python312Packages.weasyprint
