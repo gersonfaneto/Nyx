@@ -10,6 +10,9 @@ if type -q brew
     eval (brew shellenv)
 end
 
+set -gx GOPATH "$HOME/.go"
+set -gx GOBIN "$HOME/.go/bin"
+
 # Other install paths
 # Homebrew `brew shellenv` uses `--move` to prepend its paths, overriding our
 # custom wrappers in `~/.bin` (e.g., `~/.bin/fzf`). We use `--move` again here
@@ -18,7 +21,7 @@ fish_add_path --move \
     $HOME/.bin \
     $HOME/.local/bin \
     $HOME/.cargo/bin \
-    $HOME/go/bin
+    $HOME/.go/bin
 
 if test -f $HOME/.envvars
     source $HOME/.envvars
