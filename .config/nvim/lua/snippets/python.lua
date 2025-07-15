@@ -125,11 +125,11 @@ M.snippets = {
         i(1, 'sys.stderr'),
       }),
       level = c(2, {
+        i(2, 'logging.DEBUG'),
         i(2, 'logging.INFO'),
         i(2, 'logging.WARNING'),
         i(2, 'logging.ERROR'),
         i(2, 'logging.CRITICAL'),
-        i(2, 'logging.DEBUG'),
         i(2, 'logging.NOTSET'),
       }),
     })
@@ -150,7 +150,7 @@ M.snippets = {
       trig = 'l',
       desc = 'Logger log',
     },
-    un.fmtad('<logger>.<level>(<q><message><q><e>)', {
+    un.fmtad('<logger>.<level>(<msg><e>)', {
       logger = i(1, 'logger'),
       level = c(2, {
         i(2, 'info'),
@@ -159,17 +159,30 @@ M.snippets = {
         i(2, 'critical'),
         i(2, 'debug'),
       }),
-      q = un.qt(),
-      message = i(3, 'message'),
+      msg = c(3, {
+        un.fmtad('<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+        un.fmtad('f<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+      }),
       e = i(4),
-    })
+    }),
+    {
+      stored = {
+        msg = i(nil, 'msg'),
+      },
+    }
   ),
   us.sn(
     {
       trig = 'lg',
       desc = 'logger.log()',
     },
-    un.fmtad('<logger>.log(<level>, <q><message><q><e>)', {
+    un.fmtad('<logger>.log(<level>, <msg><e>)', {
       logger = i(1, 'logger'),
       level = c(2, {
         i(2, 'logging.INFO'),
@@ -179,70 +192,148 @@ M.snippets = {
         i(2, 'logging.DEBUG'),
         i(2, 'logging.NOTSET'),
       }),
-      q = un.qt(),
-      message = i(3, 'message'),
+      msg = c(3, {
+        un.fmtad('<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+        un.fmtad('f<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+      }),
       e = i(4),
-    })
+    }),
+    {
+      stored = {
+        msg = i(nil, 'msg'),
+      },
+    }
   ),
   us.sn(
     {
       trig = 'li',
       desc = 'logger.info()',
     },
-    un.fmtad('<logger>.info(<q><message><q><e>)', {
+    un.fmtad('<logger>.info(<msg><e>)', {
       logger = i(1, 'logger'),
-      q = un.qt(),
-      message = i(2, 'message'),
+      msg = c(2, {
+        un.fmtad('<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+        un.fmtad('f<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+      }),
       e = i(3),
-    })
+    }),
+    {
+      stored = {
+        msg = i(nil, 'msg'),
+      },
+    }
   ),
   us.sn(
     {
       trig = 'lw',
       desc = 'logger.warning()',
     },
-    un.fmtad('<logger>.warning(<q><message><q><e>)', {
+    un.fmtad('<logger>.warning(<msg><e>)', {
       logger = i(1, 'logger'),
-      q = un.qt(),
-      message = i(2, 'message'),
+      msg = c(2, {
+        un.fmtad('<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+        un.fmtad('f<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+      }),
       e = i(3),
-    })
+    }),
+    {
+      stored = {
+        msg = i(nil, 'msg'),
+      },
+    }
   ),
   us.sn(
     {
       trig = 'le',
       desc = 'logger.error()',
     },
-    un.fmtad('<logger>.error(<q><message><q><e>)', {
+    un.fmtad('<logger>.error(<msg><e>)', {
       logger = i(1, 'logger'),
-      q = un.qt(),
-      message = i(2, 'message'),
+      msg = c(2, {
+        un.fmtad('<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+        un.fmtad('f<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+      }),
       e = i(3),
-    })
+    }),
+    {
+      stored = {
+        msg = i(nil, 'msg'),
+      },
+    }
   ),
   us.sn(
     {
       trig = 'lc',
       desc = 'logger.critical()',
     },
-    un.fmtad('<logger>.critical(<q><message><q><e>)', {
+    un.fmtad('<logger>.critical(<msg><e>)', {
       logger = i(1, 'logger'),
-      q = un.qt(),
-      message = i(2, 'message'),
+      msg = c(2, {
+        un.fmtad('<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+        un.fmtad('f<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+      }),
       e = i(3),
-    })
+    }),
+    {
+      stored = {
+        msg = i(nil, 'msg'),
+      },
+    }
   ),
   us.sn(
     {
       trig = 'ld',
       desc = 'logger.debug()',
     },
-    un.fmtad('<logger>.debug(<q><message><q><e>)', {
+    un.fmtad('<logger>.debug(<msg><e>)', {
       logger = i(1, 'logger'),
-      q = un.qt(),
-      message = i(2, 'message'),
+      msg = c(2, {
+        un.fmtad('<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+        un.fmtad('f<q><m><q>', {
+          q = un.qt(),
+          m = r(1, 'msg'),
+        }),
+      }),
       e = i(3),
-    })
+    }),
+    {
+      stored = {
+        msg = i(nil, 'msg'),
+      },
+    }
   ),
   us.sn(
     {
@@ -600,7 +691,7 @@ M.snippets = {
         <body>
       ]],
       {
-        name = i(1, 'class_name'),
+        name = i(1, 'ClassName'),
         args = i(2),
         idnt = un.idnt(1),
         body = un.body(3, 2, 'pass'),
@@ -763,13 +854,21 @@ M.snippets = {
       [[
         try:
         <body>
-        except<exc>:
-        <idnt>
+        except <exc><i>:
+        <idnt><exc_body>
       ]],
       {
-        body = un.body(1, 1),
-        exc = i(2),
+        body = un.body(1, 1, 'pass'),
+        exc = c(2, {
+          sn(nil, r(1, 'exc_name', i(nil, 'Exception'))),
+          un.fmtad('<exc_name> as <e>', {
+            exc_name = r(1, 'exc_name', i(nil, 'Exception')),
+            e = i(2, 'e'),
+          }),
+        }),
+        i = i(3),
         idnt = un.idnt(1),
+        exc_body = i(4, 'pass'),
       }
     )
   ),
@@ -780,12 +879,20 @@ M.snippets = {
     },
     un.fmtad(
       [[
-        except<exc>:
-        <body>
+        except <exc><i>:
+        <idnt><exc_body>
       ]],
       {
-        exc = i(1),
-        body = un.body(2, 1, 'pass'),
+        exc = c(1, {
+          sn(nil, r(1, 'exc_name', i(nil, 'Exception'))),
+          un.fmtad('<exc_name> as <e>', {
+            exc_name = r(1, 'exc_name', i(nil, 'Exception')),
+            e = i(2, 'e'),
+          }),
+        }),
+        i = i(2),
+        idnt = un.idnt(1),
+        exc_body = i(3, 'pass'),
       }
     )
   ),
