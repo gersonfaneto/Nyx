@@ -72,6 +72,9 @@ bindsym $mod+$shift+b exec firefox --private-window
 # Open the terminal.
 bindsym $mod+Return exec alacritty
 
+# Open text editor (VSCode)
+bindsym $mod+e exec code
+
 # Kill the focused window.
 bindsym $mod+q kill
 

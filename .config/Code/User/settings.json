@@ -1,0 +1,93 @@
+{
+  "editor.bracketPairColorization.enabled": false,
+  "editor.cursorBlinking": "solid",
+  "editor.fontFamily": "'Iosevka', 'monospace', monospace",
+  "editor.guides.indentation": false,
+  "editor.renderLineHighlight": "none",
+  "editor.suggest.selectionMode": "never",
+  "editor.wordWrap": "off",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "files.autoSave": "onFocusChange",
+  "git.openRepositoryInParentFolders": "always",
+  "security.workspace.trust.enabled": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "terminal.integrated.allowChords": false,
+  "terminal.integrated.allowMnemonics": false,
+  "terminal.integrated.commandsToSkipShell": [
+    "-workbench.action.focusLastEditorGroup",
+    "-workbench.action.quickOpen",
+    "-workbench.action.terminal.focusFind"
+  ],
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "terminal.integrated.fontFamily": "'Iosevka', 'monospace', monospace",
+  "update.showReleaseNotes": false,
+  "window.autoDetectColorScheme": true,
+  "window.restoreWindows": "none",
+  "window.titleBarStyle": "native",
+  "workbench.editor.restoreViewState": false,
+  "workbench.startupEditor": "none",
+  "vim.enableNeovim": true,
+  "vim.neovimUseConfigFile": true,
+  "vim.targets.smartQuotes.aIncludesSurroundingSpaces": false,
+  "vim.vimrc.enable": true,
+  "tabout.charactersToTabOutFrom": [
+    {
+      "open": "[",
+      "close": "]"
+    },
+    {
+      "open": "{",
+      "close": "}"
+    },
+    {
+      "open": "(",
+      "close": ")"
+    },
+    {
+      "open": "'",
+      "close": "'"
+    },
+    {
+      "open": "\"",
+      "close": "\""
+    },
+    {
+      "open": ",",
+      "close": ","
+    },
+    {
+      "open": ".",
+      "close": "."
+    },
+    {
+      "open": ":",
+      "close": ":"
+    },
+    {
+      "open": "=",
+      "close": "="
+    },
+    {
+      "open": ">",
+      "close": ">"
+    },
+    {
+      "open": "<",
+      "close": "<"
+    },
+    {
+      "open": ".",
+      "close": "."
+    },
+    {
+      "open": "`",
+      "close": "`"
+    },
+    {
+      "open": ";",
+      "close": ";"
+    }
+  ]
+}
