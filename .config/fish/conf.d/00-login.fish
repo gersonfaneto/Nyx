@@ -3,20 +3,9 @@ if not status is-login
     exit
 end
 
-# Setup paths
-# macOS homebrew
-fish_add_path /opt/homebrew/bin /usr/local/bin
-if type -q brew
-    eval (brew shellenv)
-end
-
 set -gx GOPATH "$HOME/.go"
 set -gx GOBIN "$HOME/.go/bin"
 
-# Other install paths
-# Homebrew `brew shellenv` uses `--move` to prepend its paths, overriding our
-# custom wrappers in `~/.bin` (e.g., `~/.bin/fzf`). We use `--move` again here
-# to ensure these paths take priority over homebrew's
 fish_add_path --move \
     $HOME/.bin \
     $HOME/.local/bin \
