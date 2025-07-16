@@ -176,7 +176,6 @@ in {
       unzip
       vim
       vlc
-      vscode
       w3m
       wget
       xclip
