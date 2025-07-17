@@ -73,7 +73,8 @@ bindsym $mod+$shift+b exec firefox --private-window
 bindsym $mod+Return exec alacritty
 
 # Open Emacs.
-bindsym $mod+e exec emacsclient -c -a 'emacs'
+# bindsym $mod+e exec emacsclient -c -a 'emacs'
+bindsym $mod+e exec emacs
 
 # Kill the focused window.
 bindsym $mod+q kill
