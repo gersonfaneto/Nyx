@@ -137,6 +137,7 @@ in {
       chafa
       detach
       diff-so-fancy
+      emacs
       fastfetch
       fd
       feh
@@ -264,6 +265,11 @@ in {
   };
 
   services = {
+    emacs = {
+      enable = true;
+      install = true;
+      startWithGraphical = true;
+    };
     openssh = {
       enable = true;
     };
