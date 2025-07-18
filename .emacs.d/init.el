@@ -99,10 +99,39 @@
 
 (show-paren-mode t)
 
+(use-package move-text
+  :config
+  (global-set-key (kbd "M-p") 'move-text-up)
+  (global-set-key (kbd "M-n") 'move-text-down))
+
+(use-package tab-jump-out
+  :hook (prog-mode . tab-jump-out-mode))
+
+(use-package whitespace-cleanup-mode
+  :hook (prog-mode . whitespace-cleanup-mode))
+
 (use-package magit
   :ensure t
   :init
   (bind-key (kbd "C-x g") 'magit-status))
+
+(use-package direnv
+  :config (direnv-mode))
+
+(use-package haskell-mode :ensure t :mode "\\.hs\\'"
+    :ensure t
+    :hook ((haskell-mode . interactive-haskell-mode)
+           (haskell-mode . turn-on-haskell-doc-mode)
+           (haskell-mode . haskell-indent-mode)
+           (haskell-mode . haskell-setup-outline-mode))
+    :bind (
+           :map haskell-mode-map
+           ("M-n" . haskell-goto-next-error)
+           ("M-p" . haskell-goto-prev-error))
+    :config
+    (defun haskell-setup-outline-mode ()
+      (make-local-variable 'outline-regexp)
+      (setq outline-regexp "\\`\\|\\s-+\\S-")))
 
 (when (file-exists-p "~/.emacs.d/custom.el")
   (setq custom-file "~/.emacs.d/custom.el")
