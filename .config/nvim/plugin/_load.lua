@@ -50,25 +50,25 @@ vim.api.nvim_create_autocmd({ 'CmdlineEnter', 'InsertEnter' }, {
 })
 
 -- winbar
--- vim.api.nvim_create_autocmd('FileType', {
---   once = true,
---   group = vim.api.nvim_create_augroup('WinBarSetup', {}),
---   callback = function()
---     if vim.g.loaded_winbar ~= nil then
---       return
---     end
---
---     local winbar = require('plugin.winbar')
---     local api = require('plugin.winbar.api')
---     winbar.setup({ bar = { hover = false } })
---
---     -- stylua: ignore start
---     vim.keymap.set('n', '<Leader>;', api.pick, { desc = 'Pick symbols in winbar' })
---     vim.keymap.set('n', '[;', api.goto_context_start, { desc = 'Go to start of current context' })
---     vim.keymap.set('n', '];', api.select_next_context, { desc = 'Select next context' })
---     -- stylua: ignore end
---   end,
--- })
+vim.api.nvim_create_autocmd('FileType', {
+  once = true,
+  group = vim.api.nvim_create_augroup('WinBarSetup', {}),
+  callback = function()
+    if vim.g.loaded_winbar ~= nil then
+      return
+    end
+
+    local winbar = require('plugin.winbar')
+    local api = require('plugin.winbar.api')
+    winbar.setup({ bar = { hover = false } })
+
+    -- stylua: ignore start
+    vim.keymap.set('n', '<Leader>;', api.pick, { desc = 'Pick symbols in winbar' })
+    vim.keymap.set('n', '[;', api.goto_context_start, { desc = 'Go to start of current context' })
+    vim.keymap.set('n', '];', api.select_next_context, { desc = 'Select next context' })
+    -- stylua: ignore end
+  end,
+})
 
 ---Load ui elements e.g. tabline, statusline, statuscolumn
 ---@param name string
@@ -200,7 +200,12 @@ if vim.g.loaded_aider == nil then
 end
 
 -- session
-do
+if vim.g.loaded_session == nil then
+  -- stylua: ignore start
+  vim.keymap.set('n', '<Leader>w', function() require('plugin.session').select() end, { desc = 'Load session (workspace) interactively' })
+  vim.keymap.set('n', '<Leader>W', function() require('plugin.session').load() end, { desc = 'Load session (workspace) for cwd' })
+  -- stylua: ignore end
+
   local opts = {
     desc = 'Init session plugin.',
     group = vim.api.nvim_create_augroup('SessionSetup', {}),
@@ -210,25 +215,11 @@ do
         return
       end
 
-      local session = require('plugin.session')
       ---@diagnostic disable-next-line: missing-fields
-      session.setup({
+      require('plugin.session').setup({
         autoload = { enabled = false },
         autoremove = { enabled = false },
       })
-
-      vim.keymap.set(
-        'n',
-        '<Leader>w',
-        session.select,
-        { desc = 'Load session (workspace) interactively' }
-      )
-      vim.keymap.set(
-        'n',
-        '<Leader>W',
-        session.load,
-        { desc = 'Load session (workspace) for cwd' }
-      )
     end,
   }
 

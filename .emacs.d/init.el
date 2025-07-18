@@ -51,6 +51,9 @@
 (global-set-key (kbd "C-3") 'split-window-right)
 (global-set-key (kbd "C-o") 'other-window)
 
+(global-set-key (kbd "C-x p") 'previous-buffer)
+(global-set-key (kbd "C-x n") 'next-buffer)
+
 (global-set-key (kbd "C-.") 'duplicate-line)
 
 (global-set-key (kbd "C-c c") 'compile)
@@ -119,19 +122,17 @@
   :config (direnv-mode))
 
 (use-package haskell-mode :ensure t :mode "\\.hs\\'"
-    :ensure t
-    :hook ((haskell-mode . interactive-haskell-mode)
-           (haskell-mode . turn-on-haskell-doc-mode)
-           (haskell-mode . haskell-indent-mode)
-           (haskell-mode . haskell-setup-outline-mode))
-    :bind (
-           :map haskell-mode-map
-           ("M-n" . haskell-goto-next-error)
-           ("M-p" . haskell-goto-prev-error))
-    :config
-    (defun haskell-setup-outline-mode ()
-      (make-local-variable 'outline-regexp)
-      (setq outline-regexp "\\`\\|\\s-+\\S-")))
+  :ensure t
+  :hook ((haskell-mode . interactive-haskell-mode)
+         (haskell-mode . turn-on-haskell-doc-mode)
+         (haskell-mode . haskell-indent-mode)
+         (haskell-mode . haskell-setup-outline-mode))
+  :config
+  (defun haskell-setup-outline-mode ()
+    (make-local-variable 'outline-regexp)
+    (setq outline-regexp "\\`\\|\\s-+\\S-")))
+
+(custom-set-variables '(haskell-stylish-on-save t))
 
 (when (file-exists-p "~/.emacs.d/custom.el")
   (setq custom-file "~/.emacs.d/custom.el")
