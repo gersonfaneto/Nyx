@@ -113,6 +113,14 @@ in {
     };
   };
 
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = false;
+    extraPackages = with pkgs; [
+      docker-compose
+    ];
+  };
+
   environment.variables = rec {
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
@@ -135,7 +143,6 @@ in {
       bluetui
       brightnessctl
       chafa
-      detach
       diff-so-fancy
       emacs
       fastfetch
@@ -153,7 +160,6 @@ in {
       jq
       less
       libqalculate
-      libreoffice
       man-pages
       man-pages-posix
       mpv
@@ -211,19 +217,6 @@ in {
       python312Packages.uv
       python312Packages.pip
 
-      pyright
-      python312Packages.ruff
-      python312Packages.pylint
-      python312Packages.flake8
-      python312Packages.mypy
-      python312Packages.isort
-
-      python312Packages.pynvim
-      python312Packages.ipykernel
-      python312Packages.jupyter-client
-      python312Packages.jupytext
-      python312Packages.weasyprint
-
       # Bash
       shfmt
       bash-language-server
@@ -253,25 +246,6 @@ in {
         sansSerif = ["Iosevka SS07"];
         monospace = ["Iosevka SS07"];
       };
-    };
-  };
-
-  virtualisation.docker = {
-    enable = true;
-    enableOnBoot = false;
-    extraPackages = with pkgs; [
-      docker-compose
-    ];
-  };
-
-  services = {
-    emacs = {
-      enable = true;
-      install = true;
-      startWithGraphical = true;
-    };
-    openssh = {
-      enable = true;
     };
   };
 
