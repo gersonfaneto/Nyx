@@ -23,5 +23,4 @@ return {
       -- vim.g.gruvbox_material_better_performance = 1
     end,
   },
-  { 'blazkowolf/gruber-darker.nvim' },
 }
