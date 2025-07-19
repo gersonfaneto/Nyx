@@ -234,7 +234,6 @@ in {
   fonts = {
     packages = with pkgs; [
       nerd-fonts.symbols-only
-      nerd-fonts.gohufont
       noto-fonts-color-emoji
       (iosevka-bin.override {variant = "SS07";})
     ];

@@ -38,22 +38,22 @@
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode))
 
-(set-frame-font "GohuFont 14 Nerd Font 16" nil t)
+(set-frame-font "Iosevka SS07 16" nil t)
 
 (use-package gruber-darker-theme
   :straight t
   :config
   (load-theme 'gruber-darker t))
 
-(global-set-key (kbd "M-0") 'delete-window)
-(global-set-key (kbd "M-1") 'delete-other-windows)
-(global-set-key (kbd "M-2") 'split-window-below)
-(global-set-key (kbd "M-3") 'split-window-right)
-(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "C-0") 'delete-window)
+(global-set-key (kbd "C-1") 'delete-other-windows)
+(global-set-key (kbd "C-2") 'split-window-below)
+(global-set-key (kbd "C-3") 'split-window-right)
+(global-set-key (kbd "C-o") 'other-window)
 
+(global-set-key (kbd "C-.")   'duplicate-line)
 (global-set-key (kbd "C-x p") 'previous-buffer)
 (global-set-key (kbd "C-x n") 'next-buffer)
-(global-set-key (kbd "C-.") 'duplicate-line)
 
 
 (global-set-key (kbd "C-c c") 'compile)
@@ -125,7 +125,7 @@
   :ensure t
   :hook ((haskell-mode . interactive-haskell-mode)
          (haskell-mode . turn-on-haskell-doc-mode)
-         (haskell-mode . haskell-indent-mode)
+         ;; (haskell-mode . haskell-indent-mode)
          (haskell-mode . haskell-setup-outline-mode))
   :config
   (defun haskell-setup-outline-mode ()
