@@ -2,7 +2,7 @@
 # vim: ft=sh ts=4 sw=4 sts=4 et :
 
 # Open a file using $EDITOR or xdg-open
-gx() {
+of() {
     # $@: files to open
     if ! command -v file >/dev/null 2>&1; then
         echo "file executable not found" >&2
@@ -45,4 +45,4 @@ gx() {
     fi
 }
 
-gx "$@"
+of "$@"
