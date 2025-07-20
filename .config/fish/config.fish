@@ -3,5 +3,3 @@
 if not status is-interactive
     exit
 end
-
-set -Ux NVIM_NF 1
