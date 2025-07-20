@@ -25,7 +25,8 @@
 (scroll-bar-mode 0)
 
 (setq
- inhibit-startup-screen t)
+ inhibit-startup-screen t
+ initial-scratch-message "")
 
 (setq tab-width 2
       indent-tabs-mode nil)
@@ -51,10 +52,11 @@
 (global-set-key (kbd "C-3") 'split-window-right)
 (global-set-key (kbd "C-o") 'other-window)
 
-(global-set-key (kbd "C-.")   'duplicate-line)
-(global-set-key (kbd "C-x p") 'previous-buffer)
-(global-set-key (kbd "C-x n") 'next-buffer)
+(global-set-key (kbd "C-.") 'duplicate-line)
 
+(global-set-key (kbd "C-x C-p") 'previous-buffer)
+(global-set-key (kbd "C-x C-n") 'next-buffer)
+(global-set-key (kbd "C-x C-k") 'kill-current-buffer)
 
 (global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c r") 'recompile)
@@ -120,6 +122,13 @@
 
 (use-package direnv
   :config (direnv-mode))
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown")
+  :bind (:map markdown-mode-map
+         ("C-c C-e" . markdown-do)))
 
 (use-package haskell-mode :ensure t :mode "\\.hs\\'"
   :ensure t
