@@ -122,8 +122,8 @@
 
   c  = commit
   cm = commit --message
-  ca = commit --ammend
-  ce = commit --ammend --no-edit
+  ca = commit --amend
+  ce = commit --amend --no-edit
 
   b  = branch
   bd = branch --delete

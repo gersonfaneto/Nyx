@@ -144,7 +144,6 @@ in {
       brightnessctl
       chafa
       diff-so-fancy
-      emacs
       fastfetch
       fd
       feh
