@@ -140,10 +140,13 @@ in {
   environment.systemPackages = with pkgs;
     [
       alacritty
+      ani-cli
       bluetui
       brightnessctl
       chafa
+      detach
       diff-so-fancy
+      emacs
       fastfetch
       fd
       feh

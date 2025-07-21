@@ -132,6 +132,7 @@
   ds = df --cached
 
   k  = checkout
+  kb = checkout --branch
   kf = checkout --force
 
   s  = switch
