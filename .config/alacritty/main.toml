@@ -16,7 +16,7 @@ transparent_background_colors = true
 size = 12
 
 [font.normal]
-family = 'Iosevka Term SS07'
+family = 'Departure Mono'
 
 [scrolling]
 history = 0

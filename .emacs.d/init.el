@@ -39,7 +39,7 @@
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode))
 
-(set-frame-font "Iosevka SS07 16" nil t)
+(set-frame-font "Departure Mono 16" nil t)
 
 (use-package gruber-darker-theme
   :straight t
@@ -52,7 +52,19 @@
 (global-set-key (kbd "C-3") 'split-window-right)
 (global-set-key (kbd "C-o") 'other-window)
 
-(global-set-key (kbd "C-.") 'duplicate-line)
+(defun min/duplicate-line ()
+  "Duplicates current line"
+  (interactive)
+  (let ((column (- (point) (point-at-bol)))
+        (line (let ((s (thing-at-point 'line t)))
+                (if s (string-remove-suffix "\n" s) ""))))
+    (move-end-of-line 1)
+    (newline)
+    (insert line)
+    (move-beginning-of-line 1)
+    (forward-char column)))
+
+(global-set-key (kbd "C-.") 'min/duplicate-line)
 
 (global-set-key (kbd "C-x C-p") 'previous-buffer)
 (global-set-key (kbd "C-x C-n") 'next-buffer)
@@ -139,10 +151,14 @@
   :config
   (defun haskell-setup-outline-mode ()
     (make-local-variable 'outline-regexp)
-    (setq outline-regexp "\\`\\|\\s-+\\S-")))
+    (setq outline-regexp "\\`\\|\\s-+\\S-"))
+  (setq haskell-stylish-on-save t))
 
-(custom-set-variables '(haskell-stylish-on-save t))
+(setq min/custom-file "~/.emacs.d/custom.el")
 
-(when (file-exists-p "~/.emacs.d/custom.el")
-  (setq custom-file "~/.emacs.d/custom.el")
+(if (not (file-exists-p min/custom-file))
+    (make-empty-file min/custom-file))
+
+(when (file-exists-p min/custom-file)
+  (setq custom-file min/custom-file)
   (load-file custom-file))

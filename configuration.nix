@@ -236,6 +236,7 @@ in {
   fonts = {
     packages = with pkgs; [
       nerd-fonts.symbols-only
+      departure-mono
       noto-fonts-color-emoji
       (iosevka-bin.override {variant = "SS07";})
     ];
@@ -243,9 +244,9 @@ in {
       enable = true;
       defaultFonts = {
         emoji = ["Noto Emoji"];
-        serif = ["Iosevka SS07"];
-        sansSerif = ["Iosevka SS07"];
-        monospace = ["Iosevka SS07"];
+        serif = ["Departure Mono"];
+        sansSerif = ["Departure Mono"];
+        monospace = ["Departure Mono"];
       };
     };
   };
