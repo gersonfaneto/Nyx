@@ -16,10 +16,10 @@ set $right l
 
 # Font families and sizes used along the system.
 
-set $font_family_general Iosevka SS07
+set $font_family_general Departure Mono
 set $font_size_general 10
 
-set $font_family_dmenu Iosevka SS07
+set $font_family_dmenu Departure Mono
 set $font_size_dmenu 12
 
 # Font for window titles.
