@@ -1,4 +1,12 @@
+(setq
+ warning-minimum-level :error
+ warning-minimum-log-level :error)
+
 (setq straight-repository-branch "develop")
+
+(setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (defvar bootstrap-version)
 
@@ -140,7 +148,27 @@
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "multimarkdown")
   :bind (:map markdown-mode-map
-         ("C-c C-e" . markdown-do)))
+              ("C-c C-e" . markdown-do)))
+
+(use-package pdf-tools
+  :magic ("%PDF" . pdf-view-mode)
+  :init (pdf-tools-install :no-query))
+
+;; (use-package pdf-view
+;;   :ensure nil
+;;   :after pdf-tools
+;;   :bind (:map pdf-view-mode-map
+;;               ("C-s" . isearch-forward)
+;;               ("d" . pdf-annot-delete)
+;;               ("h" . pdf-annot-add-highlight-markup-annotation)
+;;               ("t" . pdf-annot-add-text-annotation))
+;;   :custom
+;;   (pdf-view-display-size 'fit-page)
+;;   (pdf-view-resize-factor 1.1)
+;;   ;; Avoid searching for unicodes to speed up pdf-tools.
+;;   (pdf-view-use-unicode-ligther nil)
+;;   ;; Enable HiDPI support, at the cost of memory.
+;;   (pdf-view-use-scaling t))
 
 (use-package haskell-mode :ensure t :mode "\\.hs\\'"
   :ensure t
