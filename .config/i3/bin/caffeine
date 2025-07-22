@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+set -x
+
+status=$(xset -q | grep 'DPMS is' | awk '{ print $3 }')
+
+if [ "$status" == 'Enabled' ]; then
+	xset -dpms &&
+		dunstify 'Caffeine' "Display can't sleep now"
+else
+	xset +dpms &&
+		dunstify 'Caffeine' "Display can sleep now"
+fi

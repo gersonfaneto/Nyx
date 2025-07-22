@@ -146,6 +146,7 @@ in {
       chafa
       detach
       diff-so-fancy
+      dunst
       emacs
       fastfetch
       fd
@@ -161,6 +162,7 @@ in {
       htop
       jq
       less
+      libnotify
       libqalculate
       man-pages
       man-pages-posix
