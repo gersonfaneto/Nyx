@@ -44,15 +44,49 @@
 (setq use-short-answers t
       confirm-nonexistent-file-or-buffer nil)
 
+(setq dired-listing-switches "-lhAX --group-directories-first")
+
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode))
 
 (set-frame-font "Departure Mono 16" nil t)
 
-(use-package gruber-darker-theme
-  :straight t
+;; (use-package gruber-darker-theme
+;;   :straight t
+;;   :config
+;;   (load-theme 'gruber-darker t))
+
+(use-package doom-themes
+  :ensure t
+  :custom
+  ;; Global settings (defaults)
+  (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;; for treemacs users
+  (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   :config
-  (load-theme 'gruber-darker t))
+  (load-theme 'doom-gruvbox t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (nerd-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+(use-package doom-modeline
+  :init (doom-modeline-mode)
+  :custom
+  (doom-modeline-icon (display-graphic-p)))
+
+(use-package all-the-icons
+  :if (display-graphic-p)
+  :commands all-the-icons-install-fonts
+  :config (unless (find-font (font-spec :name "all-the-icons"))
+            (all-the-icons-install-fonts t)))
+
 
 (global-set-key (kbd "C-0") 'delete-window)
 (global-set-key (kbd "C-1") 'delete-other-windows)
@@ -181,6 +215,11 @@
     (make-local-variable 'outline-regexp)
     (setq outline-regexp "\\`\\|\\s-+\\S-"))
   (setq haskell-stylish-on-save t))
+
+(use-package go-mode
+  :mode "\\.go\\'"
+  :hook (before-save . gofmt-before-save)
+  :custom (gofmt-command "goimports"))
 
 (setq min/custom-file "~/.emacs.d/custom.el")
 
