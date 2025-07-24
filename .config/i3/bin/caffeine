@@ -6,9 +6,9 @@ set -x
 status=$(xset -q | grep 'DPMS is' | awk '{ print $3 }')
 
 if [ "$status" == 'Enabled' ]; then
-	xset -dpms &&
+	xset s off -dpms &&
 		dunstify 'Caffeine' "Display can't sleep now"
 else
-	xset +dpms &&
+	xset s on +dpms &&
 		dunstify 'Caffeine' "Display can sleep now"
 fi
