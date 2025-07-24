@@ -27,7 +27,7 @@ of() {
     # Handle non-text files with xdg-open
     if command -v xdg-open >/dev/null 2>&1; then
         while read -r file; do
-            xdg-open "$file" >/dev/null 2>&1
+            detach xdg-open "$file" >/dev/null 2>&1
         done <"$other_files"
     elif [ -s "$other_files" ]; then
         echo "xdg-open not found, omit opening files:" >&2
