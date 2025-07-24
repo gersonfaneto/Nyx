@@ -1,7 +1,3 @@
-(setq
- warning-minimum-level :error
- warning-minimum-log-level :error)
-
 (setq straight-repository-branch "develop")
 
 (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
@@ -51,48 +47,11 @@
 
 (set-frame-font "Departure Mono 16" nil t)
 
-;; (use-package gruber-darker-theme
-;;   :straight t
-;;   :config
-;;   (load-theme 'gruber-darker t))
-
-(use-package doom-themes
-  :ensure t
-  :custom
-  ;; Global settings (defaults)
-  (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
-  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  ;; for treemacs users
-  (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  :config
-  (load-theme 'doom-gruvbox t)
-
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (nerd-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
-
-(use-package doom-modeline
-  :init (doom-modeline-mode)
-  :custom
-  (doom-modeline-icon (display-graphic-p)))
-
-(use-package all-the-icons
-  :if (display-graphic-p)
-  :commands all-the-icons-install-fonts
-  :config (unless (find-font (font-spec :name "all-the-icons"))
-            (all-the-icons-install-fonts t)))
-
-
-(global-set-key (kbd "C-0") 'delete-window)
-(global-set-key (kbd "C-1") 'delete-other-windows)
-(global-set-key (kbd "C-2") 'split-window-below)
-(global-set-key (kbd "C-3") 'split-window-right)
-(global-set-key (kbd "C-o") 'other-window)
+(global-set-key (kbd "M-0") 'delete-window)
+(global-set-key (kbd "M-1") 'delete-other-windows)
+(global-set-key (kbd "M-2") 'split-window-below)
+(global-set-key (kbd "M-3") 'split-window-right)
+(global-set-key (kbd "M-o") 'other-window)
 
 (defun min/duplicate-line ()
   "Duplicates current line"
@@ -115,6 +74,24 @@
 (global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c r") 'recompile)
 
+(use-package doom-themes
+  :ensure t
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
+  :config
+  (load-theme 'doom-gruvbox t))
+
+(use-package doom-modeline
+  :init (doom-modeline-mode)
+  :custom (doom-modeline-icon (display-graphic-p)))
+
+(use-package all-the-icons
+  :if (display-graphic-p)
+  :commands all-the-icons-install-fonts
+  :config (unless (find-font (font-spec :name "all-the-icons"))
+            (all-the-icons-install-fonts t)))
+
 (use-package multiple-cursors
   :config
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -124,55 +101,49 @@
   (global-set-key (kbd "C-\"")        'mc/skip-to-next-like-this)
   (global-set-key (kbd "C-:")         'mc/skip-to-previous-like-this))
 
-
 (use-package vertico
   :custom
   (vertico-scroll-margin 0)
   (vertico-count 8)
   (vertico-resize t)
   (vertico-cycle t)
-  :init
-  (vertico-mode)
-  ;; (vertico-unobtrusive-mode)
-  :config
-  (setq read-file-name-completion-ignore-case t
-	read-buffer-completion-ignore-case t
-	completion-ignore-case t))
+  :init (vertico-mode)
+  :config (setq read-file-name-completion-ignore-case t
+		read-buffer-completion-ignore-case t
+		completion-ignore-case t))
 
 (use-package savehist
-  :init
-  (savehist-mode))
+  :init (savehist-mode))
 
 (use-package expand-region
   :ensure t
-  :config 
-  (global-set-key (kbd "C-=") 'er/expand-region))
+  :config (global-set-key (kbd "C-=") 'er/expand-region))
 
 (use-package smartparens
   :ensure t
   :hook (prog-mode . smartparens-mode)
-  :custom
-  (sp-escape-quotes-after-insert nil)
-  :config
-  (require 'smartparens-config))
+  :custom (sp-escape-quotes-after-insert nil)
+  :init (show-paren-mode t)
+  :config (require 'smartparens-config))
 
-(show-paren-mode t)
+(use-package tab-jump-out
+  :hook (prog-mode . tab-jump-out-mode))
 
 (use-package move-text
   :config
   (global-set-key (kbd "M-p") 'move-text-up)
   (global-set-key (kbd "M-n") 'move-text-down))
 
-(use-package tab-jump-out
-  :hook (prog-mode . tab-jump-out-mode))
-
-(use-package whitespace-cleanup-mode
-  :hook (prog-mode . whitespace-cleanup-mode))
+(use-package pdf-tools
+  :magic ("%PDF" . pdf-view-mode)
+  :init (pdf-tools-install :no-query))
 
 (use-package magit
   :ensure t
-  :init
-  (bind-key (kbd "C-x g") 'magit-status))
+  :init (bind-key (kbd "C-x g") 'magit-status))
+
+(use-package whitespace-cleanup-mode
+  :hook (prog-mode . whitespace-cleanup-mode))
 
 (use-package direnv
   :config (direnv-mode))
@@ -184,31 +155,10 @@
   :bind (:map markdown-mode-map
               ("C-c C-e" . markdown-do)))
 
-(use-package pdf-tools
-  :magic ("%PDF" . pdf-view-mode)
-  :init (pdf-tools-install :no-query))
-
-;; (use-package pdf-view
-;;   :ensure nil
-;;   :after pdf-tools
-;;   :bind (:map pdf-view-mode-map
-;;               ("C-s" . isearch-forward)
-;;               ("d" . pdf-annot-delete)
-;;               ("h" . pdf-annot-add-highlight-markup-annotation)
-;;               ("t" . pdf-annot-add-text-annotation))
-;;   :custom
-;;   (pdf-view-display-size 'fit-page)
-;;   (pdf-view-resize-factor 1.1)
-;;   ;; Avoid searching for unicodes to speed up pdf-tools.
-;;   (pdf-view-use-unicode-ligther nil)
-;;   ;; Enable HiDPI support, at the cost of memory.
-;;   (pdf-view-use-scaling t))
-
 (use-package haskell-mode :ensure t :mode "\\.hs\\'"
   :ensure t
   :hook ((haskell-mode . interactive-haskell-mode)
          (haskell-mode . turn-on-haskell-doc-mode)
-         ;; (haskell-mode . haskell-indent-mode)
          (haskell-mode . haskell-setup-outline-mode))
   :config
   (defun haskell-setup-outline-mode ()
@@ -220,6 +170,10 @@
   :mode "\\.go\\'"
   :hook (before-save . gofmt-before-save)
   :custom (gofmt-command "goimports"))
+
+(use-package scala-mode
+  :interpreter
+    ("scala" . scala-mode))
 
 (setq min/custom-file "~/.emacs.d/custom.el")
 
