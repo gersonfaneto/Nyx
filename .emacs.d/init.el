@@ -45,7 +45,7 @@
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode))
 
-(set-frame-font "Departure Mono 16" nil t)
+(set-frame-font "Departure Mono 12" nil t)
 
 (global-set-key (kbd "M-0") 'delete-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
