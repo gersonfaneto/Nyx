@@ -46,38 +46,39 @@ end
 -- Configure hovering window style
 -- Hijack LSP floating window function to use custom options
 do
-  local _open_floating_preview = vim.lsp.util.open_floating_preview
+  local open_floating_preview = vim.lsp.util.open_floating_preview
+
   ---@param contents table of lines to show in window
   ---@param syntax string of syntax to set for opened buffer
   ---@param opts table with optional fields (additional keys are passed on to |nvim_open_win()|)
   ---@returns bufnr,winnr buffer and window number of the newly created floating preview window
   ---@diagnostic disable-next-line: duplicate-set-field
   function vim.lsp.util.open_floating_preview(contents, syntax, opts)
-    opts = vim.tbl_deep_extend('force', opts, {
-      border = 'solid',
-      max_width = math.max(80, math.ceil(vim.go.columns * 0.75)),
-      max_height = math.max(20, math.ceil(vim.go.lines * 0.4)),
-      close_events = {
-        'CursorMovedI',
-        'CursorMoved',
-        'InsertEnter',
-        'WinScrolled',
-        'WinResized',
-        'VimResized',
-      },
-    })
-    local floating_bufnr, floating_winnr =
-      _open_floating_preview(contents, syntax, opts)
-    vim.wo[floating_winnr].concealcursor = 'nc'
-    return floating_bufnr, floating_winnr
+    return open_floating_preview(
+      contents,
+      syntax,
+      vim.tbl_deep_extend('force', opts, {
+        border = 'solid',
+        max_width = math.max(80, math.ceil(vim.go.columns * 0.75)),
+        max_height = math.max(20, math.ceil(vim.go.lines * 0.4)),
+        close_events = {
+          'CursorMovedI',
+          'CursorMoved',
+          'InsertEnter',
+          'WinScrolled',
+          'WinResized',
+          'VimResized',
+        },
+      })
+    )
   end
 
   -- Use loclist instead of qflist by default when showing document symbols
-  local _lsp_document_symbol = vim.lsp.buf.document_symbol
+  local lsp_document_symbol = vim.lsp.buf.document_symbol
+
   ---@diagnostic disable-next-line: duplicate-set-field
   vim.lsp.buf.document_symbol = function()
-    ---@diagnostic disable-next-line: redundant-parameter
-    _lsp_document_symbol({
+    lsp_document_symbol({
       loclist = true,
     })
   end

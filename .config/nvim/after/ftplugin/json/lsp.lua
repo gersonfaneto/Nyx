@@ -1,1 +1,1 @@
-../typescript/lsp.lua
+vim.lsp.enable('jsonls')
