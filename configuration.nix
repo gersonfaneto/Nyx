@@ -232,7 +232,10 @@ in {
 
       # General
       efm-langserver
-    ];
+    ]
+    ++ (with unstable; [
+      zed-editor
+    ]);
 
   fonts = {
     packages = with pkgs; [
@@ -250,6 +253,16 @@ in {
         monospace = ["Departure Mono"];
       };
     };
+  };
+
+  services.gnome.gnome-keyring.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = [ "gtk" ];
   };
 
   system.stateVersion = "24.11"; # DON'T CHANGE THIS!
