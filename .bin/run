@@ -1,10 +1,18 @@
 #!/usr/bin/env sh
 # vim:ft=sh:et:ts=4:sw=4:sts=4:
 
+CFLAGS=${CFLAGS-"-Wall -Wextra -Wpedantic -Werror -std=gnu99"}
+
 build() {
     case "$1" in
-    *.c) gcc "$1" -o "$2" ;;
-    *.cpp | *.cc | *.cxx) g++ "$1" -o "$2" ;;
+    *.c)
+        # shellcheck disable=SC2086
+        gcc -o "$2" "$1" $CFLAGS
+        ;;
+    *.cpp | *.cc | *.cxx)
+        # shellcheck disable=SC2086
+        g++ -o "$2" "$1" $CFLAGS
+        ;;
     *)
         echo >&2 "run: error: unsupported file type"
         exit 1
