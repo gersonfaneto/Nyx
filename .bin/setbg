@@ -18,8 +18,8 @@ get_theme_variant() {
 
 setbg_alacritty() {
     # $1: 'light' or 'dark'
-    (
-        cd "$CONFIG_HOME/alacritty" || return
+    (   
+        cd "$CONFIG_HOME/alacritty" 2>/dev/null || return 1
         theme_path="theme.toml"
         themes_dir="themes"
         # If $1 is empty, only need to ensure symlink to color theme file exists
@@ -29,11 +29,15 @@ setbg_alacritty() {
             ln -sf "$themes_dir/$1.toml" "$theme_path"
         fi
     )
+    (   
+        cd "$CONFIG_HOME/alacritty" 2>/dev/null || return 1
+        touch "alacritty.toml" # Force reload
+    )
 }
 
 setbg_foot() {
     # $1: 'light' or 'dark'
-    (
+    (   
         cd "$CONFIG_HOME/foot" || return
         theme_path="theme.ini"
         themes_dir="themes"
@@ -51,7 +55,7 @@ setbg_foot() {
 
 setbg_kitty() {
     # $1: 'light' or 'dark'
-    (
+    (   
         cd "$CONFIG_HOME/kitty" || return
         no_preference_theme_path="no-preference-theme.auto.conf"
         current_theme_path="current-theme.conf"
@@ -77,7 +81,7 @@ setbg_kitty() {
 
 setbg_wezterm() {
     # $1: 'light' or 'dark'
-    (
+    (   
         cd "$CONFIG_HOME/wezterm" || return
         theme_path="theme.toml"
         themes_dir="colors"
@@ -91,7 +95,7 @@ setbg_wezterm() {
 
 setbg_highlight() {
     # $1: 'light' or 'dark'
-    (
+    (   
         cd "$HOME/.highlight" || return
         themes_dir="themes"
         theme_path="highlight.theme"
@@ -271,7 +275,7 @@ setbg_konsole_yakuake() {
 
 setbg_termux() {
     # $1: 'light' or 'dark'
-    (
+    (   
         cd "$HOME/.termux" || return
         theme_path="colors.properties"
         themes_dir="colors"
@@ -342,7 +346,7 @@ setbg_vscode() {
 
 setbg_fish() {
     # $1: 'light' or 'dark'
-    (
+    (   
         cd "$CONFIG_HOME/fish/themes" || return
         theme_path="Current.theme"
         if [ -z "$1" ]; then
@@ -417,24 +421,24 @@ setbg_libreoffice() {
 # `~/.config/autostart/__checkbg_watch_awake.desktop`
 #
 # $1: bg, 'light' or 'dark'
-write_conflict_log() {
-    timestamp_dir="$STATE_HOME/setbg"
-    timestamp_file="$timestamp_dir/timestamp"
-    if [ ! -d "$timestamp_dir" ]; then
-        mkdir -p "$timestamp_dir" || return 1
-    fi
-
-    # Non-conflict bg
-    if [ -z "$1" ] || [ "$1" = "$(suggestbg)" ]; then
-        if [ -e "$timestamp_file" ]; then
-            rm "$timestamp_file" || return 1
-        fi
-        return
-    fi
-
-    # Conflict bg
-    date +%s >"$timestamp_file" # seconds since the epoch (1970-01-01 00:00 UTC)
-}
+# write_conflict_log() {
+#     timestamp_dir="$STATE_HOME/setbg"
+#     timestamp_file="$timestamp_dir/timestamp"
+#     if [ ! -d "$timestamp_dir" ]; then
+#         mkdir -p "$timestamp_dir" || return 1
+#     fi
+#
+#     # Non-conflict bg
+#     if [ -z "$1" ] || [ "$1" = "$(suggestbg)" ]; then
+#         if [ -e "$timestamp_file" ]; then
+#             rm "$timestamp_file" || return 1
+#         fi
+#         return
+#     fi
+#
+#     # Conflict bg
+#     date +%s >"$timestamp_file" # seconds since the epoch (1970-01-01 00:00 UTC)
+# }
 
 usage() {
     echo "Usage: $(basename "$0") [light|dark]"
@@ -457,38 +461,38 @@ main() {
 
     # Called by `syncbg` to sync apps' background with system/desktop
     # background, don't set system background
-    if [ -z "$SETBG_SKIP_SYSTEM" ]; then
-        setbg_macos "$bg" &
-        setbg_gnome "$bg" &
-        setbg_plasma "$bg" &
-
-        # Kitty and wezterm have their own mechanism to detect and sync with
-        # system background:
-        # - https://sw.kovidgoyal.net/kitty/kittens/themes/#change-color-themes-automatically-when-the-os-switches-between-light-and-dark
-        # - https://wezterm.org/config/lua/window/get_appearance.html?h=get_app
-        #
-        # Fix kitty memory leak on KDE when `__syncbg` is running in the ground
-        setbg_kitty "$bg" &
-        setbg_wezterm "$bg" &
-
-        # Make sure system bg is set before setting apps' bg to avoid `__syncbg`
-        # daemon setting apps' bg back to old system bg, see:
-        # - `__syncbg`
-        # - `~/.config/autostart/__syncbg`
-        # - `~/Library/LaunchAgents/user.syncbg.plist`
-        wait
-    fi
+    # if [ -z "$SETBG_SKIP_SYSTEM" ]; then
+    #     setbg_macos "$bg" &
+    #     setbg_gnome "$bg" &
+    #     setbg_plasma "$bg" &
+    #
+    #     # Kitty and wezterm have their own mechanism to detect and sync with
+    #     # system background:
+    #     # - https://sw.kovidgoyal.net/kitty/kittens/themes/#change-color-themes-automatically-when-the-os-switches-between-light-and-dark
+    #     # - https://wezterm.org/config/lua/window/get_appearance.html?h=get_app
+    #     #
+    #     # Fix kitty memory leak on KDE when `__syncbg` is running in the ground
+    #     setbg_kitty "$bg" &
+    #     setbg_wezterm "$bg" &
+    #
+    #     # Make sure system bg is set before setting apps' bg to avoid `__syncbg`
+    #     # daemon setting apps' bg back to old system bg, see:
+    #     # - `__syncbg`
+    #     # - `~/.config/autostart/__syncbg`
+    #     # - `~/Library/LaunchAgents/user.syncbg.plist`
+    #     wait
+    # fi
     setbg_alacritty "$bg" &
-    setbg_foot "$bg" &
+    # setbg_foot "$bg" &
     setbg_highlight "$bg" &
     setbg_nvim "$bg" &
-    setbg_konsole_yakuake "$bg" &
-    setbg_termux "$bg" &
-    setbg_okular "$bg" &
-    setbg_vscode "$bg" &
+    # setbg_konsole_yakuake "$bg" &
+    # setbg_termux "$bg" &
+    # setbg_okular "$bg" &
+    # setbg_vscode "$bg" &
     setbg_fish "$bg" &
-    setbg_libreoffice "$bg" &
-    write_conflict_log "$bg" &
+    # setbg_libreoffice "$bg" &
+    # write_conflict_log "$bg" &
     wait
 }
 
