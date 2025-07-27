@@ -13,9 +13,4 @@ return {
     'Vimjas/vim-python-pep8-indent',
     ft = 'python',
   },
-
-  {
-    'mfussenegger/nvim-jdtls',
-    ft = { 'java' },
-  },
 }
