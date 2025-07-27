@@ -104,6 +104,8 @@ wk.add({
   { '<Leader>fS', group = 'LSP' },
   { '<Leader>G', group = 'Debug' },
   { '<Leader>t', group = 'Test' },
+  { '<Leader>e', group = 'Direnv' },
+  { '<Leader>u', group = 'Editor' },
   { '<Leader><Tab>', group = 'Table mode' },
   { '<Leader><Tab>d', group = 'Delete' },
   { '<Leader><Tab>i', group = 'Insert' },

@@ -258,6 +258,18 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map('n', '<Leader>.', '<Cmd>FZF<CR>', { desc = 'Find files' })
     map('n', '<Leader>ff', '<Cmd>FZF<CR>', { desc = 'Find files' })
 
+
+    -- Toggle editor options
+    -- stylua: ignore start
+    map('n', '<Leader>uw', '<Cmd>set wrap!<CR>', { desc = 'Toggle word wrapping' })
+    map('n', '<Leader>us', '<Cmd>set spell!<CR>', { desc = 'Toggle spell checking' })
+    map('n', '<Leader>ur', '<Cmd>set relativenumber!<CR>', { desc = 'Toggle relative line numbers' })
+    map('n', '<Leader>uc', function ()
+      local conceallevel = vim.api.nvim_get_option_value('conceallevel', {})
+      vim.api.nvim_set_option_value('conceallevel', conceallevel == 0 and 3 or 0, {})
+    end, { desc = 'Toggle pell checking' })
+    -- stylua: ignore end
+
     -- Abbreviations
     map('!a', 'ture', 'true')
     map('!a', 'Ture', 'True')

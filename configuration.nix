@@ -252,7 +252,6 @@ in {
       nerd-fonts.symbols-only
       departure-mono
       noto-fonts-color-emoji
-      (iosevka-bin.override {variant = "SS07";})
     ];
     fontconfig = {
       enable = true;
