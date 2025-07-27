@@ -319,7 +319,7 @@ return {
   {
     'NotAShelf/direnv.nvim',
     config = function()
-      require('direnv').setup({})
+      require('configs.direnv')
     end,
   },
 }

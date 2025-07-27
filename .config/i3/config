@@ -58,6 +58,7 @@ bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
 
 # Toggle notifications on/off.
 bindsym $mod+n exec --no-startup-id "$HOME/.config/i3/bin/silence"
+bindsym $mod+$shift+n exec --no-startup-id dunstctl close-all
 
 # Drag floating windows to their wanted position.
 floating_modifier $mod
