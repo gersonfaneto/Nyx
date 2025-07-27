@@ -1,3 +1,4 @@
+---@type lsp_config_t
 return {
   cmd = { 'nil', '--stdio' },
   filetypes = { 'nix' },

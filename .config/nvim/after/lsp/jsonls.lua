@@ -1,4 +1,4 @@
----@type vim.lsp.Config
+---@type lsp_config_t
 return {
   cmd = { 'vscode-json-language-server', '--stdio' },
   filetypes = {
