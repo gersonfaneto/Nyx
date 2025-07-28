@@ -23,7 +23,7 @@ local function is_nvim_lua()
   local bufname = vim.api.nvim_buf_get_name(0)
   if
     vim.iter(vim.api.nvim_list_runtime_paths()):any(function(rtp)
-      return M.contains(rtp, bufname)
+      return u.fs.contains(rtp, bufname)
     end)
   then
     vim.b._ls_is_nvim_lua = true

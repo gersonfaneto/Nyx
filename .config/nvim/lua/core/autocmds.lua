@@ -146,9 +146,14 @@ augroup('Autosave', {
           return
         end
         vim.schedule(function()
-          vim.cmd.wall({
-            mods = { emsg_silent = true },
-          })
+          if not vim.api.nvim_buf_is_valid(args.buf) then
+            return
+          end
+          vim.api.nvim_buf_call(args.buf, function()
+            vim.cmd.update({
+              mods = { emsg_silent = true },
+            })
+          end)
         end)
       end)
     end,
@@ -302,7 +307,7 @@ do
       end,
     },
   }, {
-    { 'TermOpen', 'WinResized', 'WinNew' },
+    'WinResized',
     {
       desc = 'Record window ratio.',
       callback = function()
@@ -311,6 +316,14 @@ do
           return
         end
         require('utils.win').save_ratio(win_ratio, vim.v.event.windows)
+      end,
+    },
+  }, {
+    { 'TermOpen', 'WinNew' },
+    {
+      desc = 'Record window ratio.',
+      callback = function()
+        require('utils.win').save_ratio(win_ratio, vim.api.nvim_list_wins())
       end,
     },
   })
