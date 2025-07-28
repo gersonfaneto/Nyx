@@ -117,10 +117,17 @@ require('blink.cmp').setup({
     default = {
       'snippets',
       'lsp',
+      'omni',
       'path',
       'buffer',
     },
     providers = {
+      lsp = {
+        -- Don't wait LSP completions for a long time before falling back to
+        -- the buffer source
+        -- https://github.com/Saghen/blink.cmp/issues/2042
+        timeout_ms = 200,
+      },
       cmdline = {
         -- Don't complete left parenthesis when calling functions or
         -- expressions in cmdline, e.g. `:call func(...`
