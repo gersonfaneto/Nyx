@@ -4,7 +4,7 @@ return {
     version = '1.*',
     event = { 'InsertEnter', 'CmdlineEnter' },
     config = function()
-      require('configs.blink')
+      require('configs.blink-cmp')
     end,
   },
 
