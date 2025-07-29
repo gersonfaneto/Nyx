@@ -259,7 +259,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map('n', '<Leader>ff', '<Cmd>FZF<CR>', { desc = 'Find files' })
 
 
-    -- Toggle editor options
     -- stylua: ignore start
     map('n', '<Leader>uw', '<Cmd>set wrap!<CR>', { desc = 'Toggle word wrapping' })
     map('n', '<Leader>us', '<Cmd>set spell!<CR>', { desc = 'Toggle spell checking' })
@@ -268,6 +267,12 @@ vim.api.nvim_create_autocmd('UIEnter', {
       local conceallevel = vim.api.nvim_get_option_value('conceallevel', {})
       vim.api.nvim_set_option_value('conceallevel', conceallevel == 0 and 3 or 0, {})
     end, { desc = 'Toggle pell checking' })
+    -- stylua: ignore end
+
+    -- stylua: ignore start
+    map('n', '<Leader>bw', '<Cmd>write<CR>', { desc = 'Write' })
+    map('n', '<Leader>bq', '<Cmd>quit<CR>', { desc = 'Quit' })
+    map('n', '<Leader>bd', '<Cmd>bdelete<CR>', { desc = 'Delete' })
     -- stylua: ignore end
 
     -- Abbreviations
