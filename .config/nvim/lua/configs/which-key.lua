@@ -106,6 +106,7 @@ wk.add({
   { '<Leader>t', group = 'Test' },
   { '<Leader>e', group = 'Direnv' },
   { '<Leader>u', group = 'Editor' },
+  { '<Leader>b', group = 'Buffer' },
   { '<Leader><Tab>', group = 'Table mode' },
   { '<Leader><Tab>d', group = 'Delete' },
   { '<Leader><Tab>i', group = 'Insert' },
