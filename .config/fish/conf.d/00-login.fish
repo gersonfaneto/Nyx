@@ -3,8 +3,8 @@ if not status is-login
     exit
 end
 
-set -g GOPATH "$HOME/.go"
-set -g GOBIN "$HOME/.go/bin"
+set -Ux GOPATH "$HOME/.go"
+set -Ux GOBIN "$HOME/.go/bin"
 
 fish_add_path --move \
     $HOME/.bin \
