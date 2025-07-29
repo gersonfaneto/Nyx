@@ -49,11 +49,11 @@ require('blink.cmp').setup({
       min_width = vim.go.pumwidth,
       max_height = vim.go.pumheight,
       draw = {
-        columns = {
+        columns = not vim.g.has_nf and {
           { 'label' },
           { 'kind_icon' },
           { 'label_description' },
-        },
+        } or nil,
         components = {
           kind_icon = {
             ellipsis = false,
@@ -102,8 +102,6 @@ require('blink.cmp').setup({
   },
   ---@type table<string, (blink.cmp.KeymapCommand|fun(cmp: blink.cmp.API): boolean?)[]|false>
   keymap = {
-    ['<C-p>'] = { 'show', 'select_prev', 'fallback' },
-    ['<C-n>'] = { 'show', 'select_next', 'fallback' },
     ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
     ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
   },
@@ -117,16 +115,16 @@ require('blink.cmp').setup({
     default = {
       'snippets',
       'lsp',
-      'omni',
       'path',
       'buffer',
     },
     providers = {
       lsp = {
-        -- Don't wait LSP completions for a long time before falling back to
-        -- the buffer source
-        -- https://github.com/Saghen/blink.cmp/issues/2042
-        timeout_ms = 200,
+        -- Don't wait for LSP completions before showing buffer completions
+        -- - https://github.com/Saghen/blink.cmp/issues/2042
+        -- - https://cmp.saghen.dev/configuration/sources.html#show-buffer-completions-with-lsp
+        async = true,
+        fallbacks = {},
       },
       cmdline = {
         -- Don't complete left parenthesis when calling functions or
