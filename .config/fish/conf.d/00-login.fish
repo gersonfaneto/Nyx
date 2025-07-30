@@ -9,8 +9,11 @@ set -Ux GOBIN "$HOME/.go/bin"
 fish_add_path --move \
     $HOME/.bin \
     $HOME/.local/bin \
-    $HOME/.cargo/bin \
-    $HOME/.go/bin
+    $HOME/.local/share/bin
+
+fish_add_path --move \
+    $HOME/.go/bin \
+    $HOME/.cargo/bin
 
 if test -f $HOME/.envvars
     source $HOME/.envvars
