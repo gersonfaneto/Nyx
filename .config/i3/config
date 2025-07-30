@@ -81,6 +81,7 @@ bindsym $mod+$shift+b exec firefox --private-window
 
 # Open the terminal.
 bindsym $mod+Return exec alacritty
+bindsym $mod+$shift+Return exec ghostty
 
 # Open THE text editor.
 bindsym $mod+e exec alacritty --command nvim
