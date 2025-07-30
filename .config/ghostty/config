@@ -1,0 +1,27 @@
+font-family = Departure Mono
+font-size = 12
+
+mouse-hide-while-typing = true
+
+cursor-style = block
+cursor-style-blink = false
+
+command = fish --login --interactive
+
+shell-integration-features = no-cursor
+
+title = "Ghostty"
+
+window-padding-x = 8
+window-padding-y = 8
+
+window-inherit-font-size = false
+
+window-decoration = none
+
+confirm-close-surface = false
+
+theme = gruvbox-material
+
+keybind = ctrl+slash=text:/
+keybind = shift+ctrl+slash=text:?
