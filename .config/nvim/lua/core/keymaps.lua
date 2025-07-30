@@ -267,12 +267,19 @@ vim.api.nvim_create_autocmd('UIEnter', {
       local conceallevel = vim.api.nvim_get_option_value('conceallevel', {})
       vim.api.nvim_set_option_value('conceallevel', conceallevel == 0 and 3 or 0, {})
     end, { desc = 'Toggle pell checking' })
+    map('n', '<Leader>ub', function()
+      local background = vim.api.nvim_get_option_value('background', {})
+      vim.api.nvim_set_option_value('background', background == 'dark' and 'light' or 'dark', {})
+    end, { desc = 'Toggle background color' })
     -- stylua: ignore end
 
     -- stylua: ignore start
     map('n', '<Leader>bw', '<Cmd>write<CR>', { desc = 'Write' })
     map('n', '<Leader>bq', '<Cmd>quit<CR>', { desc = 'Quit' })
     map('n', '<Leader>bd', '<Cmd>bdelete<CR>', { desc = 'Delete' })
+
+    map('n', '<Leader>x', '<Cmd>.lua<CR>', { desc = 'Execute the current line' })
+    map('n', '<Leader><Leader>x', '<Cmd>source %<CR>', { desc = 'Execute the current file' })
     -- stylua: ignore end
 
     -- Abbreviations
