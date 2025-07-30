@@ -147,8 +147,16 @@
   fp = fetch --prune
 
   ps = push
+  pf = push --force
+  pd = push --delete
+
   pl = pull
+  pr = pull --rebase
+
   cl = clone
+  cs = clone --depth=1
+  cn = clone --filter=blob:none
+  cr = clone --recursive
 
   rb = rebase
   ri = rebase --interactive
