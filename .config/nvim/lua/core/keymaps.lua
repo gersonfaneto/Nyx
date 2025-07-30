@@ -277,9 +277,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map('n', '<Leader>bw', '<Cmd>write<CR>', { desc = 'Write' })
     map('n', '<Leader>bq', '<Cmd>quit<CR>', { desc = 'Quit' })
     map('n', '<Leader>bd', '<Cmd>bdelete<CR>', { desc = 'Delete' })
-
-    map('n', '<Leader>x', '<Cmd>.lua<CR>', { desc = 'Execute the current line' })
-    map('n', '<Leader><Leader>x', '<Cmd>source %<CR>', { desc = 'Execute the current file' })
     -- stylua: ignore end
 
     -- Abbreviations
