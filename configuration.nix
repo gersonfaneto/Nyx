@@ -90,7 +90,7 @@ in {
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
     ];
-    config.common.default = [ "gtk" ];
+    config.common.default = ["gtk"];
   };
 
   users.users.gerson = {
@@ -151,6 +151,7 @@ in {
     [
       alacritty
       ani-cli
+      arandr
       bluetui
       brightnessctl
       chafa
@@ -187,6 +188,7 @@ in {
       qalculate-gtk
       ripgrep
       rsync
+      scc
       stow
       texlive.combined.scheme-full
       tmux
