@@ -1,4 +1,4 @@
-; vim:ft=gitconfig
+; vim:ft=gitconfig:
 
 ; Behaviour
 
@@ -80,20 +80,20 @@
 
 ; Colors
 
-; [color "decorate"]
-;   HEAD = red
-;   branch = blue
-;   tag = yellow
-;   remoteBranch = magenta
+[color "decorate"]
+  HEAD = red
+  branch = blue
+  tag = yellow
+  remoteBranch = magenta
 
 [color "blame"]
   highlightRecent = black bold,1 year ago,white,1 month ago,default,7 days ago,blue
 
-; [color "diff"]
-;   meta       = black bold
-;   frag       = magenta
-;   context    = white
-;   whitespace = yellow reverse
+[color "diff"]
+  meta       = black bold
+  frag       = magenta
+  context    = default
+  whitespace = yellow reverse
 
 [color "branch"]
   current  = magenta
@@ -170,4 +170,4 @@
   wa = worktree add
   wr = worktree remove
 
-  lg = "log --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n'"
+  lg = "log --graph --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n'"
