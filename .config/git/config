@@ -118,54 +118,45 @@
 ; Aliases
 
 [alias]
-  i = "![[ ! -d ".git/" ]] && ( git init && git commit -m 'Ready... Set... Go!' --allow-empty ) || ( echo 'Project already exists!' && exit 0  )"
-
-  c  = commit
+  cm = commit
   cm = commit --message
   ca = commit --amend
   ce = commit --amend --no-edit
 
-  b  = branch
+  br = branch
   bd = branch --delete
 
-  d  = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
+  df = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
   ds = df --cached
 
-  k  = checkout
-  kb = checkout --branch
-  kf = checkout --force
+  co = checkout
+  cb = checkout --branch
+  cf = checkout --force
 
-  s  = switch
+  sw = switch
   sc = switch --create
 
-  a   = add
-  aa  = add --all
-  ap  = add --patch
-  au  = add --update
-  aup = add --update --patch
+  ad = add
+  aa = add --all
 
-  s  = status
+  st = status
   ss = status --short
 
-  f  = fetch
+  ft = fetch
   fa = fetch --all
   fp = fetch --prune
 
   ps = push
   pl = pull
+  cl = clone
 
-  g  = clone
-  gs = clone --depth=1
-  gn = clone --filter=blob:none
-  gr = clone --recursive
-
-  r  = rebase
+  rb = rebase
   ri = rebase --interactive
   rc = rebase --continue
   ra = rebase --abort
   rt = rebase --edit-todo
 
-  w  = worktree
+  wt = worktree
   wl = worktree list
   wa = worktree add
   wr = worktree remove
