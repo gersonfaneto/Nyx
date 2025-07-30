@@ -85,9 +85,6 @@ bindsym $mod+Return exec alacritty
 # Open THE text editor.
 bindsym $mod+e exec alacritty --command nvim
 
-# Open the other text editor...
-bindsym $mod+$shift+e exec zeditor
-
 # Kill the focused window.
 bindsym $mod+q kill
 

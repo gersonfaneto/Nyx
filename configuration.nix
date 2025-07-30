@@ -244,10 +244,7 @@ in {
 
       # General
       efm-langserver
-    ]
-    ++ (with unstable; [
-      zed-editor
-    ]);
+    ];
 
   fonts = {
     packages = with pkgs; [
