@@ -32,7 +32,7 @@ exec --no-startup-id setxkbmap -layout br -variant thinkpad
 exec --no-startup-id "$HOME/.config/i3/bin/background" 
 
 # Setup xss-lock & xsecurelock.
-exec_always --no-startup-id xset s 300
+exec_always --no-startup-id xset s 600
 exec_always --no-startup-id xss-lock -l -- xsecurelock
 
 # Setup dunst (notification daemon).
@@ -81,7 +81,6 @@ bindsym $mod+$shift+b exec firefox --private-window
 
 # Open the terminal.
 bindsym $mod+Return exec alacritty
-bindsym $mod+$shift+Return exec ghostty
 
 # Open THE text editor.
 bindsym $mod+e exec alacritty --command nvim
