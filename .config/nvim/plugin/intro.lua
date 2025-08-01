@@ -78,7 +78,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
       },
       {
         chunks = {
-          { text = 'by @gersonfaneto', hl = 'NonText' },
+          { text = 'by @gersonfaneto', hl = 'comment' },
         },
       },
       { chunks = {} },
@@ -86,11 +86,11 @@ vim.api.nvim_create_autocmd('UIEnter', {
         chunks = not math.randomseed() and math.random() < 0.5 and {
           {
             text = vim.fn.keytrans(vim.g.mapleader or '\\'),
-            hl = 'NonText',
+            hl = 'comment',
           },
           { text = ' to start', hl = 'Normal' },
         } or {
-          { text = ':h', hl = 'NonText' },
+          { text = ':h', hl = 'comment' },
           { text = ' for help', hl = 'Normal' },
         },
       },
