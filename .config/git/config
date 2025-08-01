@@ -90,7 +90,7 @@
   highlightRecent = black bold,1 year ago,white,1 month ago,default,7 days ago,blue
 
 [color "diff"]
-  meta       = black bold
+  meta       = default bold
   frag       = magenta
   context    = default
   whitespace = yellow reverse
