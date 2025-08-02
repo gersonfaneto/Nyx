@@ -153,6 +153,7 @@ in {
       ani-cli
       arandr
       bluetui
+      bottom
       brightnessctl
       chafa
       detach

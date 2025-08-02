@@ -3,6 +3,8 @@ if not status is-login
     exit
 end
 
+set -Ux NVIM_NF 1
+
 set -Ux GOPATH "$HOME/.go"
 set -Ux GOBIN "$HOME/.go/bin"
 
