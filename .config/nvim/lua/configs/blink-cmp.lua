@@ -1,4 +1,5 @@
 local icons = require('utils.static.icons')
+local has_ls, ls = pcall(require, 'luasnip')
 local has_devicons, devicons = pcall(require, 'nvim-web-devicons')
 local blink_source_utils = require('blink.cmp.sources.lib.utils')
 local blink_ctx = require('blink.cmp.completion.trigger.context')
@@ -102,6 +103,24 @@ require('blink.cmp').setup({
   keymap = {
     ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
     ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+    ['<C-p>'] = {
+      'select_prev',
+      function(cmp)
+        if not has_ls or not ls.choice_active() then
+          return cmp.show()
+        end
+      end,
+      'fallback', -- change luasnip choice node, see `lua/configs/luasnip.lua`
+    },
+    ['<C-n>'] = {
+      'select_next',
+      function(cmp)
+        if not has_ls or not ls.choice_active() then
+          return cmp.show()
+        end
+      end,
+      'fallback',
+    },
     -- Managed by snippet config and tabout plugin, see
     -- - `lua/configs/luasnip.lua`
     -- - `lua/plugin/tabout.lua`
@@ -114,7 +133,7 @@ require('blink.cmp').setup({
     enabled = true,
   },
   snippets = {
-    preset = pcall(require, 'luasnip') and 'luasnip' or 'default',
+    preset = has_ls and 'luasnip' or 'default',
   },
   sources = {
     default = {
@@ -125,11 +144,11 @@ require('blink.cmp').setup({
     },
     providers = {
       lsp = {
-        -- Don't wait for LSP completions before showing buffer completions
+        -- Don't wait for LSP completions for a long time before fallback to
+        -- buffer completions
         -- - https://github.com/Saghen/blink.cmp/issues/2042
         -- - https://cmp.saghen.dev/configuration/sources.html#show-buffer-completions-with-lsp
-        async = true,
-        fallbacks = {},
+        timeout_ms = 500,
       },
       cmdline = {
         -- Don't complete left parenthesis when calling functions or
