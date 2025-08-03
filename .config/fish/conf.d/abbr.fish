@@ -53,6 +53,7 @@ __command_abbr sudoe 'sudo -E'
 __command_abbr tree 'tree -N'
 __command_abbr x trash
 __command_abbr tm tmux
+__command_abbr wttr 'curl wttr.in'
 
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim
