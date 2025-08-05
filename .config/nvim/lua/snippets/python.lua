@@ -119,18 +119,34 @@ M.snippets = {
       trig = 'lconf',
       desc = 'Config logging',
     },
-    un.fmtad('logging.basicConfig(stream=<fd>, level=<level>)', {
-      fd = c(1, {
-        i(1, 'sys.stdout'),
-        i(1, 'sys.stderr'),
+    un.fmtad('logging.basicConfig(<out>, level=<level>)', {
+      out = c(1, {
+        un.fmtad('stream=<fd>', {
+          fd = i(1, 'sys.stderr'),
+        }),
+        un.fmtad('filename=<q><fname><q>, filemode=<q><fmode><q>', {
+          q = un.qt(),
+          fname = d(1, function()
+            return sn(nil, {
+              i(
+                1,
+                string.format(
+                  '%s.log',
+                  vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':t:r')
+                )
+              ),
+            })
+          end),
+          fmode = i(2, 'a'),
+        }),
       }),
       level = c(2, {
-        i(2, 'logging.DEBUG'),
-        i(2, 'logging.INFO'),
-        i(2, 'logging.WARNING'),
-        i(2, 'logging.ERROR'),
-        i(2, 'logging.CRITICAL'),
-        i(2, 'logging.NOTSET'),
+        i(nil, 'logging.DEBUG'),
+        i(nil, 'logging.INFO'),
+        i(nil, 'logging.WARNING'),
+        i(nil, 'logging.ERROR'),
+        i(nil, 'logging.CRITICAL'),
+        i(nil, 'logging.NOTSET'),
       }),
     })
   ),
@@ -139,10 +155,9 @@ M.snippets = {
       trig = 'nl',
       desc = 'Create a new logger',
     },
-    un.fmtad('<logger> = logging.getLogger(<name><e>)', {
-      logger = i(1, 'logger'),
-      name = i(2, '__name__'),
-      e = i(3),
+    un.fmtad('logger = logging.getLogger(<name><e>)', {
+      name = i(1, '__name__'),
+      e = i(2),
     })
   ),
   us.sn(
@@ -150,16 +165,15 @@ M.snippets = {
       trig = 'l',
       desc = 'Logger log',
     },
-    un.fmtad('<logger>.<level>(<msg><e>)', {
-      logger = i(1, 'logger'),
-      level = c(2, {
-        i(2, 'info'),
-        i(2, 'warning'),
-        i(2, 'error'),
-        i(2, 'critical'),
-        i(2, 'debug'),
+    un.fmtad('logger.<level>(<msg><e>)', {
+      level = c(1, {
+        i(nil, 'info'),
+        i(nil, 'warning'),
+        i(nil, 'error'),
+        i(nil, 'critical'),
+        i(nil, 'debug'),
       }),
-      msg = c(3, {
+      msg = c(2, {
         un.fmtad('<q><m><q>', {
           q = un.qt(),
           m = r(1, 'msg'),
@@ -169,7 +183,7 @@ M.snippets = {
           m = r(1, 'msg'),
         }),
       }),
-      e = i(4),
+      e = i(3),
     }),
     {
       stored = {
@@ -182,9 +196,8 @@ M.snippets = {
       trig = 'lg',
       desc = 'logger.log()',
     },
-    un.fmtad('<logger>.log(<level>, <msg><e>)', {
-      logger = i(1, 'logger'),
-      level = c(2, {
+    un.fmtad('logger.log(<level>, <msg><e>)', {
+      level = c(1, {
         i(2, 'logging.INFO'),
         i(2, 'logging.WARNING'),
         i(2, 'logging.ERROR'),
@@ -192,7 +205,7 @@ M.snippets = {
         i(2, 'logging.DEBUG'),
         i(2, 'logging.NOTSET'),
       }),
-      msg = c(3, {
+      msg = c(2, {
         un.fmtad('<q><m><q>', {
           q = un.qt(),
           m = r(1, 'msg'),
@@ -202,7 +215,7 @@ M.snippets = {
           m = r(1, 'msg'),
         }),
       }),
-      e = i(4),
+      e = i(3),
     }),
     {
       stored = {
@@ -215,9 +228,8 @@ M.snippets = {
       trig = 'li',
       desc = 'logger.info()',
     },
-    un.fmtad('<logger>.info(<msg><e>)', {
-      logger = i(1, 'logger'),
-      msg = c(2, {
+    un.fmtad('logger.info(<msg><e>)', {
+      msg = c(1, {
         un.fmtad('<q><m><q>', {
           q = un.qt(),
           m = r(1, 'msg'),
@@ -227,7 +239,7 @@ M.snippets = {
           m = r(1, 'msg'),
         }),
       }),
-      e = i(3),
+      e = i(2),
     }),
     {
       stored = {
@@ -240,9 +252,8 @@ M.snippets = {
       trig = 'lw',
       desc = 'logger.warning()',
     },
-    un.fmtad('<logger>.warning(<msg><e>)', {
-      logger = i(1, 'logger'),
-      msg = c(2, {
+    un.fmtad('logger.warning(<msg><e>)', {
+      msg = c(1, {
         un.fmtad('<q><m><q>', {
           q = un.qt(),
           m = r(1, 'msg'),
@@ -252,7 +263,7 @@ M.snippets = {
           m = r(1, 'msg'),
         }),
       }),
-      e = i(3),
+      e = i(2),
     }),
     {
       stored = {
@@ -265,9 +276,8 @@ M.snippets = {
       trig = 'le',
       desc = 'logger.error()',
     },
-    un.fmtad('<logger>.error(<msg><e>)', {
-      logger = i(1, 'logger'),
-      msg = c(2, {
+    un.fmtad('logger.error(<msg><e>)', {
+      msg = c(1, {
         un.fmtad('<q><m><q>', {
           q = un.qt(),
           m = r(1, 'msg'),
@@ -277,7 +287,7 @@ M.snippets = {
           m = r(1, 'msg'),
         }),
       }),
-      e = i(3),
+      e = i(2),
     }),
     {
       stored = {
@@ -290,9 +300,8 @@ M.snippets = {
       trig = 'lc',
       desc = 'logger.critical()',
     },
-    un.fmtad('<logger>.critical(<msg><e>)', {
-      logger = i(1, 'logger'),
-      msg = c(2, {
+    un.fmtad('logger.critical(<msg><e>)', {
+      msg = c(1, {
         un.fmtad('<q><m><q>', {
           q = un.qt(),
           m = r(1, 'msg'),
@@ -302,7 +311,7 @@ M.snippets = {
           m = r(1, 'msg'),
         }),
       }),
-      e = i(3),
+      e = i(2),
     }),
     {
       stored = {
@@ -315,9 +324,8 @@ M.snippets = {
       trig = 'ld',
       desc = 'logger.debug()',
     },
-    un.fmtad('<logger>.debug(<msg><e>)', {
-      logger = i(1, 'logger'),
-      msg = c(2, {
+    un.fmtad('logger.debug(<msg><e>)', {
+      msg = c(1, {
         un.fmtad('<q><m><q>', {
           q = un.qt(),
           m = r(1, 'msg'),
@@ -327,7 +335,7 @@ M.snippets = {
           m = r(1, 'msg'),
         }),
       }),
-      e = i(3),
+      e = i(2),
     }),
     {
       stored = {
@@ -340,23 +348,15 @@ M.snippets = {
       trig = 'll',
       desc = 'Log a line',
     },
-    un.fmtad('<logger>.<level>(<q><line><q><e>)', {
-      logger = i(1, 'logger'),
-      level = c(2, {
-        i(2, 'debug'),
-        i(2, 'info'),
-        i(2, 'warning'),
-        i(2, 'error'),
-        i(2, 'critical'),
-      }),
+    un.fmtad('logger.debug(<q><line><q><e>)', {
       q = un.qt(),
-      line = c(3, {
+      line = c(1, {
         i(nil, '----------------------------------------'),
         i(nil, '........................................'),
         i(nil, '========================================'),
         i(nil, '########################################'),
       }),
-      e = i(4),
+      e = i(2),
     })
   ),
   us.sn(
@@ -364,22 +364,14 @@ M.snippets = {
       trig = 'lck',
       desc = 'Check a value of a variable through logger.debug()',
     },
-    un.fmtad('<logger>.<level>(f<q><expr_escaped>: {<expr>}<q><e>)', {
-      logger = i(1, 'logger'),
-      level = c(2, {
-        i(2, 'debug'),
-        i(2, 'info'),
-        i(2, 'warning'),
-        i(2, 'error'),
-        i(2, 'critical'),
-      }),
+    un.fmtad('logger.debug(f<q><expr_escaped>: {<expr>}<q><e>)', {
       q = un.qt(),
-      expr = i(3),
-      expr_escaped = d(4, function(texts)
+      expr = i(1),
+      expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\' .. uf.get_quotation_type())
         return sn(nil, i(1, str))
-      end, { 3 }),
-      e = i(5),
+      end, { 1 }),
+      e = i(3),
     })
   ),
   us.msn({
