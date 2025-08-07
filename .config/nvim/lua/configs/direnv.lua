@@ -1,17 +1,17 @@
 local direnv = require('direnv')
 
 direnv.setup({
-  bin = "direnv",
+  bin = 'direnv',
   autoload_direnv = true,
   statusline = {
     enabled = true,
-    icon = "󱚟",
+    icon = '󱚟',
   },
   keybindings = {
-    allow = "<Leader>ea",
-    deny = "<Leader>ed",
-    reload = "<Leader>er",
-    edit = "<Leader>ee",
+    allow = '<Leader>ea',
+    deny = '<Leader>ed',
+    reload = '<Leader>er',
+    edit = '<Leader>ee',
   },
   notifications = {
     level = vim.log.levels.INFO,
