@@ -1,6 +1,7 @@
 return {
   {
     'ibhagwan/fzf-lua',
+    dependencies = 'elanmed/fzf-lua-frecency.nvim',
     cmd = 'FzfLua',
     keys = {
       { '<C-_>', desc = 'Fuzzy complete command/search history', mode = 'c' },
@@ -200,9 +201,8 @@ return {
       'Gwrite',
     },
     keys = {
-      { '<Leader>gv', desc = 'Git view repo status' },
-      { '<Leader>gl', desc = 'Git diff current file' },
       { '<Leader>gL', desc = 'Git log entire repo' },
+      { '<Leader>g<Space>', desc = 'Populate cmdline with ":Git"' },
     },
     event = { 'BufNew', 'BufWritePost', 'BufReadPre' },
     dependencies = {
