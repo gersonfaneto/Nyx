@@ -6,4 +6,5 @@ end
 # if type -q zoxide; and not type -q __z
 if type -q zoxide
     zoxide init fish | source
+    alias cd z
 end
