@@ -4,31 +4,33 @@ if vim.fn.executable('fzf') == 0 then
 end
 
 local fzf = require('fzf-lua')
-local fzf_frecency = require('fzf-lua-frecency')
-local actions = require('fzf-lua.actions')
-local core = require('fzf-lua.core')
-local path = require('fzf-lua.path')
-local config = require('fzf-lua.config')
 local fzf_utils = require('fzf-lua.utils')
+local fzf_actions = require('fzf-lua.actions')
+local fzf_core = require('fzf-lua.core')
+local fzf_path = require('fzf-lua.path')
+local fzf_config = require('fzf-lua.config')
+local fzf_win = require('fzf-lua.win')
+local fzf_builtin_previewer = require('fzf-lua.previewer.builtin')
+local fzf_frecency = require('fzf-lua-frecency')
 local utils = require('utils')
 local icons = require('utils.static.icons')
 
-local _arg_del = actions.arg_del
-local _vimcmd_buf = actions.vimcmd_buf
+local _arg_del = fzf_actions.arg_del
+local _vimcmd_buf = fzf_actions.vimcmd_buf
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.arg_del(...)
+function fzf_actions.arg_del(...)
   pcall(_arg_del, ...)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.vimcmd_buf(...)
+function fzf_actions.vimcmd_buf(...)
   pcall(_vimcmd_buf, ...)
 end
 
 ---Switch provider while preserving the last query and cwd
 ---@return nil
-function actions.switch_provider()
+function fzf_actions.switch_provider()
   local opts = {
     query = fzf.config.__resume_data.last_query,
     cwd = fzf.config.__resume_data.opts.cwd,
@@ -39,14 +41,14 @@ function actions.switch_provider()
       ['enter'] = function(selected)
         fzf[selected[1]](opts)
       end,
-      ['esc'] = actions.resume,
+      ['esc'] = fzf_actions.resume,
     },
   })
 end
 
 ---Change cwd while preserving the last query
 ---@return nil
-function actions.change_cwd()
+function fzf_actions.change_cwd()
   local resume_data = vim.tbl_deep_extend('force', fzf.config.__resume_data, {
     opts = {},
   })
@@ -101,7 +103,7 @@ function actions.change_cwd()
         opts.cwd = vim.fs.normalize(
           vim.fs.joinpath(
             cwd_root,
-            path.entry_to_file(selected[1], {}, false).path
+            fzf_path.entry_to_file(selected[1], {}, false).path
           )
         )
 
@@ -110,17 +112,17 @@ function actions.change_cwd()
           opts.prompt = vim.fn.fnamemodify(opts.cwd, ':~')
           local shorten_len = tonumber(opts.cwd_prompt_shorten_len)
           if shorten_len and #opts.prompt >= shorten_len then
-            opts.prompt = path.shorten(
+            opts.prompt = fzf_path.shorten(
               opts.prompt,
               tonumber(opts.cwd_prompt_shorten_val) or 1
             )
           end
-          if not path.ends_with_separator(opts.prompt) then
-            opts.prompt = opts.prompt .. path.separator()
+          if not fzf_path.ends_with_separator(opts.prompt) then
+            opts.prompt = opts.prompt .. fzf_path.separator()
           end
         end
         if opts.headers then
-          opts = core.set_header(opts)
+          opts = fzf_core.set_header(opts)
         end
 
         -- Get old picker from `opts.__resume_key`, fallback to files picker
@@ -128,7 +130,7 @@ function actions.change_cwd()
       end,
       ['esc'] = function()
         fzf.config.__resume_data = resume_data
-        actions.resume()
+        fzf_actions.resume()
       end,
       -- Should not change dir or exclude dirs when selecting cwd
       ['alt-c'] = false,
@@ -139,7 +141,7 @@ end
 
 ---Include directories, not only files when using the `files` picker
 ---@return nil
-function actions.toggle_dir(_, opts)
+function fzf_actions.toggle_dir(_, opts)
   local flag ---@type string?
   local flag_cmd_idx ---@type integer?
   local cmds = vim.iter(opts.cmd:gmatch('([^|;&]+[|;&]*)')):totable()
@@ -176,7 +178,7 @@ end
 
 ---Delete selected autocmd
 ---@return nil
-function actions.del_autocmd(selected)
+function fzf_actions.del_autocmd(selected)
   for _, line in ipairs(selected) do
     local event, group, pattern =
       line:match('^.+:%d+:|(%w+)%s*│%s*(%S+)%s*│%s*(.-)%s*│')
@@ -198,7 +200,7 @@ end
 
 ---Search & select files then add them to arglist
 ---@return nil
-function actions.arg_search_add()
+function fzf_actions.arg_search_add()
   local opts = fzf.config.__resume_data.opts
   fzf.files({
     cwd_header = true,
@@ -215,7 +217,7 @@ function actions.arg_search_add()
             cmd = input
           end
         end)
-        actions.vimcmd_file(cmd, selected, o)
+        fzf_actions.vimcmd_file(cmd, selected, o)
         fzf.args(opts)
       end,
       ['esc'] = function()
@@ -228,17 +230,17 @@ function actions.arg_search_add()
   })
 end
 
-local _file_split = actions.file_split
-local _file_vsplit = actions.file_vsplit
-local _file_tabedit = actions.file_tabedit
-local _file_sel_to_qf = actions.file_sel_to_qf
-local _file_sel_to_ll = actions.file_sel_to_ll
-local _buf_split = actions.buf_split
-local _buf_vsplit = actions.buf_vsplit
-local _buf_tabedit = actions.buf_tabedit
+local _file_split = fzf_actions.file_split
+local _file_vsplit = fzf_actions.file_vsplit
+local _file_tabedit = fzf_actions.file_tabedit
+local _file_sel_to_qf = fzf_actions.file_sel_to_qf
+local _file_sel_to_ll = fzf_actions.file_sel_to_ll
+local _buf_split = fzf_actions.buf_split
+local _buf_vsplit = fzf_actions.buf_vsplit
+local _buf_tabedit = fzf_actions.buf_tabedit
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.file_split(...)
+function fzf_actions.file_split(...)
   local win = vim.api.nvim_get_current_win()
   _file_split(...)
   if vim.api.nvim_win_is_valid(win) and utils.win.is_empty(win) then
@@ -247,7 +249,7 @@ function actions.file_split(...)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.file_vsplit(...)
+function fzf_actions.file_vsplit(...)
   local win = vim.api.nvim_get_current_win()
   _file_vsplit(...)
   if vim.api.nvim_win_is_valid(win) and utils.win.is_empty(win) then
@@ -256,7 +258,7 @@ function actions.file_vsplit(...)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.file_tabedit(...)
+function fzf_actions.file_tabedit(...)
   local tab = vim.api.nvim_get_current_tabpage()
   _file_tabedit(...)
   if vim.api.nvim_tabpage_is_valid(tab) and utils.tab.is_empty(tab) then
@@ -265,21 +267,21 @@ function actions.file_tabedit(...)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.file_edit_or_qf(selected, opts)
+function fzf_actions.file_edit_or_qf(selected, opts)
   if #selected > 1 then
-    actions.file_sel_to_qf(selected, opts)
+    fzf_actions.file_sel_to_qf(selected, opts)
     vim.cmd.cfirst()
     vim.cmd.copen()
   else
     -- Fix oil buffer concealing issue when opening some dirs
     vim.schedule(function()
-      actions.file_edit(selected, opts)
+      fzf_actions.file_edit(selected, opts)
     end)
   end
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.file_sel_to_qf(selected, opts)
+function fzf_actions.file_sel_to_qf(selected, opts)
   _file_sel_to_qf(selected, opts)
   if #selected > 1 then
     vim.cmd.cfirst()
@@ -288,7 +290,7 @@ function actions.file_sel_to_qf(selected, opts)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.file_sel_to_ll(selected, opts)
+function fzf_actions.file_sel_to_ll(selected, opts)
   _file_sel_to_ll(selected, opts)
   if #selected > 1 then
     vim.cmd.lfirst()
@@ -297,7 +299,7 @@ function actions.file_sel_to_ll(selected, opts)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.buf_split(...)
+function fzf_actions.buf_split(...)
   local win = vim.api.nvim_get_current_win()
   _buf_split(...)
   if vim.api.nvim_win_is_valid(win) and utils.win.is_empty(win) then
@@ -306,7 +308,7 @@ function actions.buf_split(...)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.buf_vsplit(...)
+function fzf_actions.buf_vsplit(...)
   local win = vim.api.nvim_get_current_win()
   _buf_vsplit(...)
   if vim.api.nvim_win_is_valid(win) and utils.win.is_empty(win) then
@@ -315,7 +317,7 @@ function actions.buf_vsplit(...)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function actions.buf_tabedit(...)
+function fzf_actions.buf_tabedit(...)
   local tab = vim.api.nvim_get_current_tabpage()
   _buf_tabedit(...)
   if vim.api.nvim_tabpage_is_valid(tab) and utils.tab.is_empty(tab) then
@@ -323,8 +325,8 @@ function actions.buf_tabedit(...)
   end
 end
 
-function actions.insert_register(...)
-  actions.paste_register(...)
+function fzf_actions.insert_register(...)
+  fzf_actions.paste_register(...)
   vim.api.nvim_feedkeys('a', 'n', true)
 end
 
@@ -345,7 +347,7 @@ local function has_fugitive_gedit_cmd(notify)
 end
 
 ---Edit a git commit object with vim-fugitive
-function actions.fugitive_edit(selected)
+function fzf_actions.fugitive_edit(selected)
   if not has_fugitive_gedit_cmd(true) or not selected[1] then
     return
   end
@@ -353,33 +355,33 @@ function actions.fugitive_edit(selected)
 end
 
 ---Edit a git commit object in horizontal split with vim-fugitive
-function actions.fugitive_split(selected)
+function fzf_actions.fugitive_split(selected)
   if not has_fugitive_gedit_cmd(true) then
     return
   end
   vim.cmd.split()
-  actions.fugitive_edit(selected)
+  fzf_actions.fugitive_edit(selected)
 end
 
 ---Edit a git commit object in vertical split with vim-fugitive
-function actions.fugitive_vsplit(selected)
+function fzf_actions.fugitive_vsplit(selected)
   if not has_fugitive_gedit_cmd(true) then
     return
   end
   vim.cmd.vsplit()
-  actions.fugitive_edit(selected)
+  fzf_actions.fugitive_edit(selected)
 end
 
 ---Edit a git commit object in vertical split with vim-fugitive
-function actions.fugitive_tabedit(selected)
+function fzf_actions.fugitive_tabedit(selected)
   if not has_fugitive_gedit_cmd(true) then
     return
   end
   vim.cmd.tabnew()
-  actions.fugitive_edit(selected)
+  fzf_actions.fugitive_edit(selected)
 end
 
-core.ACTION_DEFINITIONS[actions.toggle_dir] = {
+fzf_core.ACTION_DEFINITIONS[fzf_actions.toggle_dir] = {
   function(o)
     -- When using `fd` the flag is '--type d', but for `find` the flag is
     -- '-type d', use '-type d' as default flag here anyway since it is
@@ -390,37 +392,53 @@ core.ACTION_DEFINITIONS[actions.toggle_dir] = {
       or 'Include dirs'
   end,
 }
-core.ACTION_DEFINITIONS[actions.change_cwd] = { 'Change cwd', pos = 1 }
-core.ACTION_DEFINITIONS[actions.arg_del] = { 'delete' }
-core.ACTION_DEFINITIONS[actions.del_autocmd] = { 'delete autocmd' }
-core.ACTION_DEFINITIONS[actions.arg_search_add] = { 'add new file' }
-core.ACTION_DEFINITIONS[actions.search] = { 'edit' }
-core.ACTION_DEFINITIONS[actions.ex_run] = { 'edit' }
-core.ACTION_DEFINITIONS[actions.insert_register] = { 'insert register' }
 
-config._action_to_helpstr[actions.toggle_dir] = 'toggle-dir'
-config._action_to_helpstr[actions.switch_provider] = 'switch-provider'
-config._action_to_helpstr[actions.change_cwd] = 'change-cwd'
-config._action_to_helpstr[actions.arg_del] = 'delete'
-config._action_to_helpstr[actions.del_autocmd] = 'delete-autocmd'
-config._action_to_helpstr[actions.arg_search_add] = 'search-and-add-new-file'
-config._action_to_helpstr[actions.file_split] = 'file-split'
-config._action_to_helpstr[actions.file_vsplit] = 'file-vsplit'
-config._action_to_helpstr[actions.file_tabedit] = 'file-tabedit'
-config._action_to_helpstr[actions.file_edit_or_qf] = 'file-edit-or-qf'
-config._action_to_helpstr[actions.file_sel_to_qf] = 'file-select-to-quickfix'
-config._action_to_helpstr[actions.file_sel_to_ll] = 'file-select-to-loclist'
-config._action_to_helpstr[actions.buf_split] = 'buffer-split'
-config._action_to_helpstr[actions.buf_vsplit] = 'buffer-vsplit'
-config._action_to_helpstr[actions.buf_tabedit] = 'buffer-tabedit'
-config._action_to_helpstr[actions.buf_edit_or_qf] = 'buffer-edit-or-qf'
-config._action_to_helpstr[actions.buf_sel_to_qf] = 'buffer-select-to-quickfix'
-config._action_to_helpstr[actions.buf_sel_to_ll] = 'buffer-select-to-loclist'
-config._action_to_helpstr[actions.insert_register] = 'insert-register'
-config._action_to_helpstr[actions.fugitive_edit] = 'fugitive-edit'
-config._action_to_helpstr[actions.fugitive_split] = 'fugitive-split'
-config._action_to_helpstr[actions.fugitive_vsplit] = 'fugitive-vsplit'
-config._action_to_helpstr[actions.fugitive_tabedit] = 'fugitive-tabedit'
+fzf_core.ACTION_DEFINITIONS[fzf_actions.toggle_dir] = {
+  function(o)
+    -- When using `fd` the flag is '--type d', but for `find` the flag is
+    -- '-type d', use '-type d' as default flag here anyway since it is
+    -- the common substring for both `find` and `fd` commands
+    local flag = o.toggle_dir_flag or '-type d'
+    local escape = require('fzf-lua.utils').lua_regex_escape
+    return o.cmd and o.cmd:match(escape(flag)) and 'Exclude dirs'
+      or 'Include dirs'
+  end,
+}
+-- stylua: ignore start
+fzf_core.ACTION_DEFINITIONS[fzf_actions.change_cwd] = { 'Change cwd', pos = 1 }
+fzf_core.ACTION_DEFINITIONS[fzf_actions.arg_del] = { 'delete' }
+fzf_core.ACTION_DEFINITIONS[fzf_actions.del_autocmd] = { 'delete autocmd' }
+fzf_core.ACTION_DEFINITIONS[fzf_actions.arg_search_add] = { 'add new file' }
+fzf_core.ACTION_DEFINITIONS[fzf_actions.search] = { 'edit' }
+fzf_core.ACTION_DEFINITIONS[fzf_actions.ex_run] = { 'edit' }
+fzf_core.ACTION_DEFINITIONS[fzf_actions.insert_register] = { 'insert register' }
+-- stylua: ignore end
+
+-- stylua: ignore start
+fzf_config._action_to_helpstr[fzf_actions.toggle_dir] = 'toggle-dir'
+fzf_config._action_to_helpstr[fzf_actions.switch_provider] = 'switch-provider'
+fzf_config._action_to_helpstr[fzf_actions.change_cwd] = 'change-cwd'
+fzf_config._action_to_helpstr[fzf_actions.arg_del] = 'delete'
+fzf_config._action_to_helpstr[fzf_actions.del_autocmd] = 'delete-autocmd'
+fzf_config._action_to_helpstr[fzf_actions.arg_search_add] = 'search-and-add-new-file'
+fzf_config._action_to_helpstr[fzf_actions.file_split] = 'file-split'
+fzf_config._action_to_helpstr[fzf_actions.file_vsplit] = 'file-vsplit'
+fzf_config._action_to_helpstr[fzf_actions.file_tabedit] = 'file-tabedit'
+fzf_config._action_to_helpstr[fzf_actions.file_edit_or_qf] = 'file-edit-or-qf'
+fzf_config._action_to_helpstr[fzf_actions.file_sel_to_qf] = 'file-select-to-quickfix'
+fzf_config._action_to_helpstr[fzf_actions.file_sel_to_ll] = 'file-select-to-loclist'
+fzf_config._action_to_helpstr[fzf_actions.buf_split] = 'buffer-split'
+fzf_config._action_to_helpstr[fzf_actions.buf_vsplit] = 'buffer-vsplit'
+fzf_config._action_to_helpstr[fzf_actions.buf_tabedit] = 'buffer-tabedit'
+fzf_config._action_to_helpstr[fzf_actions.buf_edit_or_qf] = 'buffer-edit-or-qf'
+fzf_config._action_to_helpstr[fzf_actions.buf_sel_to_qf] = 'buffer-select-to-quickfix'
+fzf_config._action_to_helpstr[fzf_actions.buf_sel_to_ll] = 'buffer-select-to-loclist'
+fzf_config._action_to_helpstr[fzf_actions.insert_register] = 'insert-register'
+fzf_config._action_to_helpstr[fzf_actions.fugitive_edit] = 'fugitive-edit'
+fzf_config._action_to_helpstr[fzf_actions.fugitive_split] = 'fugitive-split'
+fzf_config._action_to_helpstr[fzf_actions.fugitive_vsplit] = 'fugitive-vsplit'
+fzf_config._action_to_helpstr[fzf_actions.fugitive_tabedit] = 'fugitive-tabedit'
+-- stylua: ignore end
 
 -- Use different prompts for document and workspace diagnostics
 -- by overriding `fzf.diagnostics_workspace()` and `fzf.diagnostics_document()`
@@ -516,9 +534,9 @@ function fzf.z(opts)
   end
 
   -- Register action descriptions
-  actions.z = z.jump
-  core.ACTION_DEFINITIONS[actions.z] = { 'jump to dir' }
-  config._action_to_helpstr[actions.z] = 'jump-to-dir'
+  fzf_actions.z = z.jump
+  fzf_core.ACTION_DEFINITIONS[fzf_actions.z] = { 'jump to dir' }
+  fzf_config._action_to_helpstr[fzf_actions.z] = 'jump-to-dir'
 
   return fzf.fzf_exec(
     z.list(),
@@ -526,7 +544,7 @@ function fzf.z(opts)
       cwd = vim.fn.getcwd(0),
       prompt = 'Open directory: ',
       actions = {
-        ['enter'] = actions.z,
+        ['enter'] = fzf_actions.z,
       },
       fzf_opts = {
         ['--no-multi'] = true,
@@ -561,15 +579,16 @@ function fzf.sessions(opts)
   end
 
   -- Register action descriptions
-  actions.load_session = action(function(p)
+  fzf_actions.load_session = action(function(p)
     session.load(p, true)
   end)
-  core.ACTION_DEFINITIONS[actions.load_session] = { 'load session' }
-  config._action_to_helpstr[actions.load_session] = 'load-session'
+  fzf_core.ACTION_DEFINITIONS[fzf_actions.load_session] = { 'load session' }
+  fzf_config._action_to_helpstr[fzf_actions.load_session] = 'load-session'
 
-  actions.remove_session = action(session.remove)
-  core.ACTION_DEFINITIONS[actions.remove_session] = { 'remove session' }
-  config._action_to_helpstr[actions.remove_session] = 'remove-session'
+  fzf_actions.remove_session = action(session.remove)
+  fzf_core.ACTION_DEFINITIONS[fzf_actions.remove_session] =
+    { 'remove session' }
+  fzf_config._action_to_helpstr[fzf_actions.remove_session] = 'remove-session'
 
   return fzf.fzf_exec(
     string.format(
@@ -579,9 +598,9 @@ function fzf.sessions(opts)
     vim.tbl_deep_extend('force', opts or {}, {
       prompt = 'Sessions: ',
       actions = {
-        ['enter'] = actions.load_session,
+        ['enter'] = fzf_actions.load_session,
         ['ctrl-x'] = {
-          fn = actions.remove_session,
+          fn = fzf_actions.remove_session,
           reload = true,
         },
       },
@@ -613,9 +632,176 @@ end
 function fzf.complete_from_registers(opts)
   fzf.registers(vim.tbl_deep_extend('force', opts or {}, {
     actions = {
-      ['enter'] = actions.insert_register,
+      ['enter'] = fzf_actions.insert_register,
     },
   }))
+end
+
+-- HACK: override fzf internals to reuse source window as preview window
+local _win_generate_layout = fzf_win.generate_layout
+local _win_redraw_preview = fzf_win.redraw_preview
+local _win_close_preview = fzf_win.close_preview
+local _builtin_previewer_preview_window =
+  fzf_builtin_previewer.base.preview_window
+
+---Hide but don't disable fzf native preview when using split layout, so that
+---we can sync builtin previewer with fzf
+function fzf_builtin_previewer.base:preview_window(...)
+  return self.win and self.win.winopts.split and 'nohidden:right:0'
+    or _builtin_previewer_preview_window(self, ...)
+end
+
+---@diagnostic disable-next-line: inject-field
+function fzf_builtin_previewer.base:backup_winhl()
+  self.winopts_orig = self.winopts_orig or {} -- fix nil error
+  ---@diagnostic disable-next-line: inject-field
+  if self.win.src_winid and vim.api.nvim_win_is_valid(self.win.src_winid) then
+    self.winhl_orig = vim.wo[self.win.src_winid].winhl
+  end
+end
+
+---@diagnostic disable-next-line: inject-field
+function fzf_builtin_previewer.base:restore_winhl()
+  if
+    self.winhl_orig
+    and self.win.src_winid
+    and vim.api.nvim_win_is_valid(self.win.src_winid)
+  then
+    vim.wo[self.win.src_winid].winhl = self.winhl_orig
+  end
+end
+
+function fzf_win:generate_layout(...)
+  -- Handle split preview if fzf main window is a split window
+  if self.winopts.split then
+    self.layout = {
+      fzf = self:normalize_border({
+        row = self.winopts.row,
+        col = self.winopts.col,
+        width = self.winopts.width,
+        height = self.winopts.height,
+        border = self._o.winopts.border,
+        relative = self.winopts.relative or 'editor',
+        zindex = self.winopts.zindex,
+        hide = self.winopts.hide,
+      }, { type = 'nvim', name = 'fzf', nwin = 2 }),
+      preview = {
+        border = self._o.winopts.preview.border,
+        focusable = true,
+        hide = self.winopts.hide,
+      },
+    }
+    return
+  end
+  _win_generate_layout(self, ...)
+end
+
+function fzf_win:redraw_preview(...)
+  -- Reuse source win or create a new split window for preview
+  if self.winopts.split and not self:validate_preview() then
+    if self.src_winid and vim.fn.win_gettype(self.src_winid) == '' then
+      self.preview_winid = self.src_winid
+    else
+      -- Use first 'normal' window as source & preview window
+      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if vim.fn.win_gettype(win) == '' then
+          self.preview_winid = win
+          self.src_winid = win
+          self.src_bufnr = vim.api.nvim_win_get_buf(win)
+          break
+        end
+      end
+      -- No existing normal window, create a new window for the previewer
+      if not self.preview_winid then
+        self.preview_winid = vim.api.nvim_open_win(0, false, {
+          split = 'above',
+          win = 0,
+        })
+      end
+    end
+    if not self.preview_winid then
+      return
+    end
+
+    -- Record source buffer name for some special temporary buffers, e.g.
+    -- `fugitive://` or `oil://` buffers so that we can restore them by
+    -- editing files with the same name if they are deleted after hidden
+    --
+    -- This has a drawback that the cursor position in the original buffer will
+    -- not be restored because original buffer has lost
+    if self.src_bufnr and vim.api.nvim_buf_is_valid(self.src_bufnr) then
+      ---@diagnostic disable-next-line: inject-field
+      self.src_bufname = vim.api.nvim_buf_get_name(self.src_bufnr)
+    end
+
+    if self._previewer then
+      -- Only builtin previewers have additional backup/restore methods
+      ---@diagnostic disable: undefined-field
+      if self._previewer.backup_winhl then
+        self._previewer:backup_winhl()
+      end
+      if self._previewer.backup_winopts then
+        self._previewer:backup_winopts()
+      end
+      ---@diagnostic enable: undefined-field
+      ---@diagnostic disable-next-line: inject-field
+      self._previewer_winopts_orig = self._previewer.winopts_orig
+    end
+  end
+  ---@diagnostic disable-next-line: redundant-parameter
+  return _win_redraw_preview(self, ...)
+end
+
+function fzf_win:close_preview(...)
+  if
+    not self.preview_winid or not vim.api.nvim_win_is_valid(self.preview_winid)
+  then
+    return
+  end
+
+  -- For normal floating window preview with a separate preview window, just
+  -- use the original `close_preview` method
+  if self.preview_winid ~= self.src_winid then
+    return _win_close_preview(self, ...)
+  end
+
+  -- For split preview windows that reuse source window, set buffer back to
+  -- source buffer instead of closing the window, fallback to new buffer with
+  -- the same name if the original source buffer is invalid or unavailable
+  local buf = self.src_bufnr
+  if not buf or not vim.api.nvim_buf_is_valid(buf) then
+    buf = vim.api.nvim_create_buf(true, false)
+    -- Try restoring deleted temp buffers
+    if self.src_bufname then
+      vim.api.nvim_buf_set_name(buf, self.src_bufname)
+      vim.api.nvim_buf_call(buf, vim.cmd.edit)
+    end
+  end
+  vim.api.nvim_win_set_buf(self.preview_winid, buf)
+
+  -- Prevent original `_win_close_preview` from closing the preview & source
+  -- window
+  self.preview_winid = nil
+  _win_close_preview(self, ...)
+
+  -- Restore preview window id, `self._previewer:restore_winopts()` needs this
+  self.preview_winid = self.src_winid
+
+  -- Restore source window appearance
+  vim.schedule(vim.schedule_wrap(function()
+    if self._previewer then
+      ---@diagnostic disable: undefined-field
+      if self._previewer.restore_winhl then
+        self._previewer:restore_winhl()
+      end
+      ---@diagnostic enable: undefined-field
+
+      if self._previewer.restore_winopts then
+        self._previewer.winopts_orig = self._previewer_winopts_orig or {}
+        self._previewer:restore_winopts()
+      end
+    end
+  end))
 end
 
 _G._fzf_lua_win_views = {}
@@ -737,10 +923,15 @@ fzf.setup({
       end)
     end,
     preview = {
-      border = 'none',
-      hidden = 'hidden',
+      border = 'solid',
       layout = 'horizontal',
       scrollbar = false,
+      winopts = {
+        colorcolumn = '',
+        signcolumn = vim.go.signcolumn,
+        statuscolumn = vim.go.statuscolumn,
+        cursorlineopt = vim.go.cursorlineopt,
+      },
     },
   },
   -- Open help window at top of screen with single border
@@ -750,15 +941,6 @@ fzf.setup({
     opts.col = 0
     return vim.api.nvim_open_win(buf, enter, opts)
   end,
-  hls = {
-    title = 'TelescopeTitle',
-    preview_title = 'TelescopeTitle',
-    -- Builtin preview only
-    cursor = 'Cursor',
-    cursorline = 'TelescopePreviewLine',
-    cursorlinenr = 'TelescopePreviewLine',
-    search = 'IncSearch',
-  },
   fzf_colors = {
     ['hl'] = { 'fg', 'TelescopeMatching' },
     ['fg+'] = { 'fg', 'TelescopeSelection' },
@@ -793,31 +975,31 @@ fzf.setup({
   },
   actions = {
     files = {
-      ['alt-s'] = actions.file_split,
-      ['alt-v'] = actions.file_vsplit,
-      ['alt-t'] = actions.file_tabedit,
-      ['alt-q'] = actions.file_sel_to_qf,
-      ['alt-l'] = actions.file_sel_to_ll,
-      ['enter'] = actions.file_edit_or_qf,
+      ['alt-s'] = fzf_actions.file_split,
+      ['alt-v'] = fzf_actions.file_vsplit,
+      ['alt-t'] = fzf_actions.file_tabedit,
+      ['alt-q'] = fzf_actions.file_sel_to_qf,
+      ['alt-l'] = fzf_actions.file_sel_to_ll,
+      ['enter'] = fzf_actions.file_edit_or_qf,
     },
     buffers = {
-      ['alt-s'] = actions.buf_split,
-      ['alt-v'] = actions.buf_vsplit,
-      ['alt-t'] = actions.buf_tabedit,
-      ['enter'] = actions.buf_edit_or_qf,
+      ['alt-s'] = fzf_actions.buf_split,
+      ['alt-v'] = fzf_actions.buf_vsplit,
+      ['alt-t'] = fzf_actions.buf_tabedit,
+      ['enter'] = fzf_actions.buf_edit_or_qf,
     },
   },
   defaults = {
     actions = {
-      ['ctrl-]'] = actions.switch_provider,
+      ['ctrl-]'] = fzf_actions.switch_provider,
     },
   },
   args = {
     files_only = false,
     actions = {
-      ['ctrl-s'] = actions.arg_search_add,
+      ['ctrl-s'] = fzf_actions.arg_search_add,
       ['ctrl-x'] = {
-        fn = actions.arg_del,
+        fn = fzf_actions.arg_del,
         reload = true,
       },
     },
@@ -825,21 +1007,21 @@ fzf.setup({
   autocmds = {
     actions = {
       ['ctrl-x'] = {
-        fn = actions.del_autocmd,
+        fn = fzf_actions.del_autocmd,
         -- reload = true,
       },
     },
   },
   blines = {
     actions = {
-      ['alt-q'] = actions.buf_sel_to_qf,
-      ['alt-l'] = actions.buf_sel_to_ll,
+      ['alt-q'] = fzf_actions.buf_sel_to_qf,
+      ['alt-l'] = fzf_actions.buf_sel_to_ll,
     },
   },
   lines = {
     actions = {
-      ['alt-q'] = actions.buf_sel_to_qf,
-      ['alt-l'] = actions.buf_sel_to_ll,
+      ['alt-q'] = fzf_actions.buf_sel_to_qf,
+      ['alt-l'] = fzf_actions.buf_sel_to_ll,
     },
   },
   buffers = {
@@ -854,51 +1036,51 @@ fzf.setup({
   },
   helptags = {
     actions = {
-      ['enter'] = actions.help,
-      ['alt-s'] = actions.help,
-      ['alt-v'] = actions.help_vert,
-      ['alt-t'] = actions.help_tab,
+      ['enter'] = fzf_actions.help,
+      ['alt-s'] = fzf_actions.help,
+      ['alt-v'] = fzf_actions.help_vert,
+      ['alt-t'] = fzf_actions.help_tab,
     },
   },
   manpages = {
     actions = {
-      ['enter'] = actions.man,
-      ['alt-s'] = actions.man,
-      ['alt-v'] = actions.man_vert,
-      ['alt-t'] = actions.man_tab,
+      ['enter'] = fzf_actions.man,
+      ['alt-s'] = fzf_actions.man,
+      ['alt-v'] = fzf_actions.man_vert,
+      ['alt-t'] = fzf_actions.man_tab,
     },
   },
   keymaps = {
     actions = {
-      ['enter'] = actions.keymap_edit,
-      ['alt-s'] = actions.keymap_split,
-      ['alt-v'] = actions.keymap_vsplit,
-      ['alt-t'] = actions.keymap_tabedit,
+      ['enter'] = fzf_actions.keymap_edit,
+      ['alt-s'] = fzf_actions.keymap_split,
+      ['alt-v'] = fzf_actions.keymap_vsplit,
+      ['alt-t'] = fzf_actions.keymap_tabedit,
     },
   },
   colorschemes = {
     actions = {
-      ['enter'] = actions.colorscheme,
+      ['enter'] = fzf_actions.colorscheme,
     },
   },
   command_history = {
     actions = {
-      ['enter'] = actions.ex_run,
+      ['enter'] = fzf_actions.ex_run,
       ['ctrl-e'] = false,
     },
   },
   search_history = {
     actions = {
-      ['enter'] = actions.search,
+      ['enter'] = fzf_actions.search,
       ['ctrl-e'] = false,
     },
   },
   files = {
     actions = {
-      ['alt-c'] = actions.change_cwd,
-      ['alt-h'] = actions.toggle_hidden,
-      ['alt-i'] = actions.toggle_ignore,
-      ['alt-/'] = actions.toggle_dir,
+      ['alt-c'] = fzf_actions.change_cwd,
+      ['alt-h'] = fzf_actions.toggle_hidden,
+      ['alt-i'] = fzf_actions.toggle_ignore,
+      ['alt-/'] = fzf_actions.toggle_dir,
       ['ctrl-g'] = false,
     },
     fzf_opts = {
@@ -914,41 +1096,43 @@ fzf.setup({
   git = {
     commits = {
       prompt = 'GitLogs>',
-      actions = has_fugitive_gedit_cmd()
-          and {
-            ['enter'] = actions.fugitive_edit,
-            ['alt-s'] = actions.fugitive_split,
-            ['alt-v'] = actions.fugitive_vsplit,
-            ['alt-t'] = actions.fugitive_tabedit,
-            ['ctrl-y'] = { fn = actions.git_yank_commit, exec_silent = true },
-          }
-        or nil,
+      actions = has_fugitive_gedit_cmd() and {
+        ['enter'] = fzf_actions.fugitive_edit,
+        ['alt-s'] = fzf_actions.fugitive_split,
+        ['alt-v'] = fzf_actions.fugitive_vsplit,
+        ['alt-t'] = fzf_actions.fugitive_tabedit,
+        ['ctrl-y'] = {
+          fn = fzf_actions.git_yank_commit,
+          exec_silent = true,
+        },
+      } or nil,
     },
     bcommits = {
-      prompt = 'GitBLogs>',
-      actions = has_fugitive_gedit_cmd()
-          and {
-            ['enter'] = actions.fugitive_edit,
-            ['alt-s'] = actions.fugitive_split,
-            ['alt-v'] = actions.fugitive_vsplit,
-            ['alt-t'] = actions.fugitive_tabedit,
-            ['ctrl-y'] = { fn = actions.git_yank_commit, exec_silent = true },
-          }
-        or nil,
+      prompt = 'GitLogs>',
+      actions = has_fugitive_gedit_cmd() and {
+        ['enter'] = fzf_actions.fugitive_edit,
+        ['alt-s'] = fzf_actions.fugitive_split,
+        ['alt-v'] = fzf_actions.fugitive_vsplit,
+        ['alt-t'] = fzf_actions.fugitive_tabedit,
+        ['ctrl-y'] = {
+          fn = fzf_actions.git_yank_commit,
+          exec_silent = true,
+        },
+      } or nil,
     },
     blame = {
       actions = {
-        ['enter'] = actions.git_goto_line,
-        ['alt-s'] = actions.git_buf_split,
-        ['alt-v'] = actions.git_buf_vsplit,
-        ['alt-t'] = actions.git_buf_tabedit,
-        ['ctrl-y'] = { fn = actions.git_yank_commit, exec_silent = true },
+        ['enter'] = fzf_actions.git_goto_line,
+        ['alt-s'] = fzf_actions.git_buf_split,
+        ['alt-v'] = fzf_actions.git_buf_vsplit,
+        ['alt-t'] = fzf_actions.git_buf_tabedit,
+        ['ctrl-y'] = { fn = fzf_actions.git_yank_commit, exec_silent = true },
       },
     },
     branches = {
       actions = {
         ['ctrl-s'] = {
-          fn = actions.git_branch_add,
+          fn = fzf_actions.git_branch_add,
           field_index = '{q}',
           reload = true,
         },
@@ -974,9 +1158,9 @@ fzf.setup({
     RIPGREP_CONFIG_PATH = vim.env.RIPGREP_CONFIG_PATH,
     rg_glob = true,
     actions = {
-      ['alt-c'] = actions.change_cwd,
-      ['alt-h'] = actions.toggle_hidden,
-      ['alt-i'] = actions.toggle_ignore,
+      ['alt-c'] = fzf_actions.change_cwd,
+      ['alt-h'] = fzf_actions.toggle_hidden,
+      ['alt-i'] = fzf_actions.toggle_ignore,
     },
     rg_opts = table.concat({
       '--no-messages',
@@ -1023,7 +1207,7 @@ fzf.setup({
 ---@diagnostic disable-next-line: missing-fields
 fzf_frecency.setup({
   display_score = false,
-  actions = config.setup_opts.files.actions,
+  actions = fzf_config.setup_opts.files.actions,
 })
 
 -- stylua: ignore start
