@@ -9,6 +9,7 @@ local actions = require('fzf-lua.actions')
 local core = require('fzf-lua.core')
 local path = require('fzf-lua.path')
 local config = require('fzf-lua.config')
+local fzf_utils = require('fzf-lua.utils')
 local utils = require('utils')
 local icons = require('utils.static.icons')
 
@@ -23,41 +24,6 @@ end
 ---@diagnostic disable-next-line: duplicate-set-field
 function actions.vimcmd_buf(...)
   pcall(_vimcmd_buf, ...)
-end
-
-local _mt_cmd_wrapper = core.mt_cmd_wrapper
-
----Wrap `core.mt_cmd_wrapper()` used in fzf-lua's file and grep providers
----to ignore `opts.cwd` when generating the command string because once the
----cwd is hard-coded in the command string, `opts.cwd` will be ignored.
----
----This fixes the bug where `change_cwd()` does not work if it is used after
----`switch_provider()`:
----
----In `switch_provider()`, `opts.cwd` will be passed the corresponding fzf
----provider (file or grep) where it will be compiled in the command string,
----which will then be stored in `fzf.config.__resume_data.contents`.
----
----`change_cwd()` internally calls the resume action to resume the last
----provider and reuse other info in previous fzf session (e.g. last query, etc)
----except `opts.cwd`, `opts.fn_selected`, etc. that needs to be changed to
----reflect the new cwd.
----
----Thus if `__resume_data.contents` contains information about the previous
----cwd, the new cwd in `opts.cwd` will be ignored and `change_cwd()` will not
----take effect.
----@param opts table?
----@diagnostic disable-next-line: duplicate-set-field
-function core.mt_cmd_wrapper(opts)
-  if not opts or not opts.cwd then
-    return _mt_cmd_wrapper(opts)
-  end
-  local _opts = {}
-  for k, v in pairs(opts) do
-    _opts[k] = v
-  end
-  _opts.cwd = nil
-  return _mt_cmd_wrapper(_opts)
 end
 
 ---Switch provider while preserving the last query and cwd
@@ -81,23 +47,21 @@ end
 ---Change cwd while preserving the last query
 ---@return nil
 function actions.change_cwd()
-  local resume_data = vim.deepcopy(fzf.config.__resume_data)
-  resume_data.opts = resume_data.opts or {}
-
-  -- Remove old fn_selected, else selected item will be opened
-  -- with previous cwd
+  local resume_data = vim.tbl_deep_extend('force', fzf.config.__resume_data, {
+    opts = {},
+  })
   local opts = resume_data.opts
-  opts.fn_selected = nil
-  opts.cwd = opts.cwd or vim.uv.cwd()
-  opts.query = fzf.config.__resume_data.last_query
 
-  local at_home = utils.fs.contains('~', opts.cwd)
+  local cwd = opts.cwd or vim.fn.getcwd(0)
+  local cwd_in_home = utils.fs.contains('~', cwd)
+  local cwd_root = cwd_in_home and '~/' or '/'
+
   fzf.files({
     cwd_prompt = false,
-    prompt = 'New cwd: ' .. (at_home and '~/' or '/'),
-    cwd = at_home and '~' or '/',
+    prompt = 'New cwd: ' .. cwd_root,
+    cwd = cwd_root,
     query = vim.fn
-      .fnamemodify(opts.cwd, at_home and ':~' or ':p')
+      .fnamemodify(cwd, cwd_in_home and ':~' or ':p')
       :gsub('^~', '')
       :gsub('^/', ''),
     -- Append current dir './' to the result list to allow switching to home
@@ -123,15 +87,21 @@ function actions.change_cwd()
     ),
     fzf_opts = { ['--no-multi'] = true },
     actions = {
+      -- Open the same picker with selected new cwd but keep old query
       ['enter'] = function(selected)
         if not selected[1] then
           return
         end
 
+        -- Remove old fn_selected, else selected item will be opened
+        -- with previous cwd
+        opts.fn_selected = nil
+        opts.resume = true
+        opts.query = resume_data.last_query
         opts.cwd = vim.fs.normalize(
           vim.fs.joinpath(
-            at_home and '~' or '/',
-            path.entry_to_file(selected[1]).path
+            cwd_root,
+            path.entry_to_file(selected[1], {}, false).path
           )
         )
 
@@ -149,13 +119,12 @@ function actions.change_cwd()
             opts.prompt = opts.prompt .. path.separator()
           end
         end
-
         if opts.headers then
           opts = core.set_header(opts)
         end
 
-        fzf.config.__resume_data = resume_data
-        actions.resume()
+        -- Get old picker from `opts.__resume_key`, fallback to files picker
+        (fzf[opts.__resume_key] or fzf.files)(opts)
       end,
       ['esc'] = function()
         fzf.config.__resume_data = resume_data
@@ -171,12 +140,38 @@ end
 ---Include directories, not only files when using the `files` picker
 ---@return nil
 function actions.toggle_dir(_, opts)
-  local exe = opts.cmd:match('^%s*(%S+)')
-  local flag = opts.toggle_dir_flag
-    or (exe == 'fd' or exe == 'fdfind') and '--type d'
-    or (exe == 'find') and '-type d'
-    or ''
-  actions.toggle_flag(_, vim.tbl_extend('force', opts, { toggle_flag = flag }))
+  local flag ---@type string?
+  local flag_cmd_idx ---@type integer?
+  local cmds = vim.iter(opts.cmd:gmatch('([^|;&]+[|;&]*)')):totable()
+
+  -- Handle multiple cmds in one string, e.g. fzf-lua-frecency uses two
+  -- commands in a row: 'cat ... ; fd ...'
+  --
+  -- fzf-lua-frecency does not support overriding cmd passed in `opts` yet
+  -- TODO: make a PR for it
+  for i, cmd in ipairs(cmds) do
+    local exec = cmd:match('^%s*(%S+)')
+    if exec == 'fd' or exec == 'fdfind' then
+      flag = '--type d'
+      flag_cmd_idx = i
+      break
+    end
+    if exec == 'find' then
+      flag = '-type d'
+      flag_cmd_idx = i
+      break
+    end
+  end
+  if not flag or not flag_cmd_idx then
+    return
+  end
+
+  cmds[flag_cmd_idx] = fzf_utils.toggle_cmd_flag(cmds[flag_cmd_idx], flag)
+
+  opts.__call_fn(vim.tbl_deep_extend('force', opts.__call_opts, {
+    cmd = table.concat(cmds),
+    resume = true,
+  }))
 end
 
 ---Delete selected autocmd
