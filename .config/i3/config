@@ -84,7 +84,6 @@ bindsym $mod+Return exec alacritty
 
 # Open THE text editor.
 bindsym $mod+e exec alacritty --command nvim
-bindsym $mod+$shift+e exec emacs
 
 # Kill the focused window.
 bindsym $mod+q kill
