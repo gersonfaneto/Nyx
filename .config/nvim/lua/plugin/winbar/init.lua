@@ -75,15 +75,31 @@ local function setup(opts)
       desc = 'Attach winbar',
     })
   end
+
+  -- Garbage collection
   vim.api.nvim_create_autocmd('BufDelete', {
     group = groupid,
     callback = function(args)
       utils.bar.exec('del', { buf = args.buf })
-      _G._winbar.bars[args.buf] = nil
-      _G._winbar.callbacks['buf' .. args.buf] = nil
     end,
     desc = 'Remove winbar from cache on buffer wipeout.',
   })
+
+  local gc_timer = vim.uv.new_timer()
+  if gc_timer then
+    gc_timer:start(
+      configs.opts.bar.gc.interval,
+      configs.opts.bar.gc.interval,
+      vim.schedule_wrap(function()
+        for buf, _ in pairs(_G._winbar.bars) do
+          if not vim.api.nvim_buf_is_valid(buf) then
+            utils.bar.exec('del', { buf = buf })
+          end
+        end
+      end)
+    )
+  end
+
   if not vim.tbl_isempty(configs.opts.bar.update_events.win) then
     vim.api.nvim_create_autocmd(configs.opts.bar.update_events.win, {
       group = groupid,
