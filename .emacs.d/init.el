@@ -92,6 +92,38 @@
   :config (unless (find-font (font-spec :name "all-the-icons"))
             (all-the-icons-install-fonts t)))
 
+(use-package evil
+  :straight t
+  :init
+  (setq evil-want-keybinding nil)
+  (evil-mode 1)
+  :config
+  (setq evil-want-integration t
+        evil-want-C-u-scroll t
+        evil-shift-width 2
+        evil-search-module 'evil-search)
+  (evil-global-set-key 'normal (kbd "SPC f c") (lambda () (interactive)
+						 (let ((default-directory user-emacs-directory))
+						   (call-interactively 'find-file)))))
+
+(use-package evil-collection
+  :straight t
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-lion
+  :straight t
+  :after evil
+  :config
+  (evil-lion-mode))
+
+(use-package evil-surround
+  :straight t
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+
 (use-package multiple-cursors
   :config
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -170,10 +202,6 @@
   :mode "\\.go\\'"
   :hook (before-save . gofmt-before-save)
   :custom (gofmt-command "goimports"))
-
-(use-package scala-mode
-  :interpreter
-    ("scala" . scala-mode))
 
 (setq min/custom-file "~/.emacs.d/custom.el")
 
