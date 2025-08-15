@@ -28,7 +28,7 @@ M.snippets = {
   }, t('return ')),
   us.sn(
     {
-      trig = 'p',
+      trig = 'pr',
       desc = 'print()',
     },
     un.fmtad('print(<expr>)', {
@@ -37,12 +37,12 @@ M.snippets = {
   ),
   us.sn(
     {
-      trig = 'o',
+      trig = 'op',
       desc = 'open()',
     },
     un.fmtad('<fd> = open(<q><file><q>, encoding=<q><encoding><q><kwargs>)', {
       fd = i(1, 'fd'),
-      q = un.qt(),
+      q = un.qt('"'),
       file = i(2, 'file'),
       encoding = i(3, 'utf-8'),
       kwargs = i(4),
@@ -61,7 +61,7 @@ M.snippets = {
         <body>
       ]],
       {
-        q = un.qt(),
+        q = un.qt('"'),
         file = i(1, 'file'),
         encoding = i(2, 'utf-8'),
         kwargs = i(3),
@@ -76,7 +76,7 @@ M.snippets = {
       desc = 'Inspect through f-string',
     },
     un.fmtad('f<q><expr_escaped>: {<expr>}<q>', {
-      q = un.qt(),
+      q = un.qt('"'),
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\' .. uf.get_quotation_type())
@@ -90,7 +90,7 @@ M.snippets = {
       desc = 'Inspect through print()',
     },
     un.fmtad('print(f<q><expr_escaped>: {<expr>}<q><e>)', {
-      q = un.qt(),
+      q = un.qt('"'),
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\' .. uf.get_quotation_type())
@@ -105,7 +105,7 @@ M.snippets = {
       desc = 'Print a line',
     },
     un.fmtad('print(<q><line><q>)', {
-      q = un.qt(),
+      q = un.qt('"'),
       line = c(1, {
         i(nil, '----------------------------------------'),
         i(nil, '........................................'),
@@ -125,7 +125,7 @@ M.snippets = {
           fd = i(1, 'sys.stderr'),
         }),
         un.fmtad('filename=<q><fname><q>, filemode=<q><fmode><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           fname = d(1, function()
             return sn(nil, {
               i(
@@ -162,60 +162,51 @@ M.snippets = {
   ),
   us.sn(
     {
-      trig = 'l',
+      trig = 'lg',
       desc = 'Logger log',
     },
-    un.fmtad('logger.<level>(<msg><e>)', {
-      level = c(1, {
-        i(nil, 'info'),
-        i(nil, 'warning'),
-        i(nil, 'error'),
-        i(nil, 'critical'),
-        i(nil, 'debug'),
-      }),
-      msg = c(2, {
-        un.fmtad('<q><m><q>', {
-          q = un.qt(),
-          m = r(1, 'msg'),
+    c(1, {
+      un.fmtad('logger.<level>(<msg><e>)', {
+        level = c(1, {
+          i(nil, 'info'),
+          i(nil, 'warning'),
+          i(nil, 'error'),
+          i(nil, 'critical'),
+          i(nil, 'debug'),
         }),
-        un.fmtad('f<q><m><q>', {
-          q = un.qt(),
-          m = r(1, 'msg'),
+        msg = c(2, {
+          un.fmtad('<q><m><q>', {
+            q = un.qt('"'),
+            m = r(1, 'msg'),
+          }),
+          un.fmtad('f<q><m><q>', {
+            q = un.qt('"'),
+            m = r(1, 'msg'),
+          }),
         }),
+        e = i(3),
       }),
-      e = i(3),
-    }),
-    {
-      stored = {
-        msg = i(nil, 'msg'),
-      },
-    }
-  ),
-  us.sn(
-    {
-      trig = 'lg',
-      desc = 'logger.log()',
-    },
-    un.fmtad('logger.log(<level>, <msg><e>)', {
-      level = c(1, {
-        i(2, 'logging.INFO'),
-        i(2, 'logging.WARNING'),
-        i(2, 'logging.ERROR'),
-        i(2, 'logging.CRITICAL'),
-        i(2, 'logging.DEBUG'),
-        i(2, 'logging.NOTSET'),
-      }),
-      msg = c(2, {
-        un.fmtad('<q><m><q>', {
-          q = un.qt(),
-          m = r(1, 'msg'),
+      un.fmtad('logger.log(<level>, <msg><e>)', {
+        level = c(1, {
+          i(2, 'logging.INFO'),
+          i(2, 'logging.WARNING'),
+          i(2, 'logging.ERROR'),
+          i(2, 'logging.CRITICAL'),
+          i(2, 'logging.DEBUG'),
+          i(2, 'logging.NOTSET'),
         }),
-        un.fmtad('f<q><m><q>', {
-          q = un.qt(),
-          m = r(1, 'msg'),
+        msg = c(2, {
+          un.fmtad('<q><m><q>', {
+            q = un.qt('"'),
+            m = r(1, 'msg'),
+          }),
+          un.fmtad('f<q><m><q>', {
+            q = un.qt('"'),
+            m = r(1, 'msg'),
+          }),
         }),
+        e = i(3),
       }),
-      e = i(3),
     }),
     {
       stored = {
@@ -231,11 +222,11 @@ M.snippets = {
     un.fmtad('logger.info(<msg><e>)', {
       msg = c(1, {
         un.fmtad('<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
         un.fmtad('f<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
       }),
@@ -255,11 +246,11 @@ M.snippets = {
     un.fmtad('logger.warning(<msg><e>)', {
       msg = c(1, {
         un.fmtad('<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
         un.fmtad('f<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
       }),
@@ -279,11 +270,11 @@ M.snippets = {
     un.fmtad('logger.error(<msg><e>)', {
       msg = c(1, {
         un.fmtad('<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
         un.fmtad('f<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
       }),
@@ -303,11 +294,11 @@ M.snippets = {
     un.fmtad('logger.critical(<msg><e>)', {
       msg = c(1, {
         un.fmtad('<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
         un.fmtad('f<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
       }),
@@ -327,11 +318,11 @@ M.snippets = {
     un.fmtad('logger.debug(<msg><e>)', {
       msg = c(1, {
         un.fmtad('<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
         un.fmtad('f<q><m><q>', {
-          q = un.qt(),
+          q = un.qt('"'),
           m = r(1, 'msg'),
         }),
       }),
@@ -349,7 +340,7 @@ M.snippets = {
       desc = 'Log a line',
     },
     un.fmtad('logger.debug(<q><line><q><e>)', {
-      q = un.qt(),
+      q = un.qt('"'),
       line = c(1, {
         i(nil, '----------------------------------------'),
         i(nil, '........................................'),
@@ -365,7 +356,7 @@ M.snippets = {
       desc = 'Check a value of a variable through logger.debug()',
     },
     un.fmtad('logger.debug(f<q><expr_escaped>: {<expr>}<q><e>)', {
-      q = un.qt(),
+      q = un.qt('"'),
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\' .. uf.get_quotation_type())
@@ -860,7 +851,7 @@ M.snippets = {
           value1 = r(2, 'value1'),
           value2 = r(3, 'value2'),
           i = i(4),
-          q = un.qt(),
+          q = un.qt('"'),
         }
       ),
     }),
@@ -957,7 +948,7 @@ M.snippets = {
         <body>
       ]],
       {
-        q = un.qt(),
+        q = un.qt('"'),
         body = un.body(1, 1, 'pass'),
       }
     )
@@ -986,7 +977,7 @@ M.snippets = {
         <q><q><q>
       ]],
       {
-        q = un.qt(),
+        q = un.qt('"'),
         body = un.body(1, 0),
       }
     )

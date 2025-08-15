@@ -191,11 +191,8 @@ M.snippets = {
       }
     )
   ),
-  us.msn({
-    { trig = 'p' },
-    { trig = 'e' },
-    common = { desc = 'echo command' },
-  }, t('echo ')),
+  us.msn({ trig = 'eo', desc = 'echo command' }, t('echo ')),
+  us.msn({ trig = 'pr', desc = 'printf command' }, t('printf ')),
   us.msn(
     {
       { trig = 'pl' },
@@ -240,7 +237,7 @@ M.snippets = {
     })
   ),
   us.sn({
-    trig = 'r',
+    trig = 'read',
     desc = 'read input',
   }, {
     t('read '),
