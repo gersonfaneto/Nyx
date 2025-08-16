@@ -318,11 +318,4 @@ return {
       require('configs.which-key')
     end,
   },
-
-  {
-    'NotAShelf/direnv.nvim',
-    config = function()
-      require('configs.direnv')
-    end,
-  },
 }
