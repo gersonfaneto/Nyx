@@ -62,29 +62,6 @@ vim.opt.foldtext = ''
 vim.opt.foldmethod = 'indent'
 vim.opt.foldopen:remove('block') -- make `{`/`}` skip over folds
 
--- Enable treesitter folding
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('TSFolding', {}),
-  desc = 'Set treesitter folding.',
-  -- Schedule to wait treesitter highlighter to attach
-  callback = vim.schedule_wrap(function(args)
-    local buf = args.buf
-    if not require('utils.ts').is_active(buf) then
-      return
-    end
-
-    for _, win in ipairs(vim.fn.win_findbuf(buf)) do
-      local wo = vim.wo[win]
-      if wo.foldexpr == '0' then
-        wo[0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        if wo.foldmethod == 'indent' or wo.foldmethod == 'manual' then
-          wo[0].foldmethod = 'expr'
-        end
-      end
-    end
-  end),
-})
-
 -- Recognize numbered lists when formatting text and
 -- continue comments on new lines
 --
@@ -390,7 +367,7 @@ vim.g.loaded_zipPlugin = 0
 ---@param runtime string
 ---@param flag string
 ---@param events string|string[]
-local function load(runtime, flag, events)
+local function load_runtime(runtime, flag, events)
   if vim.g[flag] and vim.g[flag] ~= 0 then
     return
   end
@@ -424,14 +401,15 @@ local function load(runtime, flag, events)
   end
 end
 
-load('plugin/rplugin.vim', 'loaded_remote_plugins', {
+load_runtime('plugin/rplugin.vim', 'loaded_remote_plugins', {
   'FileType',
   'BufNew',
   'BufWritePost',
   'BufReadPre',
   'CmdUndefined UpdateRemotePlugins',
 })
-load('provider/python3.vim', 'loaded_python3_provider', {
+
+load_runtime('provider/python3.vim', 'loaded_python3_provider', {
   'FileType python',
   'BufNew *.py,*.ipynb',
   'BufEnter *.py,*.ipynb',
@@ -439,26 +417,3 @@ load('provider/python3.vim', 'loaded_python3_provider', {
   'BufReadPre *.py,*.ipynb',
 })
 
--- Fix treesitter bug: when `vim.treesitter.start/stop` is called with a
--- different `buf` from current buffer, it can affect current buffer's
--- language tree
--- TODO: report to upstream
-vim.api.nvim_create_autocmd('FileType', {
-  once = true,
-  callback = function()
-    local function ts_buf_call_wrap(cb)
-      return function(buf, ...)
-        if buf and not vim.api.nvim_buf_is_valid(buf) then
-          return
-        end
-        local args = { ... }
-        vim.api.nvim_buf_call(buf or 0, function()
-          cb(buf, unpack(args))
-        end)
-      end
-    end
-
-    vim.treesitter.start = ts_buf_call_wrap(vim.treesitter.start)
-    vim.treesitter.stop = ts_buf_call_wrap(vim.treesitter.stop)
-  end,
-})
