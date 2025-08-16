@@ -665,21 +665,6 @@ M.snippets = {
       }
     )
   ),
-  us.sn(
-    {
-      trig = 'df',
-      desc = 'default statement',
-    },
-    un.fmtad(
-      [[
-        default:
-        <body>
-      ]],
-      {
-        body = un.body(1, 1, false),
-      }
-    )
-  ),
   us.msn({
     { trig = 'br' },
     { trig = 'brk' },
@@ -749,6 +734,42 @@ M.snippets = {
   ),
   us.sn(
     {
+      trig = 'df',
+      desc = 'defer func()',
+    },
+    c(1, {
+      un.fmtad(
+        [[
+          defer func(<args>) {
+          <body>
+          }(<vals>)
+        ]],
+        {
+          vals = r(1, 'vals'),
+          args = r(2, 'args'),
+          body = un.body(3, 1),
+        }
+      ),
+      un.fmtad(
+        [[
+          defer func(<args>) { <body> }(<vals>)
+        ]],
+        {
+          vals = r(1, 'vals'),
+          args = r(2, 'args'),
+          body = un.body(1, 0),
+        }
+      ),
+    }),
+    {
+      stored = {
+        vals = i(),
+        args = i(),
+      },
+    }
+  ),
+  us.sn(
+    {
       trig = 'sel',
       desc = 'select statement',
     },
@@ -777,9 +798,11 @@ M.snippets = {
           'argument_list', -- foo(func() { ... }, ...)
           'assignment', -- val = function() ... end
           'short_var_declaration', -- val := func() { ... }
-          'return_statement', -- return func() { ... }
           'binary_expression', -- <expression> and func() { ... }
           'parenthesized_expression', -- (func() { ... })()
+          'return_statement', -- return func() { ... }
+          'go_statement', -- go func() { ... }()
+          'defer_statement', -- defer func() { ... }()
         }, { ignore_injections = false })
       then
         -- Unnamed function
