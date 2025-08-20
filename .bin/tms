@@ -49,6 +49,7 @@ main() {
 		selected=$(
 			echo "${dirs[@]}" |
 				tr ' ' '\n' |
+                sed "s|^$HOME/||g" |
 				sort |
 				uniq |
 				fzf --no-preview --ansi --color hl:reverse:-1,hl+:reverse:-1 \
@@ -60,6 +61,8 @@ main() {
 	if [[ -z $selected ]]; then
 		exit 0
 	fi
+
+    selected="$HOME/$selected"
 
 	selected_name=$(handle_duplicates "$selected" | tr . _)
 	tmux_running=$(pgrep tmux)
