@@ -353,8 +353,8 @@ local function get_jump_pos(direction)
   end
 end
 
-local RIGHT = vim.api.nvim_replace_termcodes('<Right>', true, true, true)
-local LEFT = vim.api.nvim_replace_termcodes('<Left>', true, true, true)
+local KC_RIGHT = vim.keycode('<Right>')
+local KC_LEFT = vim.keycode('<Left>')
 
 ---Set the cursor position, whether in cmdline or normal buffer
 ---@param pos number[] cursor position
@@ -363,12 +363,15 @@ local function set_cursor(pos)
   if in_cmdline() then
     local cursor = get_cursor()
     local diff = pos[2] - cursor[2]
-    local termcode = string.rep(diff > 0 and RIGHT or LEFT, math.abs(diff))
+    local termcode =
+      string.rep(diff > 0 and KC_RIGHT or KC_LEFT, math.abs(diff))
     vim.api.nvim_feedkeys(termcode, 'nt', true)
   else
     vim.api.nvim_win_set_cursor(0, pos)
   end
 end
+
+local KC_START_NEW_UNDO = vim.keycode('<C-g>u')
 
 ---Get the position to jump for Tab or Shift-Tab, perform the jump if
 ---there is a position to jump to
@@ -378,6 +381,9 @@ local function jump(direction)
   local pos = get_jump_pos(direction)
   if pos then
     set_cursor(pos)
+    -- Start new undo block after moving cursor, else changes made
+    -- after the cursor jump cannot be undone
+    vim.api.nvim_feedkeys(KC_START_NEW_UNDO, 'nt', false)
     return true
   end
 end
