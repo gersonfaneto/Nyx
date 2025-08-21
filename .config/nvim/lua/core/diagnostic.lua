@@ -151,10 +151,7 @@ vim.keymap.set('n', 'dy', function()
   local diags = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
   local n_diags = #diags
   if n_diags == 0 then
-    vim.notify(
-      '[LSP] no diagnostics found in current line',
-      vim.log.levels.WARN
-    )
+    vim.notify('No diagnostics found in current line', vim.log.levels.WARN)
     return
   end
 
@@ -165,15 +162,15 @@ vim.keymap.set('n', 'dy', function()
     end
     vim.fn.setreg('"', msg)
     vim.fn.setreg(vim.v.register, msg)
+    vim.notify(
+      string.format("Yanked diagnostic message '%s'", msg),
+      vim.log.levels.INFO
+    )
   end
 
   if n_diags == 1 then
     local msg = diags[1].message
     yank(msg)
-    vim.notify(
-      string.format("[LSP] yanked diagnostic message '%s'", msg),
-      vim.log.levels.INFO
-    )
     return
   end
 

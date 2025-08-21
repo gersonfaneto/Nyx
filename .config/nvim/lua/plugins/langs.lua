@@ -1,18 +1,11 @@
 return {
+  -- Python
   {
-    -- Fix python indent
-    -- Without this plugin:
-    -- a = [|] -> press <Enter> ->
-    -- a = [
-    --         |
-    --         ]
-    -- With this plugin:
-    -- a =  [
-    --     |
-    -- ]
     'Vimjas/vim-python-pep8-indent',
     ft = 'python',
   },
+
+  -- Clojure
   {
     'Olical/conjure',
     ft = { 'clojure' },
@@ -42,5 +35,40 @@ return {
         },
       },
     },
+  },
+
+  -- Java
+  {
+    'mfussenegger/nvim-jdtls',
+    ft = { 'java' },
+  },
+
+  -- Haskell
+  {
+    'mrcjkb/haskell-tools.nvim',
+    version = '^6', -- Recommended
+    ft = { 'haskell', 'cabal' },
+    init = function()
+      vim.g.haskell_tools = {
+        hls = {
+          settings = {
+            haskell = {
+              formattingProvider = 'stylish-haskell',
+            },
+          },
+        },
+      }
+    end,
+  },
+  {
+    'neovimhaskell/haskell-vim',
+    ft = { 'haskell', 'cabal' },
+  },
+  {
+    'ndmitchell/ghcid',
+    ft = { 'haskell', 'cabal' },
+    config = function(plugin)
+      vim.opt.rtp:append(plugin.dir .. '/plugins/nvim/')
+    end,
   },
 }
