@@ -16,5 +16,14 @@ return {
         enabled = false,
       },
     },
+    yaml = {
+      format = {
+        enable = true,
+      },
+      validate = true,
+      schemas = {
+        ['https://json.schemastore.org/clang-format.json'] = '.clang-format',
+      },
+    },
   },
 }
