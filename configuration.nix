@@ -257,9 +257,9 @@
       enable = true;
       defaultFonts = {
         emoji = ["Noto Emoji"];
-        serif = ["Departure Mono"];
-        sansSerif = ["Departure Mono"];
-        monospace = ["Departure Mono"];
+        serif = ["SF Mono Nerd Font"];
+        sansSerif = ["SF Mono Nerd Font"];
+        monospace = ["SF Mono Nerd Font"];
       };
     };
   };
