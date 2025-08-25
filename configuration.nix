@@ -179,6 +179,7 @@ in {
       man-pages-posix
       mpv
       neovim
+      opencode
       pandoc
       playerctl
       poppler-utils
