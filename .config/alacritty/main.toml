@@ -17,7 +17,7 @@ transparent_background_colors = true
 size = 12
 
 [font.normal]
-family = 'Departure Mono'
+family = 'SF Mono Nerd Font'
 
 [scrolling]
 history = 0
