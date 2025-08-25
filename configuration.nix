@@ -2,14 +2,11 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
-}: let
-  unstable = import <nixos-unstable> {
-    config.allowUnfree = true;
-  };
-in {
+}: {
   imports = [
-    ./hardware-configuration.nix
+    /etc/nixos/hardware-configuration.nix
   ];
 
   documentation = {
@@ -253,6 +250,8 @@ in {
       nerd-fonts.symbols-only
       departure-mono
       noto-fonts-color-emoji
+
+      inputs.apple-fonts.packages.${pkgs.system}.sf-mono-nerd
     ];
     fontconfig = {
       enable = true;
