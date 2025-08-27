@@ -4,3 +4,6 @@
 --ignore=.stowrc
 
 --ignore=configuration.nix
+--ignore=hardware-configuration.nix
+--ignore=flake.nix
+--ignore=flake.lock
