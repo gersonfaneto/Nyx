@@ -229,12 +229,7 @@ return {
           t('}'),
         })
       end
-      return sn(1, {
-        c(1, { i(1, '\\bm'), i(1, '\\boldsymbol'), i(1, '\\mathbf') }),
-        t('{'),
-        t(symbol),
-        t('}'),
-      })
+      return sn(1, { t('\\bm{'), t(symbol), t('}') })
     end)
   ),
   -- Math bold symbol with `\mathbf`
@@ -361,6 +356,7 @@ return {
   us.sam({ trig = 'op' }, { t('\\operatorname{'), i(1), t('}') }),
   us.sam({ trig = 'xx' }, t('\\times ')),
   us.sam({ trig = 'o*' }, t('\\circledast ')),
+  us.sam({ trig = 'o.' }, t('\\odot ')),
   us.sam({ trig = 'ox' }, t('\\otimes ')),
   us.sam({ trig = 'Ox' }, t('\\bigotimes ')),
   us.sam({ trig = 'dd' }, t('\\mathrm{d}')),
@@ -424,7 +420,8 @@ return {
   us.sam({ trig = 'ell' }, t('\\ell')),
 
   us.sam({ trig = 'set' }, { t('\\{'), i(1), t('\\}') }),
-  us.sam({ trig = 'void' }, t('\\emptyset')),
+  us.sam({ trig = 'void' }, t('\\varnothing')),
+  us.sam({ trig = 'o/' }, t('\\varnothing')),
   us.sam({ trig = 'emptyset' }, t('\\emptyset')),
   us.sam({ trig = 'tt' }, { t('\\text{'), i(1), t('}') }),
   us.sam({ trig = 'cc' }, t('\\subset ')),
@@ -435,12 +432,14 @@ return {
   us.samr({ trig = '\\sqsubset%s*eq' }, t('\\sqsubseteq ')),
   us.sam({ trig = 'c=' }, t('\\subseteq ')),
   us.sam({ trig = 'notin' }, t('\\notin ')),
+  us.sam({ trig = '\\neg in' }, t('\\notin ')),
   us.sam({ trig = 'in', priority = 999 }, t('\\in ')),
   us.sam({ trig = 'uu' }, t('\\cup ')),
   us.sam({ trig = 'nn' }, t('\\cap ')),
-  us.sam({ trig = 'land' }, t('\\land ')),
-  us.sam({ trig = 'lor' }, t('\\lor ')),
+  us.sam({ trig = 'and' }, t('\\land ')),
+  us.sam({ trig = 'or' }, t('\\lor ')),
   us.sam({ trig = 'neg' }, t('\\neg ')),
+  us.sam({ trig = 'not' }, t('\\neg ')),
   us.sam({ trig = 'bigv' }, t('\\big\\rvert_{'), i(1), t('}')),
   us.sam({ trig = 'forall' }, t('\\forall ')),
   us.sam({ trig = 'any' }, t('\\forall ')),
@@ -496,7 +495,7 @@ return {
     t('}'),
   }),
   us.sam({ trig = 'argmax' }, {
-    t('\\operatorname{argamx}_{'),
+    t('\\operatorname{argmax}_{'),
     i(1),
     t('}'),
   }),
