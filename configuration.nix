@@ -165,10 +165,13 @@
       flameshot
       fzf
       gh
+      ghostty
       git
       highlight
       htop
       jq
+      lazydocker
+      lazygit
       less
       libnotify
       libqalculate
