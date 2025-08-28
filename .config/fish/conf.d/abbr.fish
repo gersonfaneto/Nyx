@@ -37,23 +37,27 @@ function __command_abbr --description 'Add an command abbreviation' -a trigger
     abbr --add $trigger --position command $argv[2..-1]
 end
 
-__command_abbr cl clear
 __command_abbr cp 'cp -i'
-__command_abbr df 'df -h'
-__command_abbr fd 'fd -H -L'
-__command_abbr fdfind 'fdfind -H -L'
-__command_abbr free 'free -mh'
-__command_abbr g git
-__command_abbr d dot
-__command_abbr lc 'wc -l'
-__command_abbr ll 'ls -lhAX --group-directories-first'
-__command_abbr mkdir 'mkdir -p'
 __command_abbr mv 'mv -i'
-__command_abbr sudoe 'sudo -E'
-__command_abbr tree 'tree -N'
-__command_abbr x trash
-__command_abbr tm tmux
-__command_abbr wttr 'curl wttr.in'
+__command_abbr mkdir 'mkdir -p'
+
+__command_abbr rm 'trash'
+
+__command_abbr df 'df -h'
+__command_abbr du 'du -hs'
+
+__command_abbr lt 'lazygit'
+__command_abbr lk 'lazydocker'
+
+__command_abbr tma 'tmux attach'
+__command_abbr tmn 'tmux new-session'
+__command_abbr tml 'tmux list-session'
+__command_abbr tmrs 'tmux rename-session'
+__command_abbr tmrw 'tmux rename-window'
+__command_abbr tmka 'tmux kill-server'
+__command_abbr tmks 'tmux kill-session'
+
+__command_abbr ll 'ls -lhAX --group-directories-first'
 
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim
