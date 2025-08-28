@@ -122,7 +122,7 @@
 
   virtualisation.docker = {
     enable = true;
-    enableOnBoot = false;
+    enableOnBoot = true;
     extraPackages = with pkgs; [
       docker-compose
     ];
@@ -149,6 +149,7 @@
       alacritty
       ani-cli
       arandr
+      aseprite
       bluetui
       bottom
       brightnessctl

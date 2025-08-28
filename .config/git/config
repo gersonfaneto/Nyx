@@ -128,6 +128,8 @@
 ; Aliases
 
 [alias]
+  it = "!git init && git commit -m 'Ready... Set... Go!' --allow-empty"
+
   cm = commit
   cm = commit --message
   ca = commit --amend
