@@ -46,6 +46,8 @@ __command_abbr rm 'trash'
 __command_abbr df 'df -h'
 __command_abbr du 'du -hs'
 
+__command_abbr g 'git'
+
 __command_abbr lt 'lazygit'
 __command_abbr lk 'lazydocker'
 
