@@ -31,7 +31,21 @@
       user = "gerson";
       email = "me@gersonfaneto.dev";
     };
+
+    forAllSystems = nixpkgs.lib.genAttrs [
+      "aarch64-linux"
+      "x86_64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
   in {
+    formatter = forAllSystems (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
+        pkgs.alejandra
+    );
+
     nixosConfigurations = {
       Nyx = nixpkgs.lib.nixosSystem {
         inherit system;
