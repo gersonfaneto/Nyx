@@ -141,6 +141,14 @@ vim.api.nvim_create_autocmd('UIEnter', {
       { desc = 'Remove trailing whitespaces' }
     )
 
+    -- Indent motions
+    map({ 'v' }, '>', '>gv', { desc = 'Indent and reselect visual selection' })
+    map({ 'v' }, '<', '<gv', { desc = 'Unindent and reselect visual selection' })
+
+    -- Indent current line in normal mode
+    map('n', '>>', '>>', { desc = 'Indent current line' })
+    map('n', '<<', '<<', { desc = 'Unindent current line' })
+
     -- Select previously changed/yanked text, useful for selecting pasted text
     map('n', 'gz', '`[v`]', { desc = 'Select previously changed/yanked text' })
     map('o', 'gz', '<Cmd>normal! `[v`]<CR>', {
