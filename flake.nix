@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
 
@@ -13,14 +14,31 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-unstable,
     home-manager,
     ...
-  } @ inputs: {
+  } @ inputs: let
+    system = "x86_64-linux";
+
+    # lib = nixpkgs.lib;
+    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+
+    apple-fonts = inputs.apple-fonts.packages.${pkgs.system};
+
+    nyx = {
+      name = "Gerson Ferreira";
+      user = "gerson";
+      email = "me@gersonfaneto.dev";
+    };
+  in {
     nixosConfigurations = {
       Nyx = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         specialArgs = {
-          inherit inputs;
+          inherit apple-fonts;
+          inherit nyx;
+          inherit pkgs-unstable;
         };
         modules = [
           ./configuration.nix
