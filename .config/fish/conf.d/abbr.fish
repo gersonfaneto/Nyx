@@ -41,10 +41,15 @@ __command_abbr cp 'cp -i'
 __command_abbr mv 'mv -i'
 __command_abbr mkdir 'mkdir -p'
 
-__command_abbr rm 'trash'
+__command_abbr rm 'trash-put'
+__command_abbr rml 'trash-list'
+__command_abbr rme 'trash-empty'
+__command_abbr rmr 'trash-restore'
 
 __command_abbr df 'df -h'
 __command_abbr du 'du -hs'
+
+__command_abbr c 'clear'
 
 __command_abbr g 'git'
 
@@ -59,7 +64,8 @@ __command_abbr tmrw 'tmux rename-window'
 __command_abbr tmka 'tmux kill-server'
 __command_abbr tmks 'tmux kill-session'
 
-__command_abbr ll 'ls -lhAX --group-directories-first'
+__command_abbr ls 'ls -lhX --group-directories-first'
+__command_abbr la 'ls -lhAX --group-directories-first'
 
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim
