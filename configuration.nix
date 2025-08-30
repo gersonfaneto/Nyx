@@ -1,8 +1,11 @@
 {
-  config,
-  lib,
+  # lib,
+  # inputs,
+  # config,
+  nyx,
   pkgs,
-  inputs,
+  pkgs-unstable,
+  apple-fonts,
   ...
 }: {
   imports = [
@@ -90,11 +93,11 @@
     config.common.default = ["gtk"];
   };
 
-  users.users.gerson = {
+  users.users.${nyx.user} = {
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups = ["audio" "video" "wheel" "docker" "networkmanager"];
-    packages = with pkgs; [];
+    # packages = with pkgs; [];
   };
 
   nixpkgs = {
@@ -116,7 +119,7 @@
     };
     nix-ld = {
       enable = true;
-      libraries = with pkgs; [];
+      # libraries = with pkgs; [];
     };
   };
 
@@ -144,8 +147,8 @@
     XSECURELOCK_BLANK_DPMS_STATE = "suspend";
   };
 
-  environment.systemPackages = with pkgs;
-    [
+  environment.systemPackages =
+    (with pkgs; [
       alacritty
       ani-cli
       arandr
@@ -173,6 +176,7 @@
       jq
       lazydocker
       lazygit
+      lazysql
       less
       libnotify
       libqalculate
@@ -180,7 +184,6 @@
       man-pages-posix
       mpv
       neovim
-      opencode
       pandoc
       playerctl
       poppler-utils
@@ -210,8 +213,11 @@
       xss-lock
       zathura
       zoxide
-    ]
-    ++ [
+    ])
+    ++ (with pkgs-unstable; [
+      opencode
+    ])
+    ++ (with pkgs; [
       # Nyx
       nil
       alejandra
@@ -247,23 +253,26 @@
 
       # General
       efm-langserver
-    ];
+    ]);
 
   fonts = {
     packages = with pkgs; [
       nerd-fonts.symbols-only
+
+      mononoki
       departure-mono
+
       noto-fonts-color-emoji
 
-      inputs.apple-fonts.packages.${pkgs.system}.sf-mono-nerd
+      apple-fonts.sf-mono
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = ["Noto Emoji"];
-        serif = ["SF Mono Nerd Font"];
-        sansSerif = ["SF Mono Nerd Font"];
-        monospace = ["SF Mono Nerd Font"];
+        serif = ["SF Mono"];
+        sansSerif = ["SF Mono"];
+        monospace = ["SF Mono"];
       };
     };
   };
