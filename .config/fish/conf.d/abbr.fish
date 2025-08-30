@@ -54,6 +54,7 @@ __command_abbr c 'clear'
 __command_abbr g 'git'
 
 __command_abbr lt 'lazygit'
+__command_abbr lq 'lazysql'
 __command_abbr lk 'lazydocker'
 
 __command_abbr tma 'tmux attach -t'

@@ -10,6 +10,7 @@ vim.opt.textwidth = 79
 vim.opt.colorcolumn = '+1'
 vim.opt.cursorlineopt = 'number'
 vim.opt.cursorline = true
+vim.opt.cmdheight = 0
 vim.opt.helpheight = 10
 vim.opt.showmode = false
 vim.opt.mousemoveevent = true
