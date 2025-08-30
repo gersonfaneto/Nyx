@@ -4,8 +4,8 @@
 
   programs.home-manager.enable = true;
 
-  programs.nix-index.enable = true;
-  programs.nix-index.enableFishIntegration = true;
+  programs.nix-index.enable = false;
+  # programs.nix-index.enableFishIntegration = true;
 
   home.packages = with pkgs; [
     home-manager
