@@ -261,13 +261,16 @@
 
   fonts = {
     packages = with pkgs; [
+      # Symbols
       nerd-fonts.symbols-only
 
-      mononoki
-      departure-mono
-
+      # Emojis
       noto-fonts-color-emoji
 
+      # Coding
+      mononoki
+
+      # UI
       apple-fonts.sf-mono
     ];
     fontconfig = {
