@@ -110,9 +110,6 @@
     fish = {
       enable = true;
     };
-    firefox = {
-      enable = true;
-    };
     direnv = {
       enable = true;
       enableFishIntegration = true;
@@ -157,6 +154,7 @@
       bottom
       brightnessctl
       chafa
+      chromium
       detach
       diff-so-fancy
       dunst
@@ -165,6 +163,7 @@
       feh
       ffmpeg
       file
+      firefox
       fish
       flameshot
       fzf
