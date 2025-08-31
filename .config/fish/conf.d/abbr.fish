@@ -49,7 +49,7 @@ __command_abbr rmr 'trash-restore'
 __command_abbr df 'df -h'
 __command_abbr du 'du -hs'
 
-__command_abbr c 'clear'
+__command_abbr cl 'clear'
 
 __command_abbr g 'git'
 
