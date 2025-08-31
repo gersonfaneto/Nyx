@@ -1,5 +1,3 @@
-; vim:ft=gitconfig:
-
 ; Credentials 
 
 [credential "https://github.com"]
@@ -196,3 +194,5 @@
   wr = worktree remove
 
   lg = "log --graph --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n'"
+
+; vim:ft=gitconfig:
