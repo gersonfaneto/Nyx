@@ -1,9 +1,16 @@
 --verbose=1
 --target=$HOME
 
+--ignore=.gitattributes
+
 --ignore=.stowrc
 
 --ignore=configuration.nix
 --ignore=hardware-configuration.nix
 --ignore=flake.nix
+--ignore=home.nix
 --ignore=flake.lock
+
+--ignore=Makefile
+
+--ignore=AGENTS.md

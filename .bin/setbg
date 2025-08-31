@@ -7,19 +7,19 @@ STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 DEFAULT_COLOR='macro'
 DEFAULT_BG='dark'
 
+# $1: name of the old theme
+# $2: 'light' or 'dark'
 get_theme_variant() {
-    # $1: name of the old theme
-    # $2: 'light' or 'dark'
     case "$2" in
     light) echo "$1" | sed 's/dark\|light/light/' | sed 's/Dark\|Light/Light/' ;;
     dark) echo "$1" | sed 's/dark\|light/dark/' | sed 's/Dark\|Light/Dark/' ;;
     esac
 }
 
+# $1: 'light' or 'dark'
 setbg_alacritty() {
-    # $1: 'light' or 'dark'
-    (   
-        cd "$CONFIG_HOME/alacritty" 2>/dev/null || return 1
+    (
+        cd "$CONFIG_HOME/alacritty" || return
         theme_path="theme.toml"
         themes_dir="themes"
         # If $1 is empty, only need to ensure symlink to color theme file exists
@@ -35,9 +35,9 @@ setbg_alacritty() {
     )
 }
 
+# $1: 'light' or 'dark'
 setbg_foot() {
-    # $1: 'light' or 'dark'
-    (   
+    (
         cd "$CONFIG_HOME/foot" || return
         theme_path="theme.ini"
         themes_dir="themes"
@@ -53,10 +53,11 @@ setbg_foot() {
     [ -e "$config_path" ] && touch "$config_path"
 }
 
+# $1: 'light' or 'dark'
 setbg_kitty() {
-    # $1: 'light' or 'dark'
-    (   
+    (
         cd "$CONFIG_HOME/kitty" || return
+
         no_preference_theme_path="no-preference-theme.auto.conf"
         current_theme_path="current-theme.conf"
         # Kitty changes its theme automatically w.r.t.
@@ -69,6 +70,11 @@ setbg_kitty() {
             ln -sf "$1-theme.auto.conf" "$no_preference_theme_path"
             ln -sf "$1-theme.auto.conf" "$current_theme_path"
         fi
+
+        # Touch main theme files for kitty to pick up the changes
+        touch "$no_preference_theme_path"
+        touch "$current_theme_path"
+
         if has kitty; then
             for pid in $(pgrep kitty); do
                 # Don't use `kill -SIGUSR1`, will cause error: 'kill: SIGUSR1: invalid signal specification'
@@ -79,9 +85,9 @@ setbg_kitty() {
     )
 }
 
+# $1: 'light' or 'dark'
 setbg_wezterm() {
-    # $1: 'light' or 'dark'
-    (   
+    (
         cd "$CONFIG_HOME/wezterm" || return
         theme_path="theme.toml"
         themes_dir="colors"
@@ -93,9 +99,9 @@ setbg_wezterm() {
     )
 }
 
+# $1: 'light' or 'dark'
 setbg_highlight() {
-    # $1: 'light' or 'dark'
-    (   
+    (
         cd "$HOME/.highlight" || return
         themes_dir="themes"
         theme_path="highlight.theme"
@@ -107,8 +113,8 @@ setbg_highlight() {
     )
 }
 
+# $1: 'light' or 'dark'
 setbg_nvim() {
-    # $1: 'light' or 'dark'
     if [ -z "$1" ] || ! has nvim; then
         return 1
     fi
@@ -159,8 +165,8 @@ setbg_nvim() {
     fi
 }
 
+# $1: 'light' or 'dark'
 setbg_macos() {
-    # $1: 'light' or 'dark'
     if [ -z "$1" ]; then
         return 1
     fi
@@ -197,8 +203,8 @@ EOF
     fi
 }
 
+# $1: 'light' or 'dark'
 setbg_plasma() {
-    # $1: 'light' or 'dark'
     if [ -z "$1" ]; then
         return 1
     fi
@@ -218,8 +224,8 @@ setbg_plasma() {
     fi
 }
 
+# $1: 'light' or 'dark'
 setbg_gnome() {
-    # $1: 'light' or 'dark'
     if [ -z "$1" ] || ! has gsettings; then
         return 1
     fi
@@ -237,9 +243,9 @@ setbg_gnome() {
     esac
 }
 
+# $1: path to config file
+# $2: 'light' or 'dark'
 get_new_profile_name() {
-    # $1: path to config file
-    # $2: 'light' or 'dark'
     if ! has kreadconfig5; then
         return 1
     fi
@@ -258,9 +264,9 @@ get_new_profile_name() {
     echo "$new_profile_name"
 }
 
+# $1: name of the app
+# $2: 'light' or 'dark'
 konsole_switch_profile_bg() {
-    # $1: name of the app
-    # $2: 'light' or 'dark'
     if ! has kreadconfig5 || ! has kwriteconfig5; then
         return 1
     fi
@@ -274,17 +280,17 @@ konsole_switch_profile_bg() {
     fi
 }
 
+# $1: 'light' or 'dark'
 setbg_konsole_yakuake() {
-    # $1: 'light' or 'dark'
     konsole_switch_profile_bg konsole "$1"
     konsole_switch_profile_bg yakuake "$1"
     konsole_switch_profile_bg dolphin "$1"
     konsole_switch_profile_bg kate "$1"
 }
 
+# $1: 'light' or 'dark'
 setbg_termux() {
-    # $1: 'light' or 'dark'
-    (   
+    (
         cd "$HOME/.termux" || return
         theme_path="colors.properties"
         themes_dir="colors"
@@ -299,8 +305,8 @@ setbg_termux() {
     )
 }
 
+# $1: 'light' or 'dark'
 setbg_okular() {
-    # $1: 'light' or 'dark'
     if [ -z "$1" ] || ! has okular || ! has kwriteconfig5; then
         return 1
     fi
@@ -315,8 +321,38 @@ setbg_okular() {
         "$changecolors"
 }
 
+# $1: 'light' or 'dark'
+setbg_zathura() {
+    if [ -z "$1" ]; then
+        return
+    fi
+
+    case "$1" in
+        dark) should_recolor=true ;;
+        light) should_recolor=false ;;
+        *) return ;;
+    esac
+    zathura_recolor_cmd=$(printf 'set recolor %s' "$should_recolor")
+
+    # https://blog.akaisuisei.org/communicating-with-zathura-via-dbus.html
+    qdbus | grep 'org\.pwmt\.zathura\.PID-' | while read -r dest; do
+        qdbus "$dest" /org/pwmt/zathura org.pwmt.zathura.ExecuteCommand \
+            "$zathura_recolor_cmd" >/dev/null 2>&1 &
+    done
+
+    # Persist bg settings, main config `$XDG_CONFIG_HOME/zathura/zathurarc`
+    # needs to include local config `zathuralocalrc`
+    zathuralocalrc="$CONFIG_HOME/zathura/zathuralocalrc"
+    if grep -qE '^\s*set\s+recolor\s+.*' "$zathuralocalrc" 2>/dev/null; then
+        sed -i'' "s/^\s*set\s\+recolor\s\+.*/set recolor $should_recolor/" \
+            "$zathuralocalrc"
+    else
+            printf '\nset recolor %s\n' "$should_recolor" >>"$zathuralocalrc"
+    fi
+}
+
+# $1: 'light' or 'dark'
 setbg_vscode() {
-    # $1: 'light' or 'dark'
     rc="$CONFIG_HOME/Code/User/settings.json"
     if [ -z "$1" ] || [ ! -e "$rc" ]; then
         return 1
@@ -353,9 +389,9 @@ setbg_vscode() {
     fi
 }
 
+# $1: 'light' or 'dark'
 setbg_fish() {
-    # $1: 'light' or 'dark'
-    (   
+    (
         cd "$CONFIG_HOME/fish/themes" || return
         theme_path="Current.theme"
         if [ -z "$1" ]; then
@@ -374,6 +410,7 @@ setbg_fish() {
     )
 }
 
+# $1: 'light' or 'dark'
 setbg_libreoffice() {
     if [ -z "$1" ]; then
         return 1
@@ -498,6 +535,7 @@ main() {
     # setbg_konsole_yakuake "$bg" &
     # setbg_termux "$bg" &
     # setbg_okular "$bg" &
+    setbg_zathura "$bg" &
     # setbg_vscode "$bg" &
     setbg_fish "$bg" &
     # setbg_libreoffice "$bg" &

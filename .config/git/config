@@ -3,12 +3,12 @@
 ; Credentials 
 
 [credential "https://github.com"]
-	helper = 
-	helper = !/run/current-system/sw/bin/gh auth git-credential
+  helper = 
+  helper = !/run/current-system/sw/bin/gh auth git-credential
 
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/run/current-system/sw/bin/gh auth git-credential
+  helper = 
+  helper = !/run/current-system/sw/bin/gh auth git-credential
 
 ; Behaviour
 
@@ -124,6 +124,20 @@
 
 [url "git@github.com:"]
   insteadOf = "gh:"
+
+; Filters
+
+[filter "okularpartrc"]
+  smudge = cat
+  clean = sed \
+    -e '/^\\[Main View\\]/,/^$/d' \
+    -e '/^\\[Nav Panel\\]/,/^$/d'
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 
 ; Aliases
 

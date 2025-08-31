@@ -218,6 +218,10 @@
       opencode
     ])
     ++ (with pkgs; [
+      libsForQt5.full
+      libsForQt5.okular
+    ])
+    ++ (with pkgs; [
       # Nyx
       nil
       alejandra
