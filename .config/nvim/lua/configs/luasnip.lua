@@ -8,7 +8,7 @@ local utils = require('utils')
 local function load_snippets(ft)
   ft = ft or vim.bo.ft
 
-  utils.ft.load_once('snippets', ft, function(_, snips)
+  utils.load.ft_load_once(ft, 'snippets', function(_, snips)
     if not snips or vim.tbl_isempty(snips) then
       return false
     end
@@ -54,7 +54,7 @@ ls.setup({
 -- https://github.com/L3MON4D3/LuaSnip/issues/258#issuecomment-1011938524
 vim.api.nvim_create_autocmd('ModeChanged', {
   desc = 'Unlink current snippet on leaving insert/selection mode.',
-  group = vim.api.nvim_create_augroup('LuaSnipModeChanged', {}),
+  group = vim.api.nvim_create_augroup('my.luasnip.unlink', {}),
   pattern = '[si]*:[^si]*',
   -- Blink.cmp will enter normal mode shortly on accepting snippet completion,
   -- see https://github.com/Saghen/blink.cmp/issues/2035
@@ -309,19 +309,15 @@ local function setup_insert_mode_tab_keymaps()
   -- stylua: ignore end
 end
 
--- We cannot map `<Tab>`/`<S-Tab>` in insert mode on loading LuaSnip because
--- LuaSnip can be loaded on entering visual mode (to support selection snippets,
--- see `:h luasnip-selection`), mapping these insert mode keys on entering
--- visual mode will make them overridden by keymaps from the tabout plugin, see
--- `lua/plugin/tabout.lua`, so we defer setting these keymaps on entering
--- insert mode if not already in insert mode to avoid being overridden by
--- tabout plugin keymaps.
+-- Defer mapping `<Tab>`/`<S-Tab>` in insert mode.
+-- Rationale: LuaSnip can be lazy-loaded on visual mode (selection snippets),
+-- and setting insert-mode maps there would be overridden by tabout
+-- (see `lua/plugin/tabout.lua`). We therefore set them only when actually in
+-- insert mode.
 --
--- LuaSnip is loaded on `ModeChanged`. Calling `vim.fn.mode()` right after
--- changing from normal mode to insert mode will return 'n' instead of 'i',
--- preventing us from setting keymaps on the first time we enter insert mode.
--- As a workaround, schedule to make sure that `vim.fn.mode()` returns correct
--- mode 'i' after the event.
+-- Note: LuaSnip loads on `ModeChanged`. Immediately querying `vim.fn.mode()`
+-- after switching to insert mode can still return 'n'. Use `vim.schedule()` to
+-- ensure the mode is correctly reported before mapping.
 vim.schedule(function()
   if vim.startswith(vim.fn.mode(), 'i') then
     setup_insert_mode_tab_keymaps()

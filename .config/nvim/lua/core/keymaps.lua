@@ -127,7 +127,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map('x', '<M-?>',  '<C-\\><C-n>`>?\\%V\\(\\)<Left><Left>', { desc = 'Search backward within visual selection' })
     -- stylua: ignore end
 
-    -- Remove trailing whitespaces
+    -- Delete trailing whitespaces
     map(
       'n',
       'd<Space>',
@@ -138,12 +138,17 @@ vim.api.nvim_create_autocmd('UIEnter', {
           mods = { silent = true },
         })
       end)),
-      { desc = 'Remove trailing whitespaces' }
+      { desc = 'Delete trailing whitespaces' }
     )
 
     -- Indent motions
     map({ 'v' }, '>', '>gv', { desc = 'Indent and reselect visual selection' })
-    map({ 'v' }, '<', '<gv', { desc = 'Unindent and reselect visual selection' })
+    map(
+      { 'v' },
+      '<',
+      '<gv',
+      { desc = 'Unindent and reselect visual selection' }
+    )
 
     -- Indent current line in normal mode
     map('n', '>>', '>>', { desc = 'Indent current line' })
@@ -163,32 +168,44 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map('s', '<BS>', '<C-o>"_s', { desc = 'Delete selection' })
     map('s', '<C-h>', '<C-o>"_s', { desc = 'Delete selection' })
 
+    ---Check if given line should join with previews lines in current buffer
+    ---@param line string
+    ---@return boolean
+    local function should_join_line(line)
+      -- Buffer-local rules
+      if vim.b.should_join_line then
+        return vim.b.should_join_line(line)
+      end
+      return line ~= ''
+    end
+
     ---Yank text with paragraphs joined as a single line, supposed to be used
     ---in a keymap
     local function yank_joined_paragraphs()
       local reg = vim.v.register
 
-      local join_paragraphs_autocmd =
+      local yank_joined_paragraphs_autocmd =
         vim.api.nvim_create_autocmd('TextYankPost', {
           once = true,
           callback = function()
             local joined_lines = {}
-            local joined_line ---@type string?
 
             for _, line in
               ipairs(vim.v.event.regcontents --[=[@as string[]]=])
             do
-              if line ~= '' then
-                joined_line = (joined_line and joined_line .. ' ' or '')
-                  .. vim.trim(line)
+              if not should_join_line(line) then
+                table.insert(joined_lines, line)
                 goto continue
               end
-              table.insert(joined_lines, joined_line)
-              table.insert(joined_lines, line)
-              joined_line = nil
+
+              local last_line = table.remove(joined_lines, #joined_lines)
+              table.insert(
+                joined_lines,
+                (last_line == '' or last_line == nil) and vim.trim(line)
+                  or string.format('%s %s', last_line, vim.trim(line))
+              )
               ::continue::
             end
-            table.insert(joined_lines, joined_line)
 
             vim.fn.setreg(reg, joined_lines, vim.v.event.regtype)
           end,
@@ -199,7 +216,8 @@ vim.api.nvim_create_autocmd('UIEnter', {
         -- events will trigger in order:
         -- 1. `ModeChanged` with pattern 'n:no'
         -- 2. `TextYankPost`
-        -- 3. `ModeChanged` with pattern 'no:n'
+        -- 3. `ModeChanged` with pattern 'no:n' (or 'V:n', if using custom text
+        --    object, e.g. `af`, `az`)
         --
         -- If joined paragraph yank is canceled, e.g. with `gy<Esc>` in normal mode,
         -- the following events will  trigger in order:
@@ -211,10 +229,10 @@ vim.api.nvim_create_autocmd('UIEnter', {
         -- 'n' to prevent it from affecting normal yanking e.g. with `y`
         vim.api.nvim_create_autocmd('ModeChanged', {
           once = true,
-          pattern = 'no:n',
-          callback = function()
-            pcall(vim.api.nvim_del_autocmd, join_paragraphs_autocmd)
-          end,
+          pattern = '*:n',
+          callback = vim.schedule_wrap(function()
+            pcall(vim.api.nvim_del_autocmd, yank_joined_paragraphs_autocmd)
+          end),
         })
       end
 
