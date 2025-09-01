@@ -44,7 +44,8 @@ local function clear_intro()
   end
 end
 
-local groupid = vim.api.nvim_create_augroup('NvimIntro', {})
+local groupid = vim.api.nvim_create_augroup('my.intro', {})
+
 vim.api.nvim_create_autocmd('UIEnter', {
   group = groupid,
   once = true,

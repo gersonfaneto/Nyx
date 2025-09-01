@@ -10,17 +10,17 @@ local function buf_valid(buf)
   end
 
   local bt = vim.bo[buf].bt
-  if
-    bt == 'help'
-    or bt == 'quickfix'
-    or bt == 'terminal'
-    or bt == 'prompt'
-  then
+  if bt == 'help' or bt == 'quickfix' or bt == 'prompt' then
     return false
   end
 
   local ft = vim.bo[buf].ft
   if ft == 'gitcommit' or ft == 'gitrebase' then
+    return false
+  end
+
+  -- Fzf-lua temp window
+  if bt == 'terminal' and ft == 'fzf' then
     return false
   end
 
@@ -76,7 +76,9 @@ M.opts = {
     enabled = true,
     events = { 'BufDelete' },
     ---@type fun(): boolean
-    cond = has_valid_buf,
+    cond = function()
+      return not has_valid_buf()
+    end,
   },
 }
 
@@ -329,7 +331,7 @@ function M.setup(opts)
     end)
 
     vim.api.nvim_create_autocmd(M.opts.autosave.events, {
-      group = vim.api.nvim_create_augroup('SessionAutoSave', {}),
+      group = vim.api.nvim_create_augroup('my.session.auto_save', {}),
       desc = 'Automatically save session.',
       -- `BufDelete` event triggers just before the buffers is actually deleted from
       -- the buffer list, delay to ensure that the buffer is deleted before checking
@@ -343,7 +345,7 @@ function M.setup(opts)
   end
 
   if check_enabled(M.opts.autoload) then
-    local groupid = vim.api.nvim_create_augroup('SessionAutoLoad', {})
+    local groupid = vim.api.nvim_create_augroup('my.session.auto_load', {})
     vim.api.nvim_create_autocmd({ 'StdinReadPre', 'SessionLoadPost' }, {
       desc = 'Detect stdin or manual session loading to disable automatic session loading.',
       group = groupid,
@@ -374,7 +376,7 @@ function M.setup(opts)
 
   if check_enabled(M.opts.autoremove) then
     vim.api.nvim_create_autocmd(M.opts.autoremove.events, {
-      group = vim.api.nvim_create_augroup('SessionAutoRemove', {}),
+      group = vim.api.nvim_create_augroup('my.session.auto_remove', {}),
       desc = 'Automatically remove sessions.',
       callback = vim.schedule_wrap(function()
         if M.opts.autoremove.cond() then

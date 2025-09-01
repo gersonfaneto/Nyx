@@ -154,12 +154,44 @@ local function enable_plugins(module_names)
         end
 
         if spec.init then
-          spec.init()
+          local repo = type(spec[1]) == 'string' and spec[1] or nil
+          local name = spec.name
+            or repo and vim.fs.basename(repo)
+            or spec.dir and vim.fs.basename(spec.dir)
+            or 'unknown'
+          local dir = spec.dir and vim.fs.normalize(spec.dir)
+            or repo and vim.fs.joinpath(
+              vim.g.package_path,
+              vim.fs.basename(repo)
+            )
+            or name and vim.fs.joinpath(vim.g.package_path, name)
+            or vim.g.package_path
+
+          local plugin = {
+            [1] = repo,
+            name = name,
+            dir = dir,
+            enabled = spec.enabled ~= false,
+            lazy = spec.lazy,
+            event = spec.event,
+            cmd = spec.cmd,
+            ft = spec.ft,
+            keys = spec.keys,
+            init = nil, -- prevent recursion
+            config = spec.config,
+            build = spec.build,
+            main = spec.main,
+            opts = spec.opts,
+            dependencies = spec.dependencies,
+            specs = specs,
+          }
+
+          spec.init(plugin)
           spec.init = nil
         end
       end
 
-      local groupid = vim.api.nvim_create_augroup('PluginDeferSetup', {})
+      local groupid = vim.api.nvim_create_augroup('my.plugins.defer', {})
 
       -- If we have undefined commands (possibly from a plugin),
       -- setup the plugin manager immediately to get the commands
@@ -224,27 +256,6 @@ local function enable_plugins(module_names)
       },
       checker = { enabled = false },
       change_detection = { notify = false },
-      performance = {
-        rtp = {
-          disabled_plugins = {
-            '2html_plugin',
-            'compiler',
-            'ftplugin',
-            'gzip',
-            'matchit',
-            'rplugin',
-            'spellfile_plugin',
-            'synmenu',
-            'syntax',
-            'tar',
-            'tarPlugin',
-            'tohtml',
-            'tutor',
-            'zip',
-            'zipPlugin',
-          },
-        },
-      },
     })
   end)
 end

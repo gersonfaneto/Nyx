@@ -1,10 +1,4 @@
 return {
-  -- Python
-  {
-    'Vimjas/vim-python-pep8-indent',
-    ft = 'python',
-  },
-
   -- Clojure
   {
     'Olical/conjure',

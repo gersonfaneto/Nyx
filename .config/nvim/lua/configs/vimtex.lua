@@ -41,7 +41,7 @@ end
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'tex',
-  group = vim.api.nvim_create_augroup('VimTexFileTypeInit', {}),
+  group = vim.api.nvim_create_augroup('vim.plugin.vimtex.ft', {}),
   callback = function(args)
     -- Make surrounding delimiters large
     vim.keymap.set('n', 'css', vim.fn['vimtex#delim#add_modifiers'], {
@@ -59,7 +59,7 @@ vim.api.nvim_create_autocmd('FileType', {
       desc = 'Automatically sync pdf viewer with tex source file.',
       buffer = args.buf,
       group = vim.api.nvim_create_augroup(
-        'VimTexAutoSyncView' .. args.buf,
+        'my.vimtex.auto_sync_view.buf.' .. args.buf,
         {}
       ),
       callback = function(a)
@@ -74,35 +74,56 @@ vim.api.nvim_create_autocmd('FileType', {
         local auto_sync_view_request_time = vim.uv.now()
         vim.g._vimtex_auto_sync_view_request_time = auto_sync_view_request_time
 
+        ---Check if the previous should be updated
+        ---
+        ---The preview should be updated if
+        ---  - current cursor line has changed
+        ---  - current request is the latest request sent
+        ---  - current buffer is a tex buffer
+        ---@return boolean
+        local function should_update_preview()
+          return vim.fn.line('.') ~= vim.g._vimtex_auto_sync_view_source_line
+            and vim.g._vimtex_auto_sync_view_request_time == auto_sync_view_request_time
+            and vim.api.nvim_get_current_buf() == a.buf
+        end
+
         -- Skip spawning a viewer; only sync if a viewer window already exists
         -- Some examples of `ps fp "$(pgrep ...)"` command output (stdout):
         -- zathura: zathura -x /usr/bin/nvim --headless -c "VimtexInverseSearch %{line}:%{column} '%{input}'" --synctex-forward 62:1:/home/user/test.tex test.pdf
         -- okular:  okular --unique file:/home/user/test.pdf#src:74/home/user/test.tex
         vim.defer_fn(function()
+          if not should_update_preview() then
+            return
+          end
+
+          local out_pdf =
+            vim.F.npcall(vim.api.nvim_eval, 'b:vimtex.viewer.out()')
+          if not out_pdf then
+            return
+          end
+
           vim.system(
             {
               'pgrep',
               '-if',
               string.format(
-                '%s.*%s',
+                '%s.*%s.*%s',
                 viewer_name,
-                vim.api.nvim_buf_get_name(0)
+                -- Don't match against `vim.api.nvim_buf_get_name(a.buf)` here
+                -- as nvim can be inside another tex file in a tex project with
+                -- multiple tex files, e.g. (main.tex, section1.tex,
+                -- section2.tex, etc.)
+                vim.fs.dirname(out_pdf),
+                vim.fs.basename(out_pdf)
               ),
             },
             {},
             vim.schedule_wrap(function(out)
-              local linenr = vim.fn.line('.')
-              if
-                out.stdout == ''
-                or vim.g._vimtex_auto_sync_view_request_time ~= auto_sync_view_request_time
-                or vim.api.nvim_get_current_buf() ~= a.buf
-                or not vim.api.nvim_buf_is_valid(a.buf)
-                or linenr == vim.g._vimtex_auto_sync_view_source_line
-              then
+              if out.stdout == '' or not should_update_preview() then
                 return
               end
               vim.fn['vimtex#view#view']()
-              vim.g._vimtex_auto_sync_view_source_line = linenr
+              vim.g._vimtex_auto_sync_view_source_line = vim.fn.line('.')
             end)
           )
         end, vim.g.vimtex_auto_sync_view_debounce)
