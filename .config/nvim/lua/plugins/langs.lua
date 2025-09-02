@@ -32,10 +32,10 @@ return {
   },
 
   -- Java
-  {
-    'mfussenegger/nvim-jdtls',
-    ft = { 'java' },
-  },
+  -- {
+  --   'mfussenegger/nvim-jdtls',
+  --   ft = { 'java' },
+  -- },
 
   -- Haskell
   {
