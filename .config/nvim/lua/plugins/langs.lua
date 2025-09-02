@@ -31,12 +31,6 @@ return {
     },
   },
 
-  -- Java
-  -- {
-  --   'mfussenegger/nvim-jdtls',
-  --   ft = { 'java' },
-  -- },
-
   -- Haskell
   {
     'mrcjkb/haskell-tools.nvim',
