@@ -7,7 +7,7 @@ md2html() {
         --standalone \
         --embed-resources \
         -f markdown-implicit_figures \
-        --css ~/.pandoc/css/paper.css \
+        --css ~/.config/pandoc/css/paper.css \
         -t html \
         "$1" \
         -o "${1%.md}.html"
