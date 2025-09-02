@@ -66,6 +66,10 @@ __command_abbr tmrw 'tmux rename-window'
 __command_abbr tmka 'tmux kill-server'
 __command_abbr tmks 'tmux kill-session'
 
+__command_abbr dk 'docker'
+__command_abbr dkp 'docker ps'
+__command_abbr dkpa 'docker ps --all'
+
 __command_abbr ls 'ls -lhX --group-directories-first'
 __command_abbr la 'ls -lhAX --group-directories-first'
 

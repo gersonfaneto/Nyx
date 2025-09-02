@@ -28,7 +28,10 @@ return {
   },
   filetypes = { 'java' },
   root_markers = {
-    { 'build.gradle', 'build.gradle.kts' },
+    {
+      'build.gradle',
+      'build.gradle.kts',
+    },
     {
       'build.xml',
       'pom.xml',
