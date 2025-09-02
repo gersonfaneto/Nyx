@@ -57,6 +57,7 @@ __command_abbr lt 'lazygit'
 __command_abbr lq 'lazysql'
 __command_abbr lk 'lazydocker'
 
+__command_abbr tm 'tmux'
 __command_abbr tma 'tmux attach -t'
 __command_abbr tmn 'tmux new-session -s (basename $PWD)'
 __command_abbr tml 'tmux list-session'
