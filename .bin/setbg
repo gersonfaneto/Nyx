@@ -29,7 +29,7 @@ setbg_alacritty() {
             ln -sf "$themes_dir/$1.toml" "$theme_path"
         fi
     )
-    (   
+    (
         cd "$CONFIG_HOME/alacritty" 2>/dev/null || return 1
         touch "alacritty.toml" # Force reload
     )
@@ -328,9 +328,9 @@ setbg_zathura() {
     fi
 
     case "$1" in
-        dark) should_recolor=true ;;
-        light) should_recolor=false ;;
-        *) return ;;
+    dark) should_recolor=true ;;
+    light) should_recolor=false ;;
+    *) return ;;
     esac
     zathura_recolor_cmd=$(printf 'set recolor %s' "$should_recolor")
 
@@ -347,7 +347,7 @@ setbg_zathura() {
         sed -i'' "s/^\s*set\s\+recolor\s\+.*/set recolor $should_recolor/" \
             "$zathuralocalrc"
     else
-            printf '\nset recolor %s\n' "$should_recolor" >>"$zathuralocalrc"
+        printf '\nset recolor %s\n' "$should_recolor" >>"$zathuralocalrc"
     fi
 }
 

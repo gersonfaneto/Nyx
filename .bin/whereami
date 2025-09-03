@@ -6,7 +6,7 @@ LOC_URL=http://ipinfo.io/loc
 
 if has curl; then
     coords=$(curl -s "$LOC_URL")
-elif     has wget; then
+elif has wget; then
     coords=$(wget -qO- "$LOC_URL")
 else
     # shellcheck disable=SC2016
@@ -15,7 +15,7 @@ else
 fi
 
 if [ -z "$coords" ] || ! (echo "$coords" | grep -Eq '^([+-]?[0-9]+\.[0-9]+,?){2}$'); then
-    echo "Failed to get location from $LOC_URL" >&2
+    echo "Failed to get location from $LOC_URL: $coords" >&2
     exit 1
 fi
 

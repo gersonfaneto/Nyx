@@ -22,7 +22,7 @@ get_cap_theme_name() {
 
 setcolor_alacritty() {
     # $1: name of the colorscheme
-    (   
+    (
         cd "$CONFIG_HOME/alacritty/themes" 2>/dev/null || return 1
         dark_theme_path="dark.toml"
         light_theme_path="light.toml"
@@ -35,7 +35,7 @@ setcolor_alacritty() {
             ln -sf "$1-light.toml" "$light_theme_path"
         fi
     )
-    (   
+    (
         cd "$CONFIG_HOME/alacritty" 2>/dev/null || return 1
         touch "alacritty.toml" # Force reload
     )
@@ -43,7 +43,7 @@ setcolor_alacritty() {
 
 setcolor_foot() {
     # $1: name of the colorscheme
-    (   
+    (
         cd "$CONFIG_HOME/foot/themes" || return
         dark_theme_path="dark.ini"
         light_theme_path="light.ini"
@@ -62,7 +62,7 @@ setcolor_foot() {
 
 setcolor_kitty() {
     # $1: name of the colorscheme
-    (   
+    (
         cd "$CONFIG_HOME/kitty" || return
 
         # Kitty changes its theme automatically w.r.t.
@@ -96,7 +96,7 @@ setcolor_kitty() {
 
 setcolor_termux() {
     # $1: name of the colorscheme
-    (   
+    (
         cd "$HOME/.termux/colors" || return
         dark_color_path="dark.properties"
         light_color_path="light.properties"
@@ -115,7 +115,7 @@ setcolor_termux() {
 
 setcolor_wezterm() {
     # $1: name of the colorscheme
-    (   
+    (
         cd "$CONFIG_HOME/wezterm/colors" || return
         dark_theme_path="dark.toml"
         light_theme_path="light.toml"
@@ -131,7 +131,7 @@ setcolor_wezterm() {
 
 setcolor_highlight() {
     # $1: name of the colorscheme
-    (   
+    (
         cd "$HOME/.highlight/themes" || return
         dark_theme_path="dark.theme"
         light_theme_path="light.theme"
@@ -245,7 +245,7 @@ setcolor_konsole_yakuake() {
 
 setcolor_fish() {
     # $1: name of the colorscheme
-    (   
+    (
         cd "$CONFIG_HOME/fish/themes" || return
         dark_theme_path="Dark.theme"
         light_theme_path="Light.theme"
