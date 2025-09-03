@@ -141,6 +141,12 @@ vim.api.nvim_create_autocmd('UIEnter', {
       { desc = 'Delete trailing whitespaces' }
     )
 
+    -- Buffer operations
+    -- stylua: ignore start
+    vim.keymap.set({ 'n' }, '<Leader>bq', '<Cmd>quit<CR>', { desc = 'Close the buffer' })
+    vim.keymap.set({ 'n' }, '<Leader>bw', '<Cmd>write<CR>', { desc = 'Write the buffer' })
+    -- stylua: ignore end
+
     -- Indent motions
     map({ 'v' }, '>', '>gv', { desc = 'Indent and reselect visual selection' })
     map(
