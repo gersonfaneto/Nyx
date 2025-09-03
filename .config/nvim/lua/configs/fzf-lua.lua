@@ -655,11 +655,12 @@ fzf.setup({
         \ for winnr in range(winnr('$'), 1, -1) |
         \   if win_gettype(winnr) !=# 'autocmd' && win_gettype(winnr) !=# 'popup' |
         \     let g:_fzf_qfclosed = win_gettype(winnr) |
+        \     let g:_fzf_qfwin = win_getid(winnr) |
         \     break |
         \   endif |
         \ endfor |
         \ if g:_fzf_qfclosed ==# 'loclist' || g:_fzf_qfclosed ==# 'quickfix' |
-        \   let g:_fzf_qfheight = nvim_win_get_height(win_getid(winnr('$'))) |
+        \   let g:_fzf_qfheight = nvim_win_get_height(g:_fzf_qfwin) |
         \   let g:_fzf_height = g:_fzf_qfheight - 1 |
         \   cclose |
         \   lclose |
@@ -668,23 +669,19 @@ fzf.setup({
         \ endif |
         \ exe printf('botright %dnew', g:_fzf_height) |
         \ let g:_fzf_win = nvim_get_current_win() |
+        \ let g:_fzf_height += g:_fzf_cmdheight + (g:_fzf_laststatus ? 1 : 0) |
         \ let w:winbar_no_attach = v:true |
         \ setlocal bt=nofile bh=wipe nobl noswf
     ]],
     on_create = function()
       -- Prevent fzf-lua window from being squeezed by windows with
-      -- `winfixheight`, see augroup `my.fix_winfixheight_with_winbar` in
-      -- `lua/core/autocmds.lua`
+      -- `winfixheight`, this is a neovim bug and can be reproduced by
+      -- `nvim --clean +'set sb spr' +'wincmd v | wincmd s | resize 8 | windo set wfh' +'botr new'`
       vim.schedule(function()
         if not vim.api.nvim_win_is_valid(vim.g._fzf_win) then
           return
         end
-        vim.api.nvim_win_set_height(
-          vim.g._fzf_win,
-          vim.g._fzf_height
-            + vim.g._fzf_cmdheight
-            + (vim.g._fzf_laststatus and 1 or 0)
-        )
+        vim.api.nvim_win_set_height(vim.g._fzf_win, vim.g._fzf_height)
       end)
 
       vim.keymap.set(

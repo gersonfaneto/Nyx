@@ -11,26 +11,16 @@ require('core.keymaps')
 require('core.autocmds')
 require('core.plugins')
 
-vim.api.nvim_create_autocmd('FileType', {
-  once = true,
-  desc = 'Apply treesitter settings.',
-  callback = function()
-    require('core.treesitter')
-  end,
-})
+local load = require('utils.load')
 
-vim.api.nvim_create_autocmd({ 'FileType', 'LspAttach' }, {
-  once = true,
-  desc = 'Apply lsp settings.',
-  callback = function()
-    require('core.lsp')
-  end,
-})
+load.on_events('FileType', function()
+  require('core.treesitter')
+end)
 
-vim.api.nvim_create_autocmd('DiagnosticChanged', {
-  once = true,
-  desc = 'Apply diagnostic settings.',
-  callback = function()
-    require('core.diagnostic')
-  end,
-})
+load.on_events({ 'FileType', 'LspAttach' }, function()
+  return require('core.lsp')
+end)
+
+load.on_events('DiagnosticChanged', function()
+  require('core.diagnostic')
+end)
