@@ -154,7 +154,6 @@
       bottom
       brightnessctl
       chafa
-      chromium
       detach
       diff-so-fancy
       dunst

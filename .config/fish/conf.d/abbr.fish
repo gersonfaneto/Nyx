@@ -73,6 +73,11 @@ __command_abbr dkpa 'docker ps --all'
 __command_abbr ls 'ls -lhX --group-directories-first'
 __command_abbr la 'ls -lhAX --group-directories-first'
 
+__command_abbr dea 'direnv allow'
+__command_abbr ded 'direnv deny'
+__command_abbr dee 'direnv edit'
+__command_abbr der 'direnv reload'
+
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim
         echo nvim
