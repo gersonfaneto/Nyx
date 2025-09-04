@@ -6,11 +6,9 @@ vim.g.has_nf = vim.env.TERM ~= 'linux' and vim.env.NVIM_NF and true or false
 vim.opt.exrc = true
 vim.opt.confirm = true
 vim.opt.timeout = false
-vim.opt.textwidth = 79
-vim.opt.colorcolumn = '+1'
+vim.opt.colorcolumn = '80'
 vim.opt.cursorlineopt = 'number'
 vim.opt.cursorline = true
-vim.opt.cmdheight = 0
 vim.opt.helpheight = 10
 vim.opt.showmode = false
 vim.opt.mousemoveevent = true
@@ -35,27 +33,29 @@ vim.opt.selection = 'old'
 vim.opt.tabclose = 'uselast'
 
 -- Defer shada reading
-local shada_augroup = vim.api.nvim_create_augroup('my.opt.shada', {})
+do
+  local group = vim.api.nvim_create_augroup('my.opt.shada', {})
 
----Restore 'shada' option and read from shada once
-local function rshada()
-  pcall(vim.api.nvim_del_augroup_by_id, shada_augroup)
+  ---Restore 'shada' option and read from shada once
+  local function rshada()
+    pcall(vim.api.nvim_del_augroup_by_id, group)
 
-  vim.opt.shada = vim.api.nvim_get_option_info2('shada', {}).default
-  pcall(vim.cmd.rshada)
+    vim.opt.shada = vim.api.nvim_get_option_info2('shada', {}).default
+    pcall(vim.cmd.rshada)
+  end
+
+  vim.opt.shada = ''
+  vim.api.nvim_create_autocmd('BufReadPre', {
+    group = group,
+    once = true,
+    callback = rshada,
+  })
+  vim.api.nvim_create_autocmd('UIEnter', {
+    group = group,
+    once = true,
+    callback = vim.schedule_wrap(rshada),
+  })
 end
-
-vim.opt.shada = ''
-vim.api.nvim_create_autocmd('BufReadPre', {
-  group = shada_augroup,
-  once = true,
-  callback = rshada,
-})
-vim.api.nvim_create_autocmd('UIEnter', {
-  group = shada_augroup,
-  once = true,
-  callback = vim.schedule_wrap(rshada),
-})
 
 -- Folding
 vim.opt.foldlevelstart = 99
@@ -75,48 +75,50 @@ vim.opt.formatoptions:remove('t')
 vim.opt.nrformats:append('blank')
 
 -- Spell check
-vim.opt.spellsuggest = 'best,9'
-vim.opt.spellcapcheck = ''
-vim.opt.spelllang = 'en,cjk'
-vim.opt.spelloptions = 'camel'
+do
+  vim.opt.spellsuggest = 'best,9'
+  vim.opt.spellcapcheck = ''
+  vim.opt.spelllang = 'en,cjk'
+  vim.opt.spelloptions = 'camel'
 
-local spell_augroup = vim.api.nvim_create_augroup('my.opt.spell', {})
+  local group = vim.api.nvim_create_augroup('my.opt.spell', {})
 
----Set spell check options
----@return nil
-local function spellcheck()
-  pcall(vim.api.nvim_del_augroup_by_id, spell_augroup)
+  ---Set spell check options
+  ---@return nil
+  local function spellcheck()
+    pcall(vim.api.nvim_del_augroup_by_id, group)
 
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if not require('utils.opt').spell:was_locally_set({ win = win }) then
-      vim.api.nvim_win_call(win, function()
-        vim.opt.spell = true
-      end)
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if not require('utils.opt').spell:was_locally_set({ win = win }) then
+        vim.api.nvim_win_call(win, function()
+          vim.opt.spell = true
+        end)
+      end
     end
   end
+
+  vim.api.nvim_create_autocmd('FileType', {
+    group = group,
+    once = true,
+    callback = function()
+      vim.treesitter.start = (function(ts_start)
+        return function(...)
+          -- Ensure spell check settings are set before starting treesitter
+          -- to avoid highlighting `@nospell` nodes
+          spellcheck()
+          vim.treesitter.start = ts_start
+          return vim.treesitter.start(...)
+        end
+      end)(vim.treesitter.start)
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('UIEnter', {
+    group = group,
+    once = true,
+    callback = vim.schedule_wrap(spellcheck),
+  })
 end
-
-vim.api.nvim_create_autocmd('FileType', {
-  group = spell_augroup,
-  once = true,
-  callback = function()
-    vim.treesitter.start = (function(ts_start)
-      return function(...)
-        -- Ensure spell check settings are set before starting treesitter
-        -- to avoid highlighting `@nospell` nodes
-        spellcheck()
-        vim.treesitter.start = ts_start
-        return vim.treesitter.start(...)
-      end
-    end)(vim.treesitter.start)
-  end,
-})
-
-vim.api.nvim_create_autocmd('UIEnter', {
-  group = spell_augroup,
-  once = true,
-  callback = vim.schedule_wrap(spellcheck),
-})
 
 -- Cursor shape
 vim.opt.gcr = {

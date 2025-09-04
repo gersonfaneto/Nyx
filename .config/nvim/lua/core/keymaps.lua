@@ -143,22 +143,17 @@ vim.api.nvim_create_autocmd('UIEnter', {
 
     -- Buffer operations
     -- stylua: ignore start
-    vim.keymap.set({ 'n' }, '<Leader>bq', '<Cmd>quit<CR>', { desc = 'Close the buffer' })
-    vim.keymap.set({ 'n' }, '<Leader>bw', '<Cmd>write<CR>', { desc = 'Write the buffer' })
+    map({ 'n' }, '<Leader>bq', '<Cmd>quit<CR>', { desc = 'Close the buffer' })
+    map({ 'n' }, '<Leader>bw', '<Cmd>write<CR>', { desc = 'Write the buffer' })
     -- stylua: ignore end
 
-    -- Indent motions
+    -- Indenting operations
+    -- stylua: ignore start
     map({ 'v' }, '>', '>gv', { desc = 'Indent and reselect visual selection' })
-    map(
-      { 'v' },
-      '<',
-      '<gv',
-      { desc = 'Unindent and reselect visual selection' }
-    )
-
-    -- Indent current line in normal mode
-    map('n', '>>', '>>', { desc = 'Indent current line' })
-    map('n', '<<', '<<', { desc = 'Unindent current line' })
+    map({ 'v' }, '<', '<gv', { desc = 'Unindent and reselect visual selection' })
+    map({ 'n' }, '>>', '>>', { desc = 'Indent current line' })
+    map({ 'n' }, '<<', '<<', { desc = 'Unindent current line' })
+    -- stylua: ignore end
 
     -- Select previously changed/yanked text, useful for selecting pasted text
     map('n', 'gz', '`[v`]', { desc = 'Select previously changed/yanked text' })
@@ -199,6 +194,12 @@ vim.api.nvim_create_autocmd('UIEnter', {
             for _, line in
               ipairs(vim.v.event.regcontents --[=[@as string[]]=])
             do
+              -- Start a new paragraph if line is an empty line so that the
+              -- original paragraphs are kept
+              if line == '' then
+                table.insert(joined_lines, '')
+              end
+
               if not should_join_line(line) then
                 table.insert(joined_lines, line)
                 goto continue
