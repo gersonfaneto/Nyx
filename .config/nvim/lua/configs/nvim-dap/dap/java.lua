@@ -6,15 +6,31 @@
 
 local M = {}
 
+local JDTLS_ATTACH_TIMEOUT = 4000
+local JDTLS_ATTACH_INTERVAL = 100
+
 local JDTLS_REQUEST_TIMEOUT = 4000
 local JDTLS_REQUEST_INTERVAL = 100
 
-M.adapter = function(cb)
-  local client = unpack(vim.lsp.get_clients({
-    name = 'jdtls',
-    bufnr = 0,
-  }))
+---Wait for jdtls client to attach to current buffer
+---@param buf? integer
+---@return vim.lsp.Client?
+local function wait_jdtls_client(buf)
+  local client ---@type vim.lsp.Client?
 
+  vim.wait(JDTLS_ATTACH_TIMEOUT, function()
+    client = unpack(vim.lsp.get_clients({
+      name = 'jdtls',
+      bufnr = vim._resolve_bufnr(buf),
+    }))
+    return client ~= nil
+  end, JDTLS_ATTACH_INTERVAL)
+
+  return client
+end
+
+M.adapter = function(cb)
+  local client = wait_jdtls_client()
   if not client then
     vim.notify(
       '[dap-java] no jdtls client attached to current buffer',
@@ -61,10 +77,7 @@ end
 -- Ported from
 -- https://github.com/mfussenegger/nvim-jdtls/blob/master/lua/jdtls/dap.lua
 M.config = (function()
-  local client = unpack(vim.lsp.get_clients({
-    name = 'jdtls',
-    bufnr = 0,
-  }))
+  local client = wait_jdtls_client()
   if not client then
     vim.notify(
       '[dap-java] no jdtls client attached to current buffer',

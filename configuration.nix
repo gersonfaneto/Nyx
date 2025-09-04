@@ -106,18 +106,24 @@
     };
   };
 
-  programs = {
-    fish = {
-      enable = true;
-    };
-    direnv = {
-      enable = true;
-      enableFishIntegration = true;
-    };
-    nix-ld = {
-      enable = true;
-      # libraries = with pkgs; [];
-    };
+  programs.fish = {
+    enable = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  programs.nix-ld = {
+    enable = true;
+  };
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
   virtualisation.docker = {
@@ -215,9 +221,9 @@
     ++ (with pkgs-unstable; [
       opencode
     ])
-    ++ (with pkgs; [
-      libsForQt5.full
-      libsForQt5.okular
+    ++ (with pkgs.libsForQt5; [
+      full
+      okular
     ])
     ++ (with pkgs; [
       # Nyx
