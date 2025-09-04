@@ -156,6 +156,7 @@
       ani-cli
       arandr
       aseprite
+      bat
       bluetui
       bottom
       brightnessctl
