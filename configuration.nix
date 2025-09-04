@@ -231,6 +231,9 @@
       nil
       alejandra
 
+      # Markdown
+      marksman
+
       # Lua
       lua
       stylua
