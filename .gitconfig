@@ -142,53 +142,40 @@
 [alias]
   it = "!git init && git commit -m 'Ready... Set... Go!' --allow-empty"
 
-  cm = commit
   cm = commit --message
   ca = commit --amend
   ce = commit --amend --no-edit
 
-  br = branch
+  ba = branch --all
   bd = branch --delete
 
   df = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
   ds = df --cached
 
-  co = checkout
   cb = checkout --branch
   cf = checkout --force
 
-  sw = switch
   sc = switch --create
 
-  ad = add
   aa = add --all
 
-  st = status
   ss = status --short
 
-  ft = fetch
   fa = fetch --all
   fp = fetch --prune
 
-  ps = push
   pf = push --force
   pd = push --delete
 
-  pl = pull
-  pr = pull --rebase
-
-  cl = clone
   cs = clone --depth=1
   cn = clone --filter=blob:none
   cr = clone --recursive
 
-  rb = rebase
   ri = rebase --interactive
   rc = rebase --continue
   ra = rebase --abort
   rt = rebase --edit-todo
 
-  wt = worktree
   wl = worktree list
   wa = worktree add
   wr = worktree remove
