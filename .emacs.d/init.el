@@ -74,13 +74,16 @@
 (global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c r") 'recompile)
 
+(defvar min/current-theme 'doom-gruvbox
+  "Current theme being used.")
+
 (use-package doom-themes
   :ensure t
   :custom
   (doom-themes-enable-bold t)
   (doom-themes-enable-italic t)
   :config
-  (load-theme 'doom-gruvbox t))
+  (load-theme min/current-theme t))
 
 (use-package doom-modeline
   :init (doom-modeline-mode)
@@ -203,21 +206,34 @@
   :hook (before-save . gofmt-before-save)
   :custom (gofmt-command "goimports"))
 
-(setq min/custom-file "~/.emacs.d/custom.el")
-
-(if (not (file-exists-p min/custom-file))
-    (make-empty-file min/custom-file))
-
 (defun min/setup-frame (frame)
   "Setup fonts, theme, and modeline for new frames."
   (with-selected-frame frame
-    (load-theme 'doom-gruvbox t)
+    (load-theme min/current-theme t)
     (set-frame-font "mononoki 12" nil t)
     (doom-modeline-mode 1)))
+
+(defun min/toggle-theme ()
+  "Toggle between doom-gruvbox and doom-gruvbox-light themes."
+  (interactive)
+  (let ((new-theme (if (eq min/current-theme 'doom-gruvbox)
+                       'doom-gruvbox-light
+                     'doom-gruvbox)))
+    (disable-theme min/current-theme)
+    (load-theme new-theme t)
+    (setq min/current-theme new-theme)
+    (custom-set-variables `(min/current-theme ',new-theme))))
+
+(global-set-key (kbd "C-c t") 'min/toggle-theme)
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions #'min/setup-frame)
   (min/setup-frame (selected-frame)))
+
+(setq min/custom-file "~/.emacs.d/custom.el")
+
+(if (not (file-exists-p min/custom-file))
+    (make-empty-file min/custom-file))
 
 (when (file-exists-p min/custom-file)
   (setq custom-file min/custom-file)
