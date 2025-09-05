@@ -208,6 +208,17 @@
 (if (not (file-exists-p min/custom-file))
     (make-empty-file min/custom-file))
 
+(defun min/setup-frame (frame)
+  "Setup fonts, theme, and modeline for new frames."
+  (with-selected-frame frame
+    (load-theme 'doom-gruvbox t)
+    (set-frame-font "mononoki 12" nil t)
+    (doom-modeline-mode 1)))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions #'min/setup-frame)
+  (min/setup-frame (selected-frame)))
+
 (when (file-exists-p min/custom-file)
   (setq custom-file min/custom-file)
   (load-file custom-file))

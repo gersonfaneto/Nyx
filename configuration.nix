@@ -168,7 +168,6 @@
       detach
       diff-so-fancy
       dunst
-      emacs
       fastfetch
       fd
       feh

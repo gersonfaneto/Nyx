@@ -8,7 +8,7 @@
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
 
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = {
@@ -64,6 +64,17 @@
             home-manager.users.gerson = ./home.nix;
           }
         ];
+      };
+    };
+
+    homeConfigurations = {
+      gerson = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./home.nix ];
+        extraSpecialArgs = {
+          inherit nyx;
+          inherit pkgs-unstable;
+        };
       };
     };
   };
