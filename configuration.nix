@@ -28,6 +28,10 @@
     experimental-features = nix-command flakes
   '';
 
+  nix.settings.trusted-users = [
+    "${nyx.user}"
+  ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -164,6 +168,7 @@
       detach
       diff-so-fancy
       dunst
+      emacs
       fastfetch
       fd
       feh
