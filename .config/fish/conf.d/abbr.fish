@@ -44,6 +44,7 @@ __command_abbr mkdir 'mkdir -p'
 __command_abbr rm 'trash-put'
 __command_abbr rml 'trash-list'
 __command_abbr rme 'trash-empty'
+__command_abbr rmp 'yes | trash-empty --verbose'
 __command_abbr rmr 'trash-restore'
 
 __command_abbr df 'df -h'
