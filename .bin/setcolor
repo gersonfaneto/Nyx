@@ -35,6 +35,7 @@ setcolor_alacritty() {
         fi
         touch "$dark_theme_path"
         touch "$light_theme_path"
+        touch "$CONFIG_HOME/alacritty/alacritty.toml"
     )
 }
 
@@ -372,15 +373,15 @@ main() {
     # Sync app's colorscheme with system/desktop colorscheme, don't set system
     # colorscheme
     if [ -z "$SETCOLOR_SKIP_SYSTEM" ]; then
-        setcolor_plasma "$color" &
+        # setcolor_plasma "$color" &
         wait
     fi
     setcolor_alacritty "$color" &
-    setcolor_foot "$color" &
-    setcolor_kitty "$color" &
-    setcolor_wezterm "$color" &
-    setcolor_konsole_yakuake "$color" &
-    setcolor_termux "$color" &
+    # setcolor_foot "$color" &
+    # setcolor_kitty "$color" &
+    # setcolor_wezterm "$color" &
+    # setcolor_konsole_yakuake "$color" &
+    # setcolor_termux "$color" &
     setcolor_highlight "$color" &
     setcolor_nvim "$color" &
     setcolor_fish "$color" &
