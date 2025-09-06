@@ -24,14 +24,12 @@ setbg_alacritty() {
         themes_dir="themes"
         # If $1 is empty, only need to ensure symlink to color theme file exists
         if [ -z "$1" ]; then
-            ln -s "$themes_dir/$DEFAULT_BG.toml" "$theme_path" 2>/dev/null
+            [ -e "$themes_dir/$DEFAULT_BG.toml" ] &&
+                ln -s "$themes_dir/$DEFAULT_BG.toml" "$theme_path" 2>/dev/null
         else
-            ln -sf "$themes_dir/$1.toml" "$theme_path"
+            [ -e "$themes_dir/$1.toml" ] &&
+                ln -sf "$themes_dir/$1.toml" "$theme_path"
         fi
-    )
-    (
-        cd "$CONFIG_HOME/alacritty" 2>/dev/null || return 1
-        touch "alacritty.toml" # Force reload
     )
 }
 
@@ -42,9 +40,11 @@ setbg_foot() {
         theme_path="theme.ini"
         themes_dir="themes"
         if [ -z "$1" ]; then
-            ln -s "$themes_dir/$DEFAULT_BG.ini" "$theme_path" 2>/dev/null
+            [ -e "$themes_dir/$DEFAULT_BG.ini" ] &&
+                ln -s "$themes_dir/$DEFAULT_BG.ini" "$theme_path" 2>/dev/null
         else
-            ln -sf "$themes_dir/$1.ini" "$theme_path"
+            [ -e "$themes_dir/$1.ini" ] &&
+                ln -sf "$themes_dir/$1.ini" "$theme_path"
         fi
     )
 
@@ -64,11 +64,11 @@ setbg_kitty() {
         # `{dark,light,no-preference}-theme.auto.conf` when OS switches to
         # dark/light mode, see: https://sw.kovidgoyal.net/kitty/kittens/themes/#change-color-themes-automatically-when-the-os-switches-between-light-and-dark
         if [ -z "$1" ]; then
-            ln -s "$DEFAULT_BG-theme.auto.conf" "$no_preference_theme_path" 2>/dev/null
-            ln -s "$DEFAULT_BG-theme.auto.conf" "$current_theme_path" 2>/dev/null
+            [ -e "$DEFAULT_BG-theme.auto.conf" ] && ln -s "$DEFAULT_BG-theme.auto.conf" "$no_preference_theme_path" 2>/dev/null
+            [ -e "$DEFAULT_BG-theme.auto.conf" ] && ln -s "$DEFAULT_BG-theme.auto.conf" "$current_theme_path" 2>/dev/null
         else
-            ln -sf "$1-theme.auto.conf" "$no_preference_theme_path"
-            ln -sf "$1-theme.auto.conf" "$current_theme_path"
+            [ -e "$1-theme.auto.conf" ] && ln -sf "$1-theme.auto.conf" "$no_preference_theme_path"
+            [ -e "$1-theme.auto.conf" ] && ln -sf "$1-theme.auto.conf" "$current_theme_path"
         fi
 
         # Touch main theme files for kitty to pick up the changes
@@ -92,9 +92,11 @@ setbg_wezterm() {
         theme_path="theme.toml"
         themes_dir="colors"
         if [ -z "$1" ]; then
-            ln -s "$themes_dir/$DEFAULT_BG.toml" "$theme_path" 2>/dev/null
+            [ -e "$themes_dir/$DEFAULT_BG.toml" ] &&
+                ln -s "$themes_dir/$DEFAULT_BG.toml" "$theme_path" 2>/dev/null
         else
-            ln -sf "$themes_dir/$1.toml" "$theme_path"
+            [ -e "$themes_dir/$1.toml" ] &&
+                ln -sf "$themes_dir/$1.toml" "$theme_path"
         fi
     )
 }
@@ -106,9 +108,11 @@ setbg_highlight() {
         themes_dir="themes"
         theme_path="highlight.theme"
         if [ -z "$1" ]; then
-            ln -s "$themes_dir/$DEFAULT_BG.theme" "$theme_path" 2>/dev/null
+            [ -e "$themes_dir/$DEFAULT_BG.theme" ] &&
+                ln -s "$themes_dir/$DEFAULT_BG.theme" "$theme_path" 2>/dev/null
         else
-            ln -sf "$themes_dir/$1.theme" "$theme_path"
+            [ -e "$themes_dir/$1.theme" ] &&
+                ln -sf "$themes_dir/$1.theme" "$theme_path"
         fi
     )
 }
@@ -295,9 +299,11 @@ setbg_termux() {
         theme_path="colors.properties"
         themes_dir="colors"
         if [ -z "$1" ]; then
-            ln -s "$themes_dir/$DEFAULT_BG.properties" "$theme_path" 2>/dev/null
+            [ -e "$themes_dir/$DEFAULT_BG.properties" ] &&
+                ln -s "$themes_dir/$DEFAULT_BG.properties" "$theme_path" 2>/dev/null
         else
-            ln -sf "$themes_dir/$1.properties" "$theme_path"
+            [ -e "$themes_dir/$1.properties" ] &&
+                ln -sf "$themes_dir/$1.properties" "$theme_path"
         fi
         if has termux-reload-settings; then
             termux-reload-settings
@@ -396,13 +402,13 @@ setbg_fish() {
         theme_path="Current.theme"
         if [ -z "$1" ]; then
             case "$DEFAULT_BG" in
-            dark) ln -s "Dark.theme" "$theme_path" 2>/dev/null ;;
-            light) ln -s "Light.theme" "$theme_path" 2>/dev/null ;;
+            dark) [ -e "Dark.theme" ] && ln -s "Dark.theme" "$theme_path" 2>/dev/null ;;
+            light) [ -e "Light.theme" ] && ln -s "Light.theme" "$theme_path" 2>/dev/null ;;
             esac
         else
             case "$1" in
-            dark) ln -sf "Dark.theme" "$theme_path" ;;
-            light) ln -sf "Light.theme" "$theme_path" ;;
+            dark) [ -e "Dark.theme" ] && ln -sf "Dark.theme" "$theme_path" ;;
+            light) [ -e "Light.theme" ] && ln -sf "Light.theme" "$theme_path" ;;
             esac
         fi
         has fish &&
@@ -463,28 +469,29 @@ setbg_libreoffice() {
 # Record the last timestamp when this script is called with 'conflict' bg
 # (different bg from suggested bg, see `suggestbg`) so that we can check the log
 # and avoid automatically setting the background if the user has already
-# manually set the background, see `__checkbg_watch_awake` and
-# `~/.config/autostart/__checkbg_watch_awake.desktop`
+# manually set the background, see `__checkbg` and
+# `~/.config/autostart/__checkbg.desktop`
 #
 # $1: bg, 'light' or 'dark'
-# write_conflict_log() {
-#     timestamp_dir="$STATE_HOME/setbg"
-#     timestamp_file="$timestamp_dir/timestamp"
-#     if [ ! -d "$timestamp_dir" ]; then
-#         mkdir -p "$timestamp_dir" || return 1
-#     fi
-#
-#     # Non-conflict bg
-#     if [ -z "$1" ] || [ "$1" = "$(suggestbg)" ]; then
-#         if [ -e "$timestamp_file" ]; then
-#             rm "$timestamp_file" || return 1
-#         fi
-#         return
-#     fi
-#
-#     # Conflict bg
-#     date +%s >"$timestamp_file" # seconds since the epoch (1970-01-01 00:00 UTC)
-# }
+write_conflict() {
+    conflict_file="$STATE_HOME/setbg/conflict"
+    conflict_file_dir="$(dirname "$conflict_file")"
+
+    if [ ! -d "$conflict_file_dir" ]; then
+        mkdir -p "$conflict_file_dir"
+    fi
+
+    # Non-conflict bg
+    if [ -z "$1" ] || [ "$1" = "$(suggestbg)" ]; then
+        if [ -e "$conflict_file" ]; then
+            rm "$conflict_file"
+        fi
+        return
+    fi
+
+    # Conflict bg
+    date +%s >"$conflict_file" # seconds since the epoch (1970-01-01 00:00 UTC)
+}
 
 usage() {
     echo "Usage: $(basename "$0") [light|dark]"
@@ -492,6 +499,13 @@ usage() {
 }
 
 main() {
+    lockfile="${XDG_RUNTIME_DIR:-/tmp}/setbg.lock"
+    exec 9>"$lockfile"
+    if ! flock -n 9; then
+        echo "Waiting for existing instance (lock: '$lockfile')" >&2
+        flock 9
+    fi
+
     bg=''
     for arg in "$@"; do
         case "$arg" in
@@ -505,41 +519,43 @@ main() {
         esac
     done
 
+    trap 'kill $(jobs -p) 2>/dev/null; wait' EXIT INT TERM HUP
+
     # Called by `syncbg` to sync apps' background with system/desktop
     # background, don't set system background
-    # if [ -z "$SETBG_SKIP_SYSTEM" ]; then
-    #     setbg_macos "$bg" &
-    #     setbg_gnome "$bg" &
-    #     setbg_plasma "$bg" &
-    #
-    #     # Kitty and wezterm have their own mechanism to detect and sync with
-    #     # system background:
-    #     # - https://sw.kovidgoyal.net/kitty/kittens/themes/#change-color-themes-automatically-when-the-os-switches-between-light-and-dark
-    #     # - https://wezterm.org/config/lua/window/get_appearance.html?h=get_app
-    #     #
-    #     # Fix kitty memory leak on KDE when `__syncbg` is running in the ground
-    #     setbg_kitty "$bg" &
-    #     setbg_wezterm "$bg" &
-    #
-    #     # Make sure system bg is set before setting apps' bg to avoid `__syncbg`
-    #     # daemon setting apps' bg back to old system bg, see:
-    #     # - `__syncbg`
-    #     # - `~/.config/autostart/__syncbg`
-    #     # - `~/Library/LaunchAgents/user.syncbg.plist`
-    #     wait
-    # fi
+    if [ -z "$SETBG_SKIP_SYSTEM" ]; then
+        setbg_macos "$bg" &
+        setbg_gnome "$bg" &
+        setbg_plasma "$bg" &
+
+        # Kitty and wezterm have their own mechanism to detect and sync with
+        # system background:
+        # - https://sw.kovidgoyal.net/kitty/kittens/themes/#change-color-themes-automatically-when-the-os-switches-between-light-and-dark
+        # - https://wezterm.org/config/lua/window/get_appearance.html?h=get_app
+        #
+        # Fix kitty memory leak on KDE when `__syncbg` is running in the ground
+        setbg_kitty "$bg" &
+        setbg_wezterm "$bg" &
+
+        # Make sure system bg is set before setting apps' bg to avoid `__syncbg`
+        # daemon setting apps' bg back to old system bg, see:
+        # - `__syncbg`
+        # - `~/.config/autostart/__syncbg`
+        # - `~/Library/LaunchAgents/user.syncbg.plist`
+        wait
+    fi
     setbg_alacritty "$bg" &
-    # setbg_foot "$bg" &
+    setbg_foot "$bg" &
     setbg_highlight "$bg" &
     setbg_nvim "$bg" &
-    # setbg_konsole_yakuake "$bg" &
-    # setbg_termux "$bg" &
-    # setbg_okular "$bg" &
+    setbg_konsole_yakuake "$bg" &
+    setbg_termux "$bg" &
+    setbg_okular "$bg" &
     setbg_zathura "$bg" &
-    # setbg_vscode "$bg" &
+    setbg_vscode "$bg" &
     setbg_fish "$bg" &
-    # setbg_libreoffice "$bg" &
-    # write_conflict_log "$bg" &
+    setbg_libreoffice "$bg" &
+    write_conflict "$bg" &
     wait
 }
 
