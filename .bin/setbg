@@ -30,6 +30,7 @@ setbg_alacritty() {
             [ -e "$themes_dir/$1.toml" ] &&
                 ln -sf "$themes_dir/$1.toml" "$theme_path"
         fi
+        touch "$CONFIG_HOME/alacritty/alacritty.toml"
     )
 }
 
@@ -524,9 +525,9 @@ main() {
     # Called by `syncbg` to sync apps' background with system/desktop
     # background, don't set system background
     if [ -z "$SETBG_SKIP_SYSTEM" ]; then
-        setbg_macos "$bg" &
-        setbg_gnome "$bg" &
-        setbg_plasma "$bg" &
+        # setbg_macos "$bg" &
+        # setbg_gnome "$bg" &
+        # setbg_plasma "$bg" &
 
         # Kitty and wezterm have their own mechanism to detect and sync with
         # system background:
@@ -534,8 +535,8 @@ main() {
         # - https://wezterm.org/config/lua/window/get_appearance.html?h=get_app
         #
         # Fix kitty memory leak on KDE when `__syncbg` is running in the ground
-        setbg_kitty "$bg" &
-        setbg_wezterm "$bg" &
+        # setbg_kitty "$bg" &
+        # setbg_wezterm "$bg" &
 
         # Make sure system bg is set before setting apps' bg to avoid `__syncbg`
         # daemon setting apps' bg back to old system bg, see:
@@ -545,17 +546,17 @@ main() {
         wait
     fi
     setbg_alacritty "$bg" &
-    setbg_foot "$bg" &
+    # setbg_foot "$bg" &
     setbg_highlight "$bg" &
     setbg_nvim "$bg" &
-    setbg_konsole_yakuake "$bg" &
-    setbg_termux "$bg" &
+    # setbg_konsole_yakuake "$bg" &
+    # setbg_termux "$bg" &
     setbg_okular "$bg" &
     setbg_zathura "$bg" &
-    setbg_vscode "$bg" &
+    # setbg_vscode "$bg" &
     setbg_fish "$bg" &
-    setbg_libreoffice "$bg" &
-    write_conflict "$bg" &
+    # setbg_libreoffice "$bg" &
+    # write_conflict "$bg" &
     wait
 }
 
