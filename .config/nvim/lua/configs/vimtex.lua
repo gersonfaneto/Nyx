@@ -10,14 +10,17 @@ vim.treesitter.start = (function(cb)
   ---@param lang string? Language of the parser (default: from buffer filetype)
   return function(bufnr, lang, ...)
     bufnr = vim._resolve_bufnr(bufnr)
-    if not vim.api.nvim_buf_is_valid(bufnr) then
+    cb(bufnr, lang, ...)
+    if vim.bo[bufnr].ft ~= 'tex' and lang ~= 'latex' then
       return
     end
-    cb(bufnr, lang, ...)
     -- Re-enable regex syntax highlighting after starting treesitter
-    if vim.bo[bufnr].ft == 'tex' or lang == 'latex' then
+    vim.schedule(function()
+      if not vim.api.nvim_buf_is_valid(bufnr) then
+        return
+      end
       vim.bo[bufnr].syntax = 'on'
-    end
+    end)
   end
 end)(vim.treesitter.start)
 
@@ -38,6 +41,19 @@ elseif vim.fn.executable('okular') == 1 then
   vim.g.vimtex_view_general_viewer = 'okular'
   vim.g.vimtex_view_general_options = '--unique file:@pdf#src:@line@tex'
 end
+
+vim.g.vimtex_auto_sync_view = true
+
+vim.api.nvim_create_user_command('VimtexAutoSyncView', function(args)
+  vim.g.vimtex_auto_sync_view = args.bang or not vim.g.vimtex_auto_sync_view
+  vim.notify(
+    'Vimtex: auto-sync '
+      .. (vim.g.vimtex_auto_sync_view and 'started' or 'stopped')
+  )
+end, {
+  bang = true,
+  desc = 'Toggle vimtex auto sync view.',
+})
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'tex',
@@ -63,6 +79,10 @@ vim.api.nvim_create_autocmd('FileType', {
         {}
       ),
       callback = function(a)
+        if not vim.g.vimtex_auto_sync_view then
+          return
+        end
+
         local viewer_name = vim.b[a.buf].vimtex.viewer.name
         if viewer_name == 'General' then
           viewer_name = vim.g.vimtex_view_general_viewer
