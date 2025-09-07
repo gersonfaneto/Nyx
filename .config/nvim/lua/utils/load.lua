@@ -82,12 +82,10 @@ local function trig_loaders_fn(loaders)
       if not vim.api.nvim_buf_is_valid(args.buf) then
         return
       end
-      vim.api.nvim_buf_call(args.buf, function()
-        vim.api.nvim_exec_autocmds(
-          args.event,
-          { pattern = args.match, data = args.data }
-        )
-      end)
+      vim.api.nvim_exec_autocmds(
+        args.event,
+        { pattern = args.match, data = args.data }
+      )
     end)
 
     return true
@@ -186,7 +184,7 @@ function M.on_events(event_specs, name, load)
             callback = trig_loaders_fn(loaders),
           })
         end
-        table.insert(event_loaders[spec.event].pats[pat], load)
+        table.insert(loaders, load)
       end
       goto continue
     end
@@ -206,7 +204,7 @@ function M.on_events(event_specs, name, load)
           callback = trig_loaders_fn(loaders),
         })
       end
-      table.insert(event_loaders[spec.event].all, load)
+      table.insert(loaders, load)
     end
     ::continue::
   end
