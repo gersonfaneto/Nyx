@@ -3,6 +3,11 @@ vim.bo.cindent = false
 vim.bo.smartindent = false
 vim.bo.commentstring = '<!-- %s -->'
 
+vim.wo.conceallevel = 2
+vim.wo.concealcursor = 'c'
+
+vim.wo.foldminlines = 1
+
 ---Don't join title/first line of list item with previous lines when yanking
 ---with joined paragraphs
 ---@param line string
