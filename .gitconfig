@@ -20,7 +20,7 @@
 
 [commit]
   verbose = true
-  ; gpgSign = true
+  gpgSign = true
 
 [core]
   autocrlf = input
@@ -62,7 +62,7 @@
 
 [push]
   default = current
-  ; gpgSign = true
+  gpgSign = true
   followTags = true
   autoSetupRemote = true
 

@@ -101,7 +101,7 @@
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups = ["audio" "video" "wheel" "docker" "networkmanager"];
-    # packages = with pkgs; [];
+    packages = with pkgs; [gnupg];
   };
 
   nixpkgs = {
@@ -121,6 +121,12 @@
 
   programs.nix-ld = {
     enable = true;
+  };
+
+  programs.gnupg = {
+    agent = {
+      enable = true;
+    };
   };
 
   virtualisation.docker = {
