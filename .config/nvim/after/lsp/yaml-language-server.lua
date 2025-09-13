@@ -23,6 +23,7 @@ return {
       validate = true,
       schemas = {
         ['https://json.schemastore.org/clang-format.json'] = '.clang-format',
+        ['https://json.schemastore.org/clangd.json'] = '.clangd',
       },
     },
   },
