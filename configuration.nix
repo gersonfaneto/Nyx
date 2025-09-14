@@ -166,6 +166,7 @@
       chafa
       detach
       diff-so-fancy
+      distrobox
       dunst
       fastfetch
       fd
