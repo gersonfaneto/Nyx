@@ -166,7 +166,6 @@
       chafa
       detach
       diff-so-fancy
-      distrobox
       dunst
       fastfetch
       fd
@@ -178,10 +177,8 @@
       flameshot
       fzf
       gh
-      ghostty
       git
       highlight
-      htop
       jq
       lazydocker
       lazygit
@@ -225,10 +222,6 @@
     ])
     ++ (with pkgs-unstable; [
       opencode
-    ])
-    ++ (with pkgs.libsForQt5; [
-      full
-      okular
     ])
     ++ (with pkgs; [
       # Nyx
