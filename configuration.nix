@@ -221,6 +221,7 @@
       zoxide
     ])
     ++ (with pkgs-unstable; [
+      neovim
       opencode
     ])
     ++ (with pkgs; [
