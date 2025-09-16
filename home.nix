@@ -8,6 +8,7 @@
 
   home.packages = with pkgs; [
     # home-manager # Not needed, is managed by the flake...
+    neovim
   ];
 
   # FIX: This might cause some problems in the future...

@@ -2,27 +2,40 @@
   description = "Nyx";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
 
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+    };
+
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+    };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    home-manager,
-    ...
-  } @ inputs: let
+  outputs = {self, ...} @ inputs: let
     system = "x86_64-linux";
 
     # lib = nixpkgs.lib;
-    pkgs = nixpkgs.legacyPackages.${system};
-    pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+    pkgs = import inputs.nixpkgs {
+      inherit system;
+      overlays = [
+        inputs.neovim-nightly-overlay.overlays.default
+      ];
+    };
 
     apple-fonts = inputs.apple-fonts.packages.${pkgs.system};
 
@@ -32,7 +45,7 @@
       email = "me@gersonfaneto.dev";
     };
 
-    forAllSystems = nixpkgs.lib.genAttrs [
+    forAllSystems = inputs.nixpkgs.lib.genAttrs [
       "aarch64-linux"
       "x86_64-linux"
       "x86_64-darwin"
@@ -41,23 +54,22 @@
   in {
     formatter = forAllSystems (
       system: let
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = inputs.nixpkgs.legacyPackages.${system};
       in
         pkgs.alejandra
     );
 
     nixosConfigurations = {
-      Nyx = nixpkgs.lib.nixosSystem {
+      Nyx = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
           inherit apple-fonts;
           inherit nyx;
-          inherit pkgs-unstable;
         };
         modules = [
           ./configuration.nix
 
-          home-manager.nixosModules.home-manager
+          inputs.home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -68,12 +80,11 @@
     };
 
     homeConfigurations = {
-      gerson = home-manager.lib.homeManagerConfiguration {
+      gerson = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [./home.nix];
         extraSpecialArgs = {
           inherit nyx;
-          inherit pkgs-unstable;
         };
       };
     };

@@ -1,10 +1,9 @@
 {
-  # lib,
-  # inputs,
-  # config,
+  lib,
+  inputs,
+  config,
   nyx,
   pkgs,
-  pkgs-unstable,
   apple-fonts,
   ...
 }: {
@@ -190,6 +189,7 @@
       man-pages-posix
       mpv
       neovim
+      opencode
       pandoc
       playerctl
       poppler-utils
@@ -219,10 +219,6 @@
       xss-lock
       zathura
       zoxide
-    ])
-    ++ (with pkgs-unstable; [
-      neovim
-      opencode
     ])
     ++ (with pkgs; [
       # Nyx
