@@ -163,20 +163,14 @@ augroup('my.last_pos_jmp', {
   {
     desc = 'Last position jump.',
     callback = function(args)
-      vim.api.nvim_create_autocmd('FileType', {
-        once = true,
-        buffer = args.buf,
-        callback = function(i)
-          local ft = vim.bo[i.buf].ft
-          if ft ~= 'gitcommit' and ft ~= 'gitrebase' then
-            vim.cmd.normal({
-              'g`"zvzz',
-              bang = true,
-              mods = { emsg_silent = true },
-            })
-          end
-        end,
-      })
+      local ft = vim.bo[args.buf].ft
+      if ft ~= 'gitcommit' and ft ~= 'gitrebase' then
+        vim.cmd.normal({
+          'g`"zv',
+          bang = true,
+          mods = { emsg_silent = true },
+        })
+      end
     end,
   },
 })
