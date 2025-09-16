@@ -158,7 +158,6 @@
       ani-cli
       arandr
       aseprite
-      atuin
       bat
       bluetui
       bottom
