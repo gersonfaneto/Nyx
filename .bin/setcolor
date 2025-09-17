@@ -128,6 +128,28 @@ setcolor_wezterm() {
 }
 
 # $1: name of the colorscheme
+setcolor_ghostty() {
+    (
+        cd "$CONFIG_HOME/ghostty/themes" || return
+        dark_theme_path="dark"
+        light_theme_path="light"
+        if [ -z "$1" ]; then
+            [ -e "$DEFAULT_COLOR-dark" ] && ln -s "$DEFAULT_COLOR-dark" "$dark_theme_path" 2>/dev/null
+            [ -e "$DEFAULT_COLOR-light" ] && ln -s "$DEFAULT_COLOR-light" "$light_theme_path" 2>/dev/null
+        else
+            [ -e "$1-dark" ] && ln -sf "$1-dark" "$dark_theme_path"
+            [ -e "$1-light" ] && ln -sf "$1-light" "$light_theme_path"
+        fi
+
+        if has ghostty; then
+            for pid in $(pgrep ghostty); do
+                kill -USR2 "$pid"
+            done
+        fi
+    )
+}
+
+# $1: name of the colorscheme
 setcolor_highlight() {
     (
         cd "$HOME/.highlight/themes" || return
@@ -385,6 +407,7 @@ main() {
     setcolor_highlight "$color" &
     setcolor_nvim "$color" &
     setcolor_fish "$color" &
+    setcolor_ghostty "$color" &
     wait
 }
 

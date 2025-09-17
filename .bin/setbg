@@ -18,7 +18,7 @@ get_theme_variant() {
 
 # $1: 'light' or 'dark'
 setbg_alacritty() {
-    (
+    (   
         cd "$CONFIG_HOME/alacritty" || return
         theme_path="theme.toml"
         themes_dir="themes"
@@ -36,7 +36,7 @@ setbg_alacritty() {
 
 # $1: 'light' or 'dark'
 setbg_foot() {
-    (
+    (   
         cd "$CONFIG_HOME/foot" || return
         theme_path="theme.ini"
         themes_dir="themes"
@@ -56,7 +56,7 @@ setbg_foot() {
 
 # $1: 'light' or 'dark'
 setbg_kitty() {
-    (
+    (   
         cd "$CONFIG_HOME/kitty" || return
 
         no_preference_theme_path="no-preference-theme.auto.conf"
@@ -88,7 +88,7 @@ setbg_kitty() {
 
 # $1: 'light' or 'dark'
 setbg_wezterm() {
-    (
+    (   
         cd "$CONFIG_HOME/wezterm" || return
         theme_path="theme.toml"
         themes_dir="colors"
@@ -103,8 +103,29 @@ setbg_wezterm() {
 }
 
 # $1: 'light' or 'dark'
+setbg_ghostty() {
+    (   
+        cd "$CONFIG_HOME/ghostty/themes" || return
+        theme_path="theme"
+        if [ -z "$1" ]; then
+            [ -e "$DEFAULT_BG" ] &&
+                ln -s "$DEFAULT_BG" "$theme_path" 2>/dev/null
+        else
+            [ -e "$1" ] &&
+                ln -sf "$1" "$theme_path"
+        fi
+
+        if has ghostty; then
+            for pid in $(pgrep ghostty); do
+                kill -USR2 "$pid"
+            done
+        fi
+    )
+}
+
+# $1: 'light' or 'dark'
 setbg_highlight() {
-    (
+    (   
         cd "$HOME/.highlight" || return
         themes_dir="themes"
         theme_path="highlight.theme"
@@ -295,7 +316,7 @@ setbg_konsole_yakuake() {
 
 # $1: 'light' or 'dark'
 setbg_termux() {
-    (
+    (   
         cd "$HOME/.termux" || return
         theme_path="colors.properties"
         themes_dir="colors"
@@ -398,7 +419,7 @@ setbg_vscode() {
 
 # $1: 'light' or 'dark'
 setbg_fish() {
-    (
+    (   
         cd "$CONFIG_HOME/fish/themes" || return
         theme_path="Current.theme"
         if [ -z "$1" ]; then
@@ -555,7 +576,7 @@ main() {
     setbg_zathura "$bg" &
     # setbg_vscode "$bg" &
     setbg_fish "$bg" &
-    # setbg_libreoffice "$bg" &
+    setbg_ghostty "$bg" &
     # write_conflict "$bg" &
     wait
 }
