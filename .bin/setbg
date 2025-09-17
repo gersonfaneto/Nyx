@@ -569,7 +569,7 @@ main() {
     # setbg_konsole_yakuake "$bg" &
     # setbg_termux "$bg" &
     setbg_okular "$bg" &
-    setbg_zathura "$bg" &
+    # setbg_zathura "$bg" &
     # setbg_vscode "$bg" &
     setbg_fish "$bg" &
     setbg_ghostty "$bg" &
