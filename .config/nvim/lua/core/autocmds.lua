@@ -159,18 +159,37 @@ augroup('my.win_close_jmp', {
 })
 
 augroup('my.last_pos_jmp', {
-  'BufReadPost',
+  'BufReadPre',
   {
     desc = 'Last position jump.',
     callback = function(args)
-      local ft = vim.bo[args.buf].ft
-      if ft ~= 'gitcommit' and ft ~= 'gitrebase' then
-        vim.cmd.normal({
-          'g`"zv',
-          bang = true,
-          mods = { emsg_silent = true },
-        })
+      -- `BufReadPre` can be triggered multiple times for the same buffer due
+      -- to lazy-loading
+      -- We should skip re-triggered events to prevent re-setting cursor pos
+      -- which can unexpectedly override target line number given in cmdline,
+      -- i.e. `nvim <file> +<linenr>`
+      if vim.b[args.buf].lpj then
+        return
       end
+      vim.b[args.buf].lpj = true
+
+      vim.api.nvim_create_autocmd('FileType', {
+        once = true,
+        buffer = args.buf,
+        callback = function(a)
+          local ft = vim.bo[a.buf].ft
+          if ft == 'gitcommit' or ft == 'gitrebase' then
+            return
+          end
+          local last_pos = vim.api.nvim_buf_get_mark(a.buf, '"')
+          if vim.deep_equal(last_pos, { 0, 0 }) then
+            return
+          end
+          for _, win in ipairs(vim.fn.win_findbuf(a.buf)) do
+            vim.api.nvim_win_set_cursor(win, last_pos)
+          end
+        end,
+      })
     end,
   },
 })
