@@ -4,6 +4,7 @@ return {
   data = {
     preload = function()
       vim.g['conjure#filetypes'] = { 'clojure' }
+      vim.g['conjure#mapping#doc_word'] = false
     end,
   },
 }
