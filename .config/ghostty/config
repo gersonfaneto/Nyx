@@ -1,0 +1,21 @@
+font-family = 'mononoki'
+font-size = 12
+
+cursor-style = block
+cursor-style-blink = false
+
+shell-integration-features = no-cursor
+
+initial-command = /run/current-system/sw/bin/fish --login --interactive
+
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+
+window-decoration = none
+
+scrollback-limit = 0
+
+confirm-close-surface = false
+
+mouse-hide-while-typing = true

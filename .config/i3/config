@@ -14,6 +14,10 @@ set $down j
 set $up k
 set $right l
 
+# Set the system default apps
+set $terminal ghostty
+set $browser firefox
+
 # Font families and sizes used along the system.
 
 set $font_family_general SF Mono
@@ -76,14 +80,14 @@ bindsym $mod+z exec --no-startup-id boomer
 bindsym $mod+c exec --no-startup-id "$HOME/.config/i3/bin/caffeine"
 
 # Open the browser.
-bindsym $mod+b exec firefox
-bindsym $mod+$shift+b exec firefox --private-window
+bindsym $mod+b exec $browser
+bindsym $mod+$shift+b exec $browser --private-window
 
 # Open the terminal.
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec $terminal
 
 # Open THE text editor.
-bindsym $mod+e exec alacritty --command nvim
+bindsym $mod+e exec $terminal --command nvim
 
 # Kill the focused window.
 bindsym $mod+q kill

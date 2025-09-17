@@ -63,7 +63,17 @@ function M.load(spec, path)
         :gsub('%.', '-')
     )
     if ok and type(plugin) == 'table' and plugin.setup then
-      pcall(plugin.setup)
+      local opts = spec.data.opts
+
+      if type(opts) == 'function' then
+        opts = opts(spec, {})
+      end
+
+      if opts then
+        pcall(plugin.setup, opts)
+      else
+        pcall(plugin.setup)
+      end
     end
   end
 end
