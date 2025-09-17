@@ -115,11 +115,7 @@ setbg_ghostty() {
                 ln -sf "$1" "$theme_path"
         fi
 
-        if has ghostty; then
-            for pid in $(pgrep ghostty); do
-                kill -USR2 "$pid"
-            done
-        fi
+        kill -USR2 "$(pgrep ghostty)"
     )
 }
 
