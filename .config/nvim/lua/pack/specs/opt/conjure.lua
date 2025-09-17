@@ -2,7 +2,6 @@
 return {
   src = 'https://github.com/Olical/conjure',
   data = {
-    ft = { 'clojure' },
     deps = {
       {
         src = 'https://github.com/Saghen/blink.compat',

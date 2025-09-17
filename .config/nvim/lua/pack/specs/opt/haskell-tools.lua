@@ -1,9 +1,8 @@
 ---@type vim.pack.Spec
 return {
   src = 'https://github.com/mrcjkb/haskell-tools.nvim',
+  version = vim.version.range('^6'),
   data = {
-    version = '^6', -- Recommended
-    ft = { 'haskell', 'cabal' },
     init = function()
       vim.g.haskell_tools = {
         hls = {

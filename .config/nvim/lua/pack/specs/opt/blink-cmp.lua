@@ -1,5 +1,7 @@
+---@type vim.pack.Spec
 return {
   src = 'https://github.com/saghen/blink.cmp',
+  version = vim.version.range('1.*'),
   data = {
     deps = {
       {
