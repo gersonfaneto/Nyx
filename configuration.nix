@@ -259,6 +259,20 @@
 
       # General
       efm-langserver
+    ])
+    ++ (with pkgs; [
+      python312Packages.pynvim
+      python312Packages.ipykernel
+      python312Packages.jupyter-client
+
+      cairosvg
+      python312Packages.kaleido
+      python312Packages.nbformat
+      python312Packages.plotly
+      python312Packages.pnglatex
+      python312Packages.pyperclip
+      python312Packages.pyperclip
+      python312Packages.pyqt6
     ]);
 
   fonts = {

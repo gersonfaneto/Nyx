@@ -1,4 +1,4 @@
-theme = theme
+theme = current
 
 initial-command = /run/current-system/sw/bin/fish --login --interactive
 

@@ -106,7 +106,7 @@ setbg_wezterm() {
 setbg_ghostty() {
     (   
         cd "$CONFIG_HOME/ghostty/themes" || return
-        theme_path="theme"
+        theme_path="current"
         if [ -z "$1" ]; then
             [ -e "$DEFAULT_BG" ] &&
                 ln -s "$DEFAULT_BG" "$theme_path" 2>/dev/null
