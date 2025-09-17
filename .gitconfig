@@ -182,4 +182,6 @@
 
   lg = "log --graph --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n'"
 
+  url = "!git config --get remote.origin.url | sed -e 's/:/\\//g' -e 's/ssh\\/\\///g' -e 's/git@/https:\\/\\//g'"
+
 ; vim:ft=gitconfig:
