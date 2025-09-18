@@ -2,8 +2,13 @@ theme = current
 
 initial-command = /run/current-system/sw/bin/fish --login --interactive
 
-font-family = mononoki
 font-size = 12
+
+# font-family = APL385 Unicode
+# font-family = APL386 Unicode
+font-family = BQN386 Unicode
+# font-family = Comic Mono
+# font-family = mononoki
 
 cursor-style = block
 cursor-style-blink = false

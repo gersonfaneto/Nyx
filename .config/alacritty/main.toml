@@ -17,7 +17,11 @@ transparent_background_colors = true
 size = 12
 
 [font.normal]
-family = 'mononoki'
+# family = 'APL385 Unicode'
+# family = 'APL386 Unicode'
+family = 'BQN386 Unicode'
+# family = 'Comic Mono'
+# family = 'mononoki'
 
 [scrolling]
 history = 0

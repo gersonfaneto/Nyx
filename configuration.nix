@@ -283,6 +283,9 @@
       noto-fonts-color-emoji
 
       # Coding
+      apl386
+      bqn386
+      comic-mono
       mononoki
 
       # UI
