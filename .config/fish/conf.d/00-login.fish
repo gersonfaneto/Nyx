@@ -56,8 +56,10 @@ if test "$TERM" = linux
 end
 
 # Ensure color theme files are correctly linked
-type -q setbg; and setbg &
-type -q setcolors; and setcolors &
+if not test -f $__fish_config_dir/themes/Current.theme
+    type -q setbg; and setbg &
+    type -q setcolors; and setcolors &
+end
 
 # Automatically login to proot-distro on termux
 if type -q proot-distro
