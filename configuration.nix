@@ -1,10 +1,6 @@
 {
-  lib,
-  inputs,
-  config,
-  nyx,
   pkgs,
-  apple-fonts,
+  inputs,
   ...
 }: {
   imports = [
@@ -27,9 +23,7 @@
     experimental-features = nix-command flakes
   '';
 
-  nix.settings.trusted-users = [
-    "${nyx.user}"
-  ];
+  nix.settings.trusted-users = ["gerson"];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -96,7 +90,7 @@
     config.common.default = ["gtk"];
   };
 
-  users.users.${nyx.user} = {
+  users.users.gerson = {
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups = ["audio" "video" "wheel" "docker" "networkmanager"];
@@ -126,6 +120,11 @@
     agent = {
       enable = true;
     };
+  };
+
+  programs.neovim = {
+    enable = true;
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
   };
 
   virtualisation.docker = {
@@ -176,6 +175,7 @@
       flameshot
       fzf
       gh
+      ghostty
       git
       highlight
       jq
@@ -188,7 +188,6 @@
       man-pages
       man-pages-posix
       mpv
-      neovim
       opencode
       pandoc
       playerctl
@@ -287,7 +286,7 @@
       mononoki
 
       # UI
-      apple-fonts.sf-mono
+      inputs.apple-fonts.packages.${pkgs.system}.sf-mono
     ];
     fontconfig = {
       enable = true;
