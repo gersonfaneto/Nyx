@@ -185,6 +185,7 @@
       less
       libnotify
       libqalculate
+      localsend
       man-pages
       man-pages-posix
       mpv
