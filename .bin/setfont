@@ -5,10 +5,14 @@ CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 switch_alacritty() {
     (
-        ALACRITTY_CONFIG="$CONFIG_HOME/alacritty/main.toml"
+        ALACRITTY_CONFIG="$CONFIG_HOME/alacritty/local.toml"
 
-        sed -i 's/^family = /# family = /' "$ALACRITTY_CONFIG"
-        sed -i "s/# family = '$FONT'/family = '$FONT'/" "$ALACRITTY_CONFIG"
+        if [ ! -f "$ALACRITTY_CONFIG" ]; then
+            echo "[font.normal]" > "$ALACRITTY_CONFIG"
+            echo "family = '$FONT'" >> "$ALACRITTY_CONFIG"
+        else
+            sed -i "s|^\([[:space:]]*\)family = .*|\1family = '$FONT'|" "$ALACRITTY_CONFIG"
+        fi
 
         touch "$CONFIG_HOME/alacritty/alacritty.toml"
     )
@@ -16,10 +20,13 @@ switch_alacritty() {
 
 switch_ghostty() {
     (
-        GHOSTTY_CONFIG="$CONFIG_HOME/ghostty/config"
+        GHOSTTY_CONFIG="$CONFIG_HOME/ghostty/config.local"
 
-        sed -i 's/^font-family = /# font-family = /' "$GHOSTTY_CONFIG"
-        sed -i "s/# font-family = $FONT/font-family = $FONT/" "$GHOSTTY_CONFIG"
+        if [ ! -f "$GHOSTTY_CONFIG" ]; then
+            echo "font-family = \"$FONT\"" > "$GHOSTTY_CONFIG"
+        else
+            sed -i "s|^font-family = .*|font-family = \"$FONT\"|" "$GHOSTTY_CONFIG"
+        fi
 
         kill -USR2 "$(pgrep ghostty)"
     )
