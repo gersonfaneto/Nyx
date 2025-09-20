@@ -284,10 +284,9 @@
       noto-fonts-color-emoji
 
       # Coding
-      apl386
       bqn386
-      comic-mono
       mononoki
+      comic-mono
 
       # UI
       inputs.apple-fonts.packages.${pkgs.system}.sf-mono

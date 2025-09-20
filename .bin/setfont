@@ -8,8 +8,8 @@ switch_alacritty() {
         ALACRITTY_CONFIG="$CONFIG_HOME/alacritty/local.toml"
 
         if [ ! -f "$ALACRITTY_CONFIG" ]; then
-            echo "[font.normal]" > "$ALACRITTY_CONFIG"
-            echo "family = '$FONT'" >> "$ALACRITTY_CONFIG"
+            echo "[font.normal]" >"$ALACRITTY_CONFIG"
+            echo "family = '$FONT'" >>"$ALACRITTY_CONFIG"
         else
             sed -i "s|^\([[:space:]]*\)family = .*|\1family = '$FONT'|" "$ALACRITTY_CONFIG"
         fi
@@ -23,7 +23,7 @@ switch_ghostty() {
         GHOSTTY_CONFIG="$CONFIG_HOME/ghostty/config.local"
 
         if [ ! -f "$GHOSTTY_CONFIG" ]; then
-            echo "font-family = \"$FONT\"" > "$GHOSTTY_CONFIG"
+            echo "font-family = \"$FONT\"" >"$GHOSTTY_CONFIG"
         else
             sed -i "s|^font-family = .*|font-family = \"$FONT\"|" "$GHOSTTY_CONFIG"
         fi
@@ -35,13 +35,13 @@ switch_ghostty() {
 main() {
     if [ $# -ne 1 ]; then
         echo "Usage: $0 <font_name>"
-        echo "Available fonts: APL385 Unicode, APL386 Unicode, BQN386 Unicode, Comic Mono, mononoki"
+        echo "Available fonts: BQN386 Unicode, Comic Mono, mononoki"
         exit 1
     fi
 
     FONT="$1"
 
-    AVAILABLE_FONTS=("APL385 Unicode" "APL386 Unicode" "BQN386 Unicode" "Comic Mono" "mononoki")
+    AVAILABLE_FONTS=("BQN386 Unicode" "Comic Mono" "mononoki")
 
     VALID=false
 
