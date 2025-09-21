@@ -159,6 +159,7 @@
       arandr
       aseprite
       bat
+      bitwarden-cli
       bluetui
       bottom
       brightnessctl
