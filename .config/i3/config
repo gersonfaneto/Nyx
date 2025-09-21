@@ -87,7 +87,7 @@ bindsym $mod+$shift+b exec $browser --private-window
 bindsym $mod+Return exec $terminal
 
 # Open THE text editor.
-bindsym $mod+e exec $terminal --command nvim
+bindsym $mod+e exec $terminal --initial-command='nvim'
 
 # Kill the focused window.
 bindsym $mod+q kill

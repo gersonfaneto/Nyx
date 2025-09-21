@@ -3,7 +3,7 @@ return {
   data = {
     postload = function()
       -- TODO: This is kinda ugly...
-      local plugin = vim.pack.get({'ghcid'})[1] --[[@as vim.pack.PlugData]]
+      local plugin = vim.pack.get({ 'ghcid' })[1] --[[@as vim.pack.PlugData]]
       vim.opt.rtp:append(plugin.path .. '/plugins/nvim/')
     end,
   },

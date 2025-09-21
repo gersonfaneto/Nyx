@@ -29,7 +29,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Nyx";
-  networking.networkmanager.enable = true;
+  networking.wireless.iwd.enable = true;
+  # networking.networkmanager.enable = true;
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
@@ -196,8 +197,8 @@
       presenterm
       prismlauncher
       pulseaudio
-      pulsemixer
       qalculate-gtk
+      qutebrowser
       ripgrep
       rsync
       scc
@@ -212,6 +213,7 @@
       vlc
       w3m
       wget
+      wiremix
       xclip
       xdragon
       xsecurelock
