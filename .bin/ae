@@ -5,7 +5,7 @@
 # Check if a file/directory does not exist
 checkne() {
     if [ -e "$1" ]; then
-        echo "Error: '$1' already exists"
+        echo "Error: '$1' already exists" >&2
         return 1
     fi
     return 0
@@ -18,6 +18,9 @@ flatten_single_dir() {
     sub_dir=""
 
     for item in "$extracted_dir"/* "$extracted_dir"/.*; do
+        if [ ! -e "$item" ]; then
+            continue
+        fi
         # Extracted dir contains file or more than 1 sub-dir
         if [ -d "$sub_dir" ] || [ ! -d "$item" ]; then
             return 1
@@ -78,7 +81,7 @@ main() {
     fname=$1
 
     if [ ! -f "$fname" ]; then
-        echo "'$fname' is not a valid file"
+        echo "'$fname' is not a valid file" >&2
         return 1
     fi
 
@@ -233,7 +236,7 @@ main() {
         7z x "$fname" -o"$froot"
         ;;
     *)
-        echo "'$fname' cannot be extracted"
+        echo "'$fname' cannot be extracted" >&2
         ;;
     esac
 
