@@ -180,6 +180,7 @@
       ghostty
       git
       highlight
+      impala
       jq
       lazydocker
       lazygit
@@ -199,7 +200,6 @@
       prismlauncher
       pulseaudio
       qalculate-gtk
-      qutebrowser
       ripgrep
       rsync
       scc
