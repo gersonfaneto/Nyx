@@ -32,6 +32,10 @@
   networking.wireless.iwd.enable = true;
   # networking.networkmanager.enable = true;
 
+  security.polkit = {
+    enable = true;
+  };
+
   systemd.services.NetworkManager-wait-online.enable = false;
 
   time.timeZone = "America/Bahia";
