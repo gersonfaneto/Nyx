@@ -1,5 +1,7 @@
-update:
+system:
 	sudo nixos-rebuild switch --flake .
+
+home:
 	nix run nixpkgs#home-manager -- switch --flake .
 
 format:
