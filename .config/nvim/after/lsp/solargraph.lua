@@ -1,6 +1,7 @@
 ---@type vim.lsp.Config
 return {
-  cmd = { 'bundle', 'exec', 'solargraph', 'stdio' },
+  -- cmd = { 'bundle', 'exec', 'solargraph', 'stdio' },
+  cmd = { 'solargraph', 'stdio' },
   filetypes = { 'ruby' },
   root_markers = { 'Gemfile', '.git' },
   on_attach = function(client)
