@@ -292,6 +292,7 @@
 
       # Coding
       bqn386
+      miracode
       mononoki
       comic-mono
 

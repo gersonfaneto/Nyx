@@ -35,13 +35,13 @@ switch_ghostty() {
 main() {
     if [ $# -ne 1 ]; then
         echo "Usage: $0 <font_name>"
-        echo "Available fonts: BQN386 Unicode, Comic Mono, mononoki"
+        echo "Available fonts: BQN386 Unicode, Comic Mono, Miracode, mononoki"
         exit 1
     fi
 
     FONT="$1"
 
-    AVAILABLE_FONTS=("BQN386 Unicode" "Comic Mono" "mononoki")
+    AVAILABLE_FONTS=("BQN386 Unicode" "Comic Mono" "Miracode" "mononoki")
 
     VALID=false
 
