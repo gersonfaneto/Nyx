@@ -49,11 +49,23 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym $shift+XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1% && $refresh_i3status
 bindsym $shift+XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-# bindsym $shift+XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym $shift+XF86AudioMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# NOTE: Alternatives for keyboards with no media keys...
+bindsym $mod+$alt+Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym $mod+$alt+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
+bindsym $mod+$alt+$shift+Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1% && $refresh_i3status
+bindsym $mod+$alt+$shift+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1% && $refresh_i3status
+bindsym $mod+$alt+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym $mod+$alt+v exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Use `playerctl` to control media.
-bindsym $mod+$alt+$left exec --no-startup-id playerctl previous
-bindsym $mod+$alt+$right exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+
+bindsym $mod+$alt+Left exec --no-startup-id playerctl previous
+bindsym $mod+$alt+Right exec --no-startup-id playerctl next
 bindsym $mod+$alt+p exec --no-startup-id playerctl play-pause
 
 # Use `brightnessctl` to control screen brightness.
