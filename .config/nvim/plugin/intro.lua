@@ -87,7 +87,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
         chunks = (function()
           math.randomseed()
           local random_num = math.random()
-          if random_num < 0.5 then
+          if random_num < 1 / 3 then
             return {
               {
                 text = vim.fn.keytrans(vim.g.mapleader or '\\'),
@@ -96,7 +96,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
               { text = ' to start', hl = 'Normal' },
             }
           end
-          if random_num < 0.75 then
+          if random_num < 2 / 3 then
             return {
               { text = ':h', hl = 'comment' },
               { text = ' for help', hl = 'Normal' },
