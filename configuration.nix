@@ -296,6 +296,7 @@
       miracode
       mononoki
       comic-mono
+      departure-mono
 
       # UI
       inputs.apple-fonts.packages.${pkgs.system}.sf-mono
