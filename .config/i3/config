@@ -93,10 +93,9 @@ bindsym $mod+$shift+b exec firefox --private-window
 
 # Open the terminal.
 bindsym $mod+Return exec ghostty
-bindsym $mod+$shift+Return exec alacritty
 
 # Open THE text editor.
-bindsym $mod+e exec ghostty --initial-command='nvim'
+bindsym $mod+e exec alacritty --command 'nvim'
 
 # Kill the focused window.
 bindsym $mod+q kill
