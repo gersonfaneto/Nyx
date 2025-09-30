@@ -7,22 +7,15 @@ return {
   on_attach = function(client)
     client.server_capabilities.documentFormattingProvider = false
   end,
-  init_options = {
-    intellisense = false,
-    codeCompletion = false,
-    formatting = false,
-    autoformat = false,
-    useBundler = true,
-    diagnostics = false,
-  },
   settings = {
     solargraph = {
-      intellisense = false,
-      codeCompletion = false,
-      formatting = false,
-      autoformat = false,
-      useBundler = true,
-      diagnostics = false,
+      autoformat = true,
+      completion = true,
+      diagnostic = true,
+      folding = true,
+      references = true,
+      rename = true,
+      symbols = true,
     },
   },
 }

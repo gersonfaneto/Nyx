@@ -225,6 +225,7 @@
       xsel
       xss-lock
       zathura
+      zed-editor
       zoxide
     ])
     ++ (with pkgs; [
