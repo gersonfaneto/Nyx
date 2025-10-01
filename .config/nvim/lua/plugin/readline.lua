@@ -211,6 +211,8 @@ function M.setup()
     )
   end, { expr = true, desc = 'Delete word after cursor' })
 
+  vim.keymap.set('i', '<C-v>', '<C-k>') -- Keep `:dig` insert function available
+
   vim.keymap.set('!', '<C-k>', function()
     return small_del(
       end_of_line() and not last_line() and '\n'

@@ -541,6 +541,7 @@ vim.api.nvim_create_autocmd('CmdlineEnter', {
     key.command_map(':', 'lua =')
     key.command_abbrev('..', '!./%')
     key.command_abbrev('man', 'Man')
+    key.command_abbrev('make', 'Make')
     key.command_abbrev('tt', 'tab te')
     key.command_abbrev('bt', 'bot te')
     key.command_abbrev('ht', 'hor te')

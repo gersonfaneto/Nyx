@@ -1,7 +1,16 @@
 return {
   src = 'https://github.com/tpope/vim-dispatch',
   data = {
-    cmds = { 'Dispatch', 'Start', 'Focus', 'Make' },
+    cmds = {
+      'Dispatch',
+      'Start',
+      'Focus',
+      'Make',
+    },
+    keys = {
+      lhs = '<Leader>M',
+      opts = { desc = 'Make' },
+    },
     postload = function()
       local handlers = vim.g.dispatch_handlers
       local job_handler ---@type string?
@@ -19,6 +28,8 @@ return {
       end
 
       vim.g.dispatch_handlers = handlers
+
+      vim.keymap.set('n', '<Leader>M', '<Cmd>Make<CR>', { silent = false })
     end,
   },
 }
