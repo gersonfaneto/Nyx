@@ -163,7 +163,6 @@
       arandr
       aseprite
       bat
-      bitwarden-cli
       bluetui
       bottom
       brightnessctl
@@ -208,7 +207,6 @@
       rsync
       scc
       stow
-      texlive.combined.scheme-full
       tmux
       trash-cli
       tree
@@ -225,7 +223,6 @@
       xsel
       xss-lock
       zathura
-      zed-editor
       zoxide
     ])
     ++ (with pkgs; [
