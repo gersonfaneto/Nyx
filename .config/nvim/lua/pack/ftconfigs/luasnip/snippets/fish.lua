@@ -144,6 +144,19 @@ M.snippets = {
       }
     )
   ),
+  us.sn({
+    trig = 'ret',
+    desc = 'return statement',
+  }, {
+    d(1, function()
+      return u.ts.find_node('function') and sn(nil, { t('return') })
+        or sn(nil, { t('exit') })
+    end),
+  }),
+  us.sn({
+    trig = 'ex',
+    desc = 'exit statement',
+  }, t('exit')),
   us.mssn(
     {
       { trig = 'mn' },
@@ -399,6 +412,26 @@ M.snippets = {
     { trig = 'here' },
     common = { desc = 'Get script dir' },
   }, t('(status dirname)/')),
+  us.msn(
+    {
+      { trig = 'bs' },
+      { trig = 'base' },
+      common = { desc = 'Base of the filename (without extension)' },
+    },
+    un.fmtad('(path stem -- $<fname>)', {
+      fname = i(1, 'fname'),
+    })
+  ),
+  us.msn(
+    {
+      { trig = 'ext' },
+      { trig = 'extension' },
+      common = { desc = 'Extension of the filename' },
+    },
+    un.fmtad('(path extension -- $<fname>)', {
+      fname = i(1, 'fname'),
+    })
+  ),
 }
 
 return M
