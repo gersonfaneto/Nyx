@@ -204,6 +204,7 @@
       pulseaudio
       pywal
       qalculate-gtk
+      quartus-prime-lite
       ripgrep
       rsync
       scc
