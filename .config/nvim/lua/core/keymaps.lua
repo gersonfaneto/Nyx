@@ -287,8 +287,8 @@ vim.api.nvim_create_autocmd('UIEnter', {
 
     -- Correct misspelled word / mark as correct
     -- stylua: ignore start
-    map('i', '<C-g>+', '<Esc>[szg`]a', { desc = 'Correct misspelled word before cursor' })
-    map('i', '<C-g>=', '<C-g>u<Esc>[s1z=`]a<C-G>u', { desc = 'Add misspelled word before cursor' })
+    map('i', '<C-l>', '<Esc>[szg`]a', { desc = 'Correct misspelled word before cursor' })
+    map('i', '<C-h>', '<C-g>u<Esc>[s1z=`]a<C-G>u', { desc = 'Add misspelled word before cursor' })
     -- stylua: ignore end
 
     -- Only clear highlights and message area and don't redraw if search
