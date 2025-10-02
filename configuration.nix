@@ -202,6 +202,7 @@
       presenterm
       prismlauncher
       pulseaudio
+      pywal
       qalculate-gtk
       ripgrep
       rsync
