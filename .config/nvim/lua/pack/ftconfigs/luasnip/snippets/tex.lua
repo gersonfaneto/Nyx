@@ -364,10 +364,8 @@ M.math = {
       }
     )
   ),
-  us.msam({
-    { trig = 'prop' },
-    { trig = 'oc' },
-  }, t('\\propto ')),
+  us.msam({ { trig = 'prop' }, { trig = 'oc' } }, t('\\propto ')),
+  us.msam({ { trig = 'cop' }, { trig = 'perp' } }, t('\\perp ')),
   us.sam({ trig = 'deg' }, t('\\degree')),
   us.sam({ trig = 'ang' }, t('\\angle ')),
   us.sam({ trig = 'mcal' }, { t('\\mathcal{'), i(1), t('}') }),
@@ -908,6 +906,7 @@ M.math = {
       { mean = i(1, '\\mu'), var = i(2, '\\sigma^2') }
     )
   ),
+  us.sam({ trig = 'mod' }, { t('\\operatorname{mod} ') }),
 
   -- Math env
   -- Press double '$' -> $|$ -> press '$' again -> multi-line math env
