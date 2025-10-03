@@ -239,6 +239,10 @@ bar {
   }
 }
 
+# Hide all decorations for ALL windows!
+default_border pixel 1
+default_floating_border pixel 1
+
 # name                  border  backgr  text    indicator
 client.focused          #444444 #555555 #FFFFFF #DDDDDD
 client.focused_inactive #222222 #333333 #888888 #292D2E
