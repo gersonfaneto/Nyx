@@ -11,7 +11,7 @@ return {
         vim.g.vimtex_syntax_conceal_disable = true
       end
 
-      vim.g.vimtex_quickfix_mode = 0
+      vim.g.vimtex_quickfix_mode = 1
       vim.g.vimtex_format_enabled = 1
       vim.g.vimtex_imaps_enabled = 0
       vim.g.vimtex_mappings_prefix = '<LocalLeader>l'
@@ -43,7 +43,6 @@ return {
           if vim.bo[args.buf].syntax == '' then
             vim.bo[args.buf].syntax = 'on'
           end
-          vim.b[args.buf]._ts_disable = true
 
           -- Make surrounding delimiters large
           vim.keymap.set('n', 'css', vim.fn['vimtex#delim#add_modifiers'], {
