@@ -517,6 +517,10 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map('n', '<Leader>.', '<Cmd>FZF<CR>', { desc = 'Find files' })
     map('n', '<Leader>ff', '<Cmd>FZF<CR>', { desc = 'Find files' })
 
+    map({ 'n', 'x', 'v' }, ':', ';')
+    map({ 'n', 'x', 'v' }, ';', ':')
+    map({ 'n', 'x', 'v' }, 'q;', 'q:')
+
     -- Abbreviations
     map('!a', 'ture', 'true')
     map('!a', 'Ture', 'True')
@@ -538,7 +542,7 @@ vim.api.nvim_create_autocmd('CmdlineEnter', {
   once = true,
   callback = function()
     local key = require('utils.key')
-    key.command_map(':', 'lua =')
+    key.command_map(';', 'lua =')
     key.command_abbrev('..', '!./%')
     key.command_abbrev('man', 'Man')
     key.command_abbrev('make', 'Make')
