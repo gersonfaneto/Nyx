@@ -170,6 +170,7 @@
       detach
       diff-so-fancy
       dunst
+      emacs
       fastfetch
       fd
       feh
@@ -182,6 +183,7 @@
       gh
       ghostty
       git
+      gum
       highlight
       impala
       jq
@@ -208,6 +210,7 @@
       ripgrep
       rsync
       scc
+      sesh
       stow
       tmux
       trash-cli
