@@ -35,7 +35,7 @@ switch_ghostty() {
 main() {
     CURRENT_FONT=$(sed 's/font-family = "\(.*\)"/\1/g' < "$CONFIG_HOME"/ghostty/config.local)
 
-    AVAILABLE_FONTS=("BQN386 Unicode" "Departure Mono" "Comic Mono" "Miracode" "mononoki")
+    AVAILABLE_FONTS=("BQN386 Unicode" "Departure Mono" "Comic Mono" "Iosevka Term SS07" "Miracode" "mononoki")
 
     if [ $# -ne 1 ]; then
         echo "Usage: $(basename "$0") <font_name>"

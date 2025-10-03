@@ -296,6 +296,7 @@
       mononoki
       comic-mono
       departure-mono
+      (iosevka-bin.override {variant = "SS07";})
 
       # UI
       inputs.apple-fonts.packages.${pkgs.system}.sf-mono
