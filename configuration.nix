@@ -210,7 +210,6 @@
       ripgrep
       rsync
       scc
-      sesh
       stow
       tmux
       trash-cli

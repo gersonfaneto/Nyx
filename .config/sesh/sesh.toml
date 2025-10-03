@@ -1,3 +1,0 @@
-[default_session]
-startup_command = "nvim +'FzfLua files'"
-preview_command = "tree -N -L 4 -C -- {}"
