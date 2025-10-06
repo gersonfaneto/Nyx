@@ -57,14 +57,14 @@ vim.api.nvim_create_autocmd('UIEnter', {
     ---@field len integer? byte-indexed text length
     ---@field width integer? display width of text
 
-    ---@class intro_line_t
+    ---@class intro.line
     ---@field chunks intro_chunk_t[]
     ---@field text string?
     ---@field width integer?
     ---@field offset integer?
 
     ---Lines of text and highlight groups to display as intro message
-    ---@type intro_line_t[]
+    ---@type intro.line[]
     local lines = {
       {
         chunks = {

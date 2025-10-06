@@ -153,7 +153,7 @@ return {
       })
 
       ---Send code cell to molten
-      ---@param cell code_cell_t
+      ---@param cell molten.code_cell
       ---@return nil
       local function send(cell)
         local range = cell.range
@@ -165,7 +165,7 @@ return {
       ---@field from integer[] 0-based (row, col) array
       ---@field to integer[] 0-based (row, col) array
 
-      ---@class code_cell_t
+      ---@class molten.code_cell
       ---@field lang string?
       ---@field text table<string>
       ---@field range code_range_t
@@ -194,10 +194,10 @@ return {
       ---Extract code cells that overlap the given range,
       ---removes cells with a language that's in the ignore list
       ---@param lang string
-      ---@param code_chunks table<string, code_cell_t>
+      ---@param code_chunks table<string, molten.code_cell>
       ---@param range code_range_t
       ---@param partial boolean?
-      ---@return code_cell_t[]
+      ---@return molten.code_cell[]
       local function extract_cells(lang, code_chunks, range, partial)
         if not code_chunks[lang] then
           return {}
@@ -331,7 +331,7 @@ return {
         local buf = vim.api.nvim_get_current_buf()
         local pos = vim.api.nvim_win_get_cursor(0)
 
-        ---@type code_cell_t
+        ---@type molten.code_cell
         local cell = {
           lang = lang,
           range = { from = { pos[1] - 1, 0 }, to = { pos[1], 0 } },

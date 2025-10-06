@@ -54,7 +54,7 @@ local function parse_cmdline_args(fargs, fn_name_alt)
   return fn_name, parsed
 end
 
----@type string<table, subcommand_arg_handler_t>
+---@type string<table, my.lsp.cmd.ArgHandler>
 local subcommand_arg_handler = {
   ---LSP command argument handler for functions that receive a range
   ---@param args lsp_command_parsed_arg_t
@@ -93,7 +93,7 @@ local subcommand_arg_handler = {
   end,
 }
 
----@type table<string, subcommand_completion_t>
+---@type table<string, my.lsp.cmd.Completion>
 local subcommand_completions = {
   bufs = function()
     return vim.tbl_map(function(buf)
@@ -148,25 +148,58 @@ local subcommand_opt_vals = {
   lsp_clients = subcommand_completions.lsp_clients,
   lsp_client_ids = subcommand_completions.lsp_client_ids,
   lsp_client_names = subcommand_completions.lsp_client_names,
-  lsp_methods = vim.lsp.protocol.Methods,
+  ---@type vim.lsp.protocol.Method[]
+  lsp_methods = {
+    'callHierarchy/incomingCalls',
+    'callHierarchy/outgoingCalls',
+    'textDocument/codeAction',
+    'textDocument/completion',
+    'textDocument/declaration',
+    'textDocument/definition',
+    'textDocument/diagnostic',
+    'textDocument/documentHighlight',
+    'textDocument/documentSymbol',
+    'textDocument/formatting',
+    'textDocument/hover',
+    'textDocument/implementation',
+    'textDocument/inlayHint',
+    'textDocument/publishDiagnostics',
+    'textDocument/rangeFormatting',
+    'textDocument/references',
+    'textDocument/rename',
+    'textDocument/semanticTokens/full',
+    'textDocument/semanticTokens/full/delta',
+    'textDocument/signatureHelp',
+    'textDocument/typeDefinition',
+    'window/logMessage',
+    'window/showMessage',
+    'window/showDocument',
+    'window/showMessageRequest',
+    'workspace/applyEdit',
+    'workspace/configuration',
+    'workspace/executeCommand',
+    'workspace/inlayHint/refresh',
+    'workspace/symbol',
+    'workspace/workspaceFolders',
+  },
 }
 
----@alias subcommand_arg_handler_t fun(args: lsp_command_parsed_arg_t, tbl: table): ...?
----@alias subcommand_params_t string[]
----@alias subcommand_opts_t table
----@alias subcommand_fn_override_t fun(...?): ...?
----@alias subcommand_completion_t fun(arglead: string, cmdline: string, cursorpos: integer): string[]
+---@alias my.lsp.cmd.ArgHandler fun(args: lsp_command_parsed_arg_t, tbl: table): ...?
+---@alias my.lsp.cmd.Params string[]
+---@alias my.lsp.cmd.Opts table
+---@alias my.lsp.cmd.Fn fun(...?): ...?
+---@alias my.lsp.cmd.Completion fun(arglead: string, cmdline: string, cursorpos: integer): string[]
 
----@class subcommand_info_t
----@field arg_handler subcommand_arg_handler_t?
----@field params subcommand_params_t?
----@field opts subcommand_opts_t?
----@field fn_override subcommand_fn_override_t?
----@field completion subcommand_completion_t?
+---@class lsp.cmd.info
+---@field arg_handler my.lsp.cmd.ArgHandler?
+---@field params my.lsp.cmd.Params?
+---@field opts my.lsp.cmd.Opts?
+---@field fn_override my.lsp.cmd.Fn?
+---@field completion my.lsp.cmd.Completion?
 
 local subcommands = {
   ---LSP subcommands
-  ---@type table<string, subcommand_info_t>
+  ---@type table<string, lsp.cmd.info>
   lsp = {
     info = {
       opts = {
@@ -667,7 +700,7 @@ local subcommands = {
   },
 
   ---Diagnostic subcommands
-  ---@type table<string, subcommand_info_t>
+  ---@type table<string, lsp.cmd.info>
   diagnostic = {
     config = {
       ---@param args lsp_command_parsed_arg_t
@@ -1030,7 +1063,7 @@ local subcommands = {
 }
 
 ---Get meta command function
----@param subcommand_info_list subcommand_info_t[] subcommands information
+---@param subcommand_info_list lsp.cmd.info[] subcommands information
 ---@param fn_scope table|fun(name: string): function scope of corresponding functions for subcommands
 ---@param fn_name_alt string|nil name of the function to call given no subcommand
 ---@return function meta_command_fn
@@ -1059,7 +1092,7 @@ end
 
 ---Get command completion function
 ---@param meta string meta command name
----@param subcommand_info_list subcommand_info_t[] subcommands information
+---@param subcommand_info_list lsp.cmd.info[] subcommands information
 ---@return function completion_fn
 local function command_complete(meta, subcommand_info_list)
   ---Command completion function
@@ -1075,7 +1108,7 @@ local function command_complete(meta, subcommand_info_list)
           return cmd:find(arglead, 1, true) == 1
         end,
         vim.tbl_filter(function(key)
-          local args = subcommand_info_list[key] ---@type subcommand_info_t|table|nil
+          local args = subcommand_info_list[key] ---@type lsp.cmd.info|table|nil
           return args
               and (args.arg_handler or args.params or args.opts or args.fn_override or args.completion)
               and true
@@ -1114,7 +1147,7 @@ end
 
 ---Setup commands
 ---@param meta string meta command name
----@param subcommand_info_list table<string, subcommand_info_t> subcommands information
+---@param subcommand_info_list table<string, lsp.cmd.info> subcommands information
 ---@param fn_scope table|fun(name: string): function scope of corresponding functions for subcommands
 ---@return nil
 local function setup_commands(meta, subcommand_info_list, fn_scope)

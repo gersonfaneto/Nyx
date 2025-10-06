@@ -4,7 +4,7 @@ local M = {}
 --- - If `opts.win` is specified, return the winbar menu attached the window;
 --- - If `opts.win` is not specified, return all opened winbar menus
 ---@param opts {win: integer?}?
----@return (winbar_menu_t?)|table<integer, winbar_menu_t>
+---@return (winbar.menu?)|table<integer, winbar.menu>
 function M.get(opts)
   opts = opts or {}
   if opts.win then
@@ -14,7 +14,7 @@ function M.get(opts)
 end
 
 ---Get current menu
----@return winbar_menu_t?
+---@return winbar.menu?
 function M.get_current()
   return M.get({ win = vim.api.nvim_get_current_win() })
 end
@@ -45,7 +45,7 @@ function M.exec(method, opts)
   return results
 end
 
----@type winbar_menu_t?
+---@type winbar.menu?
 local last_hovered_menu = nil
 
 ---Update menu hover highlights given the mouse position
@@ -67,7 +67,7 @@ function M.update_hover_hl(mouse)
   last_hovered_menu = menu
 end
 
----@type winbar_menu_t?
+---@type winbar.menu?
 local last_previewed_menu = nil
 
 ---Update menu preview given the mouse position

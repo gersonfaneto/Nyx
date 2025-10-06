@@ -61,16 +61,16 @@ end
 ---@field event string
 
 ---@alias load_event_spec_t load_event_spec_structured_t|string
----@alias load_event_loader_t fun(args: vim.api.keyset.create_autocmd.callback_args): boolean?
+---@alias load.event.handler fun(args: vim.api.keyset.create_autocmd.callback_args): boolean?
 
 ---Plugin loaders grouped by event, pattern, and buffers
----@type table<string, { all: load_event_loader_t[], pats: table<string, load_event_loader_t[]>, bufs: table<string, load_event_loader_t[]> }>
+---@type table<string, { all: load.event.handler[], pats: table<string, load.event.handler[]>, bufs: table<string, load.event.handler[]> }>
 local event_loaders = vim.defaulttable()
 
 ---Helper function that returns a function as event callback to trigger
 ---loaders given by `loaders`
----@param loaders load_event_loader_t[]
----@return load_event_loader_t
+---@param loaders load.event.handler[]
+---@return load.event.handler
 local function trig_loaders_fn(loaders)
   return function(args)
     for i, loader in ipairs(loaders) do
@@ -290,14 +290,14 @@ end
 ---@field lhs string
 ---@field opts? vim.keymap.set.Opts
 
----@alias load_key_spec_t load_key_spec_structured_t|string
+---@alias load.key.spec load_key_spec_structured_t|string
 
 ---Mapping from plugin/module name to triggering keys
----@type table<string, load_key_spec_t[]>
+---@type table<string, load.key.spec[]>
 local keys = {}
 
 ---Load plugin once on given keys
----@param key_specs load_key_spec_t|load_key_spec_t[]
+---@param key_specs load.key.spec|load.key.spec[]
 ---@param name string unique name of the plugin, also used as a namespace to prevent setting duplicated lazy-loading handlers for the same plugin/module
 ---@param load? function function to load the plugin
 function M.on_keys(key_specs, name, load)
@@ -307,7 +307,7 @@ function M.on_keys(key_specs, name, load)
 
   ---@diagnostic disable-next-line: param-type-mismatch
   if not vim.islist(key_specs) then
-    key_specs = { key_specs } ---@cast key_specs load_key_spec_t[]
+    key_specs = { key_specs } ---@cast key_specs load.key.spec[]
   end
   ---@cast key_specs load_key_spec_structured_t[]
   for i, spec in ipairs(key_specs) do

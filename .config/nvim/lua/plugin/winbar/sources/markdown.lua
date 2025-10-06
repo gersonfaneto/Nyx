@@ -31,7 +31,7 @@ function markdown_heading_symbol_t:new(opts)
   )
 end
 
----@class markdown_heading_symbols_parsed_list_t
+---@class winbar.sources.markdown.symbol_parsed_list
 ---@field end { lnum: integer, in_codeblock: boolean }
 ---@field symbols markdown_heading_symbol_t[]
 local markdown_heading_symbols_parsed_list_t = {}
@@ -39,7 +39,7 @@ markdown_heading_symbols_parsed_list_t.__index =
   markdown_heading_symbols_parsed_list_t
 
 ---Create a new markdown heading symbols parsed object
----@param opts markdown_heading_symbols_parsed_list_t?
+---@param opts winbar.sources.markdown.symbol_parsed_list?
 function markdown_heading_symbols_parsed_list_t:new(opts)
   return setmetatable(
     vim.tbl_deep_extend('force', {
@@ -50,7 +50,7 @@ function markdown_heading_symbols_parsed_list_t:new(opts)
   )
 end
 
----@type markdown_heading_symbols_parsed_list_t[]
+---@type winbar.sources.markdown.symbol_parsed_list[]
 local markdown_heading_buf_symbols = {}
 setmetatable(markdown_heading_buf_symbols, {
   __index = function(_, k)

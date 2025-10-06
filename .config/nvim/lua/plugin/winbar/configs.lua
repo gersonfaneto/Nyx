@@ -21,7 +21,7 @@ M.opts = {
     },
   },
   symbol = {
-    ---@type fun(symbol: winbar_symbol_t, min_width: integer?, n_clicks: integer?, button: string?, modifiers: string?)|false?
+    ---@type fun(symbol: winbar.symbol, min_width: integer?, n_clicks: integer?, button: string?, modifiers: string?)|false?
     on_click = function(symbol)
       -- Update current context highlights if the symbol
       -- is shown inside a menu
@@ -33,7 +33,7 @@ M.opts = {
 
       -- Determine menu configs
       local prev_win = nil ---@type integer?
-      local entries_source = nil ---@type winbar_symbol_t[]?
+      local entries_source = nil ---@type winbar.symbol[]?
       local init_cursor = nil ---@type integer[]?
       local win_configs = {}
       if symbol.bar then -- If symbol inside a winbar
@@ -89,7 +89,7 @@ M.opts = {
         prev_win = prev_win,
         cursor = init_cursor,
         win_configs = win_configs,
-        ---@param sym winbar_symbol_t
+        ---@param sym winbar.symbol
         entries = vim.tbl_map(function(sym)
           local menu_indicator_icon = configs.opts.icons.ui.menu.indicator
           local menu_indicator_on_click = nil
@@ -167,7 +167,7 @@ M.opts = {
           or utils.ts.is_active(buf)
           or not vim.tbl_isempty(vim.lsp.get_clients({
             bufnr = buf,
-            method = vim.lsp.protocol.Methods.textDocument_documentSymbol,
+            method = 'textDocument/documentSymbol',
           }))
         )
     end,
@@ -200,7 +200,7 @@ M.opts = {
       },
     },
     hover = true,
-    ---@type winbar_source_t[]|fun(buf: integer, win: integer): winbar_source_t[]
+    ---@type winbar.source[]|fun(buf: integer, win: integer): winbar.source[]
     sources = function(buf)
       local sources = require('plugin.winbar.sources')
       return vim.bo[buf].ft == 'markdown' and { sources.markdown }
@@ -291,8 +291,8 @@ M.opts = {
         end
       end,
     },
-    ---@alias winbar_menu_win_config_opts_t any|fun(menu: winbar_menu_t):any
-    ---@type table<string, winbar_menu_win_config_opts_t>
+    ---@alias winbar.menu.win_config any|fun(menu: winbar_menu_t):any
+    ---@type table<string, winbar.menu.win_config>
     ---@see vim.api.nvim_open_win
     win_configs = {
       style = 'minimal',
@@ -400,6 +400,7 @@ M.opts = {
         'repeat',
         'return_statement',
         'rpc',
+        'rule',
         'rule_set',
         'scope',
         'section',

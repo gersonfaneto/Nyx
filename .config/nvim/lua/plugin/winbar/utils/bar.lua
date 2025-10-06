@@ -8,7 +8,7 @@ local M = {}
 --- - If neither `opts.win` nor `opts.buf` is specified, return all winbars
 ---   in the form of `table<buf, table<win, winbar_t>>`
 ---@param opts {win: integer?, buf: integer?}?
----@return (winbar_t?)|table<integer, winbar_t>|table<integer, table<integer, winbar_t>>
+---@return (winbar.bar?)|table<integer, winbar.bar>|table<integer, table<integer, winbar.bar>>
 function M.get(opts)
   opts = opts or {}
   if opts.buf then
@@ -30,7 +30,7 @@ function M.get(opts)
 end
 
 ---Get current winbar
----@return winbar_t?
+---@return winbar.bar?
 function M.get_current()
   return M.get({ win = vim.api.nvim_get_current_win() })
 end
@@ -76,7 +76,7 @@ function M.exec(method, opts)
   return results
 end
 
----@type winbar_t?
+---@type winbar.bar?
 local last_hovered_winbar = nil
 
 ---Update winbar hover highlights given the mouse position

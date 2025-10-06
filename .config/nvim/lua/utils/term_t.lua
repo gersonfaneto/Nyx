@@ -1,11 +1,11 @@
 local utils = require('utils')
 
----@type table<string, table<string, term_t>>
+---@type table<string, table<string, term>>
 local terms = vim.defaulttable(function()
   return {}
 end)
 
----@class term_t
+---@class term
 ---@field buf integer
 ---@field dir string
 ---@field type string type of the terminal, useful to flag dedicated terminal running TUI apps, e.g. aider
@@ -16,7 +16,7 @@ end)
 ---@field entered? boolean whether we have ever entered this terminal buffer
 local term_t = {}
 
----@class term_opts_t
+---@class term.opts
 ---@field dir? string path to project root directory where a terminal will be created
 ---@field buf? integer existing terminal buffer
 ---@field type? string type of the terminal, useful to flag dedicated terminal running TUI apps, e.g. aider
@@ -24,7 +24,7 @@ local term_t = {}
 ---@field check_interval? integer timeout in ms waiting for aider to render
 ---@field win_configs? table window configs, see `vim.api.nvim_open_win`
 
----@type term_opts_t
+---@type term.opts
 local default_opts = {
   type = '',
   win_configs = {
@@ -40,8 +40,8 @@ local default_opts = {
 }
 
 ---Create a new terminal
----@param opts? term_opts_t
----@return term_t?
+---@param opts? term.opts
+---@return term?
 function term_t:new(opts)
   opts = vim.tbl_deep_extend('force', default_opts, self, opts)
 
@@ -70,8 +70,8 @@ end
 
 ---Create from existing terminal buffer
 ---@private
----@param opts? term_opts_t
----@return term_t?
+---@param opts? term.opts
+---@return term?
 function term_t:_new_from_buf(opts)
   if
     not opts
@@ -92,12 +92,12 @@ function term_t:_new_from_buf(opts)
     { __index = self }
   )
 
-  return term --[[@as term_t]]
+  return term --[[@as term]]
 end
 
 ---@private
----@param opts? term_opts_t
----@return term_t?
+---@param opts? term.opts
+---@return term?
 function term_t:_new_from_dir(opts)
   if not opts then
     opts = {}
@@ -140,7 +140,7 @@ function term_t:_new_from_dir(opts)
     return -- failed to run command
   end
 
-  return term --[[@as term_t]]
+  return term --[[@as term]]
 end
 
 ---Remove terminal from list
@@ -167,7 +167,7 @@ end
 ---If `path` is not given, prefer current visible terminal, if any
 ---@param path? string file or directory path, default to cwd
 ---@param tab? number default to current tabpage
----@return term_t? terminal object at `path`
+---@return term? terminal object at `path`
 ---@return boolean? is_new whether the chat is newly created or reused
 function term_t:get(path, tab)
   if not path then
@@ -303,7 +303,7 @@ function term_t:send(msg)
 end
 
 ---Call `cb` on terminal buffer update
----@param cb fun(chat: term_t): any
+---@param cb fun(chat: term): any
 ---@param tick? integer previous update's `b:changedtick`, should be `nil` on first call
 function term_t:on_update(cb, tick)
   if not self:validate() then

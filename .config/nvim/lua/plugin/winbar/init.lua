@@ -30,13 +30,13 @@ _G._winbar.callbacks = setmetatable({}, {
   end,
 })
 
----@type table<integer, table<integer, winbar_t>>
+---@type table<integer, table<integer, winbar.bar>>
 _G._winbar.bars = setmetatable({}, {
   __index = function(self, buf)
     self[buf] = setmetatable({}, {
       __index = function(this, win)
         this[win] = bar.winbar_t:new({
-          sources = configs.eval(configs.opts.bar.sources, buf, win) --[=[@as winbar_source_t[]]=],
+          sources = configs.eval(configs.opts.bar.sources, buf, win) --[=[@as winbar.source[]]=],
         })
         return this[win]
       end,

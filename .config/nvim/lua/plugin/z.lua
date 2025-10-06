@@ -46,8 +46,8 @@ end
 ---@field list fun(trig?: string[]): string[]
 ---@field add fun(dir: string): string[]
 
----@alias z_backend_t { cmds: z_cmds_t, exists: fun(): boolean }
----@type table<string, z_backend_t>
+---@alias z.backend { cmds: z_cmds_t, exists: fun(): boolean }
+---@type table<string, z.backend>
 local z_backends = {
   z = {
     exists = function()
@@ -85,7 +85,7 @@ local z_backends = {
   },
 }
 
----@type z_backend_t
+---@type z.backend
 local z = (function()
   for _, backend in pairs(z_backends) do
     if backend.exists() then

@@ -1,9 +1,10 @@
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = ' '
 
-vim.api.nvim_create_autocmd('UIEnter', {
-  once = true,
-  callback = vim.schedule_wrap(function()
+require('utils.load').on_events(
+  'UIEnter',
+  'my.keymaps',
+  vim.schedule_wrap(function()
     local keymaps = {} ---@type table<string, table<string, true>>
     local buf_keymaps = {} ---@type table<integer, table<string, table<string, true>>>
 
@@ -55,7 +56,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
       end
     end
 
-    local key_utils = require('utils.key')
+    local key = require('utils.key')
 
     -- Multi-window operations
     -- stylua: ignore start
@@ -131,7 +132,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map(
       'n',
       'd<Space>',
-      key_utils.with_cursorpos(key_utils.with_lazyredraw(function()
+      key.with_cursorpos(key.with_lazyredraw(function()
         vim.cmd.substitute({
           [[/\s\+$//e]],
           range = { 1, vim.api.nvim_buf_line_count(0) },
@@ -140,20 +141,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
       end)),
       { desc = 'Delete trailing whitespaces' }
     )
-
-    -- Buffer operations
-    -- stylua: ignore start
-    map({ 'n' }, '<Leader>bq', '<Cmd>quit<CR>', { desc = 'Close the buffer' })
-    map({ 'n' }, '<Leader>bw', '<Cmd>write<CR>', { desc = 'Write the buffer' })
-    -- stylua: ignore end
-
-    -- Indenting operations
-    -- stylua: ignore start
-    map({ 'v' }, '>', '>gv', { desc = 'Indent and reselect visual selection' })
-    map({ 'v' }, '<', '<gv', { desc = 'Unindent and reselect visual selection' })
-    map({ 'n' }, '>>', '>>', { desc = 'Indent current line' })
-    map({ 'n' }, '<<', '<<', { desc = 'Unindent current line' })
-    -- stylua: ignore end
 
     -- Select previously changed/yanked text, useful for selecting pasted text
     map('n', 'gz', '`[v`]', { desc = 'Select previously changed/yanked text' })
@@ -262,33 +249,10 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map({ 'i' }, '<Up>',   '<Cmd>norm! g<Up><CR>',   { desc = 'Move up' })
     -- stylua: ignore end
 
-    -- Tabpages
-    ---@param tab_action function
-    ---@param default_count number?
-    ---@return function
-    local function tabswitch(tab_action, default_count)
-      return function()
-        local count = default_count or vim.v.count
-        local num_tabs = vim.fn.tabpagenr('$')
-        if num_tabs >= count then
-          tab_action(count ~= 0 and count or nil)
-          return
-        end
-        vim.cmd.tablast()
-        for _ = 1, count - num_tabs do
-          vim.cmd.tabnew()
-        end
-      end
-    end
-    -- stylua: ignore start
-    map({ 'n', 'x' }, 'gt', tabswitch(vim.cmd.tabnext), { desc = 'Go to next tab' })
-    map({ 'n', 'x' }, 'gT', tabswitch(vim.cmd.tabprev), { desc = 'Go to previous tab' })
-    -- stylua: ignore end
-
     -- Correct misspelled word / mark as correct
     -- stylua: ignore start
-    map('i', '<C-l>', '<Esc>[szg`]a', { desc = 'Correct misspelled word before cursor' })
-    map('i', '<C-h>', '<C-g>u<Esc>[s1z=`]a<C-G>u', { desc = 'Add misspelled word before cursor' })
+    map('i', '<C-g>+', '<Esc>[szg`]a', { desc = 'Correct misspelled word before cursor' })
+    map('i', '<C-g>=', '<C-g>u<Esc>[s1z=`]a<C-G>u', { desc = 'Add misspelled word before cursor' })
     -- stylua: ignore end
 
     -- Only clear highlights and message area and don't redraw if search
@@ -326,7 +290,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map(
       { 'n', 'x' },
       'zV',
-      key_utils.with_lazyredraw(function()
+      key.with_lazyredraw(function()
         vim.cmd.normal({ 'zMzv', bang = true })
       end),
       { desc = 'Close all folds except current' }
@@ -343,8 +307,8 @@ vim.api.nvim_create_autocmd('UIEnter', {
     --- 1. If current window is a floating window, close it and return
     --- 2. Else, close all floating windows that can be focused
     --- 3. Fallback to `key` if no floating window can be focused
-    ---@param key string
-    local function close_floats(key)
+    ---@param k string key (lhs) of the mapping
+    local function close_floats(k)
       local current_win = vim.api.nvim_get_current_win()
 
       -- Only close current win if it's a floating window
@@ -368,7 +332,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
       -- If no floating window is closed, fallback
       if not win_closed then
         vim.api.nvim_feedkeys(
-          vim.api.nvim_replace_termcodes(key, true, true, true),
+          vim.api.nvim_replace_termcodes(k, true, true, true),
           'n',
           false
         )
@@ -517,10 +481,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map('n', '<Leader>.', '<Cmd>FZF<CR>', { desc = 'Find files' })
     map('n', '<Leader>ff', '<Cmd>FZF<CR>', { desc = 'Find files' })
 
-    map({ 'n', 'x', 'v' }, ':', ';')
-    map({ 'n', 'x', 'v' }, ';', ':')
-    map({ 'n', 'x', 'v' }, 'q;', 'q:')
-
     -- Abbreviations
     map('!a', 'ture', 'true')
     map('!a', 'Ture', 'True')
@@ -535,31 +495,27 @@ vim.api.nvim_create_autocmd('UIEnter', {
     map('!a', 'saher', 'share')
     map('!a', 'balme', 'blame')
     map('!a', 'intall', 'install')
-  end),
-})
+  end)
+)
 
-vim.api.nvim_create_autocmd('CmdlineEnter', {
-  once = true,
-  callback = function()
+require('utils.load').on_events(
+  'CmdlineEnter',
+  'my.keymaps.cmdline_abbrevs',
+  function()
     local key = require('utils.key')
-    key.command_map(';', 'lua =')
-    key.command_abbrev('..', '!./%')
+
+    key.command_map(':', 'lua =')
     key.command_abbrev('man', 'Man')
-    key.command_abbrev('make', 'Make')
     key.command_abbrev('tt', 'tab te')
     key.command_abbrev('bt', 'bot te')
     key.command_abbrev('ht', 'hor te')
     key.command_abbrev('vt', 'vert te')
-    key.command_abbrev('ae', '!ae')
-    key.command_abbrev('vr', '!vr')
     key.command_abbrev('rm', '!rm')
     key.command_abbrev('mv', '!mv')
-    key.command_abbrev('ln', '!ln')
-    key.command_abbrev('run', '!run %')
     key.command_abbrev('git', '!git')
     key.command_abbrev('tree', '!tree')
     key.command_abbrev('mkdir', '!mkdir')
     key.command_abbrev('touch', '!touch')
-    key.command_abbrev('chmod', '!chmod +x %')
-  end,
-})
+    key.command_abbrev('chmod', '!chmod')
+  end
+)
