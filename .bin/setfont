@@ -5,7 +5,10 @@ CONFIGURATIONS="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 FONT_IN_USE=$(sed 's/font-family = "\(.*\)"/\1/g' <"$CONFIGURATIONS"/ghostty/config.local)
 
-FONTS_AVAILABLE=("BQN386 Unicode" "Departure Mono" "Comic Mono" "Iosevka Term SS07" "Miracode" "mononoki")
+FONTS_AVAILABLE=()
+while IFS= read -r font; do
+    FONTS_AVAILABLE+=("$font")
+done < <(ghostty +list-fonts | grep -v '^[[:blank:]]' | grep -v '^$' | sort | uniq)
 
 switch_alacritty() {
     (
@@ -37,24 +40,49 @@ switch_ghostty() {
 }
 
 usage() {
-    (
-        echo "Usage: $(basename "$0") <font_name>"
-        echo -n "Available fonts: "
-        for font in "${FONTS_AVAILABLE[@]}"; do
-            if [ "$font" = "$FONT_IN_USE" ]; then
-                printf "\033[4m%s\033[0m" "$font"
-            else
-                echo -n "$font"
-            fi
-            if [ "$font" != "${FONTS_AVAILABLE[-1]}" ]; then
-                echo -n ", "
-            fi
-        done
-        echo
-    )
+    local program
+    program=$(basename "$0")
+    echo "Usage: $program <font_name>"
+    echo
+    echo "       -h,--help    Display this message"
+    echo "       -l,--list    List all the available fonts"
+}
+
+list_fonts() {
+    echo "Available fonts:"
+    for font in "${FONTS_AVAILABLE[@]}"; do
+        if [ "$font" = "$FONT_IN_USE" ]; then
+            printf "  \033[4m%s\033[0m (current)\n" "$font"
+        else
+            printf "  %s\n" "$font"
+        fi
+    done
 }
 
 main() {
+    while [ $# -gt 0 ]; do
+        case $1 in
+            -h | --help)
+                usage
+                exit 0
+                ;;
+            -l | --list)
+                list_fonts
+                exit 0
+                ;;
+            -*)
+                echo "Unknown option: $1" >&2
+                echo
+                usage >&2
+                exit 1
+                ;;
+            *)
+                break
+                ;;
+        esac
+        shift
+    done
+
     if [ $# -ne 1 ]; then
         usage "$@"
         exit 0
@@ -72,6 +100,8 @@ main() {
     done
 
     if [ "$VALID" = false ]; then
+        echo "Unknown font: $1" >&2
+        echo
         usage "$@"
         exit 1
     fi
