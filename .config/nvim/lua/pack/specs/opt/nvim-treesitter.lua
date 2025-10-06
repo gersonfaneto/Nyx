@@ -4,7 +4,6 @@ return {
   version = 'main', -- master branch is deprecated
   data = {
     build = function()
-      vim.cmd.packadd('nvim-treesitter')
       require('nvim-treesitter.install').update()
     end,
     cmds = {

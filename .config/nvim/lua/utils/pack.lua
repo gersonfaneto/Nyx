@@ -223,6 +223,9 @@ function M.build(spec, path, notify)
   end
   built[spec.src] = true
 
+  -- Load the plugin in case building needs code from the plugin itself
+  M.load(spec, path)
+
   notify = notify ~= false
   if notify then
     vim.notify(string.format('[utils.pack] Building %s', spec.src))
