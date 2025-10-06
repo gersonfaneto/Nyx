@@ -92,12 +92,8 @@ fzf_file_previewer() {
             # Use ASCII image previewers if ueberzugpp not available
             case "$(which_exe chafa imgcat tiv)" in
             chafa)
-                if [ -n "$TMUX" ]; then
-                    chafa -f symbols \
-                        -s "$FZF_PREVIEW_COLUMNS"x"$FZF_PREVIEW_LINES" "$fpath"
-                else
-                    chafa -s "$FZF_PREVIEW_COLUMNS"x"$FZF_PREVIEW_LINES" "$fpath"
-                fi
+                chafa -f symbols \
+                    -s "$FZF_PREVIEW_COLUMNS"x"$FZF_PREVIEW_LINES" "$fpath"
                 ;;
             imgcat)
                 imgcat -H -w "$FZF_PREVIEW_COLUMNS" \
