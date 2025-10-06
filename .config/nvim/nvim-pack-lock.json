@@ -12,6 +12,7 @@
       "rev": "1606e9d",
       "src": "https://github.com/Eandrju/cellular-automaton.nvim"
     },
+    "conjure": [],
     "everforest": {
       "rev": "3fffb09",
       "src": "https://github.com/sainnhe/everforest"
@@ -24,6 +25,7 @@
       "rev": "4333179",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
+    "ghcid": [],
     "gitsigns.nvim": {
       "rev": "1ee5c1f",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
@@ -32,6 +34,10 @@
       "rev": "834dbf2",
       "src": "https://github.com/sainnhe/gruvbox-material"
     },
+    "haskell-tools.nvim": {
+      "version": "6.0.0 - 7.0.0"
+    },
+    "haskell-vim": [],
     "img-clip.nvim": {
       "rev": "f33f3af",
       "src": "https://github.com/HakonHarnes/img-clip.nvim"
