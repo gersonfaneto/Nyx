@@ -51,14 +51,14 @@ vim.api.nvim_create_autocmd('UIEnter', {
   once = true,
   desc = 'Show the intro message on entering the UI.',
   callback = function()
-    ---@class intro_chunk_t
+    ---@class intro.chunk
     ---@field text string
     ---@field hl string
     ---@field len integer? byte-indexed text length
     ---@field width integer? display width of text
 
     ---@class intro.line
-    ---@field chunks intro_chunk_t[]
+    ---@field chunks intro.chunk[]
     ---@field text string?
     ---@field width integer?
     ---@field offset integer?

@@ -1,3 +1,4 @@
+---@type pack.spec
 -- Python dependencies:
 -- - pynvim
 -- - ipykernel
@@ -27,8 +28,6 @@ return {
       'MoltenNotebookRunVisual',
       'MoltenNotebookRunOperator',
     },
-    ---@param spec vim.pack.Spec
-    ---@param path string
     init = function(spec, path)
       vim.api.nvim_create_autocmd('FileType', {
         pattern = { 'python', 'markdown' },
@@ -161,27 +160,27 @@ return {
       end
 
       ---Code range, 0-based, end-exclusive
-      ---@class code_range_t
+      ---@class molten.code_range
       ---@field from integer[] 0-based (row, col) array
       ---@field to integer[] 0-based (row, col) array
 
       ---@class molten.code_cell
       ---@field lang string?
       ---@field text table<string>
-      ---@field range code_range_t
+      ---@field range molten.code_range
 
       ---Check if two ranges are overlapped
-      ---@param r1 code_range_t
-      ---@param r2 code_range_t
+      ---@param r1 molten.code_range
+      ---@param r2 molten.code_range
       ---@return boolean
       local function is_overlapped(r1, r2)
         return r1.from[1] <= r2.to[1] and r2.from[1] <= r1.to[1]
       end
 
       ---Get the overlap between two (line) ranges
-      ---@param r1 code_range_t
-      ---@param r2 code_range_t
-      ---@return code_range_t?
+      ---@param r1 molten.code_range
+      ---@param r2 molten.code_range
+      ---@return molten.code_range?
       local function get_overlap(r1, r2)
         if is_overlapped(r1, r2) then
           return {
@@ -195,7 +194,7 @@ return {
       ---removes cells with a language that's in the ignore list
       ---@param lang string
       ---@param code_chunks table<string, molten.code_cell>
-      ---@param range code_range_t
+      ---@param range molten.code_range
       ---@param partial boolean?
       ---@return molten.code_cell[]
       local function extract_cells(lang, code_chunks, range, partial)
@@ -267,7 +266,7 @@ return {
       ---
       ---Code are run in chunks (cells) , i.e. the whole chunk will be sent to
       ---REPL even when there are only partial overlap between the chunk and `range`
-      ---@param range code_range_t a range, for with any overlapping code cells are run
+      ---@param range molten.code_range a range, for with any overlapping code cells are run
       ---@return nil
       local function run_cell(range)
         if not otk then
@@ -346,7 +345,7 @@ return {
       ---Code are run in lines, i.e. only code lines in `range` will be sent to REPL,
       ---if there is a partial overlap between `range` and a code chunk,
       ---only the lines inside `range` will be run
-      ---@param range code_range_t
+      ---@param range molten.code_range
       ---@return nil
       local function run_range(range)
         if not otk then

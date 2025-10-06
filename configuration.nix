@@ -297,6 +297,7 @@
       mononoki
       comic-mono
       departure-mono
+      ultimate-oldschool-pc-font-pack
       (iosevka-bin.override {variant = "SS07";})
 
       # UI

@@ -2,7 +2,7 @@ local utils = require('plugin.winbar.utils')
 local icons = utils.static.icons
 local M = {}
 
----@class winbar_configs_t
+---@class winbar.config.opts
 M.opts = {
   icons = {
     kinds = {
@@ -85,7 +85,7 @@ M.opts = {
 
       local menu = require('plugin.winbar.menu')
       local configs = require('plugin.winbar.configs')
-      symbol.menu = menu.winbar_menu_t:new({
+      symbol.menu = menu.winbar_menu:new({
         prev_win = prev_win,
         cursor = init_cursor,
         win_configs = win_configs,
@@ -98,7 +98,7 @@ M.opts = {
               string.rep(' ', vim.fn.strdisplaywidth(menu_indicator_icon))
             menu_indicator_on_click = false
           end
-          return menu.winbar_menu_entry_t:new({
+          return menu.winbar_menu_entry:new({
             components = {
               sym:merge({
                 name = '',
@@ -291,7 +291,7 @@ M.opts = {
         end
       end,
     },
-    ---@alias winbar.menu.win_config any|fun(menu: winbar_menu_t):any
+    ---@alias winbar.menu.win_config any|fun(menu: winbar.menu):any
     ---@type table<string, winbar.menu.win_config>
     ---@see vim.api.nvim_open_win
     win_configs = {
@@ -307,7 +307,7 @@ M.opts = {
             and menu.prev_menu.clicked_at[1] - vim.fn.line('w0')
           or 0
       end,
-      ---@param menu winbar_menu_t
+      ---@param menu winbar.menu
       col = function(menu)
         if menu.prev_menu then
           return menu.prev_menu._win_configs.width
@@ -482,7 +482,7 @@ M.opts = {
 }
 
 ---Set winbar options
----@param new_opts winbar_configs_t?
+---@param new_opts winbar.config.opts?
 function M.set(new_opts)
   M.opts = vim.tbl_deep_extend('force', M.opts, new_opts or {})
 end

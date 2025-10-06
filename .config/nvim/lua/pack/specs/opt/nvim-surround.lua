@@ -1,3 +1,4 @@
+---@type pack.spec
 return {
   src = 'https://github.com/kylechui/nvim-surround',
   data = {
@@ -16,12 +17,9 @@ return {
     postload = function()
       require('nvim-surround').setup({
         surrounds = {
-          -- Bold & Italic markers in markdown
+          -- Bold markers in markdown
           ['<M-*>'] = {
             add = { '**', '**' },
-          },
-          ['<M-i>'] = {
-            add = { '*', '*' },
           },
         },
       })

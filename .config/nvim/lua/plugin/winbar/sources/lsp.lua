@@ -46,7 +46,7 @@ setmetatable(lsp_buf_symbols, {
 ---@field children? winbar.sources.lsp.symbol_info_tree[]
 ---@field siblings? winbar.sources.lsp.symbol_info_tree[]
 
----@alias lsp_symbol_t winbar.sources.lsp.document_symbol|winbar.sources.lsp.symbol_info
+---@alias winbar.sources.lsp.symbol winbar.sources.lsp.document_symbol|winbar.sources.lsp.symbol_info
 
 -- Map symbol number to symbol kind
 -- stylua: ignore start
@@ -84,11 +84,11 @@ local symbol_kind_names = setmetatable({
 })
 -- stylua: ignore end
 
----@alias lsp_symbol_type_t 'SymbolInformation'|'DocumentSymbol'
+---@alias winbar.sources.lsp.symbol_type 'SymbolInformation'|'DocumentSymbol'
 
 ---Return type of the symbol table
----@param symbols lsp_symbol_t[] symbol table
----@return lsp_symbol_type_t? type symbol type
+---@param symbols winbar.sources.lsp.symbol[] symbol table
+---@return winbar.sources.lsp.symbol_type? type symbol type
 local function symbol_type(symbols)
   if symbols[1] and symbols[1].location then
     return 'SymbolInformation'
@@ -113,7 +113,7 @@ local function convert_document_symbol(
   idx
 )
   local kind = symbol_kind_names[document_symbol.kind]
-  return bar.winbar_symbol_t:new(setmetatable({
+  return bar.winbar_symbol:new(setmetatable({
     buf = buf,
     win = win,
     name = document_symbol.name,
@@ -195,7 +195,7 @@ local function convert_document_symbol_list(
 end
 
 ---Convert LSP SymbolInformation[] into DocumentSymbol[]
----@param symbols lsp_symbol_t LSP symbols
+---@param symbols winbar.sources.lsp.symbol LSP symbols
 ---@return winbar.sources.lsp.document_symbol[]
 local function unify(symbols)
   if symbol_type(symbols) == 'DocumentSymbol' or vim.tbl_isempty(symbols) then

@@ -100,7 +100,7 @@ local function convert(ts_node, buf, win)
   end
   local kind = utils.str.snake_to_pascal(get_node_short_type(ts_node))
   local range = { ts_node:range() }
-  return bar.winbar_symbol_t:new(setmetatable({
+  return bar.winbar_symbol:new(setmetatable({
     buf = buf,
     win = win,
     name = get_node_short_name(ts_node, buf),

@@ -1,10 +1,6 @@
-vim.bo.shiftwidth = 4
-vim.bo.tabstop = 4
-vim.bo.expandtab = true
-
+vim.bo.sw = 4
 vim.bo.cindent = false
 vim.bo.smartindent = false
-
 vim.bo.commentstring = '<!-- %s -->'
 
 ---Don't join title/first line of list item with previous lines when yanking

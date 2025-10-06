@@ -88,7 +88,7 @@ end
 
 ---Returns whether current cursor is in the given types of treesitter node
 ---@param type string|string[]
----@param opts ts_find_node_opts_t?
+---@param opts ts.get_node.opts?
 ---@return fun(): boolean
 function M.in_tsnode(type, opts)
   return function()
@@ -98,7 +98,7 @@ end
 
 ---Returns whether current cursor is in the given names of syntax group
 ---@param name string|string[]|fun(types: string|string[]): boolean type of node, or function to check node type
----@param opts? syn_find_group_opts_t
+---@param opts? syn.get_group.opts
 ---@return fun(): boolean
 function M.in_syngroup(name, opts)
   return function()

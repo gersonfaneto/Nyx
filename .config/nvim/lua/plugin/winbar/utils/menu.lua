@@ -89,7 +89,7 @@ function M.update_preview(mouse)
   last_previewed_menu = menu
 end
 
----@class winbar_select_opts_t
+---@class winbar.menu.sel.opts
 ---Text to be displayed at the top of the menu
 ---@field prompt? string
 ---Function to format each item in the menu.
@@ -97,13 +97,13 @@ end
 ---The second return value is a list of virtual text chunks to be displayed below the item. If
 ---nothing is returned for the second value, no virtual text will be displayed.
 ---@field format_item? fun(item: any): string, string[][]?
----@field preview? fun(self: winbar_symbol_t, item: any, idx: integer)
----@field preview_close? fun(self: winbar_symbol_t, item: any, idx: integer)
+---@field preview? fun(self: winbar.symbol, item: any, idx: integer)
+---@field preview_close? fun(self: winbar.symbol, item: any, idx: integer)
 
 ---`vim.ui.select()` replacement
 ---@generic T string|table
 ---@param items T[] list of items to be selected
----@param opts winbar_select_opts_t
+---@param opts winbar.menu.sel.opts
 ---@param on_choice fun(T?, integer?): nil
 function M.select(items, opts, on_choice)
   if not items then
@@ -142,11 +142,11 @@ function M.select(items, opts, on_choice)
         end
       end
 
-      return menu.winbar_menu_entry_t:new({
+      return menu.winbar_menu_entry:new({
         -- `virt_text` will only be shown if returned from `format_item`
         virt_text = virt_text,
         components = {
-          bar.winbar_symbol_t:new({
+          bar.winbar_symbol:new({
             icon = string.format(
               icon_format,
               (idx <= 9 or idx > 9 + len_pivots) and idx
@@ -213,7 +213,7 @@ function M.select(items, opts, on_choice)
     win_configs.anchor = 'NW'
   end
 
-  local smenu = menu.winbar_menu_t:new({
+  local smenu = menu.winbar_menu:new({
     prev_win = win,
     entries = entries,
     win_configs = win_configs,

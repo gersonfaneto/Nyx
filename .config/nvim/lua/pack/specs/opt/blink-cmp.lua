@@ -1,8 +1,8 @@
----@type vim.pack.Spec
+---@type pack.spec
 return {
   src = 'https://github.com/saghen/blink.cmp',
-  version = vim.version.range('^1'),
   data = {
+    optional = vim.g.vscode,
     deps = {
       {
         src = 'https://github.com/L3MON4D3/LuaSnip',
@@ -15,13 +15,12 @@ return {
     },
     -- https://github.com/Saghen/blink.cmp/issues/145#issuecomment-2483686337
     -- https://github.com/Saghen/blink.cmp/issues/145#issuecomment-2492759016
-    -- build = string.format(
-    --   '%s cargo build --release',
-    --   vim.env.TERMUX_VERSION
-    --       and 'RUSTC_BOOTSTRAP=1 RUSTFLAGS="-C link-args=-lluajit"'
-    --     or ''
-    -- ),
-    build = 'nix run .#build-plugin',
+    build = string.format(
+      '%s cargo build --release',
+      vim.env.TERMUX_VERSION
+          and 'RUSTC_BOOTSTRAP=1 RUSTFLAGS="-C link-args=-lluajit"'
+        or ''
+    ),
     events = { 'InsertEnter', 'CmdlineEnter' },
     postload = function()
       local icons = require('utils.static.icons')

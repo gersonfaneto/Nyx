@@ -17,7 +17,7 @@ _G._winbar = setmetatable({}, {
 ---Make it assessable from global only because nvim's viml-lua interface
 ---(v:lua) only support calling global lua functions
 ---@type table<string, table<string, function>>
----@see winbar_t:update
+---@see winbar.bar:update
 _G._winbar.callbacks = setmetatable({}, {
   __index = function(self, buf)
     self[buf] = setmetatable({}, {
@@ -35,7 +35,7 @@ _G._winbar.bars = setmetatable({}, {
   __index = function(self, buf)
     self[buf] = setmetatable({}, {
       __index = function(this, win)
-        this[win] = bar.winbar_t:new({
+        this[win] = bar.winbar:new({
           sources = configs.eval(configs.opts.bar.sources, buf, win) --[=[@as winbar.source[]]=],
         })
         return this[win]
@@ -46,7 +46,7 @@ _G._winbar.bars = setmetatable({}, {
 })
 
 ---Setup winbar
----@param opts winbar_configs_t?
+---@param opts winbar.config.opts?
 local function setup(opts)
   -- Allow following calls to `setup()` to change config options
   configs.set(opts)

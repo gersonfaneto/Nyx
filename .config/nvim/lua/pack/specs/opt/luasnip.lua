@@ -1,3 +1,4 @@
+---@type pack.spec
 return {
   src = 'https://github.com/L3MON4D3/LuaSnip',
   data = {
@@ -15,7 +16,7 @@ return {
         ft = ft or vim.bo.ft
         utils.load.ft_load_once(
           ft,
-          'pack.ftconfigs.luasnip.snippets',
+          'pack.res.luasnip.snippets',
           function(_, snips)
             if not snips or vim.tbl_isempty(snips) then
               return
@@ -152,7 +153,7 @@ return {
 
       ---Convert a range into lsp format range
       ---@param range integer[][] 0-based range
-      ---@return lsp_range_t
+      ---@return winbar.source.lsp.range
       local function range_convert(range)
         local s = range[1]
         local e = range[2]

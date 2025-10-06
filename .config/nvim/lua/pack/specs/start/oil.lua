@@ -1,3 +1,4 @@
+---@type pack.spec
 return {
   src = 'https://github.com/stevearc/oil.nvim',
   data = {
@@ -15,8 +16,6 @@ return {
     },
     cmds = 'Oil',
     ---Load oil on startup only when editing a directory
-    ---@param spec vim.pack.Spec
-    ---@param path string
     init = function(spec, path)
       vim.g.loaded_fzf_file_explorer = 0
       vim.g.loaded_netrw = 0
@@ -28,7 +27,6 @@ return {
         -- checking if the buffer is a directory buffer
         callback = vim.schedule_wrap(function(args)
           local buf = args.buf
-          local id = args.id
 
           if
             not vim.api.nvim_buf_is_valid(buf)
@@ -50,8 +48,8 @@ return {
             return
           end
 
-          pcall(vim.api.nvim_del_autocmd, id)
           require('utils.pack').load(spec, path)
+          return true
         end),
       })
     end,
