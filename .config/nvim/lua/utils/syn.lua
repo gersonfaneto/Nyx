@@ -14,7 +14,7 @@ end
 ---@param names string|string[]|fun(types: string|string[]): boolean type of node, or function to check node type
 ---@param opts? syn.get_group.opts
 ---@return integer?
-function M.get_group(names, opts)
+function M.find_group(names, opts)
   opts = opts or {}
   opts.bufnr = vim._resolve_bufnr(opts.bufnr)
   opts.depth = opts.depth or math.huge
