@@ -1,0 +1,82 @@
+{
+  "plugins": {
+    "LuaSnip": {
+      "rev": "7381330"
+    },
+    "blink.cmp": {
+      "rev": "a999ddc"
+    },
+    "cellular-automaton.nvim": [],
+    "conjure": {
+      "rev": "e1cd2d21"
+    },
+    "everforest": [],
+    "fugitive-gitlab.vim": [],
+    "fzf-lua": {
+      "rev": "a13c5c5"
+    },
+    "ghcid": [],
+    "gitsigns.nvim": {
+      "rev": "1ee5c1f"
+    },
+    "gruvbox-material": [],
+    "haskell-tools.nvim": {
+      "version": "6.0.0 - 7.0.0"
+    },
+    "haskell-vim": [],
+    "img-clip.nvim": [],
+    "markdown-preview.nvim": [],
+    "molten-nvim": [],
+    "nvim-colorizer.lua": [],
+    "nvim-dap": {
+      "rev": "48570d8"
+    },
+    "nvim-dap-ui": [],
+    "nvim-nio": [],
+    "nvim-surround": [],
+    "nvim-treesitter": {
+      "rev": "01ced749",
+      "version": "'main'"
+    },
+    "nvim-treesitter-endwise": [],
+    "nvim-treesitter-incremental-selection": [],
+    "nvim-treesitter-textobjects": {
+      "version": "'main'"
+    },
+    "nvim-web-devicons": {
+      "rev": "b8221e4"
+    },
+    "oil.nvim": {
+      "rev": "919e155"
+    },
+    "one-small-step-for-vimkind": {
+      "rev": "99c22f1"
+    },
+    "opencode.nvim": {
+      "rev": "13b2a30"
+    },
+    "otter.nvim": [],
+    "plenary.nvim": [],
+    "quicker.nvim": {
+      "rev": "12a2291"
+    },
+    "treesj": [],
+    "ts-autotag.nvim": {
+      "rev": "bfa97e1"
+    },
+    "ultimate-autopair.nvim": [],
+    "vim-conjoin": [],
+    "vim-dispatch": [],
+    "vim-easy-align": [],
+    "vim-fugitive": [],
+    "vim-projectionist": [],
+    "vim-rhubarb": [],
+    "vim-sleuth": [],
+    "vim-table-mode": [],
+    "vim-test": {
+      "rev": "ad4b721"
+    },
+    "vimtex": [],
+    "which-key.nvim": []
+  }
+}
