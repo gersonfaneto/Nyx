@@ -159,9 +159,9 @@ fzf_file_previewer() {
             # Use bat, highlight or cat for remaining files
             if has bat; then
                 if [ -z "$2" ]; then
-                    bat --paging never --style plain --color always "$1"
+                    bat --theme ansi --paging never --style plain --color always "$1"
                 else
-                    bat --paging never --style numbers --color always "$1" \
+                    bat --theme ansi --paging never --style numbers --color always "$1" \
                         --highlight-line "$2"
                 fi
                 return
