@@ -490,11 +490,21 @@ require('utils.load').on_events(
     local key = require('utils.key')
 
     key.command_map(':', 'lua =')
+
     key.command_abbrev('man', 'Man')
+
     key.command_abbrev('tt', 'tab te')
     key.command_abbrev('bt', 'bot te')
     key.command_abbrev('ht', 'hor te')
     key.command_abbrev('vt', 'vert te')
+
+    key.command_abbrev('rr', 'restart')
+
+    key.command_abbrev('vpu', 'lua vim.pack.update()')
+    key.command_abbrev('vpa', 'lua vim.pack.add()')
+    key.command_abbrev('vpd', 'lua vim.pack.delete()')
+    key.command_abbrev('vpg', 'lua vim.pack.get()')
+
     key.command_abbrev('rm', '!rm')
     key.command_abbrev('mv', '!mv')
     key.command_abbrev('git', '!git')
