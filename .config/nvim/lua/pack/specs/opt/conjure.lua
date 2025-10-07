@@ -1,4 +1,4 @@
----@type vim.pack.Spec
+---@type pack.spec
 return {
   src = 'https://github.com/Olical/conjure',
   data = {

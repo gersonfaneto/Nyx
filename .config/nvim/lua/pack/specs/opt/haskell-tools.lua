@@ -1,4 +1,4 @@
----@type vim.pack.Spec
+---@type pack.spec
 return {
   src = 'https://github.com/mrcjkb/haskell-tools.nvim',
   version = vim.version.range('^6'),
