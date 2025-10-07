@@ -26,7 +26,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "4333179",
+      "rev": "c0c0926",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "ghcid": [],
@@ -75,7 +75,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "0594d1ba",
+      "rev": "3ab4f2d2",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -105,11 +105,11 @@
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
     },
     "opencode.nvim": {
-      "rev": "476ce82",
+      "rev": "123d62b",
       "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "otter.nvim": {
-      "rev": "c44d645",
+      "rev": "fc0aa35",
       "src": "https://github.com/jmbuhr/otter.nvim"
     },
     "plenary.nvim": {
@@ -169,7 +169,7 @@
       "src": "https://github.com/vim-test/vim-test"
     },
     "vimtex": {
-      "rev": "2e1bbabe",
+      "rev": "159b74a9",
       "src": "https://github.com/lervag/vimtex"
     },
     "which-key.nvim": {
