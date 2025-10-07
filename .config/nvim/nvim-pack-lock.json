@@ -13,6 +13,10 @@
       "src": "https://github.com/Eandrju/cellular-automaton.nvim"
     },
     "conjure": [],
+    "esqueleto.nvim": {
+      "rev": "d495d8a",
+      "src": "https://github.com/cvigilv/esqueleto.nvim"
+    },
     "everforest": {
       "rev": "3fffb09",
       "src": "https://github.com/sainnhe/everforest"
