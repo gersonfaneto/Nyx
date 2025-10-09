@@ -1,5 +1,9 @@
 local ts = require('utils.ts')
 
+-- Async parsing can cause unpleasant color change shortly after opening a
+-- medium-sized file e.g. C file with 1000+ lines
+vim.g._ts_force_sync_parsing = true
+
 -- Fix treesitter bug: when `vim.treesitter.start/stop` is called with a
 -- different `buf` from current buffer, it can affect current buffer's
 -- language tree
@@ -22,9 +26,11 @@ vim.treesitter.stop = ts_buf_call_wrap(vim.treesitter.stop)
 ---Enable treesitter highlighting for given buffer
 ---@param buf integer
 local function enable_ts_hl(buf)
+  -- Don't start treesitter in bufs without filetype to avoid unnecessary calls
+  -- to `vim.treesitter.start()` and improve startup time
   -- Don't re-enable in the same buffer, else buffers loaded from session can
   -- have blank highlighting
-  if not ts.is_active(buf) then
+  if vim.b[buf].ft == '' or not ts.is_active(buf) then
     return
   end
   pcall(vim.treesitter.start, buf)
@@ -35,7 +41,7 @@ for _, buf in ipairs(vim.api.nvim_list_bufs()) do
   enable_ts_hl(buf)
 end
 
-vim.api.nvim_create_autocmd('Syntax', {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FileType' }, {
   group = vim.api.nvim_create_augroup('my.ts.auto_start', {}),
   desc = 'Automatically start treesitter highlighting for buffers.',
   callback = function(args)
