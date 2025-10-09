@@ -37,6 +37,9 @@ function __command_abbr --description 'Add an command abbreviation' -a trigger
     abbr --add $trigger --position command $argv[2..-1]
 end
 
+# Just for fun...
+__command_abbr please 'sudo'
+
 __command_abbr cp 'cp -i'
 __command_abbr mv 'mv -i'
 __command_abbr mkdir 'mkdir -p'
