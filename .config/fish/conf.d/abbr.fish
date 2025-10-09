@@ -39,6 +39,7 @@ end
 
 # Just for fun...
 __command_abbr please 'sudo'
+__command_abbr btw 'fastfetch'
 
 __command_abbr cp 'cp -i'
 __command_abbr mv 'mv -i'
