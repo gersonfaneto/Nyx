@@ -71,7 +71,7 @@ vim.opt.nrformats:append('blank')
 do
   vim.opt.spellsuggest = 'best,9'
   vim.opt.spellcapcheck = ''
-  vim.opt.spelllang = 'en,cjk'
+  vim.opt.spelllang = 'en,pt'
   vim.opt.spelloptions = 'camel'
 
   ---Set spell check option
