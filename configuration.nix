@@ -182,6 +182,7 @@
       gh
       ghostty
       git
+      godot
       gum
       highlight
       impala
