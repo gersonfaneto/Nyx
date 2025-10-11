@@ -120,6 +120,10 @@
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "pywal16": {
+      "rev": "6d8063c",
+      "src": "https://github.com/uZer/pywal16.nvim"
+    },
     "quicker.nvim": {
       "rev": "12a2291",
       "src": "https://github.com/stevearc/quicker.nvim"
