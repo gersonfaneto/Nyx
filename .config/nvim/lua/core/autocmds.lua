@@ -648,3 +648,18 @@ do
     },
   })
 end
+
+do
+  augroup('my.godot_sync', {
+    'VimEnter',
+    {
+      callback = function()
+        local in_project = vim.fn.getcwd() .. './project.godot'
+
+        if in_project then
+          vim.fn.serverstart('./godohost')
+        end
+      end,
+    },
+  })
+end

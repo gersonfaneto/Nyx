@@ -53,7 +53,7 @@ __command_abbr ded 'direnv deny'
 __command_abbr dee 'direnv edit'
 __command_abbr der 'direnv reload'
 
-__command_abbr tree 'tree -N -L 4 -C --'
+__command_abbr tree 'tree -N -L 4 -C --gitignore'
 
 __command_abbr oc 'opencode'
 
