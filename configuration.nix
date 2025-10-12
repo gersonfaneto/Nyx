@@ -161,7 +161,7 @@
       alacritty
       ani-cli
       arandr
-      aseprite
+      # aseprite
       bat
       bluetui
       bottom
