@@ -658,10 +658,22 @@ do
     'VimEnter',
     {
       callback = function()
-        local in_project = vim.fn.getcwd() .. './project.godot'
+        local project_root = vim.fn.getcwd() .. '/project.godot'
+        local is_project = vim.uv.fs_stat(project_root)
 
-        if in_project then
-          vim.fn.serverstart('./godohost')
+        if is_project then
+          vim.notify('Godot project detected!')
+          vim.g.godot_server_addr = vim.fn.serverstart('./godohost')
+        end
+      end,
+    },
+  }, {
+    'VimLeave',
+    {
+      callback = function()
+        if vim.g.godot_server_addr then
+          vim.fn.serverstop(vim.g.godot_server_addr)
+          vim.g.godot_server_addr = nil
         end
       end,
     },

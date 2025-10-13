@@ -51,6 +51,10 @@ return {
             }
           end
 
+          config.settings = {
+            useGlobalExecutable = true,
+          }
+
           metals.initialize_or_attach(config)
         end,
       })
