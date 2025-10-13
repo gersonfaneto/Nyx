@@ -77,19 +77,12 @@ local function trig_loaders_fn(loaders)
       loader(args)
       loaders[i] = nil
     end
-
-    vim.schedule(function()
-      if not vim.api.nvim_buf_is_valid(args.buf) then
-        return
-      end
-      vim.api.nvim_buf_call(args.buf, function()
-        vim.api.nvim_exec_autocmds(
-          args.event,
-          { pattern = args.match, data = args.data }
-        )
-      end)
+    vim.api.nvim_buf_call(args.buf, function()
+      vim.api.nvim_exec_autocmds(
+        args.event,
+        { pattern = args.match, data = args.data }
+      )
     end)
-
     return true
   end
 end
@@ -174,7 +167,7 @@ function M.on_events(event_specs, name, load)
         if vim.tbl_isempty(loaders) then
           vim.api.nvim_create_autocmd(spec.event, {
             once = true,
-            pattern = spec.pattern,
+            pattern = pat,
             group = vim.api.nvim_create_augroup(
               string.format(
                 'my.load.on_events.event.%s.pat.%s',
