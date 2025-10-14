@@ -2,7 +2,8 @@
   description = "Nyx";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
 
     apple-fonts = {
       url = "github:Lyndeno/apple-fonts.nix";

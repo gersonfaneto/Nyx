@@ -17,6 +17,7 @@ if status is-login
         --scroll-off=999 \
         --multi \
         --ansi \
+        --gutter=' ' \
         --color=fg:-1,bg:-1,hl:bold:cyan \
         --color=fg+:-1,bg+:-1,hl+:bold:cyan \
         --color=border:white,preview-border:white \
