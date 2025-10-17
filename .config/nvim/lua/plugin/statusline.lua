@@ -731,8 +731,8 @@ utils.hl.persist(function()
   utils.hl.set(0, 'StatusLineDiagnosticWarn',  { link = 'DiagnosticSignWarn'  , default = true })
   utils.hl.set(0, 'StatusLineDiagnosticError', { link = 'DiagnosticSignError' , default = true })
 
-  utils.hl.set(0, 'StatusLineHeader',          { fg = 'TabLine', bg = 'fg', ctermfg = 'TabLine', ctermbg = 'fg', reverse = tru, default = true })
-  utils.hl.set(0, 'StatusLineHeaderModified',  { fg = 'Special', bg = 'fg', ctermfg = 'Special', ctermbg = 'fg', reverse = tru, default = true })
+  utils.hl.set(0, 'StatusLineHeader',          { fg = 'TabLine', bg = 'fg', ctermfg = 'TabLine', ctermbg = 'fg', reverse = true, default = true })
+  utils.hl.set(0, 'StatusLineHeaderModified',  { fg = 'Special', bg = 'fg', ctermfg = 'Special', ctermbg = 'fg', reverse = true, default = true })
   -- stylua: ignore end
 end)
 
