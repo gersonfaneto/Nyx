@@ -183,7 +183,6 @@
       ghostty
       git
       godot
-      gum
       highlight
       impala
       jq
@@ -202,10 +201,7 @@
       playerctl
       poppler-utils
       presenterm
-      prismlauncher
       pulseaudio
-      pywal
-      pywal16
       qalculate-gtk
       quartus-prime-lite
       ripgrep
