@@ -1,17 +1,14 @@
 ; Support for Markdown
 
-(title) @markup.heading
+(title) @function
 
-; (text) @none
-(branch) @markup.link
+(branch) @string
 
 (change) @keyword
 
-(filepath) @string.special.url
+(filepath) @string
 
 (arrow) @punctuation.delimiter
-
-(subject) @markup.heading @spell
 
 (subject
   (subject_prefix) @function @nospell)
@@ -53,4 +50,3 @@
 ; Makes markdown like headers starting with # highlighted
 ((_) @function
  (#match? @function "^#.*"))
-

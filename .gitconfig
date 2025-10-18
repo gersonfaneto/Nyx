@@ -28,6 +28,7 @@
   fsync = none
   compression = 9
   preloadindex = true
+  commentChar = ";"
 
 [advice]
   addEmptyPathSpec = false
@@ -142,45 +143,62 @@
 [alias]
   it = "!git init && git commit -m 'Ready... Set... Go!' --allow-empty"
 
+  ci = commit
   cm = commit --message
   ca = commit --amend
   ce = commit --amend --no-edit
 
+  br = branch
   ba = branch --all
   bd = branch --delete
+  bD = branch -D
 
   df = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
   ds = df --cached
 
+  co = checkout
   cb = checkout --branch
   cf = checkout --force
 
+  sw = switch
   sc = switch --create
 
   aa = add --all
 
+  st = status
   ss = status --short
 
+  ft = fetch
   fa = fetch --all
   fp = fetch --prune
 
-  pf = push --force
-  pd = push --delete
+  pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
+  pr = "!git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase"
 
+  ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
+  pf = "!git push origin $(git rev-parse --abbrev-ref HEAD) --force"
+  pd = "!git push origin $(git rev-parse --abbrev-ref HEAD) --delete"
+
+  cl = clone
   cs = clone --depth=1
-  cn = clone --filter=blob:none
   cr = clone --recursive
+  cn = clone --filter=blob:none
 
+  rr = rebase
   ri = rebase --interactive
   rc = rebase --continue
   ra = rebase --abort
   rt = rebase --edit-todo
 
+  wt = worktree
   wl = worktree list
   wa = worktree add
   wr = worktree remove
 
-  lg = "log --graph --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n'"
+  rank = shortlog --summary --numbered --email
+
+  lg = log --graph --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n'
+  la = log --all --graph --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n'
 
   url = "!git config --get remote.origin.url | sed -e 's/:/\\//g' -e 's/ssh\\/\\///g' -e 's/git@/https:\\/\\//g'"
 
