@@ -195,6 +195,7 @@
       localsend
       man-pages
       man-pages-posix
+      mendeley
       mpv
       opencode
       pandoc
