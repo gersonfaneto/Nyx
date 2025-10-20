@@ -973,6 +973,53 @@ M.snippets = {
       }
     )
   ),
+  us.msM(
+    {
+      { trig = 'en' },
+      { trig = 'enu' },
+      { trig = 'enum' },
+    },
+    un.fmtad(
+      [[
+        \begin{enumerate}
+        <text>
+        \end{enumerate}
+      ]],
+      {
+        text = un.body(1, 1),
+      }
+    )
+  ),
+  us.msM(
+    {
+      { trig = 'it' },
+      { trig = 'itemize' },
+    },
+    un.fmtad(
+      [[
+        \begin{itemize}
+        <text>
+        \end{itemize}
+      ]],
+      {
+        text = un.body(1, 1),
+      }
+    )
+  ),
+  us.sM(
+    { trig = 'll' },
+    un.fmtad(
+      [[
+        \begin{<env>}
+        <text>
+        \end{<env>}
+      ]],
+      {
+        env = c(1, { t('itemize'), t('enumerate') }),
+        text = un.body(2, 1),
+      }
+    )
+  ),
   us.sM(
     { trig = 'aln' },
     un.fmtad(
@@ -1052,10 +1099,12 @@ M.snippets = {
   us.sM({ trig = 'em' }, { t('\\emph{'), i(1), t('}') }),
   us.sM({ trig = 'bb' }, { t('\\textbf{'), i(1), t('}') }),
   us.sM({ trig = 'ul' }, { t('\\underline{'), i(1), t('}') }),
-  us.msM(
-    { { trig = 'tt' }, { trig = 'cd' } },
-    { t('\\texttt{'), i(1), t('}') }
-  ),
+  us.sM({ trig = 'cd' }, { t('\\texttt{'), i(1), t('}') }),
+  us.saM({ trig = '`' }, { t('\\texttt{'), i(1), t('}') }),
+  us.saM({ trig = '**' }, { t('\\textbf{'), i(1), t('}') }),
+  us.saM({ trig = '\\item*' }, { t('\\textbf{'), i(1), t('}') }),
+  us.saM({ trig = '__' }, { t('\\underline{'), i(1), t('}') }),
+  us.msiaM({ { trig = '-' }, { trig = '*' } }, t('\\item')),
 }
 
 return M
