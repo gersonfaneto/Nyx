@@ -10,13 +10,16 @@ return {
           return
         end
 
-        require('onedark').setup({
+        local onedark = require('onedark')
+
+        onedark.setup({
           style = vim.go.background, -- make `set bg=light/dark` work
           diagnostics = {
             darker = false,
           },
         })
-        require('onedark').load()
+
+        onedark.load()
 
         hl.set(0, 'WinBar', { link = 'StatusLine' })
         hl.set(0, 'WinBarNC', { link = 'StatusLineNC' })
