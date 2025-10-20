@@ -196,6 +196,7 @@
       man-pages
       man-pages-posix
       mendeley
+      prismlauncher
       mpv
       opencode
       pandoc
