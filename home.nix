@@ -1,14 +1,10 @@
 {inputs, ...}: {
-  # ...
   home.username = "gerson";
   home.homeDirectory = "/home/gerson";
 
-  # ...
   programs.home-manager.enable = true;
 
-  home.packages = with inputs.nixpkgs; [
-    # home-manager # Not needed, is managed by the flake...
-  ];
+  home.packages = with inputs.nixpkgs; [];
 
   # FIX: This might cause some problems in the future...
   home.enableNixpkgsReleaseCheck = false;

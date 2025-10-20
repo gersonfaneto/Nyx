@@ -251,4 +251,5 @@ client.urgent           #2F343A #900000 #FFFFFF #900000
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
+
 for_window [class="Dunst"] floating enable
