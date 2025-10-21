@@ -170,6 +170,7 @@
       detach
       diff-so-fancy
       dunst
+      emacs
       fastfetch
       fd
       feh
@@ -184,6 +185,7 @@
       git
       godot
       highlight
+      httpie
       impala
       jq
       lazydocker
@@ -196,13 +198,13 @@
       man-pages
       man-pages-posix
       mendeley
-      prismlauncher
       mpv
       opencode
       pandoc
       playerctl
       poppler-utils
       presenterm
+      prismlauncher
       pulseaudio
       qalculate-gtk
       quartus-prime-lite
@@ -262,7 +264,7 @@
       # Node
       nodejs_22
 
-      # JSON
+      # HTML + CSS + JSON
       vscode-langservers-extracted
 
       # General
