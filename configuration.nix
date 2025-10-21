@@ -40,6 +40,12 @@
 
   time.timeZone = "America/Bahia";
 
+  services.emacs = {
+    enable = true;
+    install = true;
+    startWithGraphical = true;
+  };
+
   services = {
     xserver = {
       enable = true;

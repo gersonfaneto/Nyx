@@ -38,6 +38,7 @@
 (setq make-backup-files nil)
 
 (setq use-short-answers t
+      compilation-ask-about-save nil
       confirm-nonexistent-file-or-buffer nil)
 
 (setq dired-listing-switches "-lhAX --group-directories-first")
@@ -45,7 +46,7 @@
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode))
 
-(set-frame-font "mononoki 12" nil t)
+(set-frame-font "Miracode 12" nil t)
 
 (global-set-key (kbd "M-0") 'delete-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
@@ -96,6 +97,7 @@
             (all-the-icons-install-fonts t)))
 
 (use-package evil
+  :disabled
   :straight t
   :init
   (setq evil-want-keybinding nil)
@@ -210,7 +212,7 @@
   "Setup fonts, theme, and modeline for new frames."
   (with-selected-frame frame
     (load-theme min/current-theme t)
-    (set-frame-font "mononoki 12" nil t)
+    (set-frame-font "Miracode 12" nil t)
     (doom-modeline-mode 1)))
 
 (defun min/toggle-theme ()
