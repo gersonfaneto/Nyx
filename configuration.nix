@@ -217,7 +217,6 @@
       ripgrep
       rsync
       scc
-      stow
       tmux
       trash-cli
       tree
