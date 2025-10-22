@@ -2,13 +2,13 @@ help:
 	@echo 'Usage: make [system|home|update|format]'
 
 system:
-	nixos-rebuild switch --flake .
+	sudo nixos-rebuild switch --flake .
 
 home:
-	home-manager switch -b bak --flake . 
+	nix run home-manager -- switch -b bak --flake .
 
 update:
-	nix flake update
+	sudo nix flake update
 
 format:
 	find -type f -name '*.nix' -not -name 'hardware-configuration.nix' \

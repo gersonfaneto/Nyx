@@ -24,6 +24,7 @@ in {
     ".gitconfig" = mkSymlink ".gitconfig";
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
+    ".config/doom/" = mkSymlink ".config/doom/";
     ".config/fastfetch/" = mkSymlink ".config/fastfetch/";
     ".config/fd/" = mkSymlink ".config/fd/";
     ".config/feh/" = mkSymlink ".config/feh/";
