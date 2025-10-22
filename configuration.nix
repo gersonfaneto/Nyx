@@ -200,6 +200,7 @@
       less
       libnotify
       libqalculate
+      libtool
       localsend
       man-pages
       man-pages-posix
