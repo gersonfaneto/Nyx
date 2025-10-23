@@ -1,6 +1,4 @@
 #!/usr/bin/env sh
-# vim: ft=sh ts=4 sw=4 sts=4 et :
-# Find a regex pattern using rg and fzf
 
 # Temporary files used by the script
 REGEX_QUERY_FILE="/tmp/rg-fzf-r-$$"
@@ -8,67 +6,69 @@ FUZZY_QUERY_FILE="/tmp/rg-fzf-f-$$"
 OUTPUT_FILE="/tmp/rg-fzf-o-$$"
 
 has() {
-    command -v "$1" >/dev/null 2>&1
+  command -v "$1" >/dev/null 2>&1
 }
 
 cleanup() {
-    rm -f "$REGEX_QUERY_FILE" "$FUZZY_QUERY_FILE" "$OUTPUT_FILE"
+  rm -f "$REGEX_QUERY_FILE" "$FUZZY_QUERY_FILE" "$OUTPUT_FILE"
 }
 
 # $1: search root path
 main() {
-    trap cleanup EXIT INT TERM HUP
+  trap cleanup EXIT INT TERM HUP
 
-    # Set default root path to current directory if not provided
-    root_path="${1:-.}"
-    shift 2>/dev/null
+  # Set default root path to current directory if not provided
+  root_path="${1:-.}"
+  shift 2>/dev/null
 
-    # Set preview command based on available tools
-    if has bat; then
-        preview_cmd='bat --theme base16 --paging never --style numbers,header-filename --color always {1} --highlight-line {2}'
-    elif has batcat; then
-        preview_cmd='batcat --theme base16 --paging never --style numbers,header-filename --color always {1} --highlight-line {2}'
-    elif has fzf-file-previewer; then
-        preview_cmd='fzf-file-previewer {1} {2}'
-    elif has cat; then
-        preview_cmd='cat {1}'
-    fi
+  # Set preview command based on available tools
+  if has bat; then
+    preview_cmd='bat --theme base16 --paging never --style numbers,header-filename --color always {1} --highlight-line {2}'
+  elif   has batcat; then
+    preview_cmd='batcat --theme base16 --paging never --style numbers,header-filename --color always {1} --highlight-line {2}'
+  elif   has fzf-file-previewer; then
+    preview_cmd='fzf-file-previewer {1} {2}'
+  elif   has cat; then
+    preview_cmd='cat {1}'
+  fi
 
-    # Set grep command based on available tools
-    if has rg; then
-        grep_cmd="rg --no-messages --hidden --follow --smart-case --column --line-number --no-heading --color=always"
-    elif has grep; then
-        grep_cmd="grep -i -r -n -H -I --color=always"
-    fi
+  # Set grep command based on available tools
+  if has rg; then
+    grep_cmd="rg --no-messages --hidden --follow --smart-case --column --line-number --no-heading --color=always"
+  elif   has grep; then
+    grep_cmd="grep -i -r -n -H -I --color=always"
+  fi
 
-    # Set editor
-    if has nvim; then
-        editor='nvim'
-    elif has vim; then
-        editor='vim'
-    fi
+  # Set editor
+  if has nvim; then
+    editor='nvim'
+  elif   has vim; then
+    editor='vim'
+  fi
 
-    initial_query="${*:-}"
-    regex_search_hint=$(printf ":: <\033[33;1mctrl-g\033[0m> to \033[33;1mRegex Search\033[0m")
-    fuzzy_search_hint=$(printf ":: <\033[33;1mctrl-t\033[0m> to \033[33;1mFuzzy Search\033[0m")
-    regex_prompt=' Rg> '
-    fuzzy_prompt=' Fzf> '
+  initial_query="${*:-}"
+  regex_search_hint=$(printf ":: <\033[33;1mctrl-g\033[0m> to \033[33;1mRegex Search\033[0m")
+  fuzzy_search_hint=$(printf ":: <\033[33;1mctrl-t\033[0m> to \033[33;1mFuzzy Search\033[0m")
+  regex_prompt=' Rg> '
+  fuzzy_prompt=' Fzf> '
 
-    : | fzf --ansi --disabled --query "$initial_query" \
-        --bind "start:reload($grep_cmd '.' \"$root_path\")+unbind(ctrl-g)" \
-        --bind "change:reload:sleep 0.1; $grep_cmd {q} \"$root_path\" || true" \
-        --bind "ctrl-t:unbind(change,ctrl-t)+change-prompt($fuzzy_prompt)+enable-search+rebind(ctrl-g)+transform-query(echo {q} > \"$REGEX_QUERY_FILE\"; cat \"$FUZZY_QUERY_FILE\")+change-header($regex_search_hint)" \
-        --bind "ctrl-g:unbind(ctrl-g)+change-prompt($regex_prompt)+disable-search+reload($grep_cmd {q} \"$root_path\" || true)+rebind(change,ctrl-t)+transform-query(echo {q} > \"$FUZZY_QUERY_FILE\"; cat \"$REGEX_QUERY_FILE\")+change-header($fuzzy_search_hint)" \
-        --prompt "$regex_prompt" \
-        --delimiter ':' \
-        --header "$fuzzy_search_hint" \
-        --preview "$preview_cmd" \
-        --preview-window '+{2}-6,~1' >"$OUTPUT_FILE"
+  : | fzf --ansi --disabled --query "$initial_query" \
+    --bind "start:reload($grep_cmd '.' \"$root_path\")+unbind(ctrl-g)" \
+    --bind "change:reload:sleep 0.1; $grep_cmd {q} \"$root_path\" || true" \
+    --bind "ctrl-t:unbind(change,ctrl-t)+change-prompt($fuzzy_prompt)+enable-search+rebind(ctrl-g)+transform-query(echo {q} > \"$REGEX_QUERY_FILE\"; cat \"$FUZZY_QUERY_FILE\")+change-header($regex_search_hint)" \
+    --bind "ctrl-g:unbind(ctrl-g)+change-prompt($regex_prompt)+disable-search+reload($grep_cmd {q} \"$root_path\" || true)+rebind(change,ctrl-t)+transform-query(echo {q} > \"$FUZZY_QUERY_FILE\"; cat \"$REGEX_QUERY_FILE\")+change-header($fuzzy_search_hint)" \
+    --prompt "$regex_prompt" \
+    --delimiter ':' \
+    --header "$fuzzy_search_hint" \
+    --preview "$preview_cmd" \
+    --preview-window '+{2}-6,~1' >"$OUTPUT_FILE"
 
-    # Let editor read the output file as error file and jump to the first error
-    if [ -s "$OUTPUT_FILE" ]; then
-        $editor +"cfile $OUTPUT_FILE"
-    fi
+  # Let editor read the output file as error file and jump to the first error
+  if [ -s "$OUTPUT_FILE" ]; then
+    $editor +"cfile $OUTPUT_FILE"
+  fi
 }
 
 main "$@"
+
+# vim:ft=sh:ts=2:sw=2:et:

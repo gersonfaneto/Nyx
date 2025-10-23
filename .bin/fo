@@ -1,25 +1,25 @@
 #!/usr/bin/env sh
-# vim:ft=sh:et:ts=4:sw=4:sts=4:
 
 main() {
-    # Use a temporary file to store the file list since POSIX sh doesn't support arrays
-    tmpfile=$(mktemp)
-    trap 'rm -f "$tmpfile"' EXIT INT TERM HUP
+  # Use a temporary file to store the file list since POSIX sh doesn't support arrays
+  tmpfile=$(mktemp)
+  trap 'rm -f "$tmpfile"' EXIT INT TERM HUP
 
-    # Get oldfiles from nvim and filter existing files
-    nvim -u NONE --headless +'lua io.write(table.concat(vim.v.oldfiles, "\n") .. "\n")' +qa |
-        sed -e 's/^\s*\S*:\/\///' |
-        while read -r file; do
-            [ -e "$file" ] && echo "$file"
-        done |
-        fzf >"$tmpfile"
+  # Get oldfiles from nvim and filter existing files
+  nvim -u NONE --headless +'lua io.write(table.concat(vim.v.oldfiles, "\n") .. "\n")' +qa |
+    sed -e 's/^\s*\S*:\/\///' |
+    while read -r file; do
+      [ -e "$file" ] && echo "$file"
+    done | fzf >"$tmpfile"
 
-    # Check if we got any files
-    if [ -s "$tmpfile" ]; then
-        # Use xargs to handle multiple files properly
-        # shellcheck disable=SC2086 # `$EDITOR` can have spaces and flags
-        xargs ${EDITOR:-nvim} <"$tmpfile"
-    fi
+  # Check if we got any files
+  if [ -s "$tmpfile" ]; then
+    # Use xargs to handle multiple files properly
+    # shellcheck disable=SC2086 # `$EDITOR` can have spaces and flags
+    xargs ${EDITOR:-nvim} <"$tmpfile"
+  fi
 }
 
 main "$@"
+
+# vim:ft=sh:ts=2:sw=2:et:

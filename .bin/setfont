@@ -6,116 +6,116 @@ FONT_IN_USE=$(sed 's/font-family = "\(.*\)"/\1/g' <"$CONFIGURATIONS"/ghostty/con
 
 FONTS_AVAILABLE=()
 while IFS= read -r font; do
-    FONTS_AVAILABLE+=("$font")
+  FONTS_AVAILABLE+=("$font")
 done < <(ghostty +list-fonts | grep -v '^[[:blank:]]' | grep -v '^$' | sort | uniq)
 
 switch_alacritty() {
-    (
-        ALACRITTY_CONFIGURATION="$CONFIGURATIONS/alacritty/local.toml"
+  (   
+    ALACRITTY_CONFIGURATION="$CONFIGURATIONS/alacritty/local.toml"
 
-        if [ ! -f "$ALACRITTY_CONFIGURATION" ]; then
-            echo "[font.normal]" >"$ALACRITTY_CONFIGURATION"
-            echo "family = '$FONT'" >>"$ALACRITTY_CONFIGURATION"
-        else
-            sed -i "s|^\([[:space:]]*\)family = .*|\1family = '$FONT'|" "$ALACRITTY_CONFIGURATION"
-        fi
+    if [ ! -f "$ALACRITTY_CONFIGURATION" ]; then
+      echo "[font.normal]" >"$ALACRITTY_CONFIGURATION"
+      echo "family = '$FONT'" >>"$ALACRITTY_CONFIGURATION"
+    else
+      sed -i "s|^\([[:space:]]*\)family = .*|\1family = '$FONT'|" "$ALACRITTY_CONFIGURATION"
+    fi
 
-        touch "$CONFIGURATIONS/alacritty/alacritty.toml"
-    )
+    touch "$CONFIGURATIONS/alacritty/alacritty.toml"
+  )
 }
 
 switch_ghostty() {
-    (
-        GHOSTTY_CONFIGURATION="$CONFIGURATIONS/ghostty/config.local"
+  (   
+    GHOSTTY_CONFIGURATION="$CONFIGURATIONS/ghostty/config.local"
 
-        if [ ! -f "$GHOSTTY_CONFIGURATION" ]; then
-            echo "font-family = \"$FONT\"" >"$GHOSTTY_CONFIGURATION"
-        else
-            sed -i "s|^font-family = .*|font-family = \"$FONT\"|" "$GHOSTTY_CONFIGURATION"
-        fi
+    if [ ! -f "$GHOSTTY_CONFIGURATION" ]; then
+      echo "font-family = \"$FONT\"" >"$GHOSTTY_CONFIGURATION"
+    else
+      sed -i "s|^font-family = .*|font-family = \"$FONT\"|" "$GHOSTTY_CONFIGURATION"
+    fi
 
-        kill -USR2 "$(pgrep ghostty)"
-    )
+    kill -USR2 "$(pgrep ghostty)"
+  )
 }
 
 usage() {
-    local program
-    program=$(basename "$0")
-    echo "Usage: $program <font_name>"
-    echo
-    echo "       -h,--help    Display this message"
-    echo "       -l,--list    List all the available fonts"
+  local program
+  program=$(basename "$0")
+  echo "Usage: $program <font_name>"
+  echo
+  echo "       -h,--help    Display this message"
+  echo "       -l,--list    List all the available fonts"
 }
 
 list_fonts() {
-    echo "Available fonts:"
-    for font in "${FONTS_AVAILABLE[@]}"; do
-        if [ "$font" = "$FONT_IN_USE" ]; then
-            printf "  \033[4m%s\033[0m (current)\n" "$font"
-        else
-            printf "  %s\n" "$font"
-        fi
-    done
+  echo "Available fonts:"
+  for font in "${FONTS_AVAILABLE[@]}"; do
+    if [ "$font" = "$FONT_IN_USE" ]; then
+      printf "  \033[4m%s\033[0m (current)\n" "$font"
+    else
+      printf "  %s\n" "$font"
+    fi
+  done
 }
 
 main() {
-    while [ $# -gt 0 ]; do
-        case $1 in
-            -h | --help)
-                usage
-                exit 0
-                ;;
-            -l | --list)
-                list_fonts
-                exit 0
-                ;;
-            -*)
-                echo "Unknown option: $1" >&2
-                echo
-                usage >&2
-                exit 1
-                ;;
-            *)
-                break
-                ;;
-        esac
-        shift
-    done
-
-    if [ $# -ne 1 ]; then
-        usage "$@"
+  while [ $# -gt 0 ]; do
+    case $1 in
+      -h | --help)
+        usage
         exit 0
-    fi
-
-    FONT="$1"
-
-    VALID=false
-
-    for avail in "${FONTS_AVAILABLE[@]}"; do
-        if [ "$FONT" = "$avail" ]; then
-            VALID=true
-            break
-        fi
-    done
-
-    if [ "$VALID" = false ]; then
-        echo "Unknown font: $1" >&2
+        ;;
+      -l | --list)
+        list_fonts
+        exit 0
+        ;;
+      -*)
+        echo "Unknown option: $1" >&2
         echo
-        usage "$@"
+        usage >&2
         exit 1
+        ;;
+      *)
+        break
+        ;;
+    esac
+    shift
+  done
+
+  if [ $# -ne 1 ]; then
+    usage "$@"
+    exit 0
+  fi
+
+  FONT="$1"
+
+  VALID=false
+
+  for avail in "${FONTS_AVAILABLE[@]}"; do
+    if [ "$FONT" = "$avail" ]; then
+      VALID=true
+      break
     fi
+  done
 
-    if [ "$FONT" = "$FONT_IN_USE" ]; then
-        echo "I can't handle change O.o"
-        exit 0
-    fi
+  if [ "$VALID" = false ]; then
+    echo "Unknown font: $1" >&2
+    echo
+    usage "$@"
+    exit 1
+  fi
 
-    switch_alacritty
-    switch_ghostty
+  if [ "$FONT" = "$FONT_IN_USE" ]; then
+    echo "I can't handle change O.o"
+    exit 0
+  fi
 
-    printf "Switched to \033[4m%s\033[0m\n" "$FONT"
+  switch_alacritty
+  switch_ghostty
+
+  printf "Switched to \033[4m%s\033[0m\n" "$FONT"
 }
 
 main "$@"
 
-# vim:ft=sh:et:ts=4:sw=4:sts=4:
+# vim:ft=sh:ts=2:sw=2:et:

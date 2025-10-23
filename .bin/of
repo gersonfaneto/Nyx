@@ -1,53 +1,54 @@
 #!/usr/bin/env sh
-# vim: ft=sh ts=4 sw=4 sts=4 et :
 
 has() {
-    command -v "$1" >/dev/null 2>&1
+  command -v "$1" >/dev/null 2>&1
 }
 
 # Open a file using $EDITOR or xdg-open
 of() {
-    # $@: files to open
-    if ! has file >/dev/null 2>&1; then
-        echo "file executable not found" >&2
-        return 1
+  # $@: files to open
+  if ! has file >/dev/null 2>&1; then
+    echo "file executable not found" >&2
+    return 1
+  fi
+
+  trap 'rm -f "$text_files" "$other_files"' EXIT INT TERM HUP
+
+  # Create temporary files to store file lists
+  text_files=$(mktemp)
+  other_files=$(mktemp)
+
+  # Categorize files based on their type
+  for file in "$@"; do
+    if file -b "$file" | grep -qE 'text|empty'; then
+      printf '%s\n' "$file" >>"$text_files"
+    else
+      printf '%s\n' "$file" >>"$other_files"
     fi
+  done
 
-    trap 'rm -f "$text_files" "$other_files"' EXIT INT TERM HUP
+  # Handle non-text files with xdg-open
+  if has xdg-open >/dev/null 2>&1; then
+    while read -r file; do
+      detach xdg-open "$file" >/dev/null 2>&1
+    done     <"$other_files"
+  elif   [ -s "$other_files" ]; then
+    echo "xdg-open not found, omit opening files:" >&2
+    cat "$other_files" >&2
+  fi
 
-    # Create temporary files to store file lists
-    text_files=$(mktemp)
-    other_files=$(mktemp)
-
-    # Categorize files based on their type
-    for file in "$@"; do
-        if file -b "$file" | grep -qE 'text|empty'; then
-            printf '%s\n' "$file" >>"$text_files"
-        else
-            printf '%s\n' "$file" >>"$other_files"
-        fi
-    done
-
-    # Handle non-text files with xdg-open
-    if has xdg-open >/dev/null 2>&1; then
-        while read -r file; do
-            detach xdg-open "$file" >/dev/null 2>&1
-        done <"$other_files"
-    elif [ -s "$other_files" ]; then
-        echo "xdg-open not found, omit opening files:" >&2
-        cat "$other_files" >&2
+  # Handle text files with $EDITOR
+  if [ -s "$text_files" ]; then
+    if has "$EDITOR" >/dev/null 2>&1; then
+      # Use xargs to handle multiple files
+      xargs "$EDITOR" <"$text_files"
+    else
+      echo "\$EDITOR not found, omit opening files:" >&2
+      cat "$text_files" >&2
     fi
-
-    # Handle text files with $EDITOR
-    if [ -s "$text_files" ]; then
-        if has "$EDITOR" >/dev/null 2>&1; then
-            # Use xargs to handle multiple files
-            xargs "$EDITOR" <"$text_files"
-        else
-            echo "\$EDITOR not found, omit opening files:" >&2
-            cat "$text_files" >&2
-        fi
-    fi
+  fi
 }
 
 of "$@"
+
+# vim:ft=sh:ts=2:sw=2:et:
