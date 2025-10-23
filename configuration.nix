@@ -305,6 +305,7 @@
       mononoki
       comic-mono
       departure-mono
+      jetbrains-mono
       nerd-fonts.space-mono
       ultimate-oldschool-pc-font-pack
       (iosevka-bin.override {variant = "SS07";})
