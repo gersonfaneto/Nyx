@@ -10,6 +10,11 @@ return {
           return
         end
 
+        -- HACK: For some reason this is a thing...
+        if vim.fn.argc() > 0 then
+          return
+        end
+
         local onedark = require('onedark')
 
         onedark.setup({

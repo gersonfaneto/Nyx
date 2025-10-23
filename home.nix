@@ -20,11 +20,11 @@ in {
     ".bin/" = mkSymlink ".bin/";
     ".local/share/backgrounds/" = mkSymlink ".local/share/backgrounds/";
     ".highlight/" = mkSymlink ".highlight/";
-    # ".emacs.d/" = mkSymlink ".emacs.d/";
+    ".emacs.d/" = mkSymlink ".emacs.d/";
     ".gitconfig" = mkSymlink ".gitconfig";
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
-    ".config/doom/" = mkSymlink ".config/doom/";
+    # ".config/doom/" = mkSymlink ".config/doom/";
     ".config/fastfetch/" = mkSymlink ".config/fastfetch/";
     ".config/fd/" = mkSymlink ".config/fd/";
     ".config/feh/" = mkSymlink ".config/feh/";
