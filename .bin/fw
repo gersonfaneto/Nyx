@@ -7,6 +7,10 @@ REGEX_QUERY_FILE="/tmp/rg-fzf-r-$$"
 FUZZY_QUERY_FILE="/tmp/rg-fzf-f-$$"
 OUTPUT_FILE="/tmp/rg-fzf-o-$$"
 
+has() {
+    command -v "$1" >/dev/null 2>&1
+}
+
 cleanup() {
     rm -f "$REGEX_QUERY_FILE" "$FUZZY_QUERY_FILE" "$OUTPUT_FILE"
 }

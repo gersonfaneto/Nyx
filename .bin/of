@@ -1,10 +1,14 @@
 #!/usr/bin/env sh
 # vim: ft=sh ts=4 sw=4 sts=4 et :
 
+has() {
+    command -v "$1" >/dev/null 2>&1
+}
+
 # Open a file using $EDITOR or xdg-open
 of() {
     # $@: files to open
-    if ! command -v file >/dev/null 2>&1; then
+    if ! has file >/dev/null 2>&1; then
         echo "file executable not found" >&2
         return 1
     fi
@@ -25,7 +29,7 @@ of() {
     done
 
     # Handle non-text files with xdg-open
-    if command -v xdg-open >/dev/null 2>&1; then
+    if has xdg-open >/dev/null 2>&1; then
         while read -r file; do
             detach xdg-open "$file" >/dev/null 2>&1
         done <"$other_files"
@@ -36,7 +40,7 @@ of() {
 
     # Handle text files with $EDITOR
     if [ -s "$text_files" ]; then
-        if command -v "$EDITOR" >/dev/null 2>&1; then
+        if has "$EDITOR" >/dev/null 2>&1; then
             # Use xargs to handle multiple files
             xargs "$EDITOR" <"$text_files"
         else
