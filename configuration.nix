@@ -29,8 +29,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Nyx";
-  networking.wireless.iwd.enable = true;
-  # networking.networkmanager.enable = true;
+  networking.networkmanager.enable = true;
 
   security.polkit = {
     enable = true;
@@ -39,12 +38,6 @@
   systemd.services.NetworkManager-wait-online.enable = false;
 
   time.timeZone = "America/Bahia";
-
-  services.emacs = {
-    enable = true;
-    install = true;
-    startWithGraphical = true;
-  };
 
   services = {
     xserver = {
@@ -192,7 +185,6 @@
       godot
       highlight
       httpie
-      impala
       jq
       lazydocker
       lazygit
@@ -234,6 +226,7 @@
       xsel
       xss-lock
       zathura
+      zed-editor-fhs
       zoxide
     ])
     ++ (with pkgs; [

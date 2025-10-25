@@ -98,7 +98,7 @@ bindsym $mod+Return exec ghostty
 bindsym $mod+e exec alacritty --command 'nvim'
 
 # Open the OTHER text editor.
-bindsym $mod+$shift+e exec emacsclient --create-frame --alternate-editor 'emacs'
+bindsym $mod+$shift+e exec emacs
 
 # Kill the focused window.
 bindsym $mod+q kill
