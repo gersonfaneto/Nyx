@@ -48,7 +48,13 @@
 (global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c r") 'recompile)
 
-(defvar minimal/current-theme 'modus-operandi
+(defvar minimal/current-theme-light 'modus-operandi
+  "Light variant of current theme.")
+
+(defvar minimal/current-theme-dark 'modus-vivendi
+  "Dark variant of current theme.")
+
+(defvar minimal/current-theme minimal/current-theme-dark
   "Current theme being used.")
 
 (defun minimal/setup-frame (frame)
@@ -60,9 +66,9 @@
 (defun minimal/toggle-theme ()
   "Toggle between light & dark variants of current theme."
   (interactive)
-  (let ((new-theme (if (eq minimal/current-theme 'modus-vivendi)
-                       'modus-operandi
-                     'modus-vivendi)))
+  (let ((new-theme (if (eq minimal/current-theme minimal/current-theme-dark)
+                       minimal/current-theme-light
+                     minimal/current-theme-dark)))
     (disable-theme minimal/current-theme)
     (load-theme new-theme t)
     (setq minimal/current-theme new-theme)
