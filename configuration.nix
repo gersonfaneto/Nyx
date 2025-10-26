@@ -163,8 +163,8 @@
       aseprite
       bat
       bluetui
-      bottom
       brightnessctl
+      btop
       chafa
       detach
       diff-so-fancy
