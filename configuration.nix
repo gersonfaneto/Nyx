@@ -97,7 +97,13 @@
   users.users.gerson = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = ["audio" "video" "wheel" "docker" "networkmanager"];
+    extraGroups = [
+      "audio"
+      "video"
+      "wheel"
+      "docker"
+      "networkmanager"
+    ];
     packages = with pkgs; [gnupg];
   };
 
@@ -184,11 +190,7 @@
       git
       godot
       highlight
-      httpie
       jq
-      lazydocker
-      lazygit
-      lazysql
       less
       libnotify
       libqalculate
@@ -196,7 +198,6 @@
       localsend
       man-pages
       man-pages-posix
-      mendeley
       mpv
       opencode
       pandoc
@@ -226,7 +227,6 @@
       xsel
       xss-lock
       zathura
-      zed-editor-fhs
       zoxide
     ])
     ++ (with pkgs; [
@@ -268,20 +268,6 @@
 
       # General
       efm-langserver
-    ])
-    ++ (with pkgs; [
-      python312Packages.pynvim
-      python312Packages.ipykernel
-      python312Packages.jupyter-client
-
-      cairosvg
-      python312Packages.kaleido
-      python312Packages.nbformat
-      python312Packages.plotly
-      python312Packages.pnglatex
-      python312Packages.pyperclip
-      python312Packages.pyperclip
-      python312Packages.pyqt6
     ]);
 
   fonts = {
