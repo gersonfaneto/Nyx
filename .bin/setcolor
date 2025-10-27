@@ -24,7 +24,7 @@ get_cap_theme_name() {
 
 # $1: name of the colorscheme
 setcolor_alacritty() {
-  (   
+  (
     cd "$CONFIG_HOME/alacritty/themes" || return
     dark_theme_path="dark.toml"
     light_theme_path="light.toml"
@@ -44,7 +44,7 @@ setcolor_alacritty() {
 
 # $1: name of the colorscheme
 setcolor_foot() {
-  (   
+  (
     cd "$CONFIG_HOME/foot/themes" || return
     dark_theme_path="dark.ini"
     light_theme_path="light.ini"
@@ -63,7 +63,7 @@ setcolor_foot() {
 
 # $1: name of the colorscheme
 setcolor_kitty() {
-  (   
+  (
     cd "$CONFIG_HOME/kitty" || return
 
     # Kitty changes its theme automatically w.r.t.
@@ -97,7 +97,7 @@ setcolor_kitty() {
 
 # $1: name of the colorscheme
 setcolor_termux() {
-  (   
+  (
     cd "$HOME/.termux/colors" || return
     dark_color_path="dark.properties"
     light_color_path="light.properties"
@@ -116,7 +116,7 @@ setcolor_termux() {
 
 # $1: name of the colorscheme
 setcolor_wezterm() {
-  (   
+  (
     cd "$CONFIG_HOME/wezterm/colors" || return
     dark_theme_path="dark.toml"
     light_theme_path="light.toml"
@@ -132,7 +132,7 @@ setcolor_wezterm() {
 
 # $1: name of the colorscheme
 setcolor_ghostty() {
-  (   
+  (
     cd "$CONFIG_HOME/ghostty/themes" || return
     dark_theme_path="dark"
     light_theme_path="light"
@@ -150,7 +150,7 @@ setcolor_ghostty() {
 
 # $1: name of the colorscheme
 setcolor_highlight() {
-  (   
+  (
     cd "$HOME/.highlight/themes" || return
     dark_theme_path="dark.theme"
     light_theme_path="light.theme"
@@ -264,7 +264,7 @@ setcolor_konsole_yakuake() {
 
 # $1: name of the colorscheme
 setcolor_fish() {
-  (   
+  (
     cd "$CONFIG_HOME/fish/themes" || return
     dark_theme_path="Dark.theme"
     light_theme_path="Light.theme"
@@ -369,7 +369,7 @@ usage() {
 
 # $1: name of the fish theme
 main() {
-  lockfile="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/setbg.lock"
+  lockfile="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/setcolor.lock"
   exec 9>"$lockfile"
   if ! flock -n 9; then
     echo "Waiting for existing instance (lock: '$lockfile')" >&2
