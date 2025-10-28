@@ -21,7 +21,18 @@
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode))
 
-(set-frame-font "Nova Nerd Font 12" nil t)
+(set-frame-font "Anonymous Pro 12" nil t)
+
+(defun minimal/scale-font (n)
+  "With positive N, increase the font size; with negative N, decrease it; with N=0, reset to default height."
+  (set-face-attribute 'default (selected-frame) :height
+    (cond ((> n 0) (+ (face-attribute 'default :height) 10))
+          ((< n 0) (- (face-attribute 'default :height) 10))
+          (t 100))))
+
+(global-set-key (kbd "C-0") '(lambda nil (interactive) (minimal/scale-font  0)))
+(global-set-key (kbd "C-=") '(lambda nil (interactive) (minimal/scale-font  1)))
+(global-set-key (kbd "C--") '(lambda nil (interactive) (minimal/scale-font -1)))
 
 (global-set-key (kbd "M-0") 'delete-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
@@ -63,7 +74,7 @@
   "Setup fonts, theme, and modeline for new frames."
   (with-selected-frame frame
     (load-theme minimal/current-theme t)
-    (set-frame-font "Nova Nerd Font 12" nil t)))
+    (set-frame-font "Anonymous Pro 12" nil t)))
 
 (defun minimal/toggle-theme ()
   "Toggle between light & dark variants of current theme."
