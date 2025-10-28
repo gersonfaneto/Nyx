@@ -6,9 +6,11 @@
       initial-scratch-message "")
 
 (setq tab-width 2
+      fill-column 100
       indent-tabs-mode nil)
 
-(setq make-backup-files nil)
+(setq backup-directory-alist `(("." . "~/.emacs.d/backup/"))
+      auto-save-file-name-transforms `((".*" "~/.emacs.d/backup/" t)))
 
 (setq use-short-answers t
       compilation-ask-about-save nil
