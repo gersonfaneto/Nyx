@@ -2,9 +2,6 @@ theme = current
 
 initial-command = /run/current-system/sw/bin/fish --login --interactive
 
-font-size = 12
-# font-family = Comic Mono
-
 cursor-style = block
 cursor-style-blink = false
 

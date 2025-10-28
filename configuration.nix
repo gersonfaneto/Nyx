@@ -283,6 +283,7 @@
       miracode
       mononoki
       comic-mono
+      anonymousPro
       departure-mono
       jetbrains-mono
       nerd-fonts.space-mono

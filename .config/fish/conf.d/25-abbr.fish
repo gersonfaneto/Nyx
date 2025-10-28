@@ -9,41 +9,34 @@ end
 
 # Just for fun...
 __command_abbr please 'sudo'
-__command_abbr btw 'clear -x && fastfetch'
+__command_abbr btw    'clear -x && fastfetch'
 
-__command_abbr cp 'cp -i'
-__command_abbr mv 'mv -i'
+__command_abbr cp    'cp -i'
+__command_abbr mv    'mv -i'
 __command_abbr mkdir 'mkdir -p'
 
-__command_abbr rm 'trash-put'
+__command_abbr df   'df -h'
+__command_abbr du   'du -hs'
+__command_abbr free 'free -h'
+
+__command_abbr g 'git'
+
+__command_abbr cl 'clear'
+
+__command_abbr rm  'trash-put'
 __command_abbr rml 'trash-list'
 __command_abbr rme 'trash-empty'
 __command_abbr rmp 'yes | trash-empty --verbose'
 __command_abbr rmr 'trash-restore'
 
-__command_abbr df 'df -h'
-__command_abbr du 'du -hs'
-
-__command_abbr cl 'clear'
-
-__command_abbr g 'git'
-
-__command_abbr lt 'lazygit'
-__command_abbr lq 'lazysql'
-__command_abbr lk 'lazydocker'
-
-__command_abbr tm 'tmux'
-__command_abbr tma 'tmux attach -t'
-__command_abbr tmn 'tmux new-session -s (basename $PWD)'
-__command_abbr tml 'tmux list-session'
+__command_abbr tm   'tmux'
+__command_abbr tma  'tmux attach -t'
+__command_abbr tmn  'tmux new-session -s (basename $PWD)'
+__command_abbr tml  'tmux list-session'
 __command_abbr tmrs 'tmux rename-session'
 __command_abbr tmrw 'tmux rename-window'
 __command_abbr tmka 'tmux kill-server'
 __command_abbr tmks 'tmux kill-session'
-
-__command_abbr dk 'docker'
-__command_abbr dkp 'docker ps'
-__command_abbr dkpa 'docker ps --all'
 
 __command_abbr ls 'ls -lhX --group-directories-first'
 __command_abbr la 'ls -lhAX --group-directories-first'
@@ -55,7 +48,7 @@ __command_abbr der 'direnv reload'
 
 __command_abbr tree 'tree -N -L 4 -C --gitignore --dirsfirst'
 
-__command_abbr oc 'opencode'
+__command_abbr em 'emacsclient --create-frame --alternate-editor \'emacs\''
 
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim
