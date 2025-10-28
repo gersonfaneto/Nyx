@@ -230,6 +230,9 @@
       zoxide
     ])
     ++ (with pkgs; [
+      (callPackage ./packages/boomer/package.nix {})
+    ])
+    ++ (with pkgs; [
       # Nyx
       nil
       alejandra
