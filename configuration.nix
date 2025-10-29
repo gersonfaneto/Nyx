@@ -188,7 +188,6 @@
       gh
       ghostty
       git
-      godot
       highlight
       jq
       less

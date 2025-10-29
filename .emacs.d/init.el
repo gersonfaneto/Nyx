@@ -9,8 +9,8 @@
       fill-column 100
       indent-tabs-mode nil)
 
-(setq backup-directory-alist `(("." . "~/.emacs.d/backup/"))
-      auto-save-file-name-transforms `((".*" "~/.emacs.d/backup/" t)))
+(setq auto-save-default nil
+      make-backup-files nil)
 
 (setq use-short-answers t
       compilation-ask-about-save nil
@@ -19,15 +19,16 @@
 (setq dired-listing-switches "-lhAX --group-directories-first")
 
 (when (version<= "26.0.50" emacs-version)
-  (global-display-line-numbers-mode))
+  (global-display-line-numbers-mode)
+  (setq display-line-numbers-type 'relative))
 
 (set-frame-font "Anonymous Pro 12" nil t)
 
 (defun minimal/scale-font (n)
   "With positive N, increase the font size; with negative N, decrease it; with N=0, reset to default height."
   (set-face-attribute 'default (selected-frame) :height
-    (cond ((> n 0) (+ (face-attribute 'default :height) 10))
-          ((< n 0) (- (face-attribute 'default :height) 10))
+    (cond ((> n 0) (+ (face-attribute 'default :height) 5))
+          ((< n 0) (- (face-attribute 'default :height) 5))
           (t 100))))
 
 (global-set-key (kbd "C-0") '(lambda nil (interactive) (minimal/scale-font  0)))
@@ -61,14 +62,9 @@
 (global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c r") 'recompile)
 
-(defvar minimal/current-theme-light 'modus-operandi
-  "Light variant of current theme.")
-
-(defvar minimal/current-theme-dark 'modus-vivendi
-  "Dark variant of current theme.")
-
-(defvar minimal/current-theme minimal/current-theme-dark
-  "Current theme being used.")
+(setq minimal/current-theme       'modus-vivendi
+      minimal/current-theme-dark  'modus-vivendi
+      minimal/current-theme-light 'modus-operandi)
 
 (defun minimal/setup-frame (frame)
   "Setup fonts, theme, and modeline for new frames."
