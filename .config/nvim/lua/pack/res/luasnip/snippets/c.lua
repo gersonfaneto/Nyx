@@ -129,7 +129,7 @@ M.snippets = {
       trig = 'pck',
       desc = 'Inspect through printf()',
     },
-    un.fmtad('printf("<expr_escaped>: <placeholder>\\n", <expr>);', {
+    un.fmtad('printf("<expr_escaped> :: <placeholder>\\n", <expr>);', {
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\"')

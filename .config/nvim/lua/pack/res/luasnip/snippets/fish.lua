@@ -272,7 +272,7 @@ M.snippets = {
   }, {
     t('read '),
     c(1, {
-      i(nil, "-P 'Prompt: ' var"),
+      i(nil, "-P 'Prompt :: ' var"),
       i(nil, '-n 1 var'),
       i(nil, 'var'),
     }),

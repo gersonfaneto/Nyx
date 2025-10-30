@@ -176,7 +176,7 @@ M.snippets = {
       }),
       msg = c(2, {
         un.fmtad('"<m>"', { m = r(1, 'msg') }),
-        un.fmtad('"<m>: {}"', { m = r(1, 'msg') }),
+        un.fmtad('"<m> :: {}"', { m = r(1, 'msg') }),
       }),
       args = i(3),
     }),
