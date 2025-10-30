@@ -124,20 +124,6 @@
 [url "git@github.com:"]
   insteadOf = "gh:"
 
-; Filters
-
-[filter "okularpartrc"]
-  smudge = cat
-  clean = sed \
-    -e '/^\\[Main View\\]/,/^$/d' \
-    -e '/^\\[Nav Panel\\]/,/^$/d'
-
-[filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
-
 ; Aliases
 
 [alias]
