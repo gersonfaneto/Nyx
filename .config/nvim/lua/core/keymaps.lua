@@ -500,7 +500,6 @@ require('utils.load').on_events(
     key.command_abbrev('ht', 'hor te')
     key.command_abbrev('vt', 'vert te')
     key.command_abbrev('ae', '!ae')
-    key.command_abbrev('vr', '!vr')
     key.command_abbrev('rm', '!rm')
     key.command_abbrev('mv', '!mv')
     key.command_abbrev('ln', '!ln')

@@ -174,6 +174,7 @@
       chafa
       detach
       diff-so-fancy
+      dragon-drop
       dunst
       fastfetch
       fd
@@ -220,7 +221,6 @@
       wget
       wiremix
       xclip
-      xdragon
       xsecurelock
       xsel
       xss-lock
