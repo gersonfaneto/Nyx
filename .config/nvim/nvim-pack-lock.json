@@ -38,6 +38,11 @@
       "rev": "834dbf2",
       "src": "https://github.com/sainnhe/gruvbox-material"
     },
+    "harpoon": {
+      "rev": "ed1f853",
+      "src": "https://github.com/theprimeagen/harpoon",
+      "version": "'harpoon2'"
+    },
     "haskell-tools.nvim": {
       "version": "6.0.0 - 7.0.0"
     },

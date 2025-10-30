@@ -9,12 +9,15 @@
     source = config.lib.file.mkOutOfStoreSymlink "${NYX_PATH}/${path}";
   };
 in {
+  imports = [
+    inputs.zen-browser.homeModules.twilight
+  ];
+
   home.username = "gerson";
   home.homeDirectory = "/home/gerson";
 
   programs.home-manager.enable = true;
-
-  home.packages = with inputs.pkgs; [];
+  programs.zen-browser.enable = true;
 
   home.file = {
     ".bin/" = mkSymlink ".bin/";

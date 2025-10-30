@@ -31,13 +31,25 @@
         };
       };
     };
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        home-manager = {
+          follows = "home-manager";
+        };
+      };
+    };
   };
 
-  outputs = {
+  outputs = inputs @ {
     self,
     nixpkgs,
     ...
-  } @ inputs: let
+  }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
 
@@ -78,7 +90,7 @@
       gerson = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [./home.nix];
-        extraSpecialArgs = {};
+        extraSpecialArgs = {inherit inputs;};
       };
     };
   };

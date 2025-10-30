@@ -246,7 +246,8 @@
         "apple-fonts": "apple-fonts",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "zen-browser": "zen-browser"
       }
     },
     "sf-arabic": {
@@ -351,6 +352,29 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1761798236,
+        "narHash": "sha256-NigAG0gHH3i7Z+me/2uqH8A/utt4NGkMgBDAa2XpkFA=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "8d9c7683366269d2991698059816cd8c2800d3ff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }
