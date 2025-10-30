@@ -503,7 +503,7 @@ M.snippets = {
   }),
   us.sn(
     { trig = 'pck' },
-    un.fmtad('print(<q><v_esc>: <q> .. <inspect>(<v>)<e>)', {
+    un.fmtad('print(<q><v_esc> :: <q> .. <inspect>(<v>)<e>)', {
       q = un.qt(),
       v = i(1),
       inspect = d(2, function()
@@ -529,7 +529,7 @@ M.snippets = {
   ),
   us.sn(
     { trig = 'ck', priority = 999 },
-    un.fmtad('<q><v_esc>: <q> .. <inspect>(<v>)', {
+    un.fmtad('<q><v_esc> :: <q> .. <inspect>(<v>)', {
       q = un.qt(),
       v = i(1),
       inspect = d(2, function()
@@ -554,7 +554,7 @@ M.snippets = {
   ),
   us.snr(
     { trig = '(%S*)(%s*)%.%.%s*ck' },
-    un.fmtad('<spc>.. <q>, <v_esc>: <q> .. <inspect>(<v>)', {
+    un.fmtad('<spc>.. <q>, <v_esc> :: <q> .. <inspect>(<v>)', {
       spc = f(function(_, snip, _)
         return snip.captures[1] == '' and snip.captures[2]
           or snip.captures[1] .. ' '

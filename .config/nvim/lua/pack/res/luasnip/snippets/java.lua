@@ -56,7 +56,7 @@ M.snippets = {
       desc = 'Check a value of a variable or expression',
     },
     un.fmtad(
-      'System.out.printf("<expr_escaped>: <placeholder>\\n", <expr>);',
+      'System.out.printf("<expr_escaped> :: <placeholder>\\n", <expr>);',
       {
         expr = r(1, 'expr'),
         expr_escaped = d(2, function(texts)
@@ -79,7 +79,7 @@ M.snippets = {
       trig = 'lck',
       desc = 'Check a value of a variable or expression in log',
     },
-    un.fmtad('log.debug("<expr_escaped>: {}", <expr>);', {
+    un.fmtad('log.debug("<expr_escaped> :: {}", <expr>);', {
       expr = r(1, 'expr'),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\"')
@@ -108,7 +108,7 @@ M.snippets = {
   us.sn(
     { trig = 'ck', desc = 'Inspect value with printf' },
     un.fmtad(
-      'System.out.printf("<expr_escaped>: <placeholder>\\n", <expr>);',
+      'System.out.printf("<expr_escaped> :: <placeholder>\\n", <expr>);',
       {
         expr = i(1),
         expr_escaped = d(2, function(texts)

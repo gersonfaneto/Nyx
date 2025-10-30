@@ -104,7 +104,7 @@ M.snippets = {
       trig = 'ck',
       desc = 'Inspect through formatted string',
     },
-    un.fmtad('"<expr_escaped>: <placeholder>\\n", <expr>', {
+    un.fmtad('"<expr_escaped> :: <placeholder>\\n", <expr>', {
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\"')
@@ -154,7 +154,7 @@ M.snippets = {
       trig = 'dpck',
       desc = 'Inspect through dbg_printf()',
     },
-    un.fmtad('dbg_printf("<expr_escaped>: <placeholder>\\n", <expr>);', {
+    un.fmtad('dbg_printf("<expr_escaped> :: <placeholder>\\n", <expr>);', {
       expr = i(1),
       expr_escaped = d(2, function(texts)
         local str = vim.fn.escape(texts[1][1], '\\"')

@@ -40,7 +40,7 @@ M.snippets = {
       trig = 'pck',
       desc = 'Inspect through console.log()',
     },
-    un.fmtad([[console.log(<q><expr_escaped>:<q>, <expr>)]], {
+    un.fmtad([[console.log(<q><expr_escaped> ::<q>, <expr>)]], {
       q = un.qt(),
       expr = i(1),
       expr_escaped = d(2, function(texts)

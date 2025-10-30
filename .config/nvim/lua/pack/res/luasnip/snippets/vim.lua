@@ -36,7 +36,7 @@ M.snippets = {
       { trig = 'pck' },
       { trig = 'eck' },
     },
-    un.fmtad('echom <q><v_esc>:<q> <v>', {
+    un.fmtad('echom <q><v_esc> ::<q> <v>', {
       q = un.qt(),
       v = i(1),
       v_esc = d(2, function(texts)
@@ -50,7 +50,7 @@ M.snippets = {
       trig = 'ck',
       priority = 999,
     },
-    un.fmtad('<q><v_esc>:<q> <v>', {
+    un.fmtad('<q><v_esc> ::<q> <v>', {
       q = un.qt(),
       v = i(1),
       v_esc = d(2, function(texts)

@@ -161,7 +161,7 @@ M.snippets = {
       desc = 'Check a value of a variable',
     },
     c(1, {
-      un.fmtad('"<expr_escaped>:", <expr>', {
+      un.fmtad('"<expr_escaped> ::", <expr>', {
         expr = r(1, 'expr'),
         expr_escaped = d(2, function(texts)
           return sn(nil, i(1, vim.fn.escape(texts[1][1], '\\"')))
@@ -184,7 +184,7 @@ M.snippets = {
       desc = 'Check a value of a variable through fmt.Println()',
     },
     c(1, {
-      un.fmtad('fmt.Println("<expr_escaped>:", <expr>)', {
+      un.fmtad('fmt.Println("<expr_escaped> ::", <expr>)', {
         expr = r(1, 'expr'),
         expr_escaped = d(2, function(texts)
           local str = vim.fn.escape(texts[1][1], '\\"')
@@ -209,7 +209,7 @@ M.snippets = {
       desc = 'Check a value of a variable through testing.T.Log()',
     },
     c(1, {
-      un.fmtad('t.Log("<expr_escaped>:", <expr>)', {
+      un.fmtad('t.Log("<expr_escaped> ::", <expr>)', {
         expr = r(1, 'expr'),
         expr_escaped = d(2, function(texts)
           local str = vim.fn.escape(texts[1][1], '\\"')

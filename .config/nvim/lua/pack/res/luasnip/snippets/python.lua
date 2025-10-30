@@ -75,7 +75,7 @@ M.snippets = {
       trig = 'ck',
       desc = 'Inspect through f-string',
     },
-    un.fmtad('f<q><expr_escaped>: {<expr>}<q>', {
+    un.fmtad('f<q><expr_escaped> :: {<expr>}<q>', {
       q = un.qt('"'),
       expr = i(1),
       expr_escaped = d(2, function(texts)
@@ -89,7 +89,7 @@ M.snippets = {
       trig = 'pck',
       desc = 'Inspect through print()',
     },
-    un.fmtad('print(f<q><expr_escaped>: {<expr>}<q><e>)', {
+    un.fmtad('print(f<q><expr_escaped> :: {<expr>}<q><e>)', {
       q = un.qt('"'),
       expr = i(1),
       expr_escaped = d(2, function(texts)
@@ -355,7 +355,7 @@ M.snippets = {
       trig = 'lck',
       desc = 'Check a value of a variable through logger.debug()',
     },
-    un.fmtad('logger.debug(f<q><expr_escaped>: {<expr>}<q><e>)', {
+    un.fmtad('logger.debug(f<q><expr_escaped> :: {<expr>}<q><e>)', {
       q = un.qt('"'),
       expr = i(1),
       expr_escaped = d(2, function(texts)
