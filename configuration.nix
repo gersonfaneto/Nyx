@@ -176,6 +176,7 @@
       diff-so-fancy
       dragon-drop
       dunst
+      emacs
       fastfetch
       fd
       feh

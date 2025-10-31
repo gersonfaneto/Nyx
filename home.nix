@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}: let
+{config, ...}: let
   NYX_PATH = "/home/gerson/Developer/Personal/Nyx";
 
   mkSymlink = path: {
@@ -15,6 +12,7 @@ in {
     ".bin/" = mkSymlink ".bin/";
     ".local/share/backgrounds/" = mkSymlink ".local/share/backgrounds/";
     ".highlight/" = mkSymlink ".highlight/";
+    ".emacs.d/" = mkSymlink ".emacs.d/";
     ".gitconfig" = mkSymlink ".gitconfig";
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
