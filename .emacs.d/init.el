@@ -24,6 +24,10 @@
 
 (set-frame-font "Anonymous Pro 12" nil t)
 
+(setq minimal/current-theme       'doom-solarized-dark
+      minimal/current-theme-dark  'doom-solarized-dark
+      minimal/current-theme-light 'doom-solarized-light)
+
 (defun minimal/scale-font (n)
   "With positive N, increase the font size; with negative N, decrease it; with N=0, reset to default height."
   (set-face-attribute 'default (selected-frame) :height
@@ -62,9 +66,188 @@
 (global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c r") 'recompile)
 
-(setq minimal/current-theme       'modus-vivendi
-      minimal/current-theme-dark  'modus-vivendi
-      minimal/current-theme-light 'modus-operandi)
+(setq straight-repository-branch "develop")
+
+(setq package-archives '(("elpa"	.	"https://elpa.gnu.org/packages/")
+                         ("melpa"	.	"https://melpa.org/packages/")
+                         ("nongnu"	.	"https://elpa.nongnu.org/nongnu/")))
+
+(defvar bootstrap-version)
+
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+
+(setq use-package-always-ensure t)
+
+(use-package straight :ensure  nil
+  :custom
+  (straight-use-package-by-default t))
+
+(use-package doom-themes
+  :init
+  (load-theme minimal/current-theme t)
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t))
+
+(use-package doom-modeline
+  :init
+  (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-icon (display-graphic-p)))
+
+(use-package all-the-icons
+  :if
+  (display-graphic-p)
+  :commands
+  all-the-icons-install-fonts
+  :config
+  (unless (find-font (font-spec :name "all-the-icons"))
+    (all-the-icons-install-fonts t)))
+
+(use-package vertico
+  :init
+  (vertico-mode)
+  :custom
+  (vertico-scroll-margin 0)
+  (vertico-count 8)
+  (vertico-resize t)
+  (vertico-cycle t)
+  :config
+  (setq completion-ignore-case t
+	read-buffer-completion-ignore-case t
+	read-file-name-completion-ignore-case t))
+
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+(use-package multiple-cursors
+  :bind
+  ("C->" . 'mc/mark-next-like-this)
+  ("C-<" . 'mc/mark-previous-like-this)
+  ("C-;" . 'mc/skip-to-next-like-this)
+  ("C-:" . 'mc/skip-to-previous-like-this)
+  ("C-c C-<" . 'mc/mark-all-like-this)
+  ("C-S-c C-S-c" . 'mc/edit-lines))
+
+(use-package move-text
+  :bind
+  ("M-p" . 'move-text-up)
+  ("M-n" . 'move-text-down))
+
+(use-package expand-region
+  :bind
+  ("C-+" . 'er/expand-region))
+
+(use-package smartparens
+  :init
+  (show-paren-mode t)
+  :hook
+  (prog-mode . smartparens-mode)
+  :custom
+  (sp-escape-quotes-after-insert nil)
+  :config
+  (require 'smartparens-config))
+
+(use-package tab-jump-out
+  :hook
+  (prog-mode . tab-jump-out-mode))
+
+(use-package magit
+  :bind
+  ("C-x g" . 'magit-status))
+
+(use-package markdown-mode
+  :init
+  (setq markdown-command "multimarkdown")
+  :mode
+  ("README\\.md\\'" . gfm-mode)
+  :bind
+  (:map markdown-mode-map
+        ("C-c C-e" . markdown-do)))
+
+(use-package direnv
+  :config
+  (direnv-mode))
+
+(use-package lsp-ui
+  :commands
+  lsp-ui-mode
+  :config
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-position 'at-point)
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-show-diagnostics t))
+
+(use-package lsp-treemacs
+  :commands
+  lsp-treemacs-errors-list)
+
+(use-package company
+  :hook
+  (prog-mode . company-mode)
+  :config
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 1))
+
+(use-package python-mode
+  :hook
+  (python-mode . lsp))
+
+(use-package typescript-mode
+  :hook
+  (typescript-mode . lsp))
+
+(use-package lsp-java
+  :hook
+  (java-mode . lsp))
+
+(use-package rust-mode
+  :hook
+  (rust-mode . lsp))
+
+(use-package whitespace-cleanup-mode
+  :hook
+  (prog-mode . whitespace-cleanup-mode))
+
+(use-package haskell-mode
+  :mode
+  "\\.hs\\'"
+  :hook
+  ((haskell-mode . interactive-haskell-mode)
+   (haskell-mode . turn-on-haskell-doc-mode)
+   (haskell-mode . haskell-setup-outline-mode))
+  :config
+  (setq haskell-stylish-on-save t)
+  (defun haskell-setup-outline-mode ()
+    (make-local-variable 'outline-regexp)
+    (setq outline-regexp "\\`\\|\\s-+\\S-")))
+
+(use-package go-mode
+  :mode
+  "\\.go\\'"
+  :hook
+  (before-save . gofmt-before-save)
+  :custom
+  (gofmt-command "goimports"))
+
+(setq custom-safe-themes t)
+
+(defadvice load-theme (before clear-previous-themes activate)
+  "Clear existing theme settings instead of layering them."
+  (mapc #'disable-theme custom-enabled-themes))
 
 (defun minimal/setup-frame (frame)
   "Setup fonts, theme, and modeline for new frames."

@@ -38,6 +38,9 @@ exec_always --no-startup-id xss-lock -l -- xsecurelock
 # Setup dunst (notification daemon).
 exec_always --no-startup-id "killall -q dunst; dunst -config ~/.config/dunst/dunstrc"
 
+# Launch EMACS server.
+exec --no-startup-id "emacs --daemon"
+
 # Use `pactl` to control system volume and microphone.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
@@ -98,7 +101,7 @@ bindsym $mod+Return exec ghostty
 bindsym $mod+e exec alacritty --command 'nvim'
 
 # Open the OTHER text editor.
-bindsym $mod+$shift+e exec emacs
+bindsym $mod+$shift+e exec emacsclient --create-frame --alternate-editor 'emacs'
 
 # Kill the focused window.
 bindsym $mod+q kill
