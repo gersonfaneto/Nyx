@@ -116,14 +116,18 @@
   (unless (find-font (font-spec :name "all-the-icons"))
     (all-the-icons-install-fonts t)))
 
+(use-package which-key
+  :config
+  (which-key-mode))
+
 (use-package vertico
   :init
   (vertico-mode)
   :custom
-  (vertico-scroll-margin 0)
   (vertico-count 8)
-  (vertico-resize t)
   (vertico-cycle t)
+  (vertico-resize t)
+  (vertico-scroll-margin 0)
   :config
   (setq completion-ignore-case t
 	read-buffer-completion-ignore-case t
@@ -181,6 +185,10 @@
 (use-package direnv
   :config
   (direnv-mode))
+
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l"))
 
 (use-package lsp-ui
   :commands
