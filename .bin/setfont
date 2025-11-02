@@ -2,7 +2,13 @@
 
 CONFIGURATIONS="${XDG_CONFIG_HOME:-$HOME/.config}"
 
-FONT_IN_USE=$(sed 's/font-family = "\(.*\)"/\1/g' <"$CONFIGURATIONS"/ghostty/config.local)
+STATES="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+DEFAULT_FONT="Nova Nerd Font"
+
+FONT_STATE=$(cat $STATES/fonts.txt 2>/dev/null || exit 0)
+
+FONT_IN_USE="${FONT_STATE:-$DEFAULT_FONT}"
 
 FONTS_AVAILABLE=()
 while IFS= read -r font; do
@@ -10,7 +16,7 @@ while IFS= read -r font; do
 done < <(ghostty +list-fonts | grep -v '^[[:blank:]]' | grep -v '^$' | sort | uniq)
 
 switch_alacritty() {
-  (   
+  (
     ALACRITTY_CONFIGURATION="$CONFIGURATIONS/alacritty/local.toml"
 
     if [ ! -f "$ALACRITTY_CONFIGURATION" ]; then
@@ -25,7 +31,7 @@ switch_alacritty() {
 }
 
 switch_ghostty() {
-  (   
+  (
     GHOSTTY_CONFIGURATION="$CONFIGURATIONS/ghostty/config.local"
 
     if [ ! -f "$GHOSTTY_CONFIGURATION" ]; then
@@ -35,6 +41,23 @@ switch_ghostty() {
     fi
 
     kill -USR2 "$(pgrep ghostty)"
+  )
+}
+
+switch_emacs() {
+  (
+    EMACS_CONFIG="$HOME/.emacs.d/init.el"
+    if [ -f "$EMACS_CONFIG" ]; then
+      CURRENT_EMACS_FONT=$(grep 'setq minimal/default-font' "$EMACS_CONFIG" | sed 's@(setq minimal/default-font "\(.*\)")@\1@')
+      if [ -n "$CURRENT_EMACS_FONT" ]; then
+        SIZE=$(echo "$CURRENT_EMACS_FONT" | awk '{print $NF}')
+        NEW_FONT="$FONT $SIZE"
+        sed -i "s@(setq minimal/default-font \".*\")@(setq minimal/default-font \"$NEW_FONT\")@" "$EMACS_CONFIG"
+        if command -v emacsclient >/dev/null 2>&1; then
+          emacsclient -e "(progn (setq minimal/default-font \"$NEW_FONT\") (dolist (frame (frame-list)) (set-frame-font minimal/default-font nil t frame)))" >/dev/null 2>&1 || true
+        fi
+      fi
+    fi
   )
 }
 
@@ -110,8 +133,14 @@ main() {
     exit 0
   fi
 
+  (
+    cat /dev/null > $STATES/fonts.txt
+    echo "$FONT" >> $STATES/fonts.txt
+  )
+
   switch_alacritty
   switch_ghostty
+  switch_emacs
 
   printf "Switched to \033[4m%s\033[0m\n" "$FONT"
 }

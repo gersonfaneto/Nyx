@@ -22,7 +22,9 @@
   (global-display-line-numbers-mode)
   (setq display-line-numbers-type 'relative))
 
-(set-frame-font "Anonymous Pro 12" nil t)
+(setq minimal/default-font "mononoki 12")
+
+(set-frame-font minimal/default-font nil t)
 
 (setq minimal/current-theme       'doom-solarized-dark
       minimal/current-theme-dark  'doom-solarized-dark
@@ -251,17 +253,11 @@
   :custom
   (gofmt-command "goimports"))
 
-(setq custom-safe-themes t)
-
 (defadvice load-theme (before clear-previous-themes activate)
   "Clear existing theme settings instead of layering them."
   (mapc #'disable-theme custom-enabled-themes))
 
-(defun minimal/setup-frame (frame)
-  "Setup fonts, theme, and modeline for new frames."
-  (with-selected-frame frame
-    (load-theme minimal/current-theme t)
-    (set-frame-font "Anonymous Pro 12" nil t)))
+(setq custom-safe-themes t)
 
 (defun minimal/toggle-theme ()
   "Toggle between light & dark variants of current theme."
@@ -275,6 +271,12 @@
     (custom-set-variables `(minimal/current-theme ',new-theme))))
 
 (global-set-key (kbd "C-c t") 'minimal/toggle-theme)
+
+(defun minimal/setup-frame (frame)
+  "Setup fonts, theme, and modeline for new frames."
+  (with-selected-frame frame
+    (load-theme minimal/current-theme t)
+    (set-frame-font minimal/default-font nil t)))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions #'minimal/setup-frame)
