@@ -188,6 +188,10 @@
   (:map markdown-mode-map
         ("C-c C-e" . markdown-do)))
 
+(use-package whitespace-cleanup-mode
+  :hook
+  (prog-mode . whitespace-cleanup-mode))
+
 (use-package direnv
   :config
   (direnv-mode))
@@ -216,26 +220,6 @@
   (setq company-idle-delay 0.1
         company-minimum-prefix-length 1))
 
-(use-package python-mode
-  :hook
-  (python-mode . lsp))
-
-(use-package typescript-mode
-  :hook
-  (typescript-mode . lsp))
-
-(use-package lsp-java
-  :hook
-  (java-mode . lsp))
-
-(use-package rust-mode
-  :hook
-  (rust-mode . lsp))
-
-(use-package whitespace-cleanup-mode
-  :hook
-  (prog-mode . whitespace-cleanup-mode))
-
 (use-package haskell-mode
   :mode
   "\\.hs\\'"
@@ -248,14 +232,6 @@
   (defun haskell-setup-outline-mode ()
     (make-local-variable 'outline-regexp)
     (setq outline-regexp "\\`\\|\\s-+\\S-")))
-
-(use-package go-mode
-  :mode
-  "\\.go\\'"
-  :hook
-  (before-save . gofmt-before-save)
-  :custom
-  (gofmt-command "goimports"))
 
 (defadvice load-theme (before clear-previous-themes activate)
   "Clear existing theme settings instead of layering them."
