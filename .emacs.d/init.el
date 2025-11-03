@@ -1,11 +1,7 @@
-;; -*- lexical-binding: t; outline-regexp: ";;;"; eval: (local-set-key (kbd "C-c i") #'consult-outline); -*-
+;; -*- lexical-binding: t; -*-
 
 ;; A foolish attempt on a minimal EMACS configuration, by @gersonfaneto.
 
-;;; In the beginning...
-(harder-better-faster-stronger)
-
-;;; UI :: Font Settings
 (set-frame-font minimal/default-font nil t)
 
 (defun minimal/scale-font (n)
@@ -19,20 +15,16 @@
 (global-set-key (kbd "C-=") '(lambda nil (interactive) (minimal/scale-font  1)))
 (global-set-key (kbd "C--") '(lambda nil (interactive) (minimal/scale-font -1)))
 
-;;; Bindings :: Managing Windows
 (global-set-key (kbd "M-0") 'delete-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'split-window-below)
 (global-set-key (kbd "M-3") 'split-window-right)
 (global-set-key (kbd "M-o") 'other-window)
 
-;;; Spell Checking
 (global-set-key (kbd "M-s s") 'flyspell-mode)
 
-;;; Quick URLs
 (global-set-key (kbd "M-g l") 'browse-url)
 
-;;; Custom :: Duplicate Line
 (defun minimal/duplicate-line ()
   "Duplicates current line"
   (interactive)
@@ -47,11 +39,9 @@
 
 (global-set-key (kbd "C-.") 'minimal/duplicate-line)
 
-;;; Bindings :: Better Movement
 (global-set-key (kbd "M-j") 'forward-paragraph)
 (global-set-key (kbd "M-k") 'backward-paragraph)
 
-;;; Bindings :: Managing Buffers
 (defun kill-all-buffers ()
   "Close all buffers."
   (interactive)
@@ -67,11 +57,9 @@
 (global-set-key (kbd "C-x C-k") 'kill-current-buffer)
 (global-set-key (kbd "C-x C-S-k") 'kill-all-buffers)
 
-;;; Bindings :: Compilation
 (global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c r") 'recompile)
 
-;;; Packages :: Bootstrap
 (setq straight-repository-branch "develop")
 
 (setq package-archives '(("elpa"	.	"https://elpa.gnu.org/packages/")
@@ -101,13 +89,11 @@
   :custom
   (straight-use-package-by-default t))
 
-;;; Packages :: Server
 (use-package server
   :config
   (unless (server-running-p)
     (server-start)))
 
-;;; Packages :: DOOM Themes
 (use-package doom-themes
   :init
   (load-theme minimal/current-theme t)
@@ -115,14 +101,12 @@
   (doom-themes-enable-bold t)
   (doom-themes-enable-italic t))
 
-;;; Packages :: DOOM Modeline
 (use-package doom-modeline
   :init
   (doom-modeline-mode 1)
   :custom
   (doom-modeline-icon (display-graphic-p)))
 
-;;; Packages :: Icons
 (use-package all-the-icons
   :if
   (display-graphic-p)
@@ -132,12 +116,10 @@
   (unless (find-font (font-spec :name "all-the-icons"))
     (all-the-icons-install-fonts t)))
 
-;;; Packages :: Which-Key
 (use-package which-key
   :config
   (which-key-mode))
 
-;;; Packages :: Vertico
 (use-package vertico
   :init
   (vertico-mode)
@@ -151,12 +133,10 @@
 	read-buffer-completion-ignore-case t
 	read-file-name-completion-ignore-case t))
 
-;;; Packages :: Marginalia
 (use-package marginalia
   :init
   (marginalia-mode))
 
-;;; Packages :: Orderless
 (use-package orderless
   :config
   (setq completion-styles '(orderless basic)
@@ -164,7 +144,6 @@
 	completion-category-defaults nil
 	completion-category-overrides '((file (styles partial-completion)))))
 
-;;; Packages :: Consult
 (use-package consult
   :bind
   (("C-C C-x b" . 'consult-buffer)
@@ -175,7 +154,6 @@
    ("C-c C-x i" . 'consult-imenu)
    ("C-c C-x t" . 'consult-theme)))
 
-;;; Packages :: Multi-Cursors
 (use-package multiple-cursors
   :bind
   ("C->" . 'mc/mark-next-like-this)
@@ -185,18 +163,15 @@
   ("C-c C-<" . 'mc/mark-all-like-this)
   ("C-S-c C-S-c" . 'mc/edit-lines))
 
-;;; Packages :: Move-Text
 (use-package move-text
   :bind
   ("M-p" . 'move-text-up)
   ("M-n" . 'move-text-down))
 
-;;; Packages :: Expand-Region
 (use-package expand-region
   :bind
   ("C-+" . 'er/expand-region))
 
-;;; Packages :: Smartparens
 (use-package smartparens
   :init
   (show-paren-mode t)
@@ -207,17 +182,14 @@
   :config
   (require 'smartparens-config))
 
-;;; Packages :: Tab-Jump-Out
 (use-package tab-jump-out
   :hook
   (prog-mode . tab-jump-out-mode))
 
-;;; Packages :: Magit
 (use-package magit
   :bind
   ("C-x g" . 'magit-status))
 
-;;; Packages :: Markdown-Mode
 (use-package markdown-mode
   :init
   (setq markdown-command "multimarkdown")
@@ -227,17 +199,14 @@
   (:map markdown-mode-map
         ("C-c C-e" . markdown-do)))
 
-;;; Packages :: Whitespace-Cleanup-Mode
 (use-package whitespace-cleanup-mode
   :hook
   (prog-mode . whitespace-cleanup-mode))
 
-;;; Packages :: Direnv
 (use-package direnv
   :config
   (direnv-mode))
 
-;;; Packages :: AI
 (use-package gptel
   :commands
   (gptel gptel-send)
@@ -246,7 +215,6 @@
 	 ("C-c <return>" . gptel-send)
 	 ("C-c C-<return>" . gptel-menu)))
 
-;;; Packages :: LSP-Mode
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -261,7 +229,6 @@
 	("C-c C-c i" . lsp-organize-imports)
 	("C-c C-c h" . lsp-describe-thing-at-point)))
 
-;;; Packages :: LSP-UI
 (use-package lsp-ui
   :commands
   lsp-ui-mode
@@ -271,7 +238,6 @@
   (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-show-diagnostics t))
 
-;;; Packages :: Treemacs
 (use-package treemacs
   :bind
   ("M-SPC" . treemacs)
@@ -280,12 +246,10 @@
 	("j" . treemacs-next-line)
 	("k" . treemacs-previous-line)))
 
-;;; Packages :: LSP-Treemmuacs
 (use-package lsp-treemacs
   :commands
   lsp-treemacs-errors-list)
 
-;;; Packages :: Company
 (use-package company
   :hook
   (prog-mode . company-mode)
@@ -293,11 +257,9 @@
   (setq company-idle-delay 0.1
         company-minimum-prefix-length 1))
 
-;;; Packages :: Flycheck
 (use-package flycheck
   :ensure t)
 
-;;; Languages :: Haskell
 (use-package haskell-mode
   :mode
   "\\.hs\\'"
@@ -311,22 +273,18 @@
     (make-local-variable 'outline-regexp)
     (setq outline-regexp "\\`\\|\\s-+\\S-")))
 
-;;; Languages :: Nix
 (use-package nix-mode
   :mode
   "\\.nix\\'"
   :hook
   (nix-mode . lsp))
 
-;;; UI :: Cleanup Colors 
 (defadvice load-theme (before clear-previous-themes activate)
   "Clear existing theme settings instead of layering them."
   (mapc #'disable-theme custom-enabled-themes))
 
-;;; UI :: Trust!
 (setq custom-safe-themes t)
 
-;;; UI :: Toggle Background
 (defun minimal/toggle-theme ()
   "Toggle between light & dark variants of current theme."
   (interactive)
@@ -340,7 +298,6 @@
 
 (global-set-key (kbd "C-c t") 'minimal/toggle-theme)
 
-;;; UI :: Bravo!
 (defun minimal/setup-frame (frame)
   "Setup fonts, theme, and modeline for new frames."
   (with-selected-frame frame
@@ -351,7 +308,6 @@
     (add-hook 'after-make-frame-functions #'minimal/setup-frame)
   (minimal/setup-frame (selected-frame)))
 
-;;; Don't touch my stuff!
 (setq minimal/custom-file "~/.emacs.d/custom.el")
 
 (if (not (file-exists-p minimal/custom-file))
