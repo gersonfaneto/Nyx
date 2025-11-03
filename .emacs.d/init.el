@@ -25,7 +25,7 @@
 (setq minimal/local-file "~/.emacs.d/local.el")
 
 (if (file-exists-p minimal/local-file)
-    (load-file minimal/custom-file)
+    (load-file minimal/local-file)
   (setq minimal/default-font "Nova Nerd Font 12"))
 
 (set-frame-font minimal/default-font nil t)
@@ -67,7 +67,7 @@
 
 (global-set-key (kbd "C-x C-p") 'previous-buffer)
 (global-set-key (kbd "C-x C-n") 'next-buffer)
-(global-set-key (kbd "C-x C-k") 'kill-current-buffer)
+(global-set-key (kbd "C-x C-k") 'kill-buffer-and-window)
 
 (global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c r") 'recompile)
