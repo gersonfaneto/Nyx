@@ -28,66 +28,59 @@
   ;; Don't want a mode line while loading init.
   (setq-default mode-line-format nil))
 
-;;; No default splash screen nor scratch buffer message.
+;;; No default splash screen nor scratch buffer message
 (setq inhibit-startup-screen t
       initial-scratch-message nil)
 
-;;; No scrollbar by default.
+;;; No scrollbar by default
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
-;;; No nenubar by default.
+;;; No nenubar by default
 (when (fboundp 'menu-bar-mode)
   (menu-bar-mode -1))
 
-;;; No toolbar by default.
+;;; No toolbar by default
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 
-;;; No tooltip by default.
+;;; No tooltip by default
 (when (fboundp 'tooltip-mode)
   (tooltip-mode -1))
 
-;;; A nice and minimal welcome buffer.
-(defun minimal/show-welcome-buffer ()
-  "Show *Welcome* buffer."
-  (with-current-buffer (get-buffer-create "*Welcome*")
-    (setq truncate-lines t)
-    (minimal/refresh-welcome-buffer)
-    (setq cursor-type nil)
-    (read-only-mode +1)
-    (add-hook 'window-size-change-functions
-	      (lambda (_frame)
-		(minimal/refresh-welcome-buffer)) nil t)
-    (add-hook 'window-configuration-change-hook
-	      #'minimal/refresh-welcome-buffer nil t)
-    (switch-to-buffer (current-buffer))
-    (local-set-key (kbd "q") 'kill-this-buffer)))
+;;; Backup & Temporary files
+(setq auto-save-default nil
+      make-backup-files nil)
 
-(defun minimal/refresh-welcome-buffer ()
-  "Refresh welcome buffer content for WINDOW."
-  (when-let* ((inhibit-read-only t)
-	      (welcome-buffer (get-buffer "*Welcome*"))
-	      (window (get-buffer-window welcome-buffer))
-	      (image-path "~/.emacs.d/logo.png")
-	      (image (create-image image-path nil nil :max-height 300))
-	      (image-height (cdr (image-size image)))
-	      (image-width (car (image-size image)))
-	      (top-margin (floor (/ (- (window-height window) image-height) 2)))
-	      (left-margin (floor (/ (- (window-width window) image-width) 2)))
-	      (title "Welcome to Emacs"))
-    (with-current-buffer welcome-buffer
-      (erase-buffer)
-      ;; (setq mode-line-format nil)
-      (goto-char (point-min))
-      (insert (make-string top-margin ?\n))
-      (insert (make-string left-margin ?\ ))
-      (insert-image image)
-      (insert "\n\n\n")
-      (insert (make-string (floor (/ (- (window-width window) (* (string-width title) 1.2)) 2)) ?\ ))
-      (insert (propertize title 'face '(:height 1.2))))))
+;;; Spacing & Indentation
+(setq tab-width 2
+      fill-column 100
+      indent-tabs-mode nil)
 
-(when (< (length command-line-args) 2)
-  (add-hook 'emacs-startup-hook (lambda ()
-				  (when (display-graphic-p)
-				    (minimal/show-welcome-buffer)))))
+;;; Don't open dialog boxes
+(setq use-dialog-box nil
+      use-file-dialog nil)
+
+;;; Make EMACS a tidy less stubborn
+(setq use-short-answers t
+      compilation-ask-about-save nil
+      confirm-nonexistent-file-or-buffer nil)
+
+;;; Dired
+(setq dired-listing-switches "-lhAX --group-directories-first")
+
+;;; Line Numbers
+(when (version<= "26.0.50" emacs-version)
+  (global-display-line-numbers-mode)
+  (setq display-line-numbers-type 'relative))
+
+;;; UI Styling :: Defaults
+(setq minimal/local-file            "~/.emacs.d/local.el"
+      minimal/default-font          "Nova Nerd Font 12"
+      minimal/current-theme         'doom-solarized-dark
+      minimal/current-theme-dark    'doom-solarized-dark
+      minimal/current-theme-light   'doom-solarized-light)
+
+;;; UI Styling :: Overrides
+(if (file-exists-p minimal/local-file)
+    (load-file minimal/local-file))
