@@ -249,7 +249,17 @@
 ;;; Packages :: LSP-Mode
 (use-package lsp-mode
   :init
-  (setq lsp-keymap-prefix "C-c l"))
+  (setq lsp-keymap-prefix "C-c l")
+  :bind
+  (:map lsp-mode-map
+	("C-c C-c a" . lsp-execute-code-action)
+	("C-c C-c r" . lsp-rename)
+	("C-c C-c k" . lsp-doc-glance)
+	("C-c C-c f" . lsp-format-buffer)
+	("C-c C-c d" . lsp-find-definition)
+	("C-c C-c /" . lsp-find-references)
+	("C-c C-c i" . lsp-organize-imports)
+	("C-c C-c h" . lsp-describe-thing-at-point)))
 
 ;;; Packages :: LSP-UI
 (use-package lsp-ui
