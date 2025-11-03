@@ -22,7 +22,11 @@
   (global-display-line-numbers-mode)
   (setq display-line-numbers-type 'relative))
 
-(setq minimal/default-font "mononoki 12")
+(setq minimal/local-file "~/.emacs.d/local.el")
+
+(if (file-exists-p minimal/local-file)
+    (load-file minimal/custom-file)
+  (setq minimal/default-font "Nova Nerd Font 12"))
 
 (set-frame-font minimal/default-font nil t)
 

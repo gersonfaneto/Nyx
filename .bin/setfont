@@ -46,17 +46,23 @@ switch_ghostty() {
 
 switch_emacs() {
   (
-    EMACS_CONFIG="$HOME/.emacs.d/init.el"
-    if [ -f "$EMACS_CONFIG" ]; then
+    EMACS_CONFIG="$HOME/.emacs.d/local.el"
+
+    NEW_FONT="$FONT 12"
+
+    if [ ! -f "$EMACS_CONFIG" ]; then
+      echo "(setq minimal/default-font \"$NEW_FONT\")" > "$EMACS_CONFIG"
+    else
       CURRENT_EMACS_FONT=$(grep 'setq minimal/default-font' "$EMACS_CONFIG" | sed 's@(setq minimal/default-font "\(.*\)")@\1@')
       if [ -n "$CURRENT_EMACS_FONT" ]; then
         SIZE=$(echo "$CURRENT_EMACS_FONT" | awk '{print $NF}')
         NEW_FONT="$FONT $SIZE"
         sed -i "s@(setq minimal/default-font \".*\")@(setq minimal/default-font \"$NEW_FONT\")@" "$EMACS_CONFIG"
-        if command -v emacsclient >/dev/null 2>&1; then
-          emacsclient -e "(progn (setq minimal/default-font \"$NEW_FONT\") (dolist (frame (frame-list)) (set-frame-font minimal/default-font nil t frame)))" >/dev/null 2>&1 || true
-        fi
       fi
+    fi
+
+    if command -v emacsclient >/dev/null 2>&1; then
+      emacsclient -e "(progn (setq minimal/default-font \"$NEW_FONT\") (dolist (frame (frame-list)) (set-frame-font minimal/default-font nil t frame)))" >/dev/null 2>&1 || true
     fi
   )
 }
