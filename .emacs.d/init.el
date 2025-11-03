@@ -261,6 +261,15 @@
   (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-show-diagnostics t))
 
+;;; Packages :: Treemacs
+(use-package treemacs
+  :bind
+  ("M-SPC" . treemacs)
+  :bind
+  (:map treemacs-mode-map
+	("j" . treemacs-next-line)
+	("k" . treemacs-previous-line)))
+
 ;;; Packages :: LSP-Treemmuacs
 (use-package lsp-treemacs
   :commands
@@ -278,7 +287,7 @@
 (use-package flycheck
   :ensure t)
 
-;;; Packages :: Haskell-Mode
+;;; Languages :: Haskell
 (use-package haskell-mode
   :mode
   "\\.hs\\'"
@@ -291,6 +300,13 @@
   (defun haskell-setup-outline-mode ()
     (make-local-variable 'outline-regexp)
     (setq outline-regexp "\\`\\|\\s-+\\S-")))
+
+;;; Languages :: Nix
+(use-package nix-mode
+  :mode
+  "\\.nix\\'"
+  :hook
+  (nix-mode . lsp))
 
 ;;; UI :: Cleanup Colors 
 (defadvice load-theme (before clear-previous-themes activate)
