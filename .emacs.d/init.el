@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; outline-regexp: ";;;"; eval: (local-set-key (kbd "C-c i") #'consult-outline); -*-
 
-;; A foolish attempt on a minimal EMACS configuration, by @better.
+;; A foolish attempt on a minimal EMACS configuration, by @gersonfaneto.
 
 ;;; In the beginning...
 (harder-better-faster-stronger)
@@ -48,8 +48,8 @@
 (global-set-key (kbd "C-.") 'minimal/duplicate-line)
 
 ;;; Bindings :: Better Movement
-(global-set-key (kbd "M-j") 'backward-paragraph)
-(global-set-key (kbd "M-k") 'forward-paragraph)
+(global-set-key (kbd "M-j") 'forward-paragraph)
+(global-set-key (kbd "M-k") 'backward-paragraph)
 
 ;;; Bindings :: Managing Buffers
 (defun kill-all-buffers ()
@@ -247,90 +247,90 @@
 	 ("C-c C-<return>" . gptel-menu)))
 
 ;;; Packages :: LSP-Mode
-  (use-package lsp-mode
-    :init
-    (setq lsp-keymap-prefix "C-c l"))
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l"))
 
 ;;; Packages :: LSP-UI
-  (use-package lsp-ui
-    :commands
-    lsp-ui-mode
-    :config
-    (setq lsp-ui-doc-enable t)
-    (setq lsp-ui-doc-position 'at-point)
-    (setq lsp-ui-sideline-enable t)
-    (setq lsp-ui-sideline-show-diagnostics t))
+(use-package lsp-ui
+  :commands
+  lsp-ui-mode
+  :config
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-position 'at-point)
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-show-diagnostics t))
 
 ;;; Packages :: LSP-Treemmuacs
-  (use-package lsp-treemacs
-    :commands
-    lsp-treemacs-errors-list)
+(use-package lsp-treemacs
+  :commands
+  lsp-treemacs-errors-list)
 
 ;;; Packages :: Company
-  (use-package company
-    :hook
-    (prog-mode . company-mode)
-    :config
-    (setq company-idle-delay 0.1
-          company-minimum-prefix-length 1))
+(use-package company
+  :hook
+  (prog-mode . company-mode)
+  :config
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 1))
 
 ;;; Packages :: Flycheck
-  (use-package flycheck
-    :ensure t)
+(use-package flycheck
+  :ensure t)
 
 ;;; Packages :: Haskell-Mode
-  (use-package haskell-mode
-    :mode
-    "\\.hs\\'"
-    :hook
-    ((haskell-mode . interactive-haskell-mode)
-     (haskell-mode . turn-on-haskell-doc-mode)
-     (haskell-mode . haskell-setup-outline-mode))
-    :config
-    (setq haskell-stylish-on-save t)
-    (defun haskell-setup-outline-mode ()
-      (make-local-variable 'outline-regexp)
-      (setq outline-regexp "\\`\\|\\s-+\\S-")))
+(use-package haskell-mode
+  :mode
+  "\\.hs\\'"
+  :hook
+  ((haskell-mode . interactive-haskell-mode)
+   (haskell-mode . turn-on-haskell-doc-mode)
+   (haskell-mode . haskell-setup-outline-mode))
+  :config
+  (setq haskell-stylish-on-save t)
+  (defun haskell-setup-outline-mode ()
+    (make-local-variable 'outline-regexp)
+    (setq outline-regexp "\\`\\|\\s-+\\S-")))
 
 ;;; UI :: Cleanup Colors 
-  (defadvice load-theme (before clear-previous-themes activate)
-    "Clear existing theme settings instead of layering them."
-    (mapc #'disable-theme custom-enabled-themes))
+(defadvice load-theme (before clear-previous-themes activate)
+  "Clear existing theme settings instead of layering them."
+  (mapc #'disable-theme custom-enabled-themes))
 
 ;;; UI :: Trust!
-  (setq custom-safe-themes t)
+(setq custom-safe-themes t)
 
 ;;; UI :: Toggle Background
-  (defun minimal/toggle-theme ()
-    "Toggle between light & dark variants of current theme."
-    (interactive)
-    (let ((new-theme (if (eq minimal/current-theme minimal/current-theme-dark)
-			 minimal/current-theme-light
-                       minimal/current-theme-dark)))
-      (disable-theme minimal/current-theme)
-      (load-theme new-theme t)
-      (setq minimal/current-theme new-theme)
-      (custom-set-variables `(minimal/current-theme ',new-theme))))
+(defun minimal/toggle-theme ()
+  "Toggle between light & dark variants of current theme."
+  (interactive)
+  (let ((new-theme (if (eq minimal/current-theme minimal/current-theme-dark)
+		       minimal/current-theme-light
+                     minimal/current-theme-dark)))
+    (disable-theme minimal/current-theme)
+    (load-theme new-theme t)
+    (setq minimal/current-theme new-theme)
+    (custom-set-variables `(minimal/current-theme ',new-theme))))
 
-  (global-set-key (kbd "C-c t") 'minimal/toggle-theme)
+(global-set-key (kbd "C-c t") 'minimal/toggle-theme)
 
 ;;; UI :: Bravo!
-  (defun minimal/setup-frame (frame)
-    "Setup fonts, theme, and modeline for new frames."
-    (with-selected-frame frame
-      (load-theme minimal/current-theme t)
-      (set-frame-font minimal/default-font nil t)))
+(defun minimal/setup-frame (frame)
+  "Setup fonts, theme, and modeline for new frames."
+  (with-selected-frame frame
+    (load-theme minimal/current-theme t)
+    (set-frame-font minimal/default-font nil t)))
 
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions #'minimal/setup-frame)
-    (minimal/setup-frame (selected-frame)))
+(if (daemonp)
+    (add-hook 'after-make-frame-functions #'minimal/setup-frame)
+  (minimal/setup-frame (selected-frame)))
 
 ;;; Don't touch my stuff!
-  (setq minimal/custom-file "~/.emacs.d/custom.el")
+(setq minimal/custom-file "~/.emacs.d/custom.el")
 
-  (if (not (file-exists-p minimal/custom-file))
-      (make-empty-file minimal/custom-file))
+(if (not (file-exists-p minimal/custom-file))
+    (make-empty-file minimal/custom-file))
 
-  (when (file-exists-p minimal/custom-file)
-    (setq custom-file minimal/custom-file)
-    (load-file custom-file))
+(when (file-exists-p minimal/custom-file)
+  (setq custom-file minimal/custom-file)
+  (load-file custom-file))
