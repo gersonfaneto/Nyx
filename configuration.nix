@@ -190,6 +190,7 @@
       ghostty
       git
       highlight
+      ispell
       jq
       less
       libnotify
