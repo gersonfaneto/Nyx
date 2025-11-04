@@ -210,6 +210,11 @@
 (use-package gptel
   :commands
   (gptel gptel-send)
+  :config
+  (setq gptel-model 'gemini-2.5-flash-lite
+	gptel-backend (gptel-make-gemini "Gemini"
+			:key GEMINI_API_KEY
+			:stream t))
   :bind (("C-c j" . gptel-menu)
          ("C-c C-g" . gptel-abort)
 	 ("C-c <return>" . gptel-send)

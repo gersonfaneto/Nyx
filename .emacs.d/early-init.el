@@ -65,7 +65,8 @@
   (global-display-line-numbers-mode)
   (setq display-line-numbers-type 'relative))
 
-(setq minimal/local-file            "~/.emacs.d/local.el"
+(setq minimal/env-file              "~/.emacs.d/env.el"
+      minimal/local-file            "~/.emacs.d/local.el"
       minimal/default-font          "Nova Nerd Font 12"
       minimal/current-theme         'doom-solarized-dark
       minimal/current-theme-dark    'doom-solarized-dark
@@ -73,3 +74,6 @@
 
 (if (file-exists-p minimal/local-file)
     (load-file minimal/local-file))
+
+(if (file-exists-p minimal/env-file)
+    (load-file minimal/env-file))
