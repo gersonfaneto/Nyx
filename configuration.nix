@@ -2,8 +2,7 @@
   pkgs,
   inputs,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -24,7 +23,7 @@
     experimental-features = nix-command flakes
   '';
 
-  nix.settings.trusted-users = [ "gerson" ];
+  nix.settings.trusted-users = ["gerson"];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -92,7 +91,7 @@
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
     ];
-    config.common.default = [ "gtk" ];
+    config.common.default = ["gtk"];
   };
 
   users.users.gerson = {
@@ -105,7 +104,7 @@
       "docker"
       "networkmanager"
     ];
-    packages = with pkgs; [ gnupg ];
+    packages = with pkgs; [gnupg];
   };
 
   nixpkgs = {
@@ -201,7 +200,7 @@
       man-pages
       man-pages-posix
       mpv
-      opencode
+      (import ./packages/opencode/package.nix {inherit (pkgs) stdenv fetchzip;})
       pandoc
       playerctl
       poppler-utils
@@ -231,7 +230,7 @@
       zoxide
     ])
     ++ (with pkgs; [
-      (callPackage ./packages/boomer/package.nix { })
+      (callPackage ./packages/boomer/package.nix {})
     ])
     ++ (with pkgs; [
       # Nyx
@@ -292,7 +291,7 @@
       jetbrains-mono
       nerd-fonts.space-mono
       ultimate-oldschool-pc-font-pack
-      (iosevka-bin.override { variant = "SS07"; })
+      (iosevka-bin.override {variant = "SS07";})
 
       # UI
       inputs.apple-fonts.packages.${pkgs.system}.sf-mono
@@ -300,10 +299,10 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        emoji = [ "Noto Emoji" ];
-        serif = [ "SF Mono" ];
-        sansSerif = [ "SF Mono" ];
-        monospace = [ "SF Mono" ];
+        emoji = ["Noto Emoji"];
+        serif = ["SF Mono"];
+        sansSerif = ["SF Mono"];
+        monospace = ["SF Mono"];
       };
     };
   };

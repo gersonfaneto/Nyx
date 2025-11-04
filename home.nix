@@ -1,12 +1,10 @@
-{ config, ... }:
-let
+{config, ...}: let
   NYX_PATH = "/home/gerson/Developer/Personal/Nyx";
 
   mkSymlink = path: {
     source = config.lib.file.mkOutOfStoreSymlink "${NYX_PATH}/${path}";
   };
-in
-{
+in {
   home.username = "gerson";
   home.homeDirectory = "/home/gerson";
 
