@@ -1,0 +1,33 @@
+# name: 'Solarized Dark'
+# preferred_background: 002b36
+
+fish_color_normal                    normal
+fish_color_command                   93a1a1 --bold
+fish_color_quote                     dc322f
+fish_color_redirection               b58900
+fish_color_end                       859900
+fish_color_error                     dc322f
+fish_color_param                     268bd2
+fish_color_comment                   586e75
+fish_color_match                            --reverse
+fish_color_search_match                     --background=073642
+fish_color_operator                  2aa198
+fish_color_escape                    d33682
+fish_color_cwd                       93a1a1 --background=073642
+fish_color_cwd_root                  dc322f --background=073642
+fish_color_autosuggestion            586e75
+fish_color_user                      859900
+fish_color_host                      normal
+fish_color_host_remote               b58900
+fish_color_cancel                           --reverse
+fish_color_selection                 839496 --background=073642
+fish_color_status                    002b36 --background=dc322f
+fish_color_status_0                  002b36 --background=839496
+fish_color_history_current                  --bold
+fish_color_valid_path                839496
+fish_color_vcs                       586e75
+fish_pager_color_completion          normal
+fish_pager_color_description         586e75
+fish_pager_color_prefix              normal --bold --underline
+fish_pager_color_progress            93a1a1 --bold
+fish_pager_color_selected_background        --reverse

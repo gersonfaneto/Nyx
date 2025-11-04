@@ -1,1 +1,1 @@
-complete -f -c setcolor -a 'cockatoo nano everforest macro gruvbox-material sonokai onedark'
+complete -f -c setcolor -a 'cockatoo nano everforest macro gruvbox-material solarized sonokai onedark'
