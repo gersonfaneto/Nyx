@@ -167,6 +167,14 @@
 	completion-category-defaults nil
 	completion-category-overrides '((file (styles partial-completion))))) ;; File completion optimization
 
+;; --- Navigation Enhancements ---
+(use-package projectile
+  :bind
+  ("C-c f" . projectile-find-file)
+  ("C-c d" . projectile-find-dir)
+  :commands
+  (projectile-find-file))
+
 ;; --- Consult Package ---
 ;; Enhance search and navigation with Consult.
 (use-package consult
