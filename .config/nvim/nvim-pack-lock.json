@@ -5,7 +5,9 @@
     "cellular-automaton.nvim": [],
     "conjure": [],
     "esqueleto.nvim": [],
-    "everforest": [],
+    "everforest": {
+      "rev": "f518edb"
+    },
     "fugitive-gitlab.vim": [],
     "fzf-lua": [],
     "ghcid": [],
@@ -39,7 +41,9 @@
     "oil.nvim": [],
     "one-small-step-for-vimkind": [],
     "onedark.nvim": [],
-    "opencode.nvim": [],
+    "opencode.nvim": {
+      "rev": "ce93483"
+    },
     "otter.nvim": [],
     "plenary.nvim": [],
     "quicker.nvim": [],
