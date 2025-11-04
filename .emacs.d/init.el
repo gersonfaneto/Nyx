@@ -318,7 +318,6 @@
         ("C-c C-e" . markdown-do)))     ;; Export Markdown
 
 ;; --- Haskell Mode ---
-;; Configuration for Haskell development.
 (use-package haskell-mode
   :mode
   "\\.hs\\'"                            ;; Apply to .hs files
@@ -341,6 +340,11 @@
   "\\.nix\\'"                           ;; Apply to .nix files
   :hook
   (nix-mode . lsp))                     ;; Enable LSP for Nix mode
+
+;; --- C/C++ Mode ---
+(use-package cc-mode :ensure nil
+  :hook
+  (c-mode . lsp))
 
 ;; --- Theme Toggling ---
 ;; Advice to clear previous themes before loading a new one.
