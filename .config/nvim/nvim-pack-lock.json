@@ -1,0 +1,61 @@
+{
+  "plugins": {
+    "LuaSnip": [],
+    "blink.cmp": [],
+    "cellular-automaton.nvim": [],
+    "conjure": [],
+    "esqueleto.nvim": [],
+    "everforest": [],
+    "fugitive-gitlab.vim": [],
+    "fzf-lua": [],
+    "ghcid": [],
+    "gitsigns.nvim": [],
+    "gruvbox-material": [],
+    "harpoon": {
+      "version": "'harpoon2'"
+    },
+    "haskell-tools.nvim": {
+      "version": "6.0.0 - 7.0.0"
+    },
+    "haskell-vim": [],
+    "img-clip.nvim": [],
+    "markdown-preview.nvim": [],
+    "molten-nvim": [],
+    "nvim-colorizer.lua": [],
+    "nvim-dap": [],
+    "nvim-dap-ui": [],
+    "nvim-metals": [],
+    "nvim-nio": [],
+    "nvim-surround": [],
+    "nvim-treesitter": {
+      "version": "'main'"
+    },
+    "nvim-treesitter-endwise": [],
+    "nvim-treesitter-incremental-selection": [],
+    "nvim-treesitter-textobjects": {
+      "version": "'main'"
+    },
+    "nvim-web-devicons": [],
+    "oil.nvim": [],
+    "one-small-step-for-vimkind": [],
+    "onedark.nvim": [],
+    "opencode.nvim": [],
+    "otter.nvim": [],
+    "plenary.nvim": [],
+    "quicker.nvim": [],
+    "treesj": [],
+    "ts-autotag.nvim": [],
+    "ultimate-autopair.nvim": [],
+    "vim-conjoin": [],
+    "vim-dispatch": [],
+    "vim-easy-align": [],
+    "vim-fugitive": [],
+    "vim-projectionist": [],
+    "vim-rhubarb": [],
+    "vim-sleuth": [],
+    "vim-table-mode": [],
+    "vim-test": [],
+    "vimtex": [],
+    "which-key.nvim": []
+  }
+}
