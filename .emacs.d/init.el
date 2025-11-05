@@ -100,6 +100,13 @@
   :custom
   (straight-use-package-by-default t)) ;; Ensure all packages are managed by straight.el
 
+;; --- Player Mode ---
+(use-package ready-player :after transient
+  :custom
+  (ready-player-my-media-collection-location "~/Music/")
+  :config
+  (ready-player-mode 1))
+
 ;; --- Server Mode ---
 ;; Start Emacs server if not already running, for emacsclient.
 (use-package server
@@ -238,7 +245,6 @@
   (prog-mode . tab-jump-out-mode))    ;; Enable tab-jump-out in programming modes
 
 (delete-selection-mode 1) ;; Deletes text between the point and the mark when a selection is active.
-(toggle-truncate-lines 0) ;; Disable line wrapping.
 
 ;; --- Version Control ---
 ;; Magit for Git integration.
