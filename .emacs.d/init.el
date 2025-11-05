@@ -100,13 +100,6 @@
   :custom
   (straight-use-package-by-default t)) ;; Ensure all packages are managed by straight.el
 
-;; --- Player Mode ---
-(use-package ready-player :after transient
-  :custom
-  (ready-player-my-media-collection-location "~/Music/")
-  :config
-  (ready-player-mode 1))
-
 ;; --- Server Mode ---
 ;; Start Emacs server if not already running, for emacsclient.
 (use-package server
@@ -372,6 +365,13 @@
 (use-package lua-mode
   :hook
   (lua-mode . lsp))
+
+;; --- Player Mode ---
+(use-package ready-player
+  :custom
+  (ready-player-my-media-collection-location "~/Music/")
+  :config
+  (ready-player-mode 1))
 
 ;; --- Theme Toggling ---
 ;; Advice to clear previous themes before loading a new one.
