@@ -175,6 +175,13 @@
   :commands
   (projectile-find-file))
 
+(use-package dirvish :after dired
+  :bind
+  (:map dired-mode-map
+	("?" . dirvish-dispatch))
+  :init
+  (dirvish-override-dired-mode))
+
 ;; --- Consult Package ---
 ;; Enhance search and navigation with Consult.
 (use-package consult
@@ -231,6 +238,7 @@
   (prog-mode . tab-jump-out-mode))    ;; Enable tab-jump-out in programming modes
 
 (delete-selection-mode 1) ;; Deletes text between the point and the mark when a selection is active.
+(toggle-truncate-lines 0) ;; Disable line wrapping.
 
 ;; --- Version Control ---
 ;; Magit for Git integration.
@@ -353,6 +361,11 @@
 (use-package cc-mode :ensure nil
   :hook
   (c-mode . lsp))
+
+;; --- Lua Mode ---
+(use-package lua-mode
+  :hook
+  (lua-mode . lsp))
 
 ;; --- Theme Toggling ---
 ;; Advice to clear previous themes before loading a new one.
