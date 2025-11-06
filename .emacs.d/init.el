@@ -49,7 +49,7 @@
   "Close all buffers."
   (interactive)
   ;; Temporarily ignore LSP restart to prevent interference
-  (let ((lsp-restart 'ignore))
+  (let ((eglot-ensure-restart 'ignore))
     (delete-other-windows) ;; Close all but the active window
     (save-some-buffers)    ;; Prompt to save modified buffers
     (let
@@ -96,7 +96,7 @@
       use-package-always-ensure t)         ;; Automatically install packages if not present
 
 ;; Configure straight.el itself.
-(use-package straight :ensure  nil
+(use-package straight :straight (:type built-in)
   :custom
   (straight-use-package-by-default t)) ;; Ensure all packages are managed by straight.el
 
@@ -268,47 +268,6 @@
 	 ("C-c <return>" . gptel-send)  ;; Send prompt to GPTel
 	 ("C-c C-<return>" . gptel-menu))) ;; Send prompt and show menu
 
-;; --- Language Server Protocol (LSP) Configuration ---
-;; Core LSP mode setup.
-(use-package lsp-mode
-  :init
-  (setq lsp-keymap-prefix "C-c l")     ;; Set prefix for LSP commands
-  :bind
-  (:map lsp-mode-map
-	("C-c C-c a" . lsp-execute-code-action) ;; Execute code actions
-	("C-c C-c r" . lsp-rename)             ;; Rename symbol
-	("C-c C-c k" . lsp-doc-glance)         ;; Show documentation glance
-	("C-c C-c f" . lsp-format-buffer)      ;; Format entire buffer
-	("C-c C-c d" . lsp-find-definition)    ;; Find definition of symbol
-	("C-c C-c /" . lsp-find-references)    ;; Find references to symbol
-	("C-c C-c i" . lsp-organize-imports)   ;; Organize imports
-	("C-c C-c h" . lsp-describe-thing-at-point))) ;; Describe symbol at point
-
-;; LSP UI enhancements (diagnostics, code annotations).
-(use-package lsp-ui
-  :commands
-  lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-enable t)          ;; Enable documentation display
-  (setq lsp-ui-doc-position 'at-point) ;; Position docs at point
-  (setq lsp-ui-sideline-enable t)     ;; Enable sideline for diagnostics
-  (setq lsp-ui-sideline-show-diagnostics t)) ;; Show diagnostics in the sideline
-
-;; --- Tree-sitter and Treemacs ---
-;; Treemacs for a file explorer and project navigation.
-(use-package treemacs
-  :bind
-  ("M-SPC" . treemacs)                  ;; Toggle treemacs visibility
-  :bind
-  (:map treemacs-mode-map
-	("j" . treemacs-next-line)        ;; Move down in treemacs
-	("k" . treemacs-previous-line)))   ;; Move up in treemacs
-
-;; LSP integration with Treemacs (e.g., for error lists).
-(use-package lsp-treemacs
-  :commands
-  lsp-treemacs-errors-list)            ;; Show LSP errors in treemacs
-
 ;; --- Completion-at-Point ---
 ;; Company mode for code completion.
 (use-package company
@@ -321,6 +280,26 @@
 ;; Flycheck for syntax checking.
 (use-package flycheck
   :ensure t)                           ;; Ensure flycheck is installed
+
+;; --- Eglot ---
+(use-package eglot :straight (:type built-in)
+  :hook (eglot-managed-mode
+         . (lambda ()
+             (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
+             (setq indent-region-function 'eglot-format)))
+  :bind (:map eglot-mode-map
+              ("C-c l r" . eglot-rename)
+              ("C-c l f" . eglot-format-buffer)
+	      ("C-c l a" . eglot-code-actions)
+	      ("C-c l d" . eglot-code-find-declaration)
+	      ("C-c l D" . eglot-code-find-typeDefinition)
+	      ("C-c l i" . eglot-code-find-implementation)
+	      ("C-c e r" . eglot-reconnect)
+	      ("C-c e s" . eglot-shutdown)
+	      ("C-c e S" . eglot-shutdown-all))
+  :config
+  (setq-default eglot-stay-out-of '(flymake-diagnostic-functions
+                                    eldoc-documentation-strategy)))
 
 ;; --- Markdown Mode ---
 (use-package markdown-mode
@@ -352,19 +331,24 @@
 ;; Configuration for Nix language files.
 (use-package nix-mode
   :mode
-  "\\.nix\\'"                           ;; Apply to .nix files
+  "\\.nix\\'"
   :hook
-  (nix-mode . lsp))                     ;; Enable LSP for Nix mode
+  (nix-mode . eglot-ensure))
 
 ;; --- C/C++ Mode ---
-(use-package cc-mode :ensure nil
+(use-package cc-mode :straight (:type built-in)
   :hook
-  (c-mode . lsp))
+  (c-mode . eglot-ensure))
+
+;; --- Rust Mode ---
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . eglot-ensure))
 
 ;; --- Lua Mode ---
 (use-package lua-mode
   :hook
-  (lua-mode . lsp))
+  (lua-mode . eglot-ensure))
 
 ;; --- Player Mode ---
 (use-package ready-player
