@@ -70,6 +70,9 @@
       fill-column 100
       indent-tabs-mode nil)
 
+(add-hook 'prog-mode-hook
+	  #'(lambda () (toggle-truncate-lines 1)))
+
 ;; Disable all interactions through dialogs.
 (setq use-dialog-box nil
       use-file-dialog nil)
@@ -98,7 +101,3 @@
 ;; Load local customizations if the file exists.
 (if (file-exists-p minimal/local-file)
     (load-file minimal/local-file))
-
-;; Load environment variables if the file exists.
-(if (file-exists-p minimal/env-file)
-    (load-file minimal/env-file))
