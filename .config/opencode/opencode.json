@@ -1,4 +1,4 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "opencode/grok-code"
+  "model": "google/gemini-2.5-flash-lite"
 }
