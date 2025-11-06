@@ -4,6 +4,6 @@ if not status is-interactive
     exit
 end
 
-if test -f $__fish_config_dir/env.fish
-    source $__fish_config_dir/env.fish
+if test -f $__fish_config_dir/local.fish
+    source $__fish_config_dir/local.fish
 end

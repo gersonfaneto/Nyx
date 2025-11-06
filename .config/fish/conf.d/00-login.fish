@@ -15,7 +15,8 @@ fish_add_path --move \
 
 fish_add_path --move \
     $HOME/.go/bin \
-    $HOME/.cargo/bin
+    $HOME/.cargo/bin \
+    $HOME/.opencode/bin
 
 if test -f $HOME/.envvars
     source $HOME/.envvars
