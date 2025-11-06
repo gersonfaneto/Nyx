@@ -37,7 +37,7 @@
 
 ;; --- UI Customizations ---
 ;; Disable the mode line to simplify the interface.
-(setq mode-line-format nil)
+;; (setq mode-line-format nil)
 
 ;; Disable the startup screen and initial scratch message for a cleaner start.
 (setq inhibit-startup-screen t
@@ -70,10 +70,11 @@
       fill-column 100
       indent-tabs-mode nil)
 
-;; Use short answers for prompts and disable confirmation for certain actions.
+;; Disable all interactions through dialogs.
 (setq use-dialog-box nil
       use-file-dialog nil)
 
+;; Use short answers for prompts and disable confirmation for certain actions.
 (setq use-short-answers t
       compilation-ask-about-save nil
       confirm-nonexistent-file-or-buffer nil)
