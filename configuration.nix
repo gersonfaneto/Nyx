@@ -201,6 +201,7 @@
       man-pages-posix
       mpv
       (import ./packages/opencode/package.nix {inherit (pkgs) stdenv fetchzip;})
+      kdePackages.kdeconnect-kde
       pandoc
       playerctl
       poppler-utils
