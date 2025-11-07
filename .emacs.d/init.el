@@ -4,7 +4,7 @@
 
 ;; --- Font Scaling Functions ---
 (defun minimal/scale-font (n)
-  "With positive N, increase the font size; with negative N, decrease it; with N=0, reset to default height."
+  "With positive N, increase the font size; with negative N, decrease it; with N=0, reset to default height."                                       
   (set-face-attribute 'default (selected-frame) :height
                       (cond ((> n 0) (+ (face-attribute 'default :height) 5))
                             ((< n 0) (- (face-attribute 'default :height) 5))
@@ -352,10 +352,14 @@
 
 ;; --- Player Mode ---
 (use-package ready-player
+  :init
+  (ready-player-mode 1)
   :custom
-  (ready-player-my-media-collection-location "~/Music/")
-  :config
-  (ready-player-mode 1))
+  (ready-player-repeat nil)
+  (ready-player-shuffle nil)
+  (ready-player-autoplay nil)
+  (ready-player-thumbnail-max-pixel-height 200)
+  (ready-player-my-media-collection-location "~/Music/"))
 
 ;; --- Theme Toggling ---
 ;; Advice to clear previous themes before loading a new one.
