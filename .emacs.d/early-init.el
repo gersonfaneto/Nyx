@@ -60,7 +60,7 @@
 (when (fboundp 'tooltip-mode)
   (tooltip-mode 0))
 
-;; --- File Handling and Behavior ---
+;; --- Buffers Handling and Behavior ---
 ;; Disable auto-save and backup files to keep the environment cleaner.
 (setq auto-save-default nil
       make-backup-files nil)
@@ -70,9 +70,15 @@
       fill-column 100
       indent-tabs-mode nil)
 
+;; Enable relative line numbers if Emacs version is recent enough.
+;; (when (version<= "26.0.50" emacs-version)
+;;   (global-display-line-numbers-mode)
+;;   (setq display-line-numbers-type 'relative))
+
 (add-hook 'prog-mode-hook
 	  #'(lambda () (toggle-truncate-lines 1)))
 
+;; --- Editor Interactions ---
 ;; Disable all interactions through dialogs.
 (setq use-dialog-box nil
       use-file-dialog nil)
@@ -82,13 +88,12 @@
       compilation-ask-about-save nil
       confirm-nonexistent-file-or-buffer nil)
 
+;; --- Dired UI and Behavior ---
 ;; Configure dired listing switches for a detailed, grouped view.
 (setq dired-listing-switches "-lhAX --group-directories-first")
 
-;; Enable relative line numbers if Emacs version is recent enough.
-;; (when (version<= "26.0.50" emacs-version)
-;;   (global-display-line-numbers-mode)
-;;   (setq display-line-numbers-type 'relative))
+;; Configure Dired to kill the old buffer when opening a new one.
+(setq dired-kill-when-opening-new-dired-buffer t)
 
 ;; --- Custom File and Theme Definitions ---
 ;; Define paths and initial settings for custom files, font, and theme.

@@ -192,6 +192,7 @@
       highlight
       ispell
       jq
+      kdePackages.kdeconnect-kde
       less
       libnotify
       libqalculate
@@ -200,8 +201,6 @@
       man-pages
       man-pages-posix
       mpv
-      (import ./packages/opencode/package.nix {inherit (pkgs) stdenv fetchzip;})
-      kdePackages.kdeconnect-kde
       pandoc
       playerctl
       poppler-utils
@@ -227,11 +226,13 @@
       xsecurelock
       xsel
       xss-lock
+      yt-dlp
       zathura
       zoxide
     ])
     ++ (with pkgs; [
       (callPackage ./packages/boomer/package.nix {})
+      (callPackage ./packages/opencode/package.nix {})
     ])
     ++ (with pkgs; [
       # Nyx
