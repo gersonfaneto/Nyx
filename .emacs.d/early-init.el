@@ -86,9 +86,9 @@
 (setq dired-listing-switches "-lhAX --group-directories-first")
 
 ;; Enable relative line numbers if Emacs version is recent enough.
-(when (version<= "26.0.50" emacs-version)
-  (global-display-line-numbers-mode)
-  (setq display-line-numbers-type 'relative))
+;; (when (version<= "26.0.50" emacs-version)
+;;   (global-display-line-numbers-mode)
+;;   (setq display-line-numbers-type 'relative))
 
 ;; --- Custom File and Theme Definitions ---
 ;; Define paths and initial settings for custom files, font, and theme.

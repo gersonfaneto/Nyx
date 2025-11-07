@@ -1,18 +1,22 @@
 {
   "plugins": {
     "LuaSnip": [],
-    "blink.cmp": [],
+    "blink.cmp": {
+      "rev": "40380e7"
+    },
     "cellular-automaton.nvim": [],
     "conjure": [],
     "esqueleto.nvim": [],
     "everforest": {
-      "rev": "f518edb"
+      "rev": "bb42827"
     },
     "fugitive-gitlab.vim": [],
     "fzf-lua": [],
     "ghcid": [],
     "gitsigns.nvim": [],
-    "gruvbox-material": [],
+    "gruvbox-material": {
+      "rev": "e3681c7"
+    },
     "harpoon": {
       "version": "'harpoon2'"
     },
@@ -22,7 +26,9 @@
     "haskell-vim": [],
     "img-clip.nvim": [],
     "markdown-preview.nvim": [],
-    "molten-nvim": [],
+    "molten-nvim": {
+      "rev": "4fd7be6"
+    },
     "nvim-colorizer.lua": [],
     "nvim-dap": [],
     "nvim-dap-ui": [],
@@ -30,6 +36,7 @@
     "nvim-nio": [],
     "nvim-surround": [],
     "nvim-treesitter": {
+      "rev": "5eca61b3",
       "version": "'main'"
     },
     "nvim-treesitter-endwise": [],
@@ -42,14 +49,18 @@
     "one-small-step-for-vimkind": [],
     "onedark.nvim": [],
     "opencode.nvim": {
-      "rev": "ce93483"
+      "rev": "3fd6e82"
     },
     "otter.nvim": [],
     "plenary.nvim": [],
     "quicker.nvim": [],
     "treesj": [],
-    "ts-autotag.nvim": [],
-    "ultimate-autopair.nvim": [],
+    "ts-autotag.nvim": {
+      "rev": "35f79f6"
+    },
+    "ultimate-autopair.nvim": {
+      "rev": "72e160c"
+    },
     "vim-conjoin": [],
     "vim-dispatch": [],
     "vim-easy-align": [],
