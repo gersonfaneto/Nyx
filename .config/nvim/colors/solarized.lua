@@ -27,82 +27,82 @@ local c_cyan
 local c_green
 
 if vim.go.bg == 'dark' then
-    c_base03  = { '#002b36', 234 }
-    c_base02  = { '#073642', 235 }
-    c_base01  = { '#586e75', 240 }
-    c_base00  = { '#657b83', 241 }
-    c_base0   = { '#839496', 244 }
-    c_base1   = { '#93a1a1', 245 }
-    c_base2   = { '#eee8d5', 254 }
-    c_base3   = { '#fdf6e3', 230 }
-    c_yellow  = { '#b58900', 136 }
-    c_orange  = { '#cb4b16', 166 }
-    c_red     = { '#dc322f', 160 }
-    c_magenta = { '#d33682', 125 }
-    c_violet  = { '#6c71c4', 61 }
-    c_blue    = { '#268bd2', 33 }
-    c_cyan    = { '#2aa198', 37 }
-    c_green   = { '#859900', 64 }
+  c_base03 = { '#002b36', 234 }
+  c_base02 = { '#073642', 235 }
+  c_base01 = { '#586e75', 240 }
+  c_base00 = { '#657b83', 241 }
+  c_base0 = { '#839496', 244 }
+  c_base1 = { '#93a1a1', 245 }
+  c_base2 = { '#eee8d5', 254 }
+  c_base3 = { '#fdf6e3', 230 }
+  c_yellow = { '#b58900', 136 }
+  c_orange = { '#cb4b16', 166 }
+  c_red = { '#dc322f', 160 }
+  c_magenta = { '#d33682', 125 }
+  c_violet = { '#6c71c4', 61 }
+  c_blue = { '#268bd2', 33 }
+  c_cyan = { '#2aa198', 37 }
+  c_green = { '#859900', 64 }
 else
-    c_base03  = { '#fdf6e3', 230 }
-    c_base02  = { '#eee8d5', 254 }
-    c_base01  = { '#93a1a1', 245 }
-    c_base00  = { '#839496', 244 }
-    c_base0   = { '#657b83', 241 }
-    c_base1   = { '#586e75', 240 }
-    c_base2   = { '#073642', 235 }
-    c_base3   = { '#002b36', 234 }
-    c_yellow  = { '#b58900', 136 }
-    c_orange  = { '#cb4b16', 166 }
-    c_red     = { '#dc322f', 160 }
-    c_magenta = { '#d33682', 125 }
-    c_violet  = { '#6c71c4', 61 }
-    c_blue    = { '#268bd2', 33 }
-    c_cyan    = { '#2aa198', 37 }
-    c_green   = { '#859900', 64 }
+  c_base03 = { '#fdf6e3', 230 }
+  c_base02 = { '#eee8d5', 254 }
+  c_base01 = { '#93a1a1', 245 }
+  c_base00 = { '#839496', 244 }
+  c_base0 = { '#657b83', 241 }
+  c_base1 = { '#586e75', 240 }
+  c_base2 = { '#073642', 235 }
+  c_base3 = { '#002b36', 234 }
+  c_yellow = { '#b58900', 136 }
+  c_orange = { '#cb4b16', 166 }
+  c_red = { '#dc322f', 160 }
+  c_magenta = { '#d33682', 125 }
+  c_violet = { '#6c71c4', 61 }
+  c_blue = { '#268bd2', 33 }
+  c_cyan = { '#2aa198', 37 }
+  c_green = { '#859900', 64 }
 end
 -- }}}
 
 -- Terminal colors {{{
 if vim.go.bg == 'dark' then
-    vim.g.terminal_color_0  = c_base02[1]
-    vim.g.terminal_color_1  = c_red[1]
-    vim.g.terminal_color_2  = c_green[1]
-    vim.g.terminal_color_3  = c_yellow[1]
-    vim.g.terminal_color_4  = c_blue[1]
-    vim.g.terminal_color_5  = c_magenta[1]
-    vim.g.terminal_color_6  = c_cyan[1]
-    vim.g.terminal_color_7  = c_base2[1]
-    vim.g.terminal_color_8  = c_base03[1]
-    vim.g.terminal_color_9  = c_orange[1]
-    vim.g.terminal_color_10 = c_base01[1]
-    vim.g.terminal_color_11 = c_base00[1]
-    vim.g.terminal_color_12 = c_base0[1]
-    vim.g.terminal_color_13 = c_violet[1]
-    vim.g.terminal_color_14 = c_base1[1]
-    vim.g.terminal_color_15 = c_base3[1]
-    vim.g.terminal_color_16 = c_orange[1]
-    vim.g.terminal_color_17 = c_orange[1]
- else
-    vim.g.terminal_color_0  = c_base2[1]
-    vim.g.terminal_color_1  = c_red[1]
-    vim.g.terminal_color_2  = c_green[1]
-    vim.g.terminal_color_3  = c_yellow[1]
-    vim.g.terminal_color_4  = c_blue[1]
-    vim.g.terminal_color_5  = c_magenta[1]
-    vim.g.terminal_color_6  = c_cyan[1]
-    vim.g.terminal_color_7  = c_base02[1]
-    vim.g.terminal_color_8  = c_base3[1]
-    vim.g.terminal_color_9  = c_orange[1]
-    vim.g.terminal_color_10 = c_base1[1]
-    vim.g.terminal_color_11 = c_base0[1]
-    vim.g.terminal_color_12 = c_base00[1]
-    vim.g.terminal_color_13 = c_violet[1]
-    vim.g.terminal_color_14 = c_base01[1]
-    vim.g.terminal_color_15 = c_base03[1]
-    vim.g.terminal_color_16 = c_orange[1]
-    vim.g.terminal_color_17 = c_orange[1]
- end
+  vim.g.terminal_color_0 = c_base02[1]
+  vim.g.terminal_color_1 = c_red[1]
+  vim.g.terminal_color_2 = c_green[1]
+  vim.g.terminal_color_3 = c_yellow[1]
+  vim.g.terminal_color_4 = c_blue[1]
+  vim.g.terminal_color_5 = c_magenta[1]
+  vim.g.terminal_color_6 = c_cyan[1]
+  vim.g.terminal_color_7 = c_base2[1]
+  vim.g.terminal_color_8 = c_base03[1]
+  vim.g.terminal_color_9 = c_orange[1]
+  vim.g.terminal_color_10 = c_base01[1]
+  vim.g.terminal_color_11 = c_base00[1]
+  vim.g.terminal_color_12 = c_base0[1]
+  vim.g.terminal_color_13 = c_violet[1]
+  vim.g.terminal_color_14 = c_base1[1]
+  vim.g.terminal_color_15 = c_base3[1]
+  vim.g.terminal_color_16 = c_orange[1]
+  vim.g.terminal_color_17 = c_orange[1]
+else
+  vim.g.terminal_color_0 = c_base2[1]
+  vim.g.terminal_color_1 = c_red[1]
+  vim.g.terminal_color_2 = c_green[1]
+  vim.g.terminal_color_3 = c_yellow[1]
+  vim.g.terminal_color_4 = c_blue[1]
+  vim.g.terminal_color_5 = c_magenta[1]
+  vim.g.terminal_color_6 = c_cyan[1]
+  vim.g.terminal_color_7 = c_base02[1]
+  vim.g.terminal_color_8 = c_base3[1]
+  vim.g.terminal_color_9 = c_orange[1]
+  vim.g.terminal_color_10 = c_base1[1]
+  vim.g.terminal_color_11 = c_base0[1]
+  vim.g.terminal_color_12 = c_base00[1]
+  vim.g.terminal_color_13 = c_violet[1]
+  vim.g.terminal_color_14 = c_base01[1]
+  vim.g.terminal_color_15 = c_base03[1]
+  vim.g.terminal_color_16 = c_orange[1]
+  vim.g.terminal_color_17 = c_orange[1]
+end
 -- }}}
 
 -- Highlight groups {{{
@@ -480,12 +480,12 @@ end
 
 -- Set highlight groups {{{
 for name, attr in pairs(hlgroups) do
-    attr.ctermbg = attr.bg and attr.bg[2]
-    attr.ctermfg = attr.fg and attr.fg[2]
-    attr.bg = attr.bg and attr.bg[1]
-    attr.fg = attr.fg and attr.fg[1]
-    attr.sp = attr.sp and attr.sp[1]
-    vim.api.nvim_set_hl(0, name, attr)
+  attr.ctermbg = attr.bg and attr.bg[2]
+  attr.ctermfg = attr.fg and attr.fg[2]
+  attr.bg = attr.bg and attr.bg[1]
+  attr.fg = attr.fg and attr.fg[1]
+  attr.sp = attr.sp and attr.sp[1]
+  vim.api.nvim_set_hl(0, name, attr)
 end
 -- }}}
 

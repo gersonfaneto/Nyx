@@ -1,12 +1,52 @@
-directory: ~/Music
-library: ~/.local/share/beets/library.db
-
-import:
-  copy: no
-
 plugins:
-  - musicbrainz
+  - inline
+  - convert
+  - duplicates
+  - edit
+  - export
   - fetchart
   - embedart
-  - lyrics
   - lastgenre
+  - thumbnails
+  - albumtypes
+  - musicbrainz
+  - deezer
+  - spotify
+
+threaded: yes
+
+alt_filename: albumart
+
+original-date: no
+
+per_disc_numbering: no
+
+directory: ~/Music/library
+
+library: ~/Music/library.db
+
+convert:
+  auto: no
+  dest: ~/Music/converted
+  opts: -ab 320k -ac 2 -ar 48000
+  max_bitrate: 320
+  never_convert_lossy_files: yes
+
+paths:
+  default: Artists/$albumartist/$album%aunique{} ($year)/$track $title
+  singleton: Singles/$artist - $title
+  comp: Compilations/$album%aunique{} ($year)/$track $title
+  albumtype:soundtrack: Soundtracks/$album ($year)/$track $title
+
+import:
+  write: yes
+  copy: no
+  move: yes
+  resume: ask
+  incremental: yes
+  quiet_fallback: skip
+  log: ~/Music/beet.log
+
+lastgenre:
+  count: 2
+  force: yes
