@@ -178,7 +178,8 @@
 (use-package dirvish :after dired
   :bind
   (:map dired-mode-map
-	("?" . dirvish-dispatch))
+	("?" . dirvish-dispatch)
+	("-" . dired-up-directory))
   :init
   (dirvish-override-dired-mode))
 
@@ -354,6 +355,8 @@
 (use-package ready-player
   :init
   (ready-player-mode 1)
+  :bind
+  ("C-c m d" . ready-player-download-album-artwork-and-set-metadata)
   :custom
   (ready-player-repeat nil)
   (ready-player-shuffle nil)

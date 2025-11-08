@@ -1,0 +1,12 @@
+directory: ~/Music
+library: ~/.local/share/beets/library.db
+
+import:
+  copy: no
+
+plugins:
+  - musicbrainz
+  - fetchart
+  - embedart
+  - lyrics
+  - lastgenre

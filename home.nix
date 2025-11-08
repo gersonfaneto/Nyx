@@ -15,6 +15,7 @@ in {
     ".emacs.d/" = mkSymlink ".emacs.d/";
     ".gitconfig" = mkSymlink ".gitconfig";
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
+    ".config/beets/" = mkSymlink ".config/beets/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
     ".config/fastfetch/" = mkSymlink ".config/fastfetch/";
     ".config/fd/" = mkSymlink ".config/fd/";

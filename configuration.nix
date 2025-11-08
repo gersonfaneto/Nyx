@@ -168,6 +168,7 @@
       arandr
       aseprite
       bat
+      beets
       bluetui
       brightnessctl
       btop
