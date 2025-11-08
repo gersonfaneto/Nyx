@@ -358,10 +358,6 @@
   :bind
   ("C-c m d" . ready-player-download-album-artwork-and-set-metadata)
   :custom
-  (ready-player-repeat nil)
-  (ready-player-shuffle nil)
-  (ready-player-autoplay nil)
-  (ready-player-thumbnail-max-pixel-height 200)
   (ready-player-my-media-collection-location "~/Music/"))
 
 ;; --- Theme Toggling ---
