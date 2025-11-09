@@ -95,6 +95,9 @@
 ;; Configure Dired to kill the old buffer when opening a new one.
 (setq dired-kill-when-opening-new-dired-buffer t)
 
+;; Configure Dired to move files to trash upon deletion.
+(setq delete-by-moving-to-trash t)
+
 ;; --- Custom File and Theme Definitions ---
 ;; Define paths and initial settings for custom files, font, and theme.
 (setq minimal/local-file            "~/.emacs.d/local.el"

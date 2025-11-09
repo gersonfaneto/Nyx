@@ -51,6 +51,8 @@ __command_abbr tree 'tree -N -L 4 -C --gitignore --dirsfirst'
 __command_abbr eg 'emacsclient --create-frame --alternate-editor \'emacs\''
 __command_abbr et 'emacsclient --tty --alternate-editor \'emacs --no-window-system\''
 
+__command_abbr ytmp3 'yt-dlp --extract-audio --audio-format mp3 --embed-metadata --add-metadata'
+
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim
         echo nvim

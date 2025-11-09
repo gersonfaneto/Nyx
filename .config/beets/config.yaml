@@ -23,7 +23,7 @@ lastgenre:
 
 convert:
   auto: no
-  dest: ~/Music/converted
+  dest: ~/Music/.beets/converted
   opts: -ab 320k -ac 2 -ar 48000
   max_bitrate: 320
   never_convert_lossy_files: yes
