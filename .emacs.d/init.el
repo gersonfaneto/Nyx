@@ -294,10 +294,11 @@
 	      ("C-c l a" . eglot-code-actions)
 	      ("C-c l d" . eglot-code-find-declaration)
 	      ("C-c l D" . eglot-code-find-typeDefinition)
-	      ("C-c l i" . eglot-code-find-implementation)
-	      ("C-c e r" . eglot-reconnect)
-	      ("C-c e s" . eglot-shutdown)
-	      ("C-c e S" . eglot-shutdown-all))
+	      ("C-c l i" . eglot-code-find-implementation))
+  :bind
+  ("C-c e r" . eglot-reconnect)
+  ("C-c e s" . eglot-shutdown)
+  ("C-c e S" . eglot-shutdown-all)
   :config
   (setq-default eglot-stay-out-of '(flymake-diagnostic-functions
                                     eldoc-documentation-strategy)))

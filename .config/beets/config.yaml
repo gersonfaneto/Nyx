@@ -1,29 +1,25 @@
-plugins:
-  - inline
-  - convert
-  - duplicates
-  - edit
-  - export
-  - fetchart
-  - embedart
-  - lastgenre
-  - thumbnails
-  - albumtypes
-  - musicbrainz
-  - deezer
-  - spotify
+directory: ~/Music/
 
-threaded: yes
+library: ~/Music/.beets/library.db
 
-alt_filename: albumart
+import:
+  write: yes
+  copy: yes
+  move: no
+  resume: ask
+  incremental: yes
+  quiet_fallback: skip
+  log: ~/Music/.beets/beet.log
 
-original-date: no
+paths:
+  default: Artists/$artist/$album%aunique{} ($year)/$track $title
+  singleton: Singles/$artist - $title
+  comp: Compilations/$album%aunique{} ($year)/$track $title
+  albumtype:soundtrack: Soundtracks/$album ($year)/$track $title
 
-per_disc_numbering: no
-
-directory: ~/Music/library
-
-library: ~/Music/library.db
+lastgenre:
+  count: 2
+  force: yes
 
 convert:
   auto: no
@@ -32,21 +28,18 @@ convert:
   max_bitrate: 320
   never_convert_lossy_files: yes
 
-paths:
-  default: Artists/$albumartist/$album%aunique{} ($year)/$track $title
-  singleton: Singles/$artist - $title
-  comp: Compilations/$album%aunique{} ($year)/$track $title
-  albumtype:soundtrack: Soundtracks/$album ($year)/$track $title
-
-import:
-  write: yes
-  copy: no
-  move: yes
-  resume: ask
-  incremental: yes
-  quiet_fallback: skip
-  log: ~/Music/beet.log
-
-lastgenre:
-  count: 2
-  force: yes
+plugins:
+  - inline
+  - convert
+  - duplicates
+  - edit
+  - export
+  - web
+  - fetchart
+  - embedart
+  - lastgenre
+  - thumbnails
+  - albumtypes
+  - musicbrainz
+  - deezer
+  - spotify
