@@ -263,8 +263,23 @@
   :bind*
   ("C-t" . vterm-toggle)) ; "Intelligent" switching to vterm; eg creates it if it's not open, non-intrusive windowing, saves window setup, etc.
 
-;; --- AI Assistance ---
+;; --- Popper ---
+(use-package popper
+  :bind
+  (("C-`"   . popper-toggle)
+   ("M-`"   . popper-cycle)
+   ("C-M-`" . popper-toggle-type))
+  :init
+  (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "Output\\*$"
+          "\\*Async Shell Command\\*"
+          help-mode
+          compilation-mode))
+  (popper-mode 1)
+  (popper-echo-mode 1))
 
+;; --- AI Assistance ---
 ;; GPTel for interacting with AI models (Gemini).
 (use-package gptel
   :commands

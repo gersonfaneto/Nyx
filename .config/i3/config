@@ -17,7 +17,7 @@ set $right l
 # Font families and sizes used along the system.
 
 set $font_family SpaceMono Nerd Font
-set $font_size 12
+set $font_size 10
 
 # Font for window titles.
 font pango:$font_family $font_size
