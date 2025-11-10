@@ -4,7 +4,7 @@ library: ~/Music/.beets/library.db
 
 import:
   write: yes
-  copy: yes
+  copy: no
   move: no
   resume: ask
   incremental: yes
@@ -12,8 +12,8 @@ import:
   log: ~/Music/.beets/beet.log
 
 paths:
-  default: Artists/$artist/$album%aunique{} ($year)/$track $title
-  singleton: Singles/$artist - $title
+  default: Artists/$albumartist/$album%aunique{} ($year)/$track $title
+  singleton: Singles/$albumartist - $title
   comp: Compilations/$album%aunique{} ($year)/$track $title
   albumtype:soundtrack: Soundtracks/$album ($year)/$track $title
 

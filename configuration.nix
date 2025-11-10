@@ -287,15 +287,15 @@
 
       # Coding
       bqn386
+      iosevka
       miracode
       mononoki
       comic-mono
       anonymousPro
       departure-mono
       jetbrains-mono
+      source-code-pro
       nerd-fonts.space-mono
-      ultimate-oldschool-pc-font-pack
-      (iosevka-bin.override { variant = "SS07"; })
 
       # UI
       inputs.apple-fonts.packages.${pkgs.system}.sf-mono
