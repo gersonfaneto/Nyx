@@ -252,6 +252,17 @@
   :config
   (direnv-mode))                      ;; Enable direnv mode
 
+;; --- Terminal ---
+;; Shell with a nearly universal compatibility with terminal applications.
+(use-package vterm
+  :bind
+  (("s-v" . vterm-yank)
+   ("M-y" . vterm-yank)))
+
+(use-package vterm-toggle
+  :bind*
+  ("C-t" . vterm-toggle)) ; "Intelligent" switching to vterm; eg creates it if it's not open, non-intrusive windowing, saves window setup, etc.
+
 ;; --- AI Assistance ---
 
 ;; GPTel for interacting with AI models (Gemini).

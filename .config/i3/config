@@ -16,14 +16,11 @@ set $right l
 
 # Font families and sizes used along the system.
 
-set $font_family_general SF Mono
-set $font_size_general 10
-
-set $font_family_dmenu SF Mono
-set $font_size_dmenu 12
+set $font_family SpaceMono Nerd Font
+set $font_size 12
 
 # Font for window titles.
-font pango:$font_family_general $font_size_general
+font pango:$font_family $font_size
 
 # Set keyboard layout.
 exec --no-startup-id setxkbmap -layout br -variant thinkpad
@@ -76,7 +73,7 @@ bindsym $mod+$shift+n exec --no-startup-id dunstctl close-all
 floating_modifier $mod
 
 # Open `dmenu`, the default application launcher.
-bindsym $mod+d exec --no-startup-id dmenu_run -i -p 'run' -fn '$font_family_dmenu:regular:pixelsize=$font_size_dmenu'
+bindsym $mod+d exec --no-startup-id dmenu_run -i -p 'run' -fn '$font_family:regular:pixelsize=$font_size'
 
 # Open screenshot tool.
 bindsym $mod+p exec --no-startup-id flameshot gui

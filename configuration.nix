@@ -285,28 +285,16 @@
       # Emojis
       noto-fonts-color-emoji
 
-      # Coding
-      bqn386
-      iosevka
-      miracode
-      mononoki
-      comic-mono
-      anonymousPro
-      departure-mono
-      jetbrains-mono
-      source-code-pro
+      # General
       nerd-fonts.space-mono
-
-      # UI
-      inputs.apple-fonts.packages.${pkgs.system}.sf-mono
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "SF Mono" ];
-        sansSerif = [ "SF Mono" ];
-        monospace = [ "SF Mono" ];
+        serif = [ "SpaceMono Nerd Font" ];
+        sansSerif = [ "SpaceMono Nerd Font" ];
+        monospace = [ "SpaceMono Nerd Font" ];
       };
     };
   };
