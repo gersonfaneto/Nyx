@@ -1,9 +1,0 @@
-[submodule "modules/st/src"]
-	path = modules/st/src
-	url = https://git.suckless.org/st
-[submodule "modules/dwm/src"]
-	path = modules/dwm/src
-	url = https://git.suckless.org/dwm
-[submodule "modules/dmenu/src"]
-	path = modules/dmenu/src
-	url = https://git.suckless.org/dmenu

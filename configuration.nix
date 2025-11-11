@@ -46,11 +46,8 @@
   };
 
   services.xserver = {
-    windowManager.dwm = {
+    windowManager.i3 = {
       enable = true;
-      package = pkgs.dwm.overrideAttrs {
-        src = ./modules/dwm/src;
-      };
     };
   };
 
@@ -285,6 +282,7 @@
       noto-fonts-color-emoji
 
       # General
+      victor-mono
       nerd-fonts.space-mono
     ];
     fontconfig = {

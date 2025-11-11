@@ -2,7 +2,7 @@ help:
 	@echo 'Usage: make [build|update|format]'
 
 build:
-	sudo nixos-rebuild switch --flake .?submodules=1
+	sudo nixos-rebuild switch --flake .
 
 update:
 	sudo nix flake update

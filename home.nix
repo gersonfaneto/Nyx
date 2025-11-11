@@ -5,11 +5,6 @@
     source = config.lib.file.mkOutOfStoreSymlink "${NYX_PATH}/${path}";
   };
 in {
-  imports = [
-    ./modules/st
-    ./modules/dmenu
-  ];
-
   home.username = "gerson";
   home.homeDirectory = "/home/gerson";
 
