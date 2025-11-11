@@ -7,6 +7,9 @@ cursor-style-blink = false
 
 shell-integration-features = no-cursor
 
+font-size = 10
+font-family = SpaceMono Nerd Font
+
 window-padding-x = 8
 window-padding-y = 8
 window-padding-balance = true
@@ -18,6 +21,3 @@ scrollback-limit = 0
 confirm-close-surface = false
 
 mouse-hide-while-typing = true
-
-# Load a custom config for overrides, ? silently fails if the file is missing.
-config-file = ?config.local

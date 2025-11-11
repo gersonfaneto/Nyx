@@ -101,7 +101,7 @@
 ;; --- Custom File and Theme Definitions ---
 ;; Define paths and initial settings for custom files, font, and theme.
 (setq minimal/local-file            "~/.emacs.d/local.el"
-      minimal/default-font          "Nova Nerd Font 12"
+      minimal/default-font          "SpaceMono Nerd Font 10"
       minimal/current-theme         'doom-solarized-dark
       minimal/current-theme-dark    'doom-solarized-dark
       minimal/current-theme-light   'doom-solarized-light)

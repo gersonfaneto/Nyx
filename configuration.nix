@@ -282,7 +282,6 @@
       noto-fonts-color-emoji
 
       # General
-      victor-mono
       nerd-fonts.space-mono
     ];
     fontconfig = {
