@@ -7,6 +7,9 @@ build:
 update:
 	sudo nix flake update
 
+prune:
+	sudo nix-collect-garbage --delete-older-than 10d
+
 format:
 	find -maxdepth 1 -type f -name '*.nix' -not -name 'hardware-configuration.nix' -exec nix fmt --quiet {} \;
 
