@@ -2,8 +2,7 @@
   pkgs,
   inputs,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -24,7 +23,7 @@
     experimental-features = nix-command flakes
   '';
 
-  nix.settings.trusted-users = [ "gerson" ];
+  nix.settings.trusted-users = ["gerson"];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -40,31 +39,31 @@
 
   time.timeZone = "America/Bahia";
 
-  services = {
-    xserver = {
+  services.xserver = {
+    enable = true;
+    autoRepeatDelay = 200;
+    autoRepeatInterval = 35;
+  };
+
+  services.xserver = {
+    windowManager.dwm = {
       enable = true;
-      windowManager = {
-        i3 = {
-          enable = true;
-        };
+      package = pkgs.dwm.overrideAttrs {
+        src = ./modules/dwm/src;
       };
     };
   };
 
-  services = {
-    displayManager = {
-      ly = {
-        enable = true;
-      };
+  services.displayManager = {
+    ly = {
+      enable = true;
     };
   };
 
-  services = {
-    xserver = {
-      xkb = {
-        layout = "br";
-        variant = "thinkpad";
-      };
+  services.xserver = {
+    xkb = {
+      layout = "br";
+      variant = "thinkpad";
     };
   };
 
@@ -92,7 +91,7 @@
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
     ];
-    config.common.default = [ "gtk" ];
+    config.common.default = ["gtk"];
   };
 
   users.users.gerson = {
@@ -105,7 +104,7 @@
       "docker"
       "networkmanager"
     ];
-    packages = with pkgs; [ gnupg ];
+    packages = with pkgs; [gnupg];
   };
 
   nixpkgs = {
@@ -233,8 +232,8 @@
       zoxide
     ])
     ++ (with pkgs; [
-      (callPackage ./packages/boomer/package.nix { })
-      (callPackage ./packages/opencode/package.nix { })
+      (callPackage ./packages/boomer/package.nix {})
+      (callPackage ./packages/opencode/package.nix {})
     ])
     ++ (with pkgs; [
       # Nyx
@@ -291,10 +290,10 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        emoji = [ "Noto Emoji" ];
-        serif = [ "SpaceMono Nerd Font" ];
-        sansSerif = [ "SpaceMono Nerd Font" ];
-        monospace = [ "SpaceMono Nerd Font" ];
+        emoji = ["Noto Emoji"];
+        serif = ["SpaceMono Nerd Font"];
+        sansSerif = ["SpaceMono Nerd Font"];
+        monospace = ["SpaceMono Nerd Font"];
       };
     };
   };

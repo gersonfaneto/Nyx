@@ -12,9 +12,9 @@ import:
   log: ~/Music/.beets/beet.log
 
 paths:
-  default: Artists/$albumartist/$album%aunique{} ($year)/$track $title
-  singleton: Singles/$albumartist - $title
-  comp: Compilations/$album%aunique{} ($year)/$track $title
+  default: Artists/$artist/$album ($year)/$track $title
+  singleton: Singles/$artist - $title
+  comp: Compilations/$album ($year)/$track $title
   albumtype:soundtrack: Soundtracks/$album ($year)/$track $title
 
 lastgenre:
@@ -29,6 +29,7 @@ convert:
   never_convert_lossy_files: yes
 
 plugins:
+  - info
   - inline
   - convert
   - duplicates

@@ -36,6 +36,7 @@
   outputs = inputs @ {
     self,
     nixpkgs,
+    home-manager,
     ...
   }: let
     system = "x86_64-linux";
@@ -74,12 +75,18 @@
       };
     };
 
-    homeConfigurations = {
-      gerson = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [./home.nix];
-        extraSpecialArgs = {};
-      };
+    devShells.${system}.suckless = pkgs.mkShell {
+      packages = with pkgs; [
+        fontconfig
+        freetype
+        gcc
+        gnumake
+        harfbuzz
+        pkg-config
+        xorg.libX11
+        xorg.libXft
+        xorg.libXinerama
+      ];
     };
   };
 }

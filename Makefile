@@ -1,11 +1,8 @@
 help:
-	@echo 'Usage: make [system|home|update|format]'
+	@echo 'Usage: make [build|update|format]'
 
-system:
-	sudo nixos-rebuild switch --flake .
-
-home:
-	nix run home-manager -- switch -b bak --flake .
+build:
+	sudo nixos-rebuild switch --flake .?submodules=1
 
 update:
 	sudo nix flake update
