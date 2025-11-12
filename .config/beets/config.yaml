@@ -36,6 +36,7 @@ plugins:
   - edit
   - export
   - web
+  - fish
   - fetchart
   - embedart
   - lastgenre

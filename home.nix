@@ -16,7 +16,6 @@ in {
     ".bin/" = mkSymlink ".bin/";
     ".local/share/backgrounds/" = mkSymlink ".local/share/backgrounds/";
     ".highlight/" = mkSymlink ".highlight/";
-    ".emacs.d/" = mkSymlink ".emacs.d/";
     ".gitconfig" = mkSymlink ".gitconfig";
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";

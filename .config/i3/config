@@ -88,12 +88,6 @@ bindsym $mod+$shift+b exec firefox --private-window
 # Open the terminal.
 bindsym $mod+Return exec ghostty
 
-# Open THE text editor.
-bindsym $mod+e exec alacritty --command 'nvim'
-
-# Open the OTHER text editor.
-bindsym $mod+$shift+e exec emacsclient --create-frame --alternate-editor 'emacs'
-
 # Kill the focused window.
 bindsym $mod+q kill
 

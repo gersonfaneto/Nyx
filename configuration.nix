@@ -170,10 +170,8 @@
 
   environment.systemPackages =
     (with pkgs; [
-      alacritty
       ani-cli
       arandr
-      aseprite
       bat
       beets
       bluetui
@@ -184,7 +182,6 @@
       diff-so-fancy
       dragon-drop
       dunst
-      emacs
       fastfetch
       fd
       feh
@@ -198,9 +195,7 @@
       ghostty
       git
       highlight
-      ispell
       jq
-      kdePackages.kdeconnect-kde
       less
       libnotify
       libqalculate
