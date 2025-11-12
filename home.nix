@@ -33,6 +33,7 @@ in {
     ".config/opencode/" = mkSymlink ".config/opencode/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
     ".config/rg/" = mkSymlink ".config/rg/";
+    ".config/rmpc/" = mkSymlink ".config/rmpc/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
@@ -81,7 +82,6 @@ in {
 
   services.mpdris2 = {
     enable = true;
-    notifications = true;
   };
 
   # FIX: This might cause some problems in the future...
