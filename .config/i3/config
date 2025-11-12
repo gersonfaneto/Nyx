@@ -2,7 +2,7 @@
 
 workspace_layout tabbed
 
-# Quick references for the common mappings.
+# Alias some keys to specific actions/commands.
 set $mod Mod4
 set $alt Mod1
 set $ctrl Ctrl
@@ -14,8 +14,10 @@ set $down j
 set $up k
 set $right l
 
-# Font families and sizes used along the system.
+set $decrease i
+set $increase o
 
+# Font families and sizes used along the system.
 set $font_family SpaceMono Nerd Font
 set $font_size 10
 
@@ -25,55 +27,50 @@ font pango:$font_family $font_size
 # Set keyboard layout.
 exec --no-startup-id setxkbmap -layout br -variant thinkpad
 
-# Set the background using `feh` and `betterlockscreen`.
-exec --no-startup-id "$HOME/.config/i3/bin/background"
+# Set the background.
+exec --no-startup-id $HOME/.config/i3/bin/background
 
 # Setup xss-lock & xsecurelock.
 exec_always --no-startup-id xset s 600
 exec_always --no-startup-id xss-lock -l -- xsecurelock
 
-# Setup dunst (notification daemon).
-exec_always --no-startup-id "killall -q dunst; dunst -config ~/.config/dunst/dunstrc"
+# Setup notification daemon.
+exec_always --no-startup-id 'killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc'
 
 # Use `pactl` to control system volume and microphone.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym $shift+XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1% && $refresh_i3status
-bindsym $shift+XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym $shift+XF86AudioMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && killall -SIGUSR1 i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && killall -SIGUSR1 i3status
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && killall -SIGUSR1 i3status
+bindsym $alt+XF86AudioMute   exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && killall -SIGUSR1 i3status
 
 # NOTE: Alternatives for keyboards with no media keys...
-bindsym $mod+$alt+Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym $mod+$alt+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym $mod+$alt+$shift+Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1% && $refresh_i3status
-bindsym $mod+$alt+$shift+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1% && $refresh_i3status
-bindsym $mod+$alt+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym $mod+$alt+v exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym $mod+$alt+$increase exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && killall -SIGUSR1 i3status
+bindsym $mod+$alt+$decrease exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && killall -SIGUSR1 i3status
+bindsym $mod+$alt+m         exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && killall -SIGUSR1 i3status
+bindsym $mod+$alt+v         exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && killall -SIGUSR1 i3status
 
 # Use `playerctl` to control media.
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 
-bindsym $mod+$alt+Left exec --no-startup-id playerctl previous
-bindsym $mod+$alt+Right exec --no-startup-id playerctl next
-bindsym $mod+$alt+p exec --no-startup-id playerctl play-pause
+bindsym $mod+$alt+$left  exec --no-startup-id playerctl previous
+bindsym $mod+$alt+$right exec --no-startup-id playerctl next
+bindsym $mod+$alt+p      exec --no-startup-id playerctl play-pause
 
 # Use `brightnessctl` to control screen brightness.
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
+bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl set 10%+
 
 # Toggle notifications on/off.
-bindsym $mod+n exec --no-startup-id "$HOME/.config/i3/bin/silence"
+bindsym $mod+n        exec --no-startup-id $HOME/.config/i3/bin/silence
 bindsym $mod+$shift+n exec --no-startup-id dunstctl close-all
 
 # Drag floating windows to their wanted position.
 floating_modifier $mod
 
 # Open `dmenu`, the default application launcher.
-bindsym $mod+d exec --no-startup-id dmenu_run -i -p 'run' -fn '$font_family:regular:pixelsize=$font_size'
+bindsym $mod+d exec --no-startup-id dmenu_run -i -l 5 -p ' ' -fn '$font_family:regular:pixelsize=$font_size'
 
 # Open screenshot tool.
 bindsym $mod+p exec --no-startup-id flameshot gui
@@ -82,10 +79,10 @@ bindsym $mod+p exec --no-startup-id flameshot gui
 bindsym $mod+z exec --no-startup-id boomer
 
 # Toggle display sleep on/off.
-bindsym $mod+c exec --no-startup-id "$HOME/.config/i3/bin/caffeine"
+bindsym $mod+c exec --no-startup-id $HOME/.config/i3/bin/caffeine
 
 # Open the browser.
-bindsym $mod+b exec firefox
+bindsym $mod+b        exec firefox
 bindsym $mod+$shift+b exec firefox --private-window
 
 # Open the terminal.
@@ -101,24 +98,24 @@ bindsym $mod+$shift+e exec emacsclient --create-frame --alternate-editor 'emacs'
 bindsym $mod+q kill
 
 # Change focus between windows.
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
+bindsym $mod+$left  focus left
+bindsym $mod+$down  focus down
+bindsym $mod+$up    focus up
 bindsym $mod+$right focus right
 
 # Move currently focused window.
-bindsym $mod+$shift+$left move left
-bindsym $mod+$shift+$down move down
-bindsym $mod+$shift+$up move up
+bindsym $mod+$shift+$left  move left
+bindsym $mod+$shift+$down  move down
+bindsym $mod+$shift+$up    move up
 bindsym $mod+$shift+$right move right
 
 # Navigate between workspaces.
-bindsym $mod+$ctrl+$left workspace prev
+bindsym $mod+$tab         workspace back_and_forth
+bindsym $mod+$ctrl+$left  workspace prev
 bindsym $mod+$ctrl+$right workspace next
-bindsym $mod+$tab workspace back_and_forth
 
 # Quickly switch window shape and position.
-bindsym $mod+$shift+m floating enable, resize set 1536 864, move position center
+bindsym $mod+$shift+m floating enable,  resize set 1800 920,  move position center
 bindsym $mod+$shift+f floating disable, resize set 1920 1080, move position 0 0
 
 # Split horizontally and vertically.
@@ -140,7 +137,7 @@ bindsym $mod+$shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # Focus/Unfocus the parent container.
-bindsym $mod+a focus parent
+bindsym $mod+a        focus parent
 bindsym $mod+$shift+a focus child
 
 # Define names for default workspaces.
@@ -193,14 +190,14 @@ bindsym $mod+$shift+r restart
 
 # Resize windows.
 mode "resize" {
-    bindsym $left resize shrink width 5 px or 5 ppt
-    bindsym $down resize grow height 5 px or 5 ppt
-    bindsym $up resize shrink height 5 px or 5 ppt
-    bindsym $right resize grow width 5 px or 5 ppt
+    bindsym $left  exec $HOME/.config/i3/bin/smart-resize "left"
+    bindsym $down  exec $HOME/.config/i3/bin/smart-resize "down"
+    bindsym $up    exec $HOME/.config/i3/bin/smart-resize "up" 
+    bindsym $right exec $HOME/.config/i3/bin/smart-resize "right" 
 
-    bindsym $shift+$left resize shrink width 10 px or 10 ppt
-    bindsym $shift+$down resize grow height 10 px or 10 ppt
-    bindsym $shift+$up resize shrink height 10 px or 10 ppt
+    bindsym $shift+$left  resize shrink width 10 px or 10 ppt
+    bindsym $shift+$down  resize grow height 10 px or 10 ppt
+    bindsym $shift+$up    resize shrink height 10 px or 10 ppt
     bindsym $shift+$right resize grow width 10 px or 10 ppt
 
     bindsym Return mode "default"
@@ -225,12 +222,12 @@ mode "(S)uspend, (E)xit, (L)ock, (R)eboot, (P)oweroff" {
 bindsym $mod+BackSpace mode "(S)uspend, (E)xit, (L)ock, (R)eboot, (P)oweroff"
 
 bar {
-  status_command i3status | ~/.config/i3/bin/now-playing
+  status_command i3status
   tray_output none
   colors {
     background #000000
     statusline #FFFFFF
-    separator #333333
+    separator #888888
     focused_workspace  #222222 #333333 #FFFFFF
     active_workspace   #555555 #666666 #FFFFFF
     inactive_workspace #111111 #000000 #888888

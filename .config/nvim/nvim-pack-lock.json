@@ -2,20 +2,24 @@
   "plugins": {
     "LuaSnip": [],
     "blink.cmp": {
-      "rev": "40380e7"
+      "rev": "7d79733"
     },
     "cellular-automaton.nvim": [],
-    "conjure": [],
+    "conjure": {
+      "rev": "230de423"
+    },
     "esqueleto.nvim": [],
     "everforest": {
-      "rev": "bb42827"
+      "rev": "17f101d"
     },
     "fugitive-gitlab.vim": [],
-    "fzf-lua": [],
+    "fzf-lua": {
+      "rev": "996b236"
+    },
     "ghcid": [],
     "gitsigns.nvim": [],
     "gruvbox-material": {
-      "rev": "e3681c7"
+      "rev": "4bfc698"
     },
     "harpoon": {
       "version": "'harpoon2'"
@@ -30,26 +34,31 @@
       "rev": "4fd7be6"
     },
     "nvim-colorizer.lua": [],
-    "nvim-dap": [],
+    "nvim-dap": {
+      "rev": "b38f7d3"
+    },
     "nvim-dap-ui": [],
     "nvim-metals": [],
     "nvim-nio": [],
     "nvim-surround": [],
     "nvim-treesitter": {
-      "rev": "5eca61b3",
+      "rev": "b5077407",
       "version": "'main'"
     },
     "nvim-treesitter-endwise": [],
     "nvim-treesitter-incremental-selection": [],
     "nvim-treesitter-textobjects": {
+      "rev": "06c00bc",
       "version": "'main'"
     },
     "nvim-web-devicons": [],
     "oil.nvim": [],
     "one-small-step-for-vimkind": [],
-    "onedark.nvim": [],
+    "onedark.nvim": {
+      "rev": "6c10964"
+    },
     "opencode.nvim": {
-      "rev": "3fd6e82"
+      "rev": "338efa8"
     },
     "otter.nvim": [],
     "plenary.nvim": [],
@@ -70,7 +79,9 @@
     "vim-sleuth": [],
     "vim-table-mode": [],
     "vim-test": [],
-    "vimtex": [],
+    "vimtex": {
+      "rev": "32bcb392"
+    },
     "which-key.nvim": []
   }
 }

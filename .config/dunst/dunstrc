@@ -1,5 +1,5 @@
 [global]
-font = SF Mono 10
+font = SpaceMono Nerd Font 10
 
 # allow a small subset of html markup:
 # <b>bold</b>

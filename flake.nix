@@ -75,18 +75,12 @@
       };
     };
 
-    devShells.${system}.suckless = pkgs.mkShell {
-      packages = with pkgs; [
-        fontconfig
-        freetype
-        gcc
-        gnumake
-        harfbuzz
-        pkg-config
-        xorg.libX11
-        xorg.libXft
-        xorg.libXinerama
-      ];
+    homeConfigurations = {
+      gerson = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [./home.nix];
+        extraSpecialArgs = {};
+      };
     };
   };
 }

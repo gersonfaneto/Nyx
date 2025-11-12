@@ -5,17 +5,12 @@ general {
   interval = 5
 }
 
-order += "disk /"
 order += "battery all"
 order += "volume master"
 order += "tztime local"
 
-disk "/" {
-  format = "%avail"
-}
-
 battery all {
-  format = "%status %percentage"
+  format = "BAT %percentage"
 }
 
 volume master {
@@ -27,5 +22,5 @@ volume master {
 }
 
 tztime local {
-  format = "%Y-%m-%d %H:%M:%S"
+  format = "%d/%m/%y %H:%M"
 }
