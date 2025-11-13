@@ -172,6 +172,7 @@
 
   environment.systemPackages =
     (with pkgs; [
+      acpi
       ani-cli
       arandr
       bat

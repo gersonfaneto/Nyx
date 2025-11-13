@@ -96,7 +96,8 @@ askrecording() {
 }
 
 asktoend() {
-  response=$(printf "%s\n" No Yes | dmenu -p "Recording still active. End recording?") &&
+  options=$(printf "%s\n" Yes No)
+  response=$(dmenu-picker "Recording still active. End recording?" "${options[@]}") &&
     [ "$response" = "Yes" ] && killrecording
 }
 
