@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+entries=$(dmenu_path)
+dmenu-picker ' ' "${entries[@]}"

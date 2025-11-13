@@ -64,13 +64,10 @@ bindsym $mod+$shift+n exec --no-startup-id dunstctl close-all
 floating_modifier $mod
 
 # Open `dmenu`, the default application launcher.
-bindsym $mod+d exec --no-startup-id dmenu_run -i -l 5 -p ' ' \
-          -nb '#000000' -nf '#FFFFFF' \
-          -sb '#FFFFFF' -sf '#000000' \
-          -fn 'Maple Mono NF:regular:pixelsize=14'
+bindsym $mod+d exec --no-startup-id dmenu-run
 
 # Custom music picker using `dmenu`.
-bindsym $mod+$alt+d exec --no-startup-id $HOME/.config/i3/bin/jukebox
+bindsym $mod+t exec --no-startup-id dmenu-toolbox
 
 # Open screenshot tool.
 bindsym Print exec --no-startup-id flameshot gui
