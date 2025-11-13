@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+file="$(mpc listall | dmenu -i -l 5 -p ' ' -nb '#1D1D1D' -nf '#FFFFFF' -sb '#888888' -sf '#1D1D1D' -fn 'SpaceMono Nerd Font :regular:pixelsize=14')" || exit 0
+
+mpc insert "$file" && mpc next >/dev/null
