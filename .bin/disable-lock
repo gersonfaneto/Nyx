@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Disable screenlock for some time
 # (handy for calls and movies)
 

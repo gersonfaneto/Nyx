@@ -1,10 +1,8 @@
 #!/usr/bin/env cached-nix-shell
 #! nix-shell -i bash -p ffmpeg-full xorg.xrandr slop
-
 #
 # https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/dmenurecord
 #
-
 # Usage:
 # `$0`: Ask for recording type via dmenu
 # `$0 screencast`: Record both audio and screen
@@ -85,9 +83,8 @@ audio() {
 }
 
 askrecording() {
-  choice=$(
-    dmenu-list screencast nvideo 'nvideo selected' audio webcam 'webcam (hi-def)' | dmenu -l 10 -p "Select recording style:"
-  )
+  options=$(printf "%s\n" screencast nvideo 'nvideo selected' audio webcam 'webcam (hi-def)')
+  choice=$(dmenu-picker "Select recording style:" "${options[@]}")
   case "$choice" in
     screencast) screencast ;;
     audio) audio ;;
@@ -99,7 +96,7 @@ askrecording() {
 }
 
 asktoend() {
-  response=$(dmenu-list No Yes | dmenu -p "Recording still active. End recording?") &&
+  response=$(printf "%s\n" No Yes | dmenu -p "Recording still active. End recording?") &&
     [ "$response" = "Yes" ] && killrecording
 }
 
@@ -127,3 +124,5 @@ case "$1" in
   kill) killrecording ;;
   *) ([ -f /tmp/recordingpid ] && asktoend && exit) || askrecording ;;
 esac
+
+# vim:ft=sh:sw=2:ts=2:et:

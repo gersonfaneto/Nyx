@@ -179,6 +179,7 @@
       bluetui
       bottom
       brightnessctl
+      cached-nix-shell
       cava
       chafa
       detach
@@ -198,6 +199,7 @@
       ghostty
       git
       highlight
+      imagemagick
       jq
       killall
       less

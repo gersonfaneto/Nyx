@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 tmux_sessions=$(tmux list-sessions -F "#S")
-chosen_session=$(echo "$tmux_sessions" | dmenu -p "Choose a Tmux session:" -l 10)
+
+chosen_session=$(dmenu-picker 'Chose a Tmux session' "${tmux_sessions[@]}")
 
 if [ -z "$chosen_session" ]; then
   echo "Session selection canceled."
