@@ -565,7 +565,7 @@ main() {
     # - `~/Library/LaunchAgents/user.syncbg.plist`
     wait
   fi
-  setbg_alacritty "$bg" &
+  # setbg_alacritty "$bg" &
   # setbg_foot "$bg" &
   setbg_highlight "$bg" &
   setbg_nvim "$bg" &

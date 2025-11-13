@@ -30,7 +30,6 @@ in {
     ".local/share/backgrounds/" = mkSymlink ".local/share/backgrounds/";
     ".highlight/" = mkSymlink ".highlight/";
     ".gitconfig" = mkSymlink ".gitconfig";
-    ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
     ".config/fastfetch/" = mkSymlink ".config/fastfetch/";

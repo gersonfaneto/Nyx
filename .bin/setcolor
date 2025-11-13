@@ -397,7 +397,7 @@ main() {
     # setcolor_plasma "$color" &
     wait
   fi
-  setcolor_alacritty "$color" &
+  # setcolor_alacritty "$color" &
   # setcolor_foot "$color" &
   # setcolor_kitty "$color" &
   # setcolor_wezterm "$color" &

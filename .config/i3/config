@@ -71,10 +71,10 @@ floating_modifier $mod
 
 # Open `dmenu`, the default application launcher.
 bindsym $mod+d exec --no-startup-id dmenu_run -i -l 5 -p ' ' \
-          -nb '#1D1D1D' \
+          -nb '#000000' \
           -nf '#FFFFFF' \
-          -sb '#888888' \
-          -sf '#1D1D1D' \
+          -sb '#FFFFFF' \
+          -sf '#000000' \
           -fn '$font_family:regular:pixelsize=14'
 
 # Custom music picker using `dmenu`.
