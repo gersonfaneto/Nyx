@@ -69,7 +69,7 @@
 
 [pull]
   default = current
-  rebase = true
+  ; rebase = true
 
 [submodule]
   fetchJobs = 16
@@ -140,7 +140,8 @@
   bp = branch -D
 
   df = "!git diff --output-indicator-new=' ' --output-indicator-old=' '"
-  ds = df --cached
+  ds = "!git diff --output-indicator-new=' ' --output-indicator-old=' ' --cached"
+  dv = difftool -t vimdiff -y
 
   co = checkout
   cb = checkout -b
@@ -188,6 +189,8 @@
   la = log --all --graph --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n'
   lb = "!r() { refbranch=${1:-$(git rev-parse --abbrev-ref HEAD)} count=$2; git for-each-ref --sort=-committerdate refs/heads --format='%(refname:short)|%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always --count=${count:-20} | while read line; do branch=$(echo \"$line\" | awk 'BEGIN { FS = \"|\" }; { print $1 }' | tr -d '*'); ahead=$(git rev-list --count \"${refbranch:-origin/main}..${branch}\"); behind=$(git rev-list --count \"${branch}..${refbranch:-origin/main}\"); colorline=$(echo \"$line\" | sed 's/^[^|]*|//'); echo \"$ahead|$behind|$colorline\" | awk -F'|' -vOFS='|' '{$5=substr($5,1,70)}1' ; done | ( echo \"ahead|behind|branch|updated|message|author\n\" && cat) | column -ts'|';}; r"
   lr = "!r() { refbranch=${1:-$(git rev-parse --abbrev-ref HEAD)} count=$2; git for-each-ref --sort=-committerdate refs/remotes/origin --format='%(refname:short)|%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always --count=${count:-20} | while read line; do branch=$(echo \"$line\" | awk 'BEGIN { FS = \"|\" }; { print $1 }' | tr -d '*'); ahead=$(git rev-list --count \"${refbranch:-origin/main}..${branch}\"); behind=$(git rev-list --count \"${branch}..${refbranch:-origin/main}\"); colorline=$(echo \"$line\" | sed 's/^[^|]*|//'); echo \"$ahead|$behind|$colorline\" | awk -F'|' -vOFS='|' '{$5=substr($5,1,70)}1' ; done | ( echo \"ahead|behind|branch|updated|message|author\n\" && cat) | column -ts'|';}; r"
+
+  gr = "!r() { git rev-list --all | xargs git grep $@ | fzf; }; r"
 
   url  = "!echo $(git config remote.origin.url | sed -Ee 's!(git@|git://|ssh://)!https://!' -e 's!:([^/])!/\\1!' | sed -e 's/.git$//')"
   open = "!$(command -v open || command -v xdg-open) $(git url)"

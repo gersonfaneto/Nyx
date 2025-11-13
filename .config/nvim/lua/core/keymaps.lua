@@ -102,6 +102,13 @@ require('utils.load').on_events(
     map({ 'x', 'n' }, '<M-g><M-]>', '<C-w>g<C-]>', { desc = 'Split and jump to tag under cursor' })
     map({ 'x', 'n' }, '<M-g><Tab>', '<C-w>g<Tab>', { desc = 'Go to last accessed tab' })
 
+    map({ 'x', 'n' }, '<Tab>l', '<C-w>gt', { desc = 'Go to next tab' })
+    map({ 'x', 'n' }, '<Tab>h', '<C-w>gT', { desc = 'Go to previous tab' })
+    map({ 'x', 'n' }, '<Tab>f', '<C-w>gf', { desc = 'Edit file under cursor in new tab' })
+    map({ 'x', 'n' }, '<Tab>o', '<C-w>g<Tab>', { desc = 'Go to last accessed tab' })
+    map({ 'x', 'n' }, '<Tab>t', '<C-w>T', { desc = 'Move window to new tab' })
+    map({ 'x', 'n' }, '<Tab>r', ':TabRename ', { desc = 'Rename the current tab' })
+
     map({ 'x', 'n' }, '<M-=>', '<C-w>=', { desc = 'Make all windows equal size' })
     map({ 'x', 'n' }, '<M-_>', '<C-w>_', { desc = 'Set current window height to maximum' })
     map({ 'x', 'n' }, '<M-|>', '<C-w>|', { desc = 'Set current window width to maximum' })

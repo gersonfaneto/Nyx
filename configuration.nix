@@ -163,6 +163,8 @@
       "${XDG_BIN_HOME}"
     ];
 
+    TERM = "ghostty";
+
     XSECURELOCK_BLANK_TIMEOUT = 5;
     XSECURELOCK_AUTH_TIMEOUT = 5;
     XSECURELOCK_BLANK_DPMS_STATE = "suspend";
@@ -177,6 +179,7 @@
       bluetui
       bottom
       brightnessctl
+      cava
       chafa
       detach
       diff-so-fancy
@@ -196,6 +199,7 @@
       git
       highlight
       jq
+      killall
       less
       libnotify
       libqalculate
@@ -288,15 +292,15 @@
       noto-fonts-color-emoji
 
       # General
-      nerd-fonts.space-mono
+      maple-mono.NF
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = ["Noto Emoji"];
-        serif = ["SpaceMono Nerd Font"];
-        sansSerif = ["SpaceMono Nerd Font"];
-        monospace = ["SpaceMono Nerd Font"];
+        serif = ["Maple Mono NF"];
+        sansSerif = ["Maple Mono NF"];
+        monospace = ["Maple Mono NF"];
       };
     };
   };

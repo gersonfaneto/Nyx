@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Sets the image as a wallpaper for desktop
+
+# Example usage
+# setwall ~/Pictures/walls/Thomas_Cole_-_Dream_of_Arcadia_-_Google_Art_Project.jpg
+# setwall ~/Pictures/walls/1593486499392.jpg
+
+set -e
+
+wallpaper="${1}"
+
+feh --bg-fill "$wallpaper" &

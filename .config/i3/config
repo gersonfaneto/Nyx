@@ -2,27 +2,21 @@
 
 workspace_layout tabbed
 
-# Alias some keys to specific actions/commands.
+# All the modifiers!
 set $mod Mod4
 set $alt Mod1
 set $ctrl Ctrl
 set $tab Tab
 set $shift Shift
 
+# A better way to navigate...
 set $left h
 set $down j
 set $up k
 set $right l
 
-set $decrease i
-set $increase o
-
-# Font families and sizes used along the system.
-set $font_family SpaceMono Nerd Font
-set $font_size 10
-
 # Font for window titles.
-font pango:$font_family $font_size
+font pango:Maple Mono NF 10
 
 # Set keyboard layout.
 exec --no-startup-id setxkbmap -layout br -variant thinkpad
@@ -44,8 +38,8 @@ bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_S
 bindsym $alt+XF86AudioMute   exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && killall -SIGUSR1 i3status
 
 # NOTE: Alternatives for keyboards with no media keys...
-bindsym $mod+$alt+$increase exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && killall -SIGUSR1 i3status
-bindsym $mod+$alt+$decrease exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && killall -SIGUSR1 i3status
+bindsym $mod+$alt+$up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && killall -SIGUSR1 i3status
+bindsym $mod+$alt+$down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && killall -SIGUSR1 i3status
 bindsym $mod+$alt+m         exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && killall -SIGUSR1 i3status
 bindsym $mod+$alt+v         exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && killall -SIGUSR1 i3status
 
@@ -73,7 +67,7 @@ floating_modifier $mod
 bindsym $mod+d exec --no-startup-id dmenu_run -i -l 5 -p ' ' \
           -nb '#000000' -nf '#FFFFFF' \
           -sb '#FFFFFF' -sf '#000000' \
-          -fn '$font_family:regular:pixelsize=12.5'
+          -fn 'Maple Mono NF:regular:pixelsize=14'
 
 # Custom music picker using `dmenu`.
 bindsym $mod+$alt+d exec --no-startup-id $HOME/.config/i3/bin/jukebox

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+current_date=$(date +'%Y-%m-%d')
+latest_commit_date=$(git log -1 --format=%cd --date=short 2>/dev/null)
+
+if [[ "$latest_commit_date" == "$current_date" ]]; then
+  echo "Found existing commit for today. Amending..."
+  GIT_COMMITTER_DATE="$(date)" git commit --amend -m "$current_date" --date="$(date)" "$@"
+else
+  echo "Creating new commit for today..."
+  git commit -m "$current_date" "$@"
+fi

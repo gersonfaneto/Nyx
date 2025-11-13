@@ -3,6 +3,6 @@
 file="$(mpc listall | dmenu -i -l 5 -p ' ' \
 	-nb '#000000' -nf '#FFFFFF' \
 	-sb '#FFFFFF' -sf '#000000' \
-	-fn 'SpaceMono Nerd Font:regular:pixelsize=12.5')" || exit 0
+	-fn 'Maple Mono NF:regular:pixelsize=12.5')" || exit 0
 
 mpc insert "$file" && mpc next >/dev/null

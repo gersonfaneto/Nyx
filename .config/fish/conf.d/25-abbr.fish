@@ -29,7 +29,6 @@ __command_abbr rme 'trash-empty'
 __command_abbr rmp 'yes | trash-empty --verbose'
 __command_abbr rmr 'trash-restore'
 
-__command_abbr tm   'tmux'
 __command_abbr tma  'tmux attach -t'
 __command_abbr tmn  'tmux new-session -s (basename $PWD)'
 __command_abbr tml  'tmux list-session'
