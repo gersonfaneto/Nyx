@@ -226,6 +226,7 @@
       wget
       wiremix
       xclip
+      xcolor
       xsecurelock
       xsel
       xss-lock

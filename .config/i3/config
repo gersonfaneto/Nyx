@@ -70,10 +70,21 @@ bindsym $mod+$shift+n exec --no-startup-id dunstctl close-all
 floating_modifier $mod
 
 # Open `dmenu`, the default application launcher.
-bindsym $mod+d exec --no-startup-id dmenu_run -i -l 5 -p ' ' -fn '$font_family:regular:pixelsize=$font_size'
+bindsym $mod+d exec --no-startup-id dmenu_run -i -l 5 -p ' ' \
+          -nb '#1D1D1D' \
+          -nf '#FFFFFF' \
+          -sb '#888888' \
+          -sf '#1D1D1D' \
+          -fn '$font_family:regular:pixelsize=14'
+
+# Custom music picker using `dmenu`.
+bindsym $mod+$alt+j exec --no-startup-id $HOME/.config/i3/bin/jukebox
 
 # Open screenshot tool.
 bindsym $mod+p exec --no-startup-id flameshot gui
+
+# Open color picker tool.
+bindsym $mod+$shit+p exec --no-startup-id xcolor
 
 # Use `boomer` as a magnifying glass.
 bindsym $mod+z exec --no-startup-id boomer

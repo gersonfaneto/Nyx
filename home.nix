@@ -8,6 +8,19 @@
   mkSymlink = path: {
     source = config.lib.file.mkOutOfStoreSymlink "${NYX_PATH}/${path}";
   };
+
+  dmenu = pkgs.dmenu.overrideAttrs (old: {
+    patches = [
+      (pkgs.fetchpatch {
+        url = "https://tools.suckless.org/dmenu/patches/center/dmenu-center-20250407-b1e217b.diff";
+        hash = "sha256-qoC6h6iDAAlVPmV59cG7uz+O5Obf4Y3V1N6/fQjpRSk=";
+      })
+      (pkgs.fetchpatch {
+        url = "https://tools.suckless.org/dmenu/patches/lines-below-prompt/dmenu-linesbelowprompt-and-fullwidth-20211014.diff";
+        hash = "sha256-+cNmNydNKSMIhscrd5l+Hi1d/ZGoSM8ledU+hINdtOA=";
+      })
+    ];
+  });
 in {
   home.username = "gerson";
   home.homeDirectory = "/home/gerson";
@@ -41,6 +54,7 @@ in {
   home.packages = with pkgs; [
     mpc
     rmpc
+    dmenu
   ];
 
   services.mpd = {

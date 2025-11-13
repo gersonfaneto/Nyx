@@ -11,6 +11,7 @@ order += "tztime local"
 
 battery all {
   format = "BAT %percentage"
+  separator_block_width = 20
 }
 
 volume master {
@@ -19,8 +20,11 @@ volume master {
   device = "default"
   mixer = "Master"
   mixer_idx = 0
+  separator_block_width = 20
 }
 
 tztime local {
   format = "%d/%m/%y %H:%M"
+  min_width = 120
+  separator_block_width = 20
 }
