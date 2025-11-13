@@ -2,7 +2,7 @@
   "plugins": {
     "LuaSnip": [],
     "blink.cmp": {
-      "rev": "7d79733"
+      "rev": "de57322"
     },
     "cellular-automaton.nvim": [],
     "conjure": {
@@ -10,7 +10,7 @@
     },
     "esqueleto.nvim": [],
     "everforest": {
-      "rev": "17f101d"
+      "rev": "484dd56"
     },
     "fugitive-gitlab.vim": [],
     "fzf-lua": {
@@ -58,7 +58,7 @@
       "rev": "6c10964"
     },
     "opencode.nvim": {
-      "rev": "338efa8"
+      "rev": "9a2cb69"
     },
     "otter.nvim": [],
     "plenary.nvim": [],
