@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# Disable screenlock for some time
-# (handy for calls and movies)
-
-timeSeconds=14400 # 4 hours
-echo "Disabling screenlock for $timeSeconds seconds"
-
-xset -dpms
-(sleep $timeSeconds && xset dpms) &

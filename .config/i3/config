@@ -22,7 +22,7 @@ font pango:Maple Mono NF 10
 exec --no-startup-id setxkbmap -layout br -variant thinkpad
 
 # Set the background.
-exec --no-startup-id $HOME/.config/i3/bin/background
+exec --no-startup-id setwall
 
 # Setup xss-lock & xsecurelock.
 exec_always --no-startup-id xset s 600
@@ -57,7 +57,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl set 10%+
 
 # Toggle notifications on/off.
-bindsym $mod+n        exec --no-startup-id $HOME/.config/i3/bin/silence
+bindsym $mod+n        exec --no-startup-id silence
 bindsym $mod+$shift+n exec --no-startup-id dunstctl close-all
 
 # Drag floating windows to their wanted position.
@@ -79,7 +79,7 @@ bindsym $mod+p exec --no-startup-id xcolor --selection clipboard
 bindsym $mod+z exec --no-startup-id boomer
 
 # Toggle display sleep on/off.
-bindsym $mod+c exec --no-startup-id $HOME/.config/i3/bin/caffeine
+bindsym $mod+c exec --no-startup-id caffeine
 
 # Open the browser.
 bindsym $mod+b        exec firefox
@@ -184,10 +184,10 @@ bindsym $mod+$shift+r restart
 
 # Resize windows.
 mode "resize" {
-    bindsym $left  exec $HOME/.config/i3/bin/smart-resize "left"
-    bindsym $down  exec $HOME/.config/i3/bin/smart-resize "down"
-    bindsym $up    exec $HOME/.config/i3/bin/smart-resize "up" 
-    bindsym $right exec $HOME/.config/i3/bin/smart-resize "right" 
+    bindsym $left  resize shrink width 5 px or 5 ppt
+    bindsym $down  resize grow height 5 px or 5 ppt
+    bindsym $up    resize shrink height 5 px or 5 ppt
+    bindsym $right resize grow width 5 px or 5 ppt
 
     bindsym $shift+$left  resize shrink width 10 px or 10 ppt
     bindsym $shift+$down  resize grow height 10 px or 10 ppt
@@ -216,7 +216,7 @@ mode "(S)uspend, (E)xit, (L)ock, (R)eboot, (P)oweroff" {
 bindsym $mod+BackSpace mode "(S)uspend, (E)xit, (L)ock, (R)eboot, (P)oweroff"
 
 bar {
-  status_command i3status | ~/.config/i3/bin/now-playing
+  status_command i3status | now-playing
   tray_output none
   colors {
     background #000000

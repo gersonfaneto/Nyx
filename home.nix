@@ -94,6 +94,7 @@ in {
 
   services.mpdris2 = {
     enable = true;
+    notifications = true;
   };
 
   # FIX: This might cause some problems in the future...
