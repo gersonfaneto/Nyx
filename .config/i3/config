@@ -24,6 +24,9 @@ exec --no-startup-id setxkbmap -layout br -variant thinkpad
 # Set the background.
 exec --no-startup-id setwall
 
+# Start battery monitor
+exec --no-startup-id battery-watcher  -L 20 -n &
+
 # Setup xss-lock & xsecurelock.
 exec_always --no-startup-id xset s 600
 exec_always --no-startup-id xss-lock -l -- xsecurelock
