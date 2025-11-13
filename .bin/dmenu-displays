@@ -7,7 +7,6 @@
 #  - Actions: Enable, Disable, Set Primary, Set Mode, Mirror Primary, Place Left/Right/Above/Below, Rotate
 #  - Asks when enabling externals whether to disable laptop and where to place them
 #  - Optional config file (~/.config/display-menu/config)
-#  - Emoji-enhanced UI
 #
 # User choices set: Ask each time about auto-disable, ask each time where to position, Mirror included.
 set -euo pipefail
@@ -138,18 +137,18 @@ for idx in $(seq 0 $((order-1))); do
   d="${CONNECTED_ORDER[$idx]}"
   [ -z "$d" ] && continue
   tag="${STATUS[$d]}"
-  emoji="🖥️"
+  emoji="󰍹 "
   if [ "$d" = "$LAPTOP" ]; then
-    emoji="💻"
+    emoji="󰌢 "
   fi
   if [ "${PRIMARY[$d]:-0}" -eq 1 ]; then
     tag="$tag, primary"
-    emoji="⭐$emoji"
+    emoji=" $emoji"
   fi
   if [ "${STATUS[$d]}" = "disconnected" ]; then
-    emoji="❌$emoji"
+    emoji="󱐤 $emoji"
   else
-    emoji="🔌$emoji"
+    emoji="󱐥 $emoji"
   fi
   curm="${CURRENT_MODE[$d]:-unknown}"
   display_opts+=("$emoji $d ($tag) — $curm")
@@ -164,7 +163,7 @@ fi
 chosen_display_line=$(menu "Select Display:" "${display_opts[@]}") || exit 0
 # Extract the display name (second token)
 # chosen_display_line example: "💻 eDP-1 (connected, primary) — 1920x1080"
-chosen_display=$(awk '{print $2}' <<< "$chosen_display_line")
+chosen_display=$(awk '{for(i=1;i<=NF;i++) if($i ~ /^[A-Za-z0-9-]+$/) {print $i; exit}}' <<< "$chosen_display_line")
 
 # ---------- Build action menu for selected display ----------
 action_opts=()
