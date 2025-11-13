@@ -130,7 +130,6 @@
   it = "!git init && git commit -m 'Ready... Set... Go!' --allow-empty"
 
   ci = commit
-  cx = commit --all --message 'X'
   cm = commit --message
   ca = commit --amend
   ce = commit --amend --no-edit
@@ -165,6 +164,7 @@
   ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
   pf = "!git push origin $(git rev-parse --abbrev-ref HEAD) --force"
   pd = "!git push origin $(git rev-parse --abbrev-ref HEAD) --delete"
+  px = "!git add --all && git commit --message 'X' && git push origin $(git rev-parse --abbrev-ref HEAD)"
 
   cl = clone
   cs = clone --depth=1
