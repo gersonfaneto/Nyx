@@ -1,16 +1,28 @@
+.PHONY: help
 help:
-	@echo 'Usage: make [build|update|format]'
+	@echo 'Usage: make [all|build|update|prune|format]'
 
+
+.PHONY: all
+all: prune format update build
+	@echo 'This is going to take a while...'
+
+
+.PHONY: build
 build:
 	sudo nixos-rebuild switch --flake .
 
+
+.PHONY: update
 update:
 	sudo nix flake update
 
+
+.PHONY: prune
 prune:
-	sudo nix-collect-garbage --delete-older-than 10d
+	sudo nix-collect-garbage --delete-old
 
+
+.PHONY: format
 format:
-	find -maxdepth 1 -type f -name '*.nix' -not -name 'hardware-configuration.nix' -exec nix fmt --quiet {} \;
-
-.PHONY: help system home update format
+	find -type f -name '*.nix' -exec nix fmt --quiet {} \;
