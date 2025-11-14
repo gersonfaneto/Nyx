@@ -180,17 +180,19 @@
       bluetui
       bottom
       brightnessctl
-      cached-nix-shell
       cava
       chafa
       detach
       diff-so-fancy
+      dig
+      dmidecode
       dragon-drop
       dunst
       fastfetch
       fd
       feh
       ffmpeg
+      ffmpeg-full
       file
       firefox
       fish
@@ -198,6 +200,7 @@
       fzf
       gh
       ghostty
+      gifsicle
       git
       highlight
       imagemagick
@@ -216,12 +219,14 @@
       poppler-utils
       presenterm
       prismlauncher
+      procps
       pulseaudio
       qalculate-gtk
       quartus-prime-lite
       ripgrep
       rsync
       scc
+      slop
       tmux
       trash-cli
       tree
@@ -234,6 +239,8 @@
       wiremix
       xclip
       xcolor
+      xdo
+      xorg.xrandr
       xsecurelock
       xsel
       xss-lock

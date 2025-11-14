@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Open a shell in a temporary directory.
+
+DIR=/tmp/$$.tmpsh
+
+mkdir -p "$DIR"
+
+trap 'rm -rf -- "${DIR:-?}"' EXIT INT TERM HUP
+
+cd "$DIR" || exit 0
+
+echo "$DIR" | xclip -selection clipboard
+
+(${SHELL:-/bin/sh})

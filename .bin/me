@@ -1,5 +1,4 @@
-#!/usr/bin/env cached-nix-shell
-#! nix-shell -i bash -p dig
+#!/usr/bin/env bash
 
 dig -4 +short @resolver1.opendns.com myip.opendns.com A
 dig -6 +short @resolver1.opendns.com myip.opendns.com AAAA

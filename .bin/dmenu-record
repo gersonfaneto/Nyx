@@ -1,5 +1,4 @@
-#!/usr/bin/env cached-nix-shell
-#! nix-shell -i bash -p ffmpeg-full xorg.xrandr slop
+#!/usr/bin/env bash
 #
 # https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/dmenurecord
 #
