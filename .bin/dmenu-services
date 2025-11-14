@@ -9,23 +9,23 @@ service_choose() {
     service_list=$(systemctl list-unit-files --type=service --no-pager --no-legend | awk '{print $1}')
   fi
 
-  dmenu-picker "Select a service:" "${service_list[@]}"
+  dmenu-picker "Select a service" "${service_list[@]}"
 }
 
 perform_systemctl_action() {
-  service_type=$(dmenu-picker "Select service type:" "user" "system")
+  service_type=$(dmenu-picker "Select service type" "user" "system")
   selected_service=$(service_choose)
-  action=$(dmenu-picker "Select an action:" "start" "stop" "restart" "disable")
+  action=$(dmenu-picker "Select an action" "start" "stop" "restart" "disable")
 
   systemctl_command="systemctl"
   [ "$service_type" == "user" ] && systemctl_command+=" --user"
 
   $systemctl_command "$action" "$selected_service"
-  notify-send "service $selected_service $action"ed
+  notify-send "Service" "$selected_service $action"ed
 }
 
 perform_journalctl_action() {
-  service_type=$(dmenu-picker "Select service type:" "user" "system")
+  service_type=$(dmenu-picker "Select service type" "user" "system")
   selected_service=$(service_choose)
 
   action="journalctl"
@@ -36,7 +36,7 @@ perform_journalctl_action() {
 }
 
 main() {
-  tool=$(dmenu-picker "Select a systemd tool:" "systemctl" "journalctl")
+  tool=$(dmenu-picker "Select a systemd tool" "systemctl" "journalctl")
 
   case "$tool" in
   "systemctl") perform_systemctl_action ;;

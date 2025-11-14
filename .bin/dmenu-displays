@@ -160,7 +160,7 @@ if [ "${#display_opts[@]}" -eq 0 ]; then
   exit 1
 fi
 
-chosen_display_line=$(menu "Select Display:" "${display_opts[@]}") || exit 0
+chosen_display_line=$(menu "Select Display" "${display_opts[@]}") || exit 0
 # Extract the display name (second token)
 # chosen_display_line example: "💻 eDP-1 (connected, primary) — 1920x1080"
 chosen_display=$(awk '{for(i=1;i<=NF;i++) if($i ~ /^[A-Za-z0-9-]+$/) {print $i; exit}}' <<< "$chosen_display_line")
@@ -197,7 +197,7 @@ else
   action_opts+=("Enable")
 fi
 
-chosen_action=$(menu "Select Action for $chosen_display:" "${action_opts[@]}") || exit 0
+chosen_action=$(menu "Select Action for $chosen_display" "${action_opts[@]}") || exit 0
 
 # ---------- Helper functions for actions ----------
 run_xrandr() {
@@ -247,7 +247,7 @@ if [[ "$chosen_action" == "Enable" ]]; then
   mode_choice="auto"
   if [ "${#modes_list[@]}" -gt 0 ]; then
     # prepare mode menu: show "auto" + modes
-    mode_sel=$(menu "Choose mode for $chosen_display (auto tries --auto):" "auto" "${modes_list[@]}") || mode_sel="auto"
+    mode_sel=$(menu "Choose mode for $chosen_display (auto tries --auto)" "auto" "${modes_list[@]}") || mode_sel="auto"
     mode_choice="$mode_sel"
   fi
 

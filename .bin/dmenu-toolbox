@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex
+
 SCRIPT_DIR="$(dirname "$0")"
 declare -A MENU_MAP
 options=()

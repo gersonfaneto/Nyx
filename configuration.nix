@@ -240,6 +240,7 @@
       xclip
       xcolor
       xdo
+      xdotool
       xorg.xrandr
       xsecurelock
       xsel

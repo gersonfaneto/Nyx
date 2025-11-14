@@ -83,7 +83,7 @@ audio() {
 
 askrecording() {
   options=$(printf "%s\n" screencast nvideo 'nvideo selected' audio webcam 'webcam (hi-def)')
-  choice=$(dmenu-picker "Select recording style:" "${options[@]}")
+  choice=$(dmenu-picker "Select recording style" "${options[@]}")
   case "$choice" in
     screencast) screencast ;;
     audio) audio ;;
