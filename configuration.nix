@@ -91,6 +91,12 @@
       devices = {
       };
       folders = {
+        "Alexandria" = {
+          path = "/home/gerson/Alexandria";
+          devices = [];
+        };
+      };
+      folders = {
         "Music" = {
           path = "/home/gerson/Music";
           devices = [];
