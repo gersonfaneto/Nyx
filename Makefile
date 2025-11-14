@@ -1,11 +1,6 @@
 .PHONY: help
 help:
-	@echo 'Usage: make [all|build|update|prune|format]'
-
-
-.PHONY: all
-all: prune format update build
-	@echo 'This is going to take a while...'
+	@echo 'Usage: make [build|update|prune|format]'
 
 
 .PHONY: build
