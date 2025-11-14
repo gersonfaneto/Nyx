@@ -133,6 +133,8 @@
   cm = commit --message
   ca = commit --amend
   ce = commit --amend --no-edit
+  cd = "!git-commit-date"
+  ct = "!git-commit-time"
 
   br = branch
   ba = branch --all
