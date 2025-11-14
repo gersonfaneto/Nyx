@@ -79,6 +79,33 @@
     };
   };
 
+  services.syncthing = {
+    enable = true;
+    group = "users";
+    user = "gerson";
+    dataDir = "/home/gerson/Syncthing";
+    configDir = "/home/gerson/.config/syncthing";
+    overrideDevices = true;
+    overrideFolders = true;
+    settings = {
+      devices = {
+      };
+      folders = {
+        "Music" = {
+          path = "/home/gerson/Music";
+          devices = [];
+        };
+      };
+    };
+  };
+
+  # Syncthing ports: 8384 for remote access to GUI
+  # 22000 TCP and/or UDP for sync traffic
+  # 21027/UDP for discovery
+  # source: https://docs.syncthing.net/users/firewall.html
+  # networking.firewall.allowedTCPPorts = [8384 22000];
+  # networking.firewall.allowedUDPPorts = [22000 21027];
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
