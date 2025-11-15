@@ -219,7 +219,8 @@ mode "(S)uspend, (E)xit, (L)ock, (R)eboot, (P)oweroff" {
 bindsym $mod+BackSpace mode "(S)uspend, (E)xit, (L)ock, (R)eboot, (P)oweroff"
 
 bar {
-  status_command i3status | now-playing
+  # status_command i3status | now-playing
+  status_command i3status
   tray_output none
   colors {
     background #000000
