@@ -336,15 +336,15 @@
       noto-fonts-color-emoji
 
       # General
-      maple-mono.NF
+      recursive
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = ["Noto Emoji"];
-        serif = ["Maple Mono NF"];
-        sansSerif = ["Maple Mono NF"];
-        monospace = ["Maple Mono NF"];
+        serif = ["Recursive Sans Linear Static"];
+        sansSerif = ["Recursive Sans Casual Static"];
+        monospace = ["Recursive Mono Casual Static"];
       };
     };
   };

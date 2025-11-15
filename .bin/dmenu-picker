@@ -9,7 +9,7 @@ dmenu-picker() {
     dmenu -i -l 10 -p "$prompt" \
       -nb '#000000' -nf '#FFFFFF' \
       -sb '#FFFFFF' -sf '#000000' \
-      -fn 'Maple Mono NF:regular:pixelsize=14'
+      -fn 'Recursive Sans Casual Static:regular:pixelsize=14'
 }
 
 dmenu-picker "$@"

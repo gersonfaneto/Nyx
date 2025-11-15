@@ -26,6 +26,6 @@ volume master {
 
 tztime local {
   format = "%d/%m/%y %H:%M"
-  min_width = 120
+  min_width = 110
   separator_block_width = 20
 }

@@ -4,16 +4,22 @@ library: ~/Music/.beets/library.db
 
 import:
   write: yes
-  copy: no
+  copy: yes
   move: no
   resume: ask
   incremental: yes
   quiet_fallback: skip
   log: ~/Music/.beets/beet.log
 
+inline:
+  auto: true
+
+item_fields:
+  singleartist: albumartist.split(',')[0].strip()
+
 paths:
-  default: Artists/$artist/$album ($year)/$track $title
-  singleton: Singles/$artist - $title
+  default: Albums/$singleartist/$album ($year)/$track $title
+  singleton: Singles/$singleartist - $title
   comp: Compilations/$album ($year)/$track $title
   albumtype:soundtrack: Soundtracks/$album ($year)/$track $title
 
