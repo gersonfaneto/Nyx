@@ -38,8 +38,8 @@ __command_abbr tmrw 'tmux rename-window'
 __command_abbr tmka 'tmux kill-server'
 __command_abbr tmks 'tmux kill-session'
 
-__command_abbr ls 'ls -lhX --group-directories-first'
-__command_abbr la 'ls -lhAX --group-directories-first'
+__command_abbr ls 'ls -lhXN --group-directories-first'
+__command_abbr la 'ls -lhAXN --group-directories-first'
 
 __command_abbr dea 'direnv allow'
 __command_abbr ded 'direnv deny'
@@ -47,8 +47,6 @@ __command_abbr dee 'direnv edit'
 __command_abbr der 'direnv reload'
 
 __command_abbr tree 'tree -N -L 4 -C --gitignore --dirsfirst'
-
-__command_abbr ytmp3 'yt-dlp --extract-audio --audio-format mp3 --embed-metadata --add-metadata --output "%(playlist_index)s - %(title)s.%(ext)s"'
 
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim

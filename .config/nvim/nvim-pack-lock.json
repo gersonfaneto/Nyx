@@ -2,7 +2,7 @@
   "plugins": {
     "LuaSnip": [],
     "blink.cmp": {
-      "rev": "de57322"
+      "rev": "b19413d"
     },
     "cellular-automaton.nvim": [],
     "conjure": {
@@ -14,10 +14,12 @@
     },
     "fugitive-gitlab.vim": [],
     "fzf-lua": {
-      "rev": "996b236"
+      "rev": "6db3677"
     },
     "ghcid": [],
-    "gitsigns.nvim": [],
+    "gitsigns.nvim": {
+      "rev": "cdafc32"
+    },
     "gruvbox-material": {
       "rev": "4bfc698"
     },
@@ -42,23 +44,25 @@
     "nvim-nio": [],
     "nvim-surround": [],
     "nvim-treesitter": {
-      "rev": "b5077407",
+      "rev": "c682a239",
       "version": "'main'"
     },
     "nvim-treesitter-endwise": [],
     "nvim-treesitter-incremental-selection": [],
     "nvim-treesitter-textobjects": {
-      "rev": "06c00bc",
+      "rev": "227165a",
       "version": "'main'"
     },
     "nvim-web-devicons": [],
     "oil.nvim": [],
-    "one-small-step-for-vimkind": [],
+    "one-small-step-for-vimkind": {
+      "rev": "87eeca2"
+    },
     "onedark.nvim": {
       "rev": "6c10964"
     },
     "opencode.nvim": {
-      "rev": "9a2cb69"
+      "rev": "ac58e79"
     },
     "otter.nvim": [],
     "plenary.nvim": [],
@@ -78,7 +82,9 @@
     "vim-rhubarb": [],
     "vim-sleuth": [],
     "vim-table-mode": [],
-    "vim-test": [],
+    "vim-test": {
+      "rev": "8db0f20"
+    },
     "vimtex": {
       "rev": "32bcb392"
     },
