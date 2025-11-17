@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
 
-file="$(mpc listall | dmenu -i -l 5 -p 'Next On Queue' \
-	-nb '#000000' -nf '#FFFFFF' \
-	-sb '#FFFFFF' -sf '#000000' \
-	-fn 'Maple Mono NF:regular:pixelsize=12.5')" || exit 0
+set -x # Uncomment for debugging...
+set -e
+set -u
+set -o pipefail
 
-mpc insert "$file" && mpc next >/dev/null
+OPTIONS=$(mpc listall)
+
+SONG=$(dmenu-picker 'Pick a Song' "${OPTIONS[@]}")
+
+if [[ -z "$SONG" ]]; then
+  exit 1
+else
+  mpc insert "$SONG" && mpc next
+fi
+
+# vim:sw=2:ts=2:et:
