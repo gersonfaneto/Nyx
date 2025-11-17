@@ -3,33 +3,48 @@
 # set -x # Only used for debugging...
 set -euo pipefail
 
+# Define color codes
+COLOR_RESET='\033[0m'
+COLOR_RED='\033[0;31m'
+COLOR_GREEN='\033[0;32m'
+# COLOR_YELLOW='\033[0;33m'
+# COLOR_BLUE='\033[0;34m'
+COLOR_CYAN='\033[0;36m'
+
 # Function to display help message
 usage() {
-  echo "Usage: $(basename "$0") [OPTIONS] [URL1 URL2 ... | --batch-file FILE | --edit-links]"
+  echo -e "${COLOR_CYAN}Usage:${COLOR_RESET} $(basename "$0") [OPTIONS] [URL1 URL2 ... | --batch-file FILE | --edit-links]"
   echo ""
-  echo "Downloads audio from YouTube playlists or individual videos."
+  echo -e "${COLOR_CYAN}Description:${COLOR_RESET}"
+  echo "  Downloads audio from YouTube playlists or individual videos."
   echo ""
-  echo "Options:"
-  echo "  -e, --edit-links       Open an editor to paste/write links interactively."
-  echo "  -h, --help             Display this help message and exit."
+  echo -e "${COLOR_CYAN}Options:${COLOR_RESET}"
+  echo -e "  ${COLOR_GREEN}-e, --edit-links${COLOR_RESET}       Open an editor to paste/write links interactively."
+  echo -e "  ${COLOR_GREEN}-h, --help${COLOR_RESET}             Display this help message and exit."
   echo ""
-  echo "Arguments:"
+  echo -e "${COLOR_CYAN}Arguments:${COLOR_RESET}"
   echo "  URL1 URL2 ...          One or more direct URLs to download."
   echo "  --batch-file FILE      Specify a file containing a list of URLs, one per line."
   echo ""
-  echo "Examples:"
+  echo -e "${COLOR_CYAN}Examples:${COLOR_RESET}"
   echo "  $(basename "$0") https://www.youtube.com/playlist?list=..."
   echo "  $(basename "$0") --batch-file links.txt"
   echo "  $(basename "$0") -e"
   echo ""
-  echo "Environment Variables:"
+  echo -e "${COLOR_CYAN}Environment Variables:${COLOR_RESET}"
   echo "  BROWSER                The browser to use for cookies (default: firefox)."
   echo "  EDITOR                 The editor to use for --edit-links (default: vim)."
+}
+
+# Function for error messages
+error_message() {
+  echo -e "${COLOR_RED}Error:${COLOR_RESET} $1" >&2
 }
 
 main()  {
   local urls_file=""
   local use_editor=false
+  local direct_urls=() # Array to store direct URLs
 
   # Parse options
   while [[ "$#" -gt 0 ]]; do
@@ -47,15 +62,15 @@ main()  {
           urls_file="$2"
           shift 2 # Remove --batch-file and the filename
         else
-          echo "Error: --batch-file requires a valid file path." >&2
+          error_message "--batch-file requires a valid file path."
           usage
           exit 1
         fi
         ;;
       *)
-        # If it's not an option, assume it's a URL or the start of URLs
-        # We'll handle this in the main logic if no batch file or editor is used
-        break
+        # If it's not an option, assume it's a URL
+        direct_urls+=("$1")
+        shift
         ;;
     esac
   done
@@ -68,10 +83,16 @@ main()  {
     "${EDITOR:-vim}" "$urls_file" # Use $EDITOR, fallback to vim
     # Check if the file has content after editing
     if [[ ! -s "$urls_file" ]]; then
-      echo "No links provided. Exiting."
+      error_message "No links provided. Exiting."
       rm "$urls_file" # Clean up temporary file
       exit 1
     fi
+  fi
+
+  # Check if any links were provided (either via file, editor, or direct arguments)
+  if [[ -z "$urls_file" && ${#direct_urls[@]} -eq 0 ]]; then
+    error_message "No links provided. Use --help for usage information."
+    exit 1
   fi
 
   # Construct the yt-dlp command
@@ -84,8 +105,8 @@ main()  {
     --no-mtime
     --no-embed-chapters
     --no-embed-info-json
-    --cookies-from-browser  "${BROWSER:-firefox}"
-    --output "%(playlist_title)s/%(title)s.%(ext)s"
+    --cookies-from-browser "${BROWSER:-firefox}"
+    --output "%(playlist_title)s/%(playlist_index)s - %(title)s.%(ext)s"
   )
 
   # Add the batch file argument if we have one
@@ -93,8 +114,8 @@ main()  {
     yt_dlp_cmd+=(--batch-file "$urls_file")
   fi
 
-  # Add any remaining arguments (which would be direct URLs if not using batch file or editor)
-  yt_dlp_cmd+=("$@")
+  # Add any direct URL arguments
+  yt_dlp_cmd+=("${direct_urls[@]}")
 
   # Execute the command
   "${yt_dlp_cmd[@]}"
