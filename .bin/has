@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# set -x # Uncomment for debugging...
+set -e
+set -u
+set -o pipefail
+
+main() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+main "$@"
