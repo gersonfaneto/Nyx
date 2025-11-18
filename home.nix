@@ -12,12 +12,12 @@
   dmenu = pkgs.dmenu.overrideAttrs (old: {
     patches = [
       # (pkgs.fetchpatch {
-      #   url = "https://tools.suckless.org/dmenu/patches/center/dmenu-center-20250407-b1e217b.diff";
-      #   hash = "sha256-qoC6h6iDAAlVPmV59cG7uz+O5Obf4Y3V1N6/fQjpRSk=";
+      #   url = "https://tools.suckless.org/dmenu/patches/center/dmenu-center-20240616-36c3d68.diff";
+      #   hash = "sha256-sTDzNi6VRPddFcR9pPKcfP588ZwaYWRlk28ehjnR0xo=";
       # })
       (pkgs.fetchpatch {
         url = "https://tools.suckless.org/dmenu/patches/lines-below-prompt/dmenu-linesbelowprompt-and-fullwidth-20211014.diff";
-        hash = "sha256-+cNmNydNKSMIhscrd5l+Hi1d/ZGoSM8ledU+hINdtOA=";
+        hash = "sha256-ZrnFJeeA4atZ2fwsJN15FLU8WhtCKZju790CgE19bks=";
       })
     ];
   });

@@ -205,6 +205,7 @@
 
   environment.systemPackages =
     (with pkgs; [
+      # quartus-prime-lite
       acpi
       ani-cli
       arandr
@@ -224,7 +225,6 @@
       fastfetch
       fd
       feh
-      ffmpeg
       ffmpeg-full
       file
       firefox
@@ -255,7 +255,6 @@
       procps
       pulseaudio
       qalculate-gtk
-      quartus-prime-lite
       ripgrep
       rsync
       scc

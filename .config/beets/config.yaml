@@ -65,7 +65,8 @@ duplicates:
   path: yes
   strict: no
   tiebreak:
-    items: [bitrate]
+    items:
+      - bitrate
 
 import:
   default_action: apply
@@ -81,8 +82,19 @@ import:
   log: ~/Music/.beets/beet.log
 
 edit:
-  itemfields:  track title artist album year
-  albumfields: track title artist albumartist album year
+  itemfields:
+    - track
+    - title
+    - artist
+    - album
+    - year
+  albumfields:
+    - track
+    - title
+    - artist
+    - albumartist
+    - album
+    - year
 
 embedart:
   auto: yes
@@ -273,16 +285,29 @@ album_fields:
 
 match:
   strong_rec_thresh: 0.08
-  # required: year label country
+  # required:
+  #   - year
+  #   - label
+  #   - country
   ignored: missing_tracks unmatched_tracks
 
 ui:
   color: yes
 
 aunique:
-  keys: albumartist albumtype year album
-  disambuguators: format mastering media label albumdisambig releasegroupdisambig
-  bracket: '[]'
+  keys:
+    - albumartist
+    - albumtype
+    - year
+    - album
+  disambuguators:
+    - format
+    - mastering
+    - media
+    - label
+    - albumdisambig
+    - releasegroupdisambig
+  bracket: []
 
 paths:
   default: Albums/$first_artist/$album/${padded_tracknr} - $title
@@ -297,10 +322,14 @@ lastgenre:
   source:    artist
 
 lyrics:
-  auto: yes
+  auto: no
   force: yes
-  sources: lrclib genius tekstowo google
   synced: yes
+  sources:
+    - lrclib
+    - genius
+    - tekstowo
+    - google
 
 musicbrainz:
   extra_tags:
