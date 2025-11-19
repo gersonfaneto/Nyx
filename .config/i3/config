@@ -85,7 +85,11 @@ bindsym $mod+p exec --no-startup-id xcolor --selection clipboard
 bindsym $mod+z exec --no-startup-id boomer
 
 # Toggle display sleep on/off.
-bindsym $mod+c exec --no-startup-id caffeine
+bindsym $mod+s exec --no-startup-id caffeine
+
+# Clipboard manager.
+bindsym $mod+c exec --no-startup-id bin input
+bindsym $mod+v exec --no-startup-id bin search
 
 # Open the browser.
 bindsym $mod+b        exec firefox
@@ -119,8 +123,8 @@ bindsym $mod+$shift+m floating enable,  resize set 1800 920,  move position cent
 bindsym $mod+$shift+f floating disable, resize set 1920 1080, move position 0 0
 
 # Split horizontally and vertically.
-bindsym $mod+s split h
-bindsym $mod+v split v
+# bindsym $mod+s split h
+# bindsym $mod+v split v
 
 # Make the currently focused window fullscreen.
 bindsym $mod+f fullscreen toggle

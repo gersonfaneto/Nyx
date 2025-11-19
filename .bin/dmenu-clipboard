@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+HISTORY_FILE="$HOME/.cache/cliphist"
+PLACEHOLDER="<NEWLINE>"
+
+source "$HOME/.bin/__base__"
+
+usage() {
+  echo -e "${COLOR_CYAN}Usage:${COLOR_RESET} $(basename "$0") [copy|add|save|search|paste|clear|copy-latest|--limit N|--help]"
+  echo -e ""
+  echo -e "${COLOR_CYAN}Description:${COLOR_RESET}"
+  echo -e "  Clipboard history manager using xclip + dmenu."
+  echo -e ""
+  echo -e "${COLOR_CYAN}Commands:${COLOR_RESET}"
+  echo -e "  ${COLOR_GREEN}input${COLOR_RESET}           Copies the primary selection to clipboard and adds to the history."
+  echo -e "  ${COLOR_GREEN}output${COLOR_RESET}          Reads from STDIN, copies it to the clipboard and adds to the history."
+  echo -e "  ${COLOR_GREEN}search${COLOR_RESET}          Search history via dmenu."
+  echo -e "  ${COLOR_GREEN}help${COLOR_RESET}            Show this help."
+}
+
+highlight() {
+  clip=$(xclip -o -selection primary | xclip -i -f -selection clipboard 2>/dev/null)
+}
+
+output() {
+  clip=$(xclip -i -f -selection clipboard 2>/dev/null)
+}
+
+write() {
+  [ -f "$HISTORY_FILE" ] || notify-send "Creating $HISTORY_FILE"
+  touch $HISTORY_FILE
+  [ -z "$clip" ] && exit 0
+  multiline=$(echo "$clip" | sed ':a;N;$!ba;s/\n/'"$PLACEHOLDER"'/g')
+  grep -Fxq "$multiline" "$HISTORY_FILE" || echo "$multiline" >>"$HISTORY_FILE"
+  notification=$(echo \"$multiline\")
+  [ -z "$notification" ] || notify-send "$notification"
+}
+
+sel() {
+  selection=$(tac "$HISTORY_FILE" | dmenu-picker 'Clipboard')
+  [ -n "$selection" ] && echo "$selection" | sed "s/$PLACEHOLDER/\n/g" | xclip -i -selection clipboard && notification="Copied to clipboard!"
+  [ -z "$notification" ] || notify-send "$notification"
+}
+
+main() {
+  if [[ ! "$#" -eq 1 ]]; then
+    usage
+    exit 1
+  fi
+
+  case "$1" in
+    input)
+      highlight && write
+      ;;
+    output)
+      output && write
+      ;;
+    search)
+      sel
+      ;;
+    *)
+      die "Unknown option: $1"
+      ;;
+  esac
+}
+
+main "$@"
+
+# vim:sw=2:ts=2:et:
