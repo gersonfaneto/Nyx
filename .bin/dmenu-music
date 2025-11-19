@@ -1,19 +1,73 @@
 #!/usr/bin/env bash
-# dmenu-music (MAX version)
-# Features:
-#  - Cache MPD lists (songs, albums, artists, playlists)
-#  - Smart detection of MPD availability
-#  - Submenus: Play/Enqueue Song, Album, Artist, Playlist
-#  - Queue management: view, remove, jump, clear, shuffle
-#  - Playback controls, volume, now playing
-#  - Uses dmenu-picker if available (must accept stdin), else dmenu
-#  - Async adds where appropriate to keep UI responsive
-#  - Safe handling of cancellations and empty selections
-#
-# Usage:
-#  ~/.bin/dmenu-music [--refresh-cache]
 
-set -euo pipefail
+# set -x # Uncomment only for debugging!
+set -e
+set -u
+set -o pipefail
+
+show_help() {
+  cat <<'EOF'
+dmenu-music: MPD controller using dmenu
+
+USAGE:
+  dmenu-music [OPTIONS]
+
+OPTIONS:
+  --help, -h          Show this help message
+  --version, -v       Show version information
+  --refresh-cache     Force rebuild music cache
+
+ENVIRONMENT VARIABLES:
+  DMENU_PICKER        Path to custom dmenu picker (default: ~/bin/dmenu-picker)
+  DMENU_CMD           Fallback dmenu command
+  NOTIFY_CMD          Notification command (default: notify-send)
+  DMENU_FAST_THRESHOLD Max items before using fast dmenu flags (default: 3000)
+  DMENU_FAST_FLAGS    Fast dmenu flags (default: -F)
+
+FEATURES:
+  - Play/enqueue songs, albums, artists, playlists
+  - Queue management (view, remove, jump, clear, shuffle)
+  - Playback controls (play/pause, next, prev, stop, volume, seek)
+  - Smart caching for performance
+  - Async operations to keep UI responsive
+EOF
+}
+
+show_version() {
+  echo "dmenu-music version 1.0.0"
+}
+
+err() {
+  printf '%s\n' "$*" >&2
+}
+
+quiet_run() {
+  "$@" >/dev/null 2>&1 || true
+}
+
+# Parse command line options
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --help | -h)
+      show_help
+      exit 0
+      ;;
+    --version | -v)
+      show_version
+      exit 0
+      ;;
+    --refresh-cache)
+      # This will be handled later in the script
+      break
+      ;;
+    *)
+      err "Unknown option: $1"
+      err "Use --help for usage information"
+      exit 1
+      ;;
+  esac
+  shift
+done
 
 # ----------------------
 # Config
@@ -24,35 +78,21 @@ CACHE_ALBUMS="$CACHE_DIR/albums.txt"
 CACHE_ARTISTS="$CACHE_DIR/artists.txt"
 CACHE_PLAYLISTS="$CACHE_DIR/playlists.txt"
 CACHE_META="$CACHE_DIR/meta.txt"      # metadata about cache (like songs count)
-DMENU_PICKER="${HOME}/.bin/dmenu-picker"  # prefer user-provided picker
-DMENU_CMD="dmenu -i -l 12 -p"              # fallback
-NOTIFY_CMD="notify-send"                   # optional
-DMENU_FAST_THRESHOLD=3000                   # if list len > this, switch to faster dmenu flags
-DMENU_FAST_FLAGS="-F"                       # dmenu "fast" mode (less accurate but quicker)
+DMENU_PICKER="${DMENU_PICKER:-${HOME}/.bin/dmenu-picker}"  # prefer user-provided picker
+DMENU_CMD="${DMENU_CMD:-dmenu -i -l 12 -p}"              # fallback
+NOTIFY_CMD="${NOTIFY_CMD:-notify-send}"                   # optional
+DMENU_FAST_THRESHOLD="${DMENU_FAST_THRESHOLD:-3000}"       # if list len > this, switch to faster dmenu flags
+DMENU_FAST_FLAGS="${DMENU_FAST_FLAGS:--F}"                 # dmenu "fast" mode (less accurate but quicker)
 # ----------------------
 
 mkdir -p "$CACHE_DIR"
-
-# ----------------------
-# Helpers
-# ----------------------
-err() { printf '%s\n' "$*" >&2; }
-quiet_run() { "$@" >/dev/null 2>&1 || true; }
 
 # pick: prompt < list on stdin >
 pick() {
   local prompt="$1"
   if [[ -x "$DMENU_PICKER" ]]; then
-    # call user picker — it should accept stdin
-    printf "" | "$DMENU_PICKER" "$prompt"
-    # Note: above line ensures "$DMENU_PICKER" is referenced for shellcheck; actual input provided below
-  fi
-
-  # if dmenu-picker is executable, prefer it and send stdin to it.
-  if [[ -x "$DMENU_PICKER" ]]; then
-    # if input is coming from pipe, dmenu-picker will read it
-    dmenu_input=$(cat)
-    printf '%s\n' "$dmenu_input" | "$DMENU_PICKER" "$prompt"
+    # use user picker — it should accept stdin
+    "$DMENU_PICKER" "$prompt"
     return
   fi
 
@@ -65,32 +105,26 @@ pick() {
 pick_from_args() {
   local prompt="$1"
   shift
-  # if arguments small, pass them; otherwise print and pipe to dmenu
-  if (( $# > 0 && $# < 2000 )); then
-    printf '%s\n' "$@" | pick "$prompt"
-  else
-    printf '%s\n' "$@" | pick "$prompt"
-  fi
+  # print arguments and pipe to dmenu
+  printf '%s\n' "$@" | pick "$prompt"
 }
 
-# just a small wrapper that reads stdin into a variable then calls
-# pick_with_dynamic_flags to set dmenu flags for performance
+# pick with dynamic flags for performance
 pick_with_dynamic_flags() {
   local prompt="$1"
   shift
-  # Read full stdin to tmpfile to count lines
-  local tmp
+  # Read stdin to temp file and count lines
+  local tmp n
   tmp="$(mktemp)"
-  cat > "$tmp"
-  local n
-  n=$(wc -l < "$tmp" || true)
+  cat >"$tmp"
+  n=$(wc -l <"$tmp")
   if [[ -x "$DMENU_PICKER" ]]; then
     # pass directly to picker
     cat "$tmp" | "$DMENU_PICKER" "$prompt"
     rm -f "$tmp"
     return
   fi
-  if (( n > DMENU_FAST_THRESHOLD )); then
+  if ((n > DMENU_FAST_THRESHOLD)); then
     # large list: use faster dmenu flags
     cat "$tmp" | dmenu -i -l 12 "$DMENU_FAST_FLAGS" -p "$prompt"
   else
@@ -104,13 +138,6 @@ notify() {
   if command -v "$NOTIFY_CMD" >/dev/null 2>&1; then
     "$NOTIFY_CMD" "Music" "$*"
   fi
-}
-
-# safe read choice (cancellation returns empty and we then exit/return)
-safe_choice() {
-  local choice
-  read -r choice
-  printf '%s' "$choice"
 }
 
 # run command asynchronously without leaving job control mess
@@ -156,8 +183,8 @@ get_mpc_db_id() {
       grep -Eo 'db: [0-9]+' <<<"$stats" | awk '{print $2; exit}'
       return
     fi
-    # fallback: just use md5 of mpc stats
-    printf '%s' "$stats" | md5sum | awk '{print $1}'
+    # fallback: just use sha256 of mpc stats
+    printf '%s' "$stats" | sha256sum | awk '{print $1}'
     return
   fi
   # if mpc stats failed
@@ -187,25 +214,42 @@ build_cache() {
 
   # generate lists: dedupe & sort case-insensitive
   # songs: full path-like output from mpc listall
-  mpc listall 2>/dev/null | sed '/^\s*$/d' | sort -f -u > "$tmp.songs" || true
-  mpc list album 2>/dev/null | sed '/^\s*$/d' | sort -f -u > "$tmp.albums" || true
-  mpc list artist 2>/dev/null | sed '/^\s*$/d' | sort -f -u > "$tmp.artists" || true
-  mpc lsplaylists 2>/dev/null | sed '/^\s*$/d' | sort -f -u > "$tmp.playlists" || true
+  if mpc listall 2>/dev/null | sed '/^\s*$/d' | sort -f -u >"$tmp.songs"  2>/dev/null; then
+    mv -f "$tmp.songs" "$CACHE_SONGS"
+  else
+    err "Failed to cache songs"
+    rm -f "$tmp.songs"
+  fi
 
-  # move into cache atomically
-  mv -f "$tmp.songs" "$CACHE_SONGS" 2>/dev/null || true
-  mv -f "$tmp.albums" "$CACHE_ALBUMS" 2>/dev/null || true
-  mv -f "$tmp.artists" "$CACHE_ARTISTS" 2>/dev/null || true
-  mv -f "$tmp.playlists" "$CACHE_PLAYLISTS" 2>/dev/null || true
+  if mpc list album 2>/dev/null | sed '/^\s*$/d' | sort -f -u >"$tmp.albums"  2>/dev/null; then
+    mv -f "$tmp.albums" "$CACHE_ALBUMS"
+  else
+    err "Failed to cache albums"
+    rm -f "$tmp.albums"
+  fi
+
+  if mpc list artist 2>/dev/null | sed '/^\s*$/d' | sort -f -u >"$tmp.artists"  2>/dev/null; then
+    mv -f "$tmp.artists" "$CACHE_ARTISTS"
+  else
+    err "Failed to cache artists"
+    rm -f "$tmp.artists"
+  fi
+
+  if mpc lsplaylists 2>/dev/null | sed '/^\s*$/d' | sort -f -u >"$tmp.playlists"  2>/dev/null; then
+    mv -f "$tmp.playlists" "$CACHE_PLAYLISTS"
+  else
+    err "Failed to cache playlists"
+    rm -f "$tmp.playlists"
+  fi
 
   # update meta with dbid + timestamp + counts
   local id_now n_songs n_albums n_artists n_playlists
   id_now=$(get_mpc_db_id)
-  n_songs=$(wc -l < "$CACHE_SONGS" || true)
-  n_albums=$(wc -l < "$CACHE_ALBUMS" || true)
-  n_artists=$(wc -l < "$CACHE_ARTISTS" || true)
-  n_playlists=$(wc -l < "$CACHE_PLAYLISTS" || true)
-  cat > "$CACHE_META" <<EOF
+  n_songs=$(wc -l <"$CACHE_SONGS"  2>/dev/null || echo 0)
+  n_albums=$(wc -l <"$CACHE_ALBUMS"  2>/dev/null || echo 0)
+  n_artists=$(wc -l <"$CACHE_ARTISTS"  2>/dev/null || echo 0)
+  n_playlists=$(wc -l <"$CACHE_PLAYLISTS"  2>/dev/null || echo 0)
+  cat >"$CACHE_META"  <<EOF
 dbid=$id_now
 cached_at=$(date --iso-8601=seconds 2>/dev/null || date)
 songs=$n_songs
@@ -266,7 +310,10 @@ play_song() {
   local song
   song=$(cat_cache "$CACHE_SONGS" | pick_with_dynamic_flags "Pick a song")
   [[ -z "$song" ]] && return
-  mpc clear
+  if ! mpc clear >/dev/null 2>&1; then
+    notify "Failed to clear queue"
+    return
+  fi
   # Add asynchronously so UI isn't blocked on network disk
   run_bg "mpc add \"$song\" && mpc play"
   notify "Playing: $song"
@@ -326,32 +373,39 @@ playlists_menu() {
 
 view_queue() {
   # format: show index, current marker, artist — title
-  local queue cur idx lines formatted choice index
-  queue=$(mpc playlist -f "%position%::%title% - %artist%" 2>/dev/null)
+  local queue formatted choice index
+  if ! queue=$(mpc playlist -f "%position%::%title% - %artist%" 2>/dev/null); then
+    printf '%s\n' "Failed to get queue." | pick_with_dynamic_flags "Queue"
+    return
+  fi
   if [[ -z "$queue" ]]; then
     printf '%s\n' "Queue is empty." | pick_with_dynamic_flags "Queue"
     return
   fi
-  cur=$(mpc status | sed -n '1p' | sed -n 's/\(.*\)/\1/p')
   # build display with marker
   formatted=$(printf '%s\n' "$queue" | awk -F'::' '{pos=$1; $1=""; sub(/^::/,""); printf "%02d %s\n", pos, $0}')
   # mark current playing with ▶
-  curpos=$(mpc status | sed -n '2p' | sed -n 's/#\([0-9]\+\).*/\1/')
-  if [[ -n "$curpos" ]]; then
-    # replace the line starting with that index
-    formatted=$(printf '%s\n' "$formatted" | sed "s/^$curpos /▶ $curpos /")
+  if curpos=$(mpc status 2>/dev/null | sed -n '2p' | sed -n 's/#\([0-9]\+\).*/\1/p'); then
+    if [[ -n "$curpos" ]]; then
+      formatted=$(printf '%s\n' "$formatted" | sed "s/^$curpos /▶ $curpos /")
+    fi
   fi
   choice=$(printf '%s\n' "$formatted" | pick_with_dynamic_flags "Queue (select to play)")
   [[ -z "$choice" ]] && return
   # extract index
   index=$(awk '{print $2; exit}' <<<"$choice")
-  [[ -n "$index" ]] && mpc play "$index"
+  if [[ -n "$index" ]] && [[ "$index" =~ ^[0-9]+$ ]]; then
+    mpc play "$index" >/dev/null 2>&1 || notify "Failed to play track $index"
+  fi
 }
 
 remove_from_queue() {
   local formatted choice index
   formatted=$(mpc playlist -f "%position%::%title% - %artist%" | awk -F'::' '{pos=$1; $1=""; sub(/^::/,""); printf "%02d %s\n", pos, $0}')
-  [[ -z "$formatted" ]] && { notify "Queue empty"; return; }
+  [[ -z "$formatted" ]] && {
+                             notify "Queue empty"
+                                                   return
+  }
   choice=$(printf '%s\n' "$formatted" | pick_with_dynamic_flags "Remove track (select)")
   [[ -z "$choice" ]] && return
   index=$(awk '{print $2; exit}' <<<"$choice")
@@ -388,14 +442,20 @@ playback_controls() {
 }
 
 volume_menu() {
-  local levels choice
-  # coarse levels 0..100 step 5
-  levels=$(seq 0 5 100 | tr '\n' ' ')
-  # use dmenu for selection
-  choice=$(printf '%s\n' $(seq 0 5 100) | pick_with_dynamic_flags "Volume")
+  local choice
+  # Generate volume levels 0-100 in steps of 5
+  choice=$(seq 0 5 100 | pick_with_dynamic_flags "Volume")
   [[ -z "$choice" ]] && return
-  mpc volume "$choice"
-  notify "Volume: $choice%"
+  # Validate input is a number between 0-100
+  if ! [[ "$choice" =~ ^[0-9]+$ ]] || ((choice < 0 || choice > 100)); then
+    notify "Invalid volume: $choice"
+    return
+  fi
+  if mpc volume "$choice" >/dev/null 2>&1; then
+    notify "Volume: $choice%"
+  else
+    notify "Failed to set volume"
+  fi
 }
 
 now_menu() {
@@ -427,8 +487,8 @@ main_menu() {
     "Volume" \
     "Now Playing" \
     "Refresh Cache (force)" \
-    "Quit" \
-    | pick_with_dynamic_flags "Music Menu"
+    "Quit" |
+      pick_with_dynamic_flags "Music Menu"
 }
 
 # Entry point
