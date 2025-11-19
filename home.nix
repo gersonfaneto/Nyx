@@ -41,7 +41,6 @@ in {
     ".config/i3/" = mkSymlink ".config/i3/";
     ".config/i3status/" = mkSymlink ".config/i3status/";
     ".config/nvim/" = mkSymlink ".config/nvim/";
-    ".config/opencode/" = mkSymlink ".config/opencode/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
     ".config/rg/" = mkSymlink ".config/rg/";
     ".config/rmpc/" = mkSymlink ".config/rmpc/";

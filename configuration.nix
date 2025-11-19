@@ -282,8 +282,7 @@
       zoxide
     ])
     ++ (with pkgs; [
-      (callPackage ./packages/boomer/package.nix {})
-      (callPackage ./packages/opencode/package.nix {})
+      (callPackage ./packages/boomer.nix {})
     ])
     ++ (with pkgs; [
       # Nyx
