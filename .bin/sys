@@ -67,11 +67,11 @@ bld=$'\e[1m'
 rst=$'\e[0m'
 inv=$'\e[7m'
 
-rom_info_raw=$(df --human-readable --output=size,used,pcent / | tail -n 1)
-rom_total=$(echo "$rom_info_raw" | awk '{print $1}')
-rom_used=$(echo "$rom_info_raw" | awk '{print $2}')
-rom_percent=$(echo "$rom_info_raw" | awk '{print $3}')
-rom_info="$rom_used / $rom_total GiB ($rom_percent)"
+disk_info_raw=$(df --human-readable --output=size,used,pcent / | tail -n 1)
+disk_total=$(echo "$disk_info_raw" | awk '{print $1}')
+disk_used=$(echo "$disk_info_raw" | awk '{print $2}')
+disk_percent=$(echo "$disk_info_raw" | awk '{print $3}')
+disk_info="$disk_used / $disk_total GiB ($disk_percent)"
 
 clear -x
 
@@ -87,7 +87,7 @@ $f7       'MMMMMMMMMMMMMMMMMMMMMMMMMMMMM.      Editor     »$f4 $EDITOR
 $f7       'MMMMMMMMMMMMMMMMMMMMMMMMMMMMM;      Term Font  »$f4 $terminal_font$NC
 $f7       lMMMMM  MMMMMMMMMM  MMMMMMMMMM,      Uptime     »$f4 $uptime
 $f7       KMMMMM  MMMMMMMMMM  MMMMMMMMMM.      RAM        »$f4 $ram_info
-$f7      ;WMMMMMkNMMMMMMMMMMONMMMMMMMMMW:      ROM        »$f4 $rom_info
+$f7      ;WMMMMMkNMMMMMMMMMMONMMMMMMMMMW:      DISK       »$f4 $disk_info
 $f7    oNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO     Packages   »$f4 $package_count
 $f7   .,cxKWMMMMMMMMMMMMMMMMMMMMMMMMMMMXdxo    Albums     »$f4 $albums
 $f7      ;kWMMMMMMMMMMMMMMMMMMMMMMMMMMMM:      Resolution »$f4 $resolution

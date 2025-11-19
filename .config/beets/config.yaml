@@ -326,10 +326,13 @@ lyrics:
   force: yes
   synced: yes
   sources:
-    - lrclib
     - genius
-    - tekstowo
     - google
+    - lrclib
+    - lyrics.com
+    - lyricwiki
+    - musixmatch
+    - tekstowo
 
 musicbrainz:
   extra_tags:
