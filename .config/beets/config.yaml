@@ -322,8 +322,8 @@ lastgenre:
   source:    artist
 
 lyrics:
-  auto: no
-  force: yes
+  auto: yes
+  force: no
   synced: yes
   sources:
     - genius
