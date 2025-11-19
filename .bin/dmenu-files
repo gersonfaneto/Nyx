@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# set -x # Uncomment for debugging only...
+set -e
+set -u
+set -o pipefail
+
+FILTERS=(Alexandria Documents)
+
+main()  {
+  filter=$(printf '%s\n' "${FILTERS[@]}" | dmenu-picker 'Filter')
+
+  printf '%s\0' "${FILTERS[@]}" | grep -F -x -z -- "$filter"
+
+  chosen=$(find "$HOME/$filter/" -type f -not -path '*stfolder*' | dmenu-picker "$filter")
+
+  xdg-open "$chosen"
+}
+
+main "$@"
+
+# vim:sw=2:ts=2:et:
