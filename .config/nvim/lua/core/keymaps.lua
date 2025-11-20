@@ -1,5 +1,5 @@
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = '\\'
 
 require('utils.load').on_events(
   'UIEnter',
@@ -293,7 +293,23 @@ require('utils.load').on_events(
     -- Folding
     map(
       { 'n', 'x' },
-      'zV',
+      'zo',
+      key.with_lazyredraw(function()
+        vim.api.nvim_exec2('%foldo!', { output = false })
+      end),
+      { desc = 'Open all folds' }
+    )
+    map(
+      { 'n', 'x' },
+      'zc',
+      key.with_lazyredraw(function()
+        vim.api.nvim_exec2('%foldc!', { output = false })
+      end),
+      { desc = 'Close all folds' }
+    )
+    map(
+      { 'n', 'x' },
+      'zv',
       key.with_lazyredraw(function()
         vim.cmd.normal({ 'zMzv', bang = true })
       end),

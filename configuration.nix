@@ -229,7 +229,6 @@
       file
       firefox
       fish
-      flameshot
       fzf
       gh
       ghostty

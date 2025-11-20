@@ -49,9 +49,12 @@ do
 end
 
 -- Folding
+vim.opt.foldnestmax = 1
+vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldtext = ''
-vim.opt.foldmethod = 'indent'
+vim.opt.foldcolumn = '1'
+vim.opt.foldmethod = 'expr'
 vim.opt.foldopen:remove('block') -- make `{`/`}` skip over folds
 
 -- Recognize numbered lists when formatting text and

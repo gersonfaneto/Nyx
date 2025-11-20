@@ -1,6 +1,24 @@
 #!/usr/bin/env bash
 
-# Function to display help message
+# set -x # WARN: Only used for debugging...
+set -euo pipefail
+
+COLOR_RESET='\033[0m'
+COLOR_RED='\033[0;31m'
+COLOR_GREEN='\033[0;32m'
+COLOR_YELLOW='\033[0;33m'
+COLOR_BLUE='\033[0;34m'
+COLOR_CYAN='\033[0;36m'
+
+die() {
+  printf "[${COLOR_RED}ERROR${COLOR_RESET}]: %s\n" "$1" >&2
+  exit 1
+}
+
+has() {
+  command -v "$1" >/dev/null 2>&1 || die "Missing dependency: $1"
+}
+
 usage() {
   echo -e "${COLOR_CYAN}Usage:${COLOR_RESET} $(basename "$0") [OPTIONS] [URL1 URL2 ... | --batch-file FILE | --edit-links]"
   echo ""
@@ -25,11 +43,6 @@ usage() {
   echo "  EDITOR                 The editor to use for --edit-links (default: vim)."
 }
 
-# Function for error messages
-error_message() {
-  echo -e "${COLOR_RED}Error:${COLOR_RESET} $1" >&2
-}
-
 main()  {
   local urls_file=""
   local use_editor=false
@@ -38,11 +51,11 @@ main()  {
   # Parse options
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
-      -h|--help)
+      -h | --help)
         usage
         exit 0
         ;;
-      -e|--edit-links)
+      -e | --edit-links)
         use_editor=true
         shift # Remove the flag from arguments
         ;;
@@ -51,9 +64,7 @@ main()  {
           urls_file="$2"
           shift 2 # Remove --batch-file and the filename
         else
-          error_message "--batch-file requires a valid file path."
-          usage
-          exit 1
+          die "--batch-file requires a valid file path."
         fi
         ;;
       *)
@@ -72,16 +83,14 @@ main()  {
     "${EDITOR:-vim}" "$urls_file" # Use $EDITOR, fallback to vim
     # Check if the file has content after editing
     if [[ ! -s "$urls_file" ]]; then
-      error_message "No links provided. Exiting."
       rm "$urls_file" # Clean up temporary file
-      exit 1
+      die "No links provided. Exiting."
     fi
   fi
 
   # Check if any links were provided (either via file, editor, or direct arguments)
   if [[ -z "$urls_file" && ${#direct_urls[@]} -eq 0 ]]; then
-    error_message "No links provided. Use --help for usage information."
-    exit 1
+    die "No links provided. Use --help for usage information."
   fi
 
   # Construct the yt-dlp command
