@@ -43,7 +43,6 @@ in {
     ".config/nvim/" = mkSymlink ".config/nvim/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
     ".config/rg/" = mkSymlink ".config/rg/";
-    ".config/rmpc/" = mkSymlink ".config/rmpc/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
@@ -51,7 +50,7 @@ in {
 
   home.packages = with pkgs; [
     mpc
-    rmpc
+    kew
     dmenu
   ];
 

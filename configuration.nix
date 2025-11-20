@@ -237,6 +237,7 @@
       highlight
       imagemagick
       jq
+      kew
       killall
       less
       libnotify
