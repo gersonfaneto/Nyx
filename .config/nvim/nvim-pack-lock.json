@@ -5,7 +5,7 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "b19413d214068f316c78978b08264ed1c41830ec",
+      "rev": "73ea297bc665c936b51797d5a55599536ffee0d8",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "cellular-automaton.nvim": {
@@ -21,7 +21,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "6db367781c650d0aa336577aa16bbb6aeca9ddfa",
+      "rev": "123cc546c4618f5fd90d5db2da5643e76979162c",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -54,7 +54,7 @@
       "src": "https://github.com/NvChad/nvim-colorizer.lua"
     },
     "nvim-dap": {
-      "rev": "b38f7d30366d9169d0a623c4c85fbcf99d8d58bb",
+      "rev": "5860c7c501eb428d3137ee22c522828d20cca0b3",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-dap-ui": {
@@ -74,7 +74,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "c682a239a9404ce5f90a2d0da34790eff1ed2932",
+      "rev": "bb83a676128d95c865e40ba71376d883bdadec14",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
