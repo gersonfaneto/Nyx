@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# set -x # WARN: Only used for debugging...
+set -euo pipefail
+
+COLOR_RESET='\033[0m'
+COLOR_RED='\033[0;31m'
+COLOR_GREEN='\033[0;32m'
+COLOR_YELLOW='\033[0;33m'
+COLOR_BLUE='\033[0;34m'
+COLOR_CYAN='\033[0;36m'
+
+main() {
+  BG=$(dmenu-picker 'Background' 'Dark' 'Light')
+
+  if [[ "$BG" = 'Dark' ]]; then
+    notify-send 'Background' 'Exit light!'
+    setbg dark
+  elif [[ "$BG" = 'Light' ]]; then
+    notify-send 'Background' 'Here comes the sun... '
+    setbg light
+  else
+    notify-send 'Background' 'O.o'
+    exit 1
+  fi
+
+  exit 0
+}
+
+main "$@"
+
+# vim:sw=2:ts=2:et:
