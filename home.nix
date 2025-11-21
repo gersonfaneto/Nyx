@@ -40,6 +40,7 @@ in {
     ".config/gtk-3.0/" = mkSymlink ".config/gtk-3.0/";
     ".config/i3/" = mkSymlink ".config/i3/";
     ".config/i3status/" = mkSymlink ".config/i3status/";
+    ".config/kew/" = mkSymlink ".config/kew/";
     ".config/nvim/" = mkSymlink ".config/nvim/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
     ".config/rg/" = mkSymlink ".config/rg/";

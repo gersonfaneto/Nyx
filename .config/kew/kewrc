@@ -1,0 +1,92 @@
+[miscellaneous]
+path=~/Music
+allowNotifications=1
+hideLogo=0
+hideHelp=1
+cacheLibrary=1
+titleDelay=10
+quitOnStop=0
+hideGlimmeringText=1
+replayGainCheckFirst=0
+saveRepeatShuffleSettings=1
+repeatState=0
+shuffleEnabled=0
+trackTitleAsWindowTitle=1
+
+
+[colors]
+theme=
+colorMode=0
+
+
+[track cover]
+coverEnabled=1
+coverAnsi=0
+
+
+[mouse]
+mouseEnabled=1
+mouseLeftClickAction=0 # None
+mouseMiddleClickAction=1 # Select song
+mouseRightClickAction=2 # Toggle play/pause
+mouseScrollUpAction=3 # Scroll up
+mouseScrollDownAction=4 # Scroll down
+mouseAltScrollUpAction=8 # Volume up
+mouseAltScrollDownAction=7 # Volume down
+
+
+[visualizer]
+visualizerEnabled=1
+visualizerHeight=6
+visualizerBrailleMode=0
+visualizerColorType=2
+visualizerBarWidth=2
+
+
+[progress bar]
+progressBarElapsedEvenChar=━
+progressBarElapsedOddChar=━
+progressBarApproachingEvenChar=━
+progressBarApproachingOddChar=━
+progressBarCurrentEvenChar=━
+progressBarCurrentOddChar=━
+
+
+[key bindings]
+volumeUp=+
+volumeUpAlt==
+volumeDown=-
+previousTrackAlt=h
+nextTrackAlt=l
+scrollUpAlt=k
+scrollDownAlt=j
+switchNumberedSong=G
+togglePause=p
+toggleNotifications=n
+toggleColorsDerivedFrom=i
+cycleThemes=t
+toggleVisualizer=v
+toggleAscii=b
+toggleRepeat=r
+toggleShuffle=s
+seekBackward=a
+seekForward=d
+savePlaylist=x
+addToFavoritesPlaylist=.
+updateLibrary=u
+moveSongUp=f
+moveSongDown=g
+enqueueAndPlay=^M
+sortLibrary=o
+quit=q
+altQuit=
+showPlaylistAlt=
+showLibraryAlt=
+showTrackAlt=
+showSearchAlt=
+showKeysAlt=
+showLyricsPage=m
+prevPage=K
+nextPage=J
+
+# vim:ft=toml:

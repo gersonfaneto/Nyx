@@ -310,7 +310,7 @@ aunique:
   bracket: []
 
 paths:
-  default: Albums/$first_artist - $album/${padded_tracknr} - $title
+  default: Albums/$first_artist/$album/${padded_tracknr} - $title
   albumtype:single: Singles/$first_artist_singleton - $title
   albumtype:compilation: Compilations/$album/${padded_tracknr} - $title
   albumtype:soundtrack: Soundtracks/$album/${padded_tracknr} - $title
@@ -322,7 +322,7 @@ lastgenre:
   source:    artist
 
 lyrics:
-  auto: yes
+  auto: no
   force: no
   synced: yes
   sources:

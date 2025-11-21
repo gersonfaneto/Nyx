@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-# set -x # Uncomment only for debugging!
-set -e
-set -u
-set -o pipefail
+set -x # Uncomment only for debugging!
+set -euo pipefail
 
 show_help() {
   cat <<'EOF'
