@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-# set -x # Uncomment for debugging...
-set -e
-set -u
-set -o pipefail
+set -x # WARN: Only used for debugging...
+set -euo pipefail
 
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"

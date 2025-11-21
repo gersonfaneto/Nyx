@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
 
-# set -x # WARN: Only used for debugging...
+set -x # WARN: Only used for debugging...
 set -euo pipefail
 
-COLOR_RESET='\033[0m'
-COLOR_RED='\033[0;31m'
-COLOR_GREEN='\033[0;32m'
-COLOR_YELLOW='\033[0;33m'
-COLOR_BLUE='\033[0;34m'
-COLOR_CYAN='\033[0;36m'
+BACKGROUND_STATE="${XDG_CACHE_HOME:-$HOME/.cache}/background"
+BACKGROUND_DEFAULT='dark'
 
 main() {
-  BG=$(dmenu-picker 'Background' 'Dark' 'Light')
+  local BG=""
 
-  if [[ "$BG" = 'Dark' ]]; then
-    notify-send 'Background' 'Exit light!'
-    setbg dark
-  elif [[ "$BG" = 'Light' ]]; then
+  if [[ -f "$BACKGROUND_STATE" ]]; then
+    BG=$(cat "$BACKGROUND_STATE")
+  else
+    BG="$BACKGROUND_DEFAULT"
+  fi
+
+  if [[ "$BG" = 'dark' ]]; then
     notify-send 'Background' 'Here comes the sun... '
+    echo 'light' >"$BACKGROUND_STATE"
     setbg light
+  elif [[ "$BG" = 'light' ]]; then
+    notify-send 'Background' 'Exit light!'
+    echo 'dark' >"$BACKGROUND_STATE"
+    setbg dark
   else
     notify-send 'Background' 'O.o'
     exit 1
