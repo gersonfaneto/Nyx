@@ -51,7 +51,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 
-bindsym $mod+F1 exec --no-startup-id dmenu-bg 
+bindsym $mod+F1 exec --no-startup-id dmenu-background
 bindsym $mod+F2 exec --no-startup-id dmenu-color
 
 bindsym $mod+$alt+$left  exec --no-startup-id playerctl previous
