@@ -1,4 +1,4 @@
----@type lsp_config_t
+---@type lsp.config
 return {
   cmd = { 'vscode-json-language-server', '--stdio' },
   filetypes = {
