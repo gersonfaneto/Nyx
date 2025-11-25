@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-set -x # WARN: Only used for debugging...
+# set -x # WARN: Only used for debugging...
 set -euo pipefail
 
 BACKGROUND_STATE="${XDG_CACHE_HOME:-$HOME/.cache}/background"
 BACKGROUND_DEFAULT='dark'
+
+NOTIFICATION_ID=1011
 
 main() {
   local BG=""
@@ -16,11 +18,11 @@ main() {
   fi
 
   if [[ "$BG" = 'dark' ]]; then
-    notify-send 'Background' 'Here comes the sun... '
+    notify-send -r "$NOTIFICATION_ID" -a 'Background' 'Background' 'Here comes the sun... '
     echo 'light' >"$BACKGROUND_STATE"
     setbg light
   elif [[ "$BG" = 'light' ]]; then
-    notify-send 'Background' 'Exit light!'
+    notify-send -r "$NOTIFICATION_ID" -a 'Background' 'Background' 'Exit light!'
     echo 'dark' >"$BACKGROUND_STATE"
     setbg dark
   else
