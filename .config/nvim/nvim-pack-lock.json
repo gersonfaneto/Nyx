@@ -50,6 +50,10 @@
       "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
       "src": "https://github.com/iamcco/markdown-preview.nvim"
     },
+    "mini.nvim": {
+      "rev": "72b0194c56c984476c5975b62eb340fd1aa1686a",
+      "src": "https://github.com/nvim-mini/mini.nvim"
+    },
     "molten-nvim": {
       "rev": "4fd7be6a12b5efda5179db642f13bad60893acca",
       "src": "https://github.com/benlubas/molten-nvim"
@@ -144,6 +148,10 @@
     "ultimate-autopair.nvim": {
       "rev": "72e160cb1ce8c0db2ac4315f77d97420a2f4223d",
       "src": "https://github.com/altermo/ultimate-autopair.nvim"
+    },
+    "venn.nvim": {
+      "rev": "b09c2f36ddf70b498281845109bedcf08a7e0de0",
+      "src": "https://github.com/jbyuki/venn.nvim"
     },
     "vim-conjoin": {
       "rev": "14ad4e6321b43f9518a2dc99ed705895eef8800b",

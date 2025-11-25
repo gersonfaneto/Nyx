@@ -1,13 +1,26 @@
 ---@type lsp.config
 return {
+  cmd = {
+    'clangd',
+    '-j=' .. (vim.env.CORES and vim.env.CORES or '4'),
+    '--background-index',
+    '--clang-tidy',
+    '--inlay-hints',
+    '--fallback-style=llvm',
+    '--all-scopes-completion',
+    '--completion-style=detailed',
+    '--header-insertion=iwyu',
+    '--header-insertion-decorators',
+    '--pch-storage=memory',
+  },
   filetypes = {
     'c',
     'cpp',
     'objc',
     'objcpp',
     'cuda',
+    'proto',
   },
-  cmd = { 'clangd' },
   root_markers = {
     {
       '.clangd',
@@ -18,6 +31,13 @@ return {
       'compile_commands.json',
       'compile_flags.txt',
       'configure.ac',
+    },
+    {
+      '.git',
+    },
+    {
+      ---@diagnostic disable-next-line undefined-field
+      vim.uv.cwd(), -- equivalent of `single_file_mode` in lspconfig
     },
   },
 }

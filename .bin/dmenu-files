@@ -8,7 +8,7 @@ set -o pipefail
 FILTERS=(Alexandria Documents)
 
 main()  {
-  filter=$(printf '%s\n' "${FILTERS[@]}" | dmenu-picker 'Filter')
+  filter=$(printf '%s\n' "${FILTERS[@]}" | dmenu-picker 'Files')
 
   printf '%s\0' "${FILTERS[@]}" | grep -F -x -z -- "$filter"
 

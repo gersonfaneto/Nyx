@@ -29,7 +29,7 @@ return {
       { lhs = '<Leader>#', mode = { 'n', 'x' }, opts = { desc = 'Grep word under cursor' } },
       { lhs = '<Leader>"', opts = { desc = 'Find registers' } },
       { lhs = '<Leader>:', opts = { desc = 'Find commands' } },
-      { lhs = '<Leader>F', opts = { desc = 'Find all available pickers' } },
+      { lhs = '<Leader><Leader>', opts = { desc = 'Find all available pickers' } },
       { lhs = '<Leader>o', opts = { desc = 'Find oldfiles' } },
       { lhs = '<Leader>-', opts = { desc = 'Find lines in buffer' } },
       { lhs = '<Leader>=', opts = { desc = 'Find lines across buffers' } },
@@ -1222,7 +1222,7 @@ return {
       vim.keymap.set('x', '<Leader>#', fzf.grep_visual, { desc = 'Grep visual selection' })
       vim.keymap.set('n', '<Leader>"', fzf.registers, { desc = 'Find registers' })
       vim.keymap.set('n', '<Leader>:', fzf.commands, { desc = 'Find commands' })
-      vim.keymap.set('n', '<Leader>F', fzf.builtin, { desc = 'Find all available pickers' })
+      vim.keymap.set('n', '<Leader><Leader>', fzf.builtin, { desc = 'Find all available pickers' })
       vim.keymap.set('n', '<Leader>o', fzf.oldfiles, { desc = 'Find old files' })
       vim.keymap.set('n', '<Leader>-', fzf.blines, { desc = 'Find lines in buffer' })
       vim.keymap.set('n', '<Leader>=', fzf.lines, { desc = 'Find lines across buffers' })
