@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   NYX_PATH = "/home/gerson/Developer/Personal/Nyx";
 
   mkSymlink = path: {
@@ -21,7 +22,8 @@
       })
     ];
   });
-in {
+in
+{
   home.username = "gerson";
   home.homeDirectory = "/home/gerson";
 
