@@ -49,6 +49,7 @@ in
     ".config/rmpc/" = mkSymlink ".config/rmpc/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
+    ".config/zed/" = mkSymlink ".config/zed/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
   };
 

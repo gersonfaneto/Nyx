@@ -1,0 +1,20 @@
+{
+  "vim_mode": true,
+  "base_keymap": "Atom",
+  "restore_on_file_reopen": false,
+  "restore_on_startup": "none",
+  "ui_font_size": 10,
+  "ui_font_family": "Recursive Sans Casual Static",
+  "buffer_font_size": 10,
+  "buffer_font_family": "Departure Mono",
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)"
+  },
+  "theme": {
+    "mode": "dark",
+    "light": "Solarized Light",
+    "dark": "Solarized Dark"
+  }
+}
