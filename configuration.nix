@@ -257,6 +257,7 @@
       pulseaudio
       qalculate-gtk
       ripgrep
+      rmpc
       rsync
       scc
       slop
