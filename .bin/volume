@@ -9,16 +9,9 @@ main() {
   while [ $# -gt 0 ]; do
     ACTION=$1
 
-    VOLUME=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '[0-9]+(?=%)' | head -1)
-    MUTED=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -oP 'Mute:\s+\K.*')
-
     case "$ACTION" in
       up)
-        if [[ "$VOLUME" -eq 100 ]]; then
-          :
-        else
-          pactl set-sink-volume @DEFAULT_SINK@ +5%
-        fi
+        pactl set-sink-volume @DEFAULT_SINK@ +5%
         ;;
       down)
         pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -31,6 +24,9 @@ main() {
         exit 1
         ;;
     esac
+
+    VOLUME=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '[0-9]+(?=%)' | head -1)
+    MUTED=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -oP 'Mute:\s+\K.*')
 
     if [ "$MUTED" = "yes" ]; then
       SUMMARY="Volume Muted"
