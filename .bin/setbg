@@ -30,8 +30,8 @@ update_fish() {
     fi
     has fish &&
       fish -c 'set -U __fish_reload_theme (head -c 16 /dev/urandom | sha256sum)'
-    )
-  }
+  )
+}
 
 update_nvim() {
   if [ -z "$1" ] || ! has nvim; then
@@ -117,28 +117,6 @@ update_highlight() {
   )
 }
 
-update_zed() {
-  ( 
-    config_file="$CONFIG_HOME/zed/settings.json" || return
-
-    if ! has jq; then
-      echo "Error: program 'jq' not found, skip setting backgroud for zed" >&2
-      return 1
-    fi
-
-    current_mode=$(jq -r '.theme.mode' "$config_file")
-    new_mode=""
-
-    if [ "$current_mode" = "dark" ]; then
-      new_mode="light"
-    else
-      new_mode="dark"
-    fi
-
-    jq --arg new_mode "$new_mode" '.theme.mode = $new_mode | .icon_theme.mode = $new_mode' "$config_file" >"$config_file.tmp"  && mv "$config_file.tmp" "$config_file"
-  )
-}
-
 main() {
   lockfile="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/setbg.lock"
 
@@ -169,7 +147,6 @@ main() {
   update_nvim "$bg" &
   update_ghostty "$bg" &
   update_highlight "$bg" &
-  update_zed "$bg" &
 
   wait
 }

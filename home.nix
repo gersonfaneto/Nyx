@@ -29,9 +29,6 @@ in
 
   home.file = {
     ".bin/" = mkSymlink ".bin/";
-    ".local/share/backgrounds/" = mkSymlink ".local/share/backgrounds/";
-    ".highlight/" = mkSymlink ".highlight/";
-    ".gitconfig" = mkSymlink ".gitconfig";
     ".config/beets/" = mkSymlink ".config/beets/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
     ".config/fastfetch/" = mkSymlink ".config/fastfetch/";
@@ -43,14 +40,17 @@ in
     ".config/i3/" = mkSymlink ".config/i3/";
     ".config/i3status/" = mkSymlink ".config/i3status/";
     ".config/kew/" = mkSymlink ".config/kew/";
+    ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/nvim/" = mkSymlink ".config/nvim/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
     ".config/rg/" = mkSymlink ".config/rg/";
     ".config/rmpc/" = mkSymlink ".config/rmpc/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
-    ".config/zed/" = mkSymlink ".config/zed/";
-    ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
+    ".emacs.d/" = mkSymlink ".emacs.d/";
+    ".gitconfig" = mkSymlink ".gitconfig";
+    ".highlight/" = mkSymlink ".highlight/";
+    ".local/share/backgrounds/" = mkSymlink ".local/share/backgrounds/";
   };
 
   home.packages = with pkgs; [

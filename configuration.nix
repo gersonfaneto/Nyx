@@ -210,6 +210,7 @@
       acpi
       ani-cli
       arandr
+      aseprite
       bat
       beets
       bluetui
@@ -223,6 +224,7 @@
       dmidecode
       dragon-drop
       dunst
+      emacs
       fastfetch
       fd
       feh
@@ -237,7 +239,9 @@
       git
       highlight
       imagemagick
+      ispell
       jq
+      kdePackages.kdeconnect-kde
       kew
       killall
       less
@@ -281,7 +285,6 @@
       xss-lock
       yt-dlp
       zathura
-      zed-editor-fhs
       zoxide
     ])
     ++ (with pkgs; [
