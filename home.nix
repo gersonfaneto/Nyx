@@ -2,8 +2,7 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   NYX_PATH = "/home/gerson/Developer/Personal/Nyx";
 
   mkSymlink = path: {
@@ -22,8 +21,7 @@ let
       })
     ];
   });
-in
-{
+in {
   home.username = "gerson";
   home.homeDirectory = "/home/gerson";
 
@@ -58,6 +56,11 @@ in
     kew
     dmenu
   ];
+
+  services.kdeconnect = {
+    enable = true;
+    indicator = true;
+  };
 
   services.mpd = {
     enable = true;

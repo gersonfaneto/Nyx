@@ -241,7 +241,6 @@
       imagemagick
       ispell
       jq
-      kdePackages.kdeconnect-kde
       kew
       killall
       less
