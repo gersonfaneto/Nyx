@@ -5,7 +5,7 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "73ea297bc665c936b51797d5a55599536ffee0d8",
+      "rev": "f13226770b4947eb7e66befbeb53c3db39f13e25",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "cellular-automaton.nvim": {
@@ -26,7 +26,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "123cc546c4618f5fd90d5db2da5643e76979162c",
+      "rev": "9a0704e8af8f8442110ff22a83b5608366b235df",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -83,7 +83,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "bb83a676128d95c865e40ba71376d883bdadec14",
+      "rev": "c5871d9d870c866fea9f271f1a3b3f29049a4793",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -105,7 +105,7 @@
       "src": "https://github.com/kyazdani42/nvim-web-devicons"
     },
     "oil.nvim": {
-      "rev": "7e1cd7703ff2924d7038476dcbc04b950203b902",
+      "rev": "01cb3a8ad7d5e8707041edc775af83dbf33838f4",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "one-small-step-for-vimkind": {
@@ -113,11 +113,11 @@
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
     },
     "onedark.nvim": {
-      "rev": "6c10964f91321c6a0f09bcc41dd64e7a6602bc4f",
+      "rev": "213c23ae45a04797572242568d5d51937181792d",
       "src": "https://github.com/navarasu/onedark.nvim"
     },
     "opencode.nvim": {
-      "rev": "d2447ed45a4e6e03481ca4b69fd4004b100cf670",
+      "rev": "a604965f234bebac1e2ff1a15ea7c0ed6c8f8548",
       "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "otter.nvim": {
@@ -129,7 +129,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "quicker.nvim": {
-      "rev": "12a2291869a326424b1cbee937f4f80334433012",
+      "rev": "9983d4b28881e1df626e3682167b45c284d4da8c",
       "src": "https://github.com/stevearc/quicker.nvim"
     },
     "rustaceanvim": {
@@ -182,11 +182,11 @@
       "src": "https://github.com/tpope/vim-sleuth"
     },
     "vim-table-mode": {
-      "rev": "e156dbbedce0bbf61c0919db7678fa246fabd616",
+      "rev": "bb025308a45c67c7c8f0763ba37bc2ee3f534df0",
       "src": "https://github.com/dhruvasagar/vim-table-mode"
     },
     "vim-test": {
-      "rev": "8db0f2074d989d452e5ad4b11e01bb5aa0787a01",
+      "rev": "bbdc7f5d6280a047c3b1a951614454555a566356",
       "src": "https://github.com/vim-test/vim-test"
     },
     "vimtex": {
