@@ -11,15 +11,20 @@
 
   dmenu = pkgs.dmenu.overrideAttrs (old: {
     patches = [
-      # (pkgs.fetchpatch {
-      #   url = "https://tools.suckless.org/dmenu/patches/center/dmenu-center-20240616-36c3d68.diff";
-      #   hash = "sha256-sTDzNi6VRPddFcR9pPKcfP588ZwaYWRlk28ehjnR0xo=";
-      # })
       (pkgs.fetchpatch {
         url = "https://tools.suckless.org/dmenu/patches/lines-below-prompt/dmenu-linesbelowprompt-and-fullwidth-20211014.diff";
         hash = "sha256-ZrnFJeeA4atZ2fwsJN15FLU8WhtCKZju790CgE19bks=";
       })
+      # (pkgs.fetchpatch {
+      #   url = "https://tools.suckless.org/dmenu/patches/center/dmenu-center-20240616-36c3d68.diff";
+      #   hash = "sha256-sTDzNi6VRPddFcR9pPKcfP588ZwaYWRlk28ehjnR0xo=";
+      # })
+      # (pkgs.fetchpatch {
+      #   url = "https://tools.suckless.org/dmenu/patches/png_images/dmenu-png-images-5.3.diff";
+      #   hash = "sha256-HjgdM6peQwYUhV3QEX7JEw3bvCSvzJ1Bd2naHxNUPy0=";
+      # })
     ];
+    buildInputs = old.buildInputs ++ [ pkgs.libspng ];
   });
 in {
   home.username = "gerson";

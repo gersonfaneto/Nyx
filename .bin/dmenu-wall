@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# set -x # WARN: Only used for debugging...
+set -euo pipefail
+
+BACKGROUND_STATE="${XDG_CACHE_HOME:-$HOME/.cache}/background"
+BACKGROUND_DEFAULT='dark'
+
+NOTIFICATION_ID=1011
+
+WALLPAPERS_HOME=${XDG_DATA_HOME:-$HOME/.local/share}/wallpapers
+
+main() {
+  local BG=""
+
+  if [[ -f "$BACKGROUND_STATE" ]]; then
+    BG=$(cat "$BACKGROUND_STATE")
+  else
+    BG="$BACKGROUND_DEFAULT"
+  fi
+
+  if [[ "$BG" != 'dark' && "$BG" != 'light' ]]; then
+    notify-send 'Wallpaper' 'O.o'
+    exit 1
+  fi
+
+  WALLS=$(find "$WALLPAPERS_HOME/$BG" -type f)
+
+  WALL=$(dmenu-picker 'Wallpapers' "${WALLS[@]}")
+
+  if setwall "$WALL"; then
+    notify-send -r "$NOTIFICATION_ID" -a 'Wallpaper' 'Wallpaper' 'Updating...'
+  else
+    notify-send -r "$NOTIFICATION_ID" -a 'Wallpaper' 'Wallpaper' 'O.o'
+  fi
+
+  exit 0
+}
+
+main "$@"
+
+# vim:sw=2:ts=2:et:ft=bash:
