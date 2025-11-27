@@ -341,9 +341,22 @@
       noto-fonts-color-emoji
 
       # UI + Coding
-      monaspace
-      recursive
+      anonymousPro
+      bqn386
+      comic-mono
       departure-mono
+      inputs.apple-fonts.packages.${pkgs.system}.sf-mono
+      iosevka
+      jetbrains-mono
+      maple-mono.NF
+      miracode
+      monaspace
+      mononoki
+      nerd-fonts.space-mono
+      recursive
+      source-code-pro
+      ultimate-oldschool-pc-font-pack
+      victor-mono
     ];
     fontconfig = {
       enable = true;
