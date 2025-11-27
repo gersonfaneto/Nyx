@@ -26,6 +26,7 @@ in {
   home.homeDirectory = "/home/gerson";
 
   home.file = {
+    ".bash_profile/" = mkSymlink ".bash_profile/";
     ".bin/" = mkSymlink ".bin/";
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";
@@ -51,6 +52,8 @@ in {
     ".highlight/" = mkSymlink ".highlight/";
     ".local/share/applications/" = mkSymlink ".local/share/applications/";
     ".local/share/backgrounds/" = mkSymlink ".local/share/backgrounds/";
+    ".profile/" = mkSymlink ".profile/";
+    ".bashrc/" = mkSymlink ".bashrc/";
   };
 
   home.packages = with pkgs; [
