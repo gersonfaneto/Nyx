@@ -74,16 +74,19 @@ bindsym $mod+$shift+n exec --no-startup-id dunstctl close-all
 floating_modifier $mod
 
 # Open `dmenu`, the default application launcher.
-bindsym $mod+d exec --no-startup-id dmenu-run
+# bindsym $mod+d exec --no-startup-id dmenu-run
+bindsym $mod+d exec --no-startup-id "~/.config/rofi/launchers/launcher.sh"
+bindsym $mod+$alt+d exec --no-startup-id "~/.config/rofi/applets/bin/apps.sh"
 
 # Custom 'toolbox' using dmenu as a picker and some custom scripts.
 bindsym $mod+t exec --no-startup-id dmenu-toolbox
 
 # Let's groove!
-bindsym $mod+m exec --no-startup-id dmenu-music
+# bindsym $mod+m exec --no-startup-id dmenu-music
+bindsym $mod+m exec --no-startup-id "~/.config/rofi/applets/mpd.sh"
 
 # Cpature the moment...
-bindsym $mod+p exec --no-startup-id dmenu-capture
+bindsym $mod+p exec --no-startup-id "~/.config/rofi/applets/screenshot.sh"
 
 # Use `boomer` as a magnifying glass.
 bindsym $mod+z exec --no-startup-id boomer
@@ -230,7 +233,7 @@ mode "(S)uspend, (E)xit, (L)ock, (R)eboot, (P)oweroff" {
   bindsym Escape mode "default"
 }
 
-bindsym $mod+BackSpace mode "(S)uspend, (E)xit, (L)ock, (R)eboot, (P)oweroff"
+bindsym $mod+BackSpace exec --no-startup-id "~/.config/rofi/powermenu/powermenu.sh"
 
 bar {
   # status_command i3status | now-playing

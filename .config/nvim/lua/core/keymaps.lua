@@ -163,6 +163,9 @@ require('utils.load').on_events(
     map('s', '<BS>', '<C-o>"_s', { desc = 'Delete selection' })
     map('s', '<C-h>', '<C-o>"_s', { desc = 'Delete selection' })
 
+    map('n', '<C-x>', '<C-a>', { noremap = true, desc = 'Increment' })
+    map('n', '<C-z>', '<C-x>', { noremap = true, desc = 'Decrement' })
+
     ---Check if given line should join with previews lines in current buffer
     ---@param line string
     ---@return boolean

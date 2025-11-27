@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+
+# Author: (Original) Aditya Shakya — (Improved) ChatGPT Version
+# MPD Rofi Controller — Persistent, Auto-Refreshing
+
+theme="$HOME/.config/rofi/applets/style.rasi"
+
+# ─────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────
+
+get_status() {
+  mpc status
+}
+
+get_prompt_and_message() {
+  local st="$1"
+
+  if [[ -z "$st" ]]; then
+    prompt="Offline"
+    mesg="MPD is Offline"
+  else
+    prompt="$(mpc -f "%artist%" current)"
+    mesg="$(mpc -f "%title%" current) :: $(echo "$st" | grep "#" | awk '{print $3}')"
+  fi
+}
+
+read_theme_layout() {
+  layout=$(grep 'USE_ICON' "$theme" | cut -d'=' -f2)
+}
+
+build_options() {
+  # Play/Pause
+  if [[ "$status" == *"[playing]"* ]]; then
+    icon_play=""
+    text_play="Pause"
+  else
+    icon_play=""
+    text_play="Play"
+  fi
+
+  if [[ "$layout" == "NO" ]]; then
+    option_1="$icon_play $text_play"
+    option_2=" Stop"
+    option_3=" Previous"
+    option_4=" Next"
+    option_5=" Repeat"
+    option_6=" Random"
+  else
+    option_1="$icon_play"
+    option_2=""
+    option_3=""
+    option_4=""
+    option_5=""
+    option_6=""
+  fi
+}
+
+highlight_modes() {
+  active=""
+  urgent=""
+
+  if [[ "$status" == *"repeat: on"* ]]; then
+    active="-a 4"
+  else
+    urgent="-u 4"
+  fi
+
+  if [[ "$status" == *"random: on"* ]]; then
+    [[ -n "$active" ]] && active+=",5" || active="-a 5"
+  else
+    [[ -n "$urgent" ]] && urgent+=",5" || urgent="-u 5"
+  fi
+}
+
+run_rofi() {
+  rofi -theme-str 'listview {columns: 6; lines: 1;}' \
+       -theme-str 'textbox-prompt-colon {str: "";}' \
+       -dmenu -markup-rows \
+       -p "$prompt" \
+       -mesg "$mesg" \
+       $active $urgent \
+       -theme "$theme"
+}
+
+execute_action() {
+  case "$1" in
+    "$option_1") mpc -q toggle ;;
+    "$option_2") mpc -q stop   ;;
+    "$option_3") mpc -q prev   ;;
+    "$option_4") mpc -q next   ;;
+    "$option_5") mpc -q repeat ;;
+    "$option_6") mpc -q random ;;
+  esac
+}
+
+# ─────────────────────────────────────────────
+# MAIN LOOP — Persistent until ESC pressed
+# ─────────────────────────────────────────────
+
+read_theme_layout
+
+while true; do
+  status="$(get_status)"
+  get_prompt_and_message "$status"
+  build_options
+  highlight_modes
+
+  chosen="$(printf "%s\n%s\n%s\n%s\n%s\n%s" \
+            "$option_1" "$option_2" "$option_3" "$option_4" "$option_5" "$option_6" \
+            | run_rofi)"
+
+  [[ -z "$chosen" ]] && exit 0  # ESC → exit cleanly
+
+  execute_action "$chosen"
+done

@@ -24,7 +24,7 @@
       #   hash = "sha256-HjgdM6peQwYUhV3QEX7JEw3bvCSvzJ1Bd2naHxNUPy0=";
       # })
     ];
-    buildInputs = old.buildInputs ++ [ pkgs.libspng ];
+    buildInputs = old.buildInputs ++ [pkgs.libspng];
   });
 in {
   home.username = "gerson";
@@ -47,7 +47,7 @@ in {
     ".config/nvim/" = mkSymlink ".config/nvim/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
     ".config/rg/" = mkSymlink ".config/rg/";
-    ".config/rmpc/" = mkSymlink ".config/rmpc/";
+    ".config/rofig/" = mkSymlink ".config/rofig/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
     ".bin/" = mkSymlink ".bin/";
@@ -66,6 +66,11 @@ in {
     kew
     dmenu
   ];
+
+  services.picom = {
+    enable = true;
+    backend = "glx";
+  };
 
   services.kdeconnect = {
     enable = true;

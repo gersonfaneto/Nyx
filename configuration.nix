@@ -248,9 +248,11 @@
       libqalculate
       libtool
       localsend
+      maim
       man-pages
       man-pages-posix
       mpv
+      ncmpcpp
       pandoc
       playerctl
       poppler-utils
@@ -260,7 +262,7 @@
       pulseaudio
       qalculate-gtk
       ripgrep
-      rmpc
+      rofi
       rsync
       scc
       slop
