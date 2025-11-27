@@ -27,6 +27,7 @@ in {
 
   home.file = {
     ".bin/" = mkSymlink ".bin/";
+    ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
     ".config/fastfetch/" = mkSymlink ".config/fastfetch/";

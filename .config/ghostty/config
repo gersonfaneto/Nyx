@@ -8,7 +8,6 @@ cursor-style-blink = false
 shell-integration-features = no-cursor
 
 font-size = 10
-font-family = Departure Mono
 
 window-padding-x = 8
 window-padding-y = 8
@@ -21,3 +20,5 @@ scrollback-limit = 0
 confirm-close-surface = false
 
 mouse-hide-while-typing = true
+
+config-file = ?config.local

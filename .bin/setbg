@@ -102,6 +102,23 @@ update_ghostty() {
   )
 }
 
+update_alacritty() {
+  (
+    cd "$CONFIG_HOME/alacritty" || return
+    theme_path="theme.toml"
+    themes_dir="themes"
+    # If $1 is empty, only need to ensure symlink to color theme file exists
+    if [ -z "$1" ]; then
+      [ -e "$themes_dir/$DEFAULT_BG.toml" ] &&
+        ln -s "$themes_dir/$DEFAULT_BG.toml" "$theme_path" 2>/dev/null
+    else
+      [ -e "$themes_dir/$1.toml" ] &&
+        ln -sf "$themes_dir/$1.toml" "$theme_path"
+    fi
+    touch "$CONFIG_HOME/alacritty/alacritty.toml"
+  )
+}
+
 update_highlight() {
   ( 
     cd "$HOME/.highlight" || return
@@ -146,6 +163,7 @@ main() {
   update_fish "$bg" &
   update_nvim "$bg" &
   update_ghostty "$bg" &
+  update_alacritty "$bg" &
   update_highlight "$bg" &
 
   wait

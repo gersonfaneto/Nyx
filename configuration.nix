@@ -208,6 +208,7 @@
     (with pkgs; [
       # quartus-prime-lite
       acpi
+      alacritty
       ani-cli
       arandr
       aseprite

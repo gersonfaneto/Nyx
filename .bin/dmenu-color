@@ -8,7 +8,7 @@ NOTIFICATION_ID=1010
 COLORS=(cockatoo nano everforest macro gruvbox-material solarized sonokai onedark)
 
 main() {
-  COLOR=$(dmenu-picker 'Color' cockatoo nano everforest macro gruvbox-material solarized sonokai onedark)
+  COLOR=$(dmenu-picker 'Color' "${COLORS[@]}")
 
   if printf '%s\0' "${COLORS[@]}" | grep -F -x -z -- "$COLOR"; then
     notify-send -r "$NOTIFICATION_ID" -a 'Colors' 'Colors' "Using '$COLOR'"

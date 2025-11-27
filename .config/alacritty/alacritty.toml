@@ -1,0 +1,6 @@
+[general]
+import = [
+    'theme.toml',
+    'main.toml',
+    'local.toml',
+]

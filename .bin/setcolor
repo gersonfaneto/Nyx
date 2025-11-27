@@ -116,6 +116,25 @@ update_ghostty() {
   )
 }
 
+update_alacritty() {
+  ( 
+    cd "$CONFIG_HOME/alacritty/themes" || return
+    dark_theme_path="dark.toml"
+    light_theme_path="light.toml"
+    # If $1 is empty, only need to ensure symlink to color theme files exists
+    if [ -z "$1" ]; then
+      [ -e "$DEFAULT_COLOR-dark.toml" ] && ln -s "$DEFAULT_COLOR-dark.toml" "$dark_theme_path" 2>/dev/null
+      [ -e "$DEFAULT_COLOR-light.toml" ] && ln -s "$DEFAULT_COLOR-light.toml" "$light_theme_path" 2>/dev/null
+    else
+      [ -e "$1-dark.toml" ] && ln -sf "$1-dark.toml" "$dark_theme_path"
+      [ -e "$1-light.toml" ] && ln -sf "$1-light.toml" "$light_theme_path"
+    fi
+    touch "$dark_theme_path"
+    touch "$light_theme_path"
+    touch "$CONFIG_HOME/alacritty/alacritty.toml"
+  )
+}
+
 update_highlight() {
   ( 
     cd "$HOME/.highlight/themes" || return
@@ -160,6 +179,7 @@ main() {
   update_fish "$color" &
   update_nvim "$color" &
   update_ghostty "$color" &
+  update_alacritty "$color" &
   update_highlight "$color" &
 
   wait
