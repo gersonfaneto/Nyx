@@ -26,8 +26,6 @@ in {
   home.homeDirectory = "/home/gerson";
 
   home.file = {
-    ".bash_profile/" = mkSymlink ".bash_profile/";
-    ".bin/" = mkSymlink ".bin/";
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
@@ -47,13 +45,15 @@ in {
     ".config/rmpc/" = mkSymlink ".config/rmpc/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
+    ".bin/" = mkSymlink ".bin/";
     ".emacs.d/" = mkSymlink ".emacs.d/";
-    ".gitconfig" = mkSymlink ".gitconfig";
     ".highlight/" = mkSymlink ".highlight/";
-    ".local/share/applications/" = mkSymlink ".local/share/applications/";
     ".local/share/backgrounds/" = mkSymlink ".local/share/backgrounds/";
-    ".profile/" = mkSymlink ".profile/";
-    ".bashrc/" = mkSymlink ".bashrc/";
+    ".local/share/applications/" = mkSymlink ".local/share/applications/";
+    ".gitconfig" = mkSymlink ".gitconfig";
+    ".bashrc" = mkSymlink ".bashrc";
+    ".profile" = mkSymlink ".profile";
+    ".bash_profile" = mkSymlink ".bash_profile";
   };
 
   home.packages = with pkgs; [
