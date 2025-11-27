@@ -53,7 +53,7 @@ switch_emacs() {
   (
     EMACS_CONFIG="$HOME/.emacs.d/local.el"
 
-    NEW_FONT="$FONT 12"
+    NEW_FONT="$FONT 10"
 
     if [ ! -f "$EMACS_CONFIG" ]; then
       echo "(setq minimal/default-font \"$NEW_FONT\")" > "$EMACS_CONFIG"

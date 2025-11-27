@@ -1,34 +1,23 @@
 return {
+  cmd = { 'nixd' },
+  filetypes = { 'nix' },
+  root_markers = { 'flake.nix', '.git' },
   settings = {
     nixd = {
       nixpkgs = {
-        expr = vim.fs.root(0, { 'shell.nix' }) ~= nil
-            and 'import <nixpkgs> { }'
-          or string.format(
-            'import (builtins.getFlake "%s").inputs.nixpkgs { }',
-            vim.fs.root(0, { 'flake.nix' }) or vim.fn.expand('$DOTFILES')
-          ),
+        expr = 'import <nixpkgs> { }',
       },
       formatting = {
         command = { 'alejandra' },
       },
-      options = vim.tbl_extend('force', {
-        home_manager = {
-          expr = string.format(
-            '(builtins.getFlake "%s").homeConfigurations.%s.options',
-            vim.fn.expand('$DOTFILES'),
-            vim.fn.hostname()
-          ),
-        },
-      }, {
+      options = {
         nixos = {
-          expr = string.format(
-            '(builtins.getFlake "%s").nixosConfigurations.%s.options',
-            vim.fn.expand('$DOTFILES'),
-            vim.fn.hostname()
-          ),
+          expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.Nyx.options',
         },
-      }),
+        home_manager = {
+          expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."gerson@Nyx".options',
+        },
+      },
     },
   },
 }

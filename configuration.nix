@@ -2,8 +2,7 @@
   pkgs,
   inputs,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -24,7 +23,7 @@
     experimental-features = nix-command flakes
   '';
 
-  nix.settings.trusted-users = [ "gerson" ];
+  nix.settings.trusted-users = ["gerson"];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -94,13 +93,13 @@
       folders = {
         "Alexandria" = {
           path = "/home/gerson/Alexandria";
-          devices = [ ];
+          devices = [];
         };
       };
       folders = {
         "Music" = {
           path = "/home/gerson/Music";
-          devices = [ ];
+          devices = [];
         };
       };
     };
@@ -132,7 +131,7 @@
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
     ];
-    config.common.default = [ "gtk" ];
+    config.common.default = ["gtk"];
   };
 
   users.users.gerson = {
@@ -145,7 +144,7 @@
       "docker"
       "networkmanager"
     ];
-    packages = with pkgs; [ gnupg ];
+    packages = with pkgs; [gnupg];
   };
 
   nixpkgs = {
@@ -288,7 +287,7 @@
       zoxide
     ])
     ++ (with pkgs; [
-      (callPackage ./packages/boomer.nix { })
+      (callPackage ./packages/boomer.nix {})
     ])
     ++ (with pkgs; [
       # Nyx
@@ -361,10 +360,10 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        emoji = [ "Noto Emoji" ];
-        serif = [ "Recursive Sans Linear Static" ];
-        sansSerif = [ "Recursive Sans Casual Static" ];
-        monospace = [ "Recursive Mono Casual Static" ];
+        emoji = ["Noto Emoji"];
+        serif = ["Recursive Sans Linear Static"];
+        sansSerif = ["Recursive Sans Casual Static"];
+        monospace = ["Recursive Mono Casual Static"];
       };
     };
   };

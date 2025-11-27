@@ -49,6 +49,7 @@ in {
     ".emacs.d/" = mkSymlink ".emacs.d/";
     ".gitconfig" = mkSymlink ".gitconfig";
     ".highlight/" = mkSymlink ".highlight/";
+    ".local/share/applications/" = mkSymlink ".local/share/applications/";
     ".local/share/backgrounds/" = mkSymlink ".local/share/backgrounds/";
   };
 

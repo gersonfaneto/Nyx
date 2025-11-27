@@ -1,3 +1,9 @@
 [Default Applications]
-inode/directory=nemo.desktop
+inode/directory=file-manager.desktop
+
+[Default Applications]
 application/pdf=org.pwmt.zathura.desktop
+
+[Default Applications]
+image/png=feh.desktop
+image/jpeg=feh.desktop

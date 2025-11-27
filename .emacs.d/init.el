@@ -66,6 +66,10 @@
 (global-set-key (kbd "C-c c") 'compile)             ;; Run compilation
 (global-set-key (kbd "C-c r") 'recompile)           ;; Recompile project
 
+;; --- General Keybindings ---
+(global-set-key (kbd "C-c C-c r") 'restart-emacs)
+(global-set-key (kbd "C-c C-c k") 'kill-emacs)
+
 ;; --- Straight.el Configuration ---
 ;; Specify the branch for straight.el.
 (setq straight-repository-branch "develop")
@@ -361,7 +365,18 @@
   :mode
   "\\.nix\\'"
   :hook
-  (nix-mode . eglot-ensure))
+  (nix-mode . eglot-ensure)
+  :init
+  (setq lsp-nix-nixd-server-path "nixd"
+	lsp-nix-nixd-formatting-command [ "alejandra" ]
+	lsp-nix-nixd-nixpkgs-expr "import <nixpkgs> { }"
+	lsp-nix-nixd-nixos-options-expr "(builtins.getFlake (\"git+file://\" + toString ./.)).nixosConfigurations.Nyx.options"
+	lsp-nix-nixd-home-manager-options-expr "(builtins.getFlake (\"git+file://\" + toString ./.)).homeConfigurations.\"gerson@Nyx\".options")
+  :config
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+		 '((nix-mode) . ("nixd" :initializationOptions
+				 (:formatting (:command ["alejandra"])))))))
 
 ;; --- C/C++ Mode ---
 (use-package cc-mode :straight (:type built-in)
