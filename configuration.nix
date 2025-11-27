@@ -340,6 +340,7 @@
       noto-fonts-color-emoji
 
       # UI + Coding
+      monaspace
       recursive
       departure-mono
     ];

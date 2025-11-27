@@ -53,7 +53,7 @@ vim.opt.foldnestmax = 3
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldtext = ''
-vim.opt.foldcolumn = '1'
+vim.opt.foldcolumn = '0'
 vim.opt.foldmethod = 'indent'
 vim.opt.foldopen:remove('block') -- make `{`/`}` skip over folds
 
