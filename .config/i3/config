@@ -75,8 +75,8 @@ floating_modifier $mod
 
 # Open `dmenu`, the default application launcher.
 # bindsym $mod+d exec --no-startup-id dmenu-run
-bindsym $mod+d exec --no-startup-id "~/.config/rofi/launchers/launcher.sh"
-bindsym $mod+$alt+d exec --no-startup-id "~/.config/rofi/applets/bin/apps.sh"
+bindsym $mod+d      exec --no-startup-id "~/.config/rofi/launchers/launcher.sh"
+bindsym $mod+$alt+d exec --no-startup-id "~/.config/rofi/applets/apps.sh"
 
 # Custom 'toolbox' using dmenu as a picker and some custom scripts.
 bindsym $mod+t exec --no-startup-id dmenu-toolbox

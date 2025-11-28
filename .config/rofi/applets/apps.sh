@@ -17,8 +17,8 @@ list_row='1'
 
 # CMDs (add your apps here)
 term_cmd='alacritty'
-file_cmd='thunar'
-text_cmd='geany'
+file_cmd='alacritty -e nvim /home/gerson'
+text_cmd='emacs'
 web_cmd='firefox'
 music_cmd='alacritty -e ncmpcpp'
 setting_cmd='xfce4-settings-manager'
