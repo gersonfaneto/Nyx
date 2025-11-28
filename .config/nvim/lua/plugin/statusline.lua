@@ -133,32 +133,26 @@ local function resolve_git_context_with_dotfiles_fallback(buf)
 
   if not vim.b[buf].git_work_tree then
     vim.b[buf].git_work_tree = utils.git.execute(
-      { 'rev-parse', '--show-toplevel' },
-      nil,
-      buf
+      buf,
+      { 'rev-parse', '--show-toplevel' }
     ) or utils.git.execute(
+      buf,
       vim.list_extend(
         vim.deepcopy(use_dot_repo_args),
         { 'rev-parse', '--show-toplevel' }
-      ),
-      nil,
-      buf
+      )
     )
   end
 
   if not vim.b[buf].git_dir then
-    vim.b[buf].git_dir = utils.git.execute(
-      { 'rev-parse', '--git-dir' },
-      nil,
-      buf
-    ) or utils.git.execute(
-      vim.list_extend(
-        vim.deepcopy(use_dot_repo_args),
-        { 'rev-parse', '--git-dir' }
-      ),
-      nil,
-      buf
-    )
+    vim.b[buf].git_dir = utils.git.execute(buf, { 'rev-parse', '--git-dir' })
+      or utils.git.execute(
+        buf,
+        vim.list_extend(
+          vim.deepcopy(use_dot_repo_args),
+          { 'rev-parse', '--git-dir' }
+        )
+      )
   end
 
   return vim.b[buf].git_work_tree, vim.b[buf].git_dir
@@ -185,7 +179,10 @@ function _G._statusline.gitdiff()
   -- Integration with gitsigns.nvim
   ---@diagnostic disable-next-line: undefined-field
   local diff = vim.b.gitsigns_status_dict
-    or utils.git.diffstat({ '--git-dir', git_dir, '--work-tree', work_tree })
+    or utils.git.diffstat(
+      0,
+      { '--git-dir', git_dir, '--work-tree', work_tree }
+    )
     or {}
   local added = diff.added or 0
   local changed = diff.changed or 0
@@ -225,6 +222,7 @@ function _G._statusline.gitbranch()
 
   local branch = vim.b.gitsigns_status_dict and vim.b.gitsigns_status_dict.head
     or utils.git.execute(
+      0,
       vim.list_extend(
         vim.deepcopy(use_cur_repo_args),
         { 'rev-parse', '--abbrev-ref', 'HEAD' }
@@ -238,14 +236,17 @@ function _G._statusline.gitbranch()
   -- and current file is not tracked
   -- This prevents showing the dotfiles bare repo branch info in irrelevant
   -- files
-  local show_untracked =
-    utils.git.execute(vim.list_extend(vim.deepcopy(use_cur_repo_args), {
+  local show_untracked = utils.git.execute(
+    0,
+    vim.list_extend(vim.deepcopy(use_cur_repo_args), {
       'config',
       '--local',
       '--get',
       'status.showUntrackedFiles',
-    }))
+    })
+  )
   local tracked = utils.git.execute(
+    0,
     vim.list_extend(
       vim.deepcopy(use_cur_repo_args),
       { 'ls-files', vim.api.nvim_buf_get_name(0) }
@@ -691,7 +692,7 @@ vim.api.nvim_create_autocmd('LspProgress', {
   callback = function(args)
     -- Update LSP progress data
     local id = args.data.client_id
-    local bufs = vim.tbl_keys(vim.lsp.get_client_by_id(id).attached_buffers)
+    local bufs = vim.lsp.get_buffers_by_client_id(id)
     client_info[id] = {
       name = vim.lsp.get_client_by_id(id).name,
       bufs = bufs,
