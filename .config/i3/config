@@ -98,9 +98,9 @@ bindsym $mod+c exec --no-startup-id caffeine
 bindsym $mod+b        exec firefox
 bindsym $mod+$shift+b exec firefox --private-window
 
-# Open ghostty.
-bindsym $mod+Return exec ghostty
-bindsym $mod+$shift+Return exec alacritty
+# Open the terminal[s].
+bindsym $mod+Return exec alacritty
+bindsym $mod+$shift+Return exec ghostty
 
 # Open THE text editor.
 bindsym $mod+e exec alacritty --command 'nvim'
