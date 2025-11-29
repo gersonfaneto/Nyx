@@ -602,15 +602,13 @@ do
     local colors_config = vim.tbl_deep_extend(
       'keep',
       json.read(colors_config_file),
-      { colors_name = 'nano' }
+      { bg = 'dark', colors_name = 'nano' }
     )
-    if colors_config.bg then
-      vim.go.bg = colors_config.bg
-    end
-    if
-      vim.v.vim_did_enter == 1
-      and colors_config.colors_name ~= vim.g.colors_name
-    then
+
+    vim.go.bg = colors_config.bg
+
+    -- Colorschemes provided by plugins are not loaded before fully startup
+    if vim.v.vim_did_enter == 1 then
       vim.cmd.colorscheme({
         args = { colors_config.colors_name },
         mods = { emsg_silent = true },
@@ -673,33 +671,6 @@ do
 
           json.write(colors_config_file, colors_config)
         end)
-      end,
-    },
-  })
-end
-
-do
-  augroup('my.godot_sync', {
-    'VimEnter',
-    {
-      callback = function()
-        local project_root = vim.fn.getcwd() .. '/project.godot'
-        local is_project = vim.uv.fs_stat(project_root)
-
-        if is_project then
-          vim.notify('Godot project detected!')
-          vim.g.godot_server_addr = vim.fn.serverstart('./godohost')
-        end
-      end,
-    },
-  }, {
-    'VimLeave',
-    {
-      callback = function()
-        if vim.g.godot_server_addr then
-          vim.fn.serverstop(vim.g.godot_server_addr)
-          vim.g.godot_server_addr = nil
-        end
       end,
     },
   })
