@@ -1,6 +1,6 @@
 fish_variables
 fish_envvars
-env.fish
+local.fish
 themes/Current.theme
 themes/Dark.theme
 themes/Light.theme

@@ -26,11 +26,11 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "9a0704e8af8f8442110ff22a83b5608366b235df",
+      "rev": "ed140c90465a18f893bb2f5fcfbc23c661e583cd",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "684270f22364bd248fcedd51598b6433266fdc47",
+      "rev": "5813e4878748805f1518cee7abb50fd7205a3a48",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "gruvbox-material": {
@@ -49,10 +49,6 @@
     "markdown-preview.nvim": {
       "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
       "src": "https://github.com/iamcco/markdown-preview.nvim"
-    },
-    "mini.nvim": {
-      "rev": "72b0194c56c984476c5975b62eb340fd1aa1686a",
-      "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "molten-nvim": {
       "rev": "4fd7be6a12b5efda5179db642f13bad60893acca",
@@ -96,7 +92,7 @@
       "src": "https://github.com/shushtain/nvim-treesitter-incremental-selection"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "6f2dc7e41a648ec90314f0f94b5f574c75c5c58b",
+      "rev": "63c4dce4a56312ef1bdeafd16bdefa008fcc950a",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
