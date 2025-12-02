@@ -183,6 +183,8 @@
   wa = worktree add
   wr = worktree remove
 
+  rs = restore --staged
+
   rank = shortlog --summary --numbered --email
 
   lg = log --graph --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n'

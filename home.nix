@@ -50,6 +50,8 @@ in {
     ".config/rofi/" = mkSymlink ".config/rofi/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
+    ".config/xmobar/" = mkSymlink ".config/xmobar/";
+    ".config/xmonad/" = mkSymlink ".config/xmonad/";
     ".bin/" = mkSymlink ".bin/";
     ".emacs.d/" = mkSymlink ".emacs.d/";
     ".highlight/" = mkSymlink ".highlight/";

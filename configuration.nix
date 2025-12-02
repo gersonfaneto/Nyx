@@ -46,8 +46,15 @@
   };
 
   services.xserver = {
-    windowManager.i3 = {
+    windowManager.xmonad = {
       enable = true;
+      enableContribAndExtras = true;
+      enableConfiguredRecompile = true;
+    };
+    displayManager = {
+      sessionCommands = ''
+        setwall
+      '';
     };
   };
 
@@ -291,47 +298,55 @@
     ++ (with pkgs; [
       (callPackage ./packages/boomer.nix {})
     ])
-    ++ (with pkgs; [
-      # Nyx
-      nil
-      nixd
-      alejandra
+    ++ (with pkgs;
+      [
+        # Nyx
+        nil
+        nixd
+        alejandra
 
-      # Markdown
-      marksman
+        # Markdown
+        marksman
 
-      # Lua
-      lua
-      stylua
-      lua-language-server
-      luajitPackages.luacheck
+        # Lua
+        lua
+        stylua
+        lua-language-server
+        luajitPackages.luacheck
 
-      # C
-      gcc
-      gnumake
-      cmake
-      gdb
-      strace
-      valgrind
+        # C
+        gcc
+        gnumake
+        cmake
+        gdb
+        strace
+        valgrind
 
-      # Python
-      python312
-      python312Packages.uv
-      python312Packages.pip
+        # Python
+        python312
+        python312Packages.uv
+        python312Packages.pip
 
-      # Bash
-      shfmt
-      bash-language-server
+        # Bash
+        shfmt
+        bash-language-server
 
-      # Node
-      nodejs_22
+        # Node
+        nodejs_22
 
-      # HTML + CSS + JSON
-      vscode-langservers-extracted
+        # HTML + CSS + JSON
+        vscode-langservers-extracted
 
-      # General
-      efm-langserver
-    ]);
+        # General
+        efm-langserver
+      ]
+      ++ (with pkgs; [
+        ghc
+        haskell-language-server
+        haskellPackages.xmobar
+        haskellPackages.xmonad
+        haskellPackages.xmonad-contrib
+      ]));
 
   fonts = {
     packages = with pkgs; [
