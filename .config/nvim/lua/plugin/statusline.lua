@@ -128,31 +128,13 @@ local function resolve_git_context_with_dotfiles_fallback(buf)
     return
   end
 
-  local use_dot_repo_args =
-    { '--git-dir', vim.env.DOT_DIR, '--work-tree', vim.env.HOME }
-
   if not vim.b[buf].git_work_tree then
-    vim.b[buf].git_work_tree = utils.git.execute(
-      buf,
-      { 'rev-parse', '--show-toplevel' }
-    ) or utils.git.execute(
-      buf,
-      vim.list_extend(
-        vim.deepcopy(use_dot_repo_args),
-        { 'rev-parse', '--show-toplevel' }
-      )
-    )
+    vim.b[buf].git_work_tree =
+      utils.git.execute(buf, { 'rev-parse', '--show-toplevel' })
   end
 
   if not vim.b[buf].git_dir then
     vim.b[buf].git_dir = utils.git.execute(buf, { 'rev-parse', '--git-dir' })
-      or utils.git.execute(
-        buf,
-        vim.list_extend(
-          vim.deepcopy(use_dot_repo_args),
-          { 'rev-parse', '--git-dir' }
-        )
-      )
   end
 
   return vim.b[buf].git_work_tree, vim.b[buf].git_dir
