@@ -12,15 +12,6 @@
       "rev": "1606e9d5d04ff254023c3f3c62842d065708d6d3",
       "src": "https://github.com/Eandrju/cellular-automaton.nvim"
     },
-    "conjure": {
-      "rev": "a02dd9d510ac86c76411e4bf5d4fd49595176487",
-      "src": "https://github.com/Olical/conjure"
-    },
-    "crates.nvim": {
-      "rev": "afcd1cc3eeceb5783676fc8464389b9216a29d05",
-      "src": "https://github.com/saecki/crates.nvim",
-      "version": "'stable'"
-    },
     "everforest": {
       "rev": "484dd560dccb2d2842685c441ad2b54a54ffef1b",
       "src": "https://github.com/sainnhe/everforest"
@@ -32,10 +23,6 @@
     "fzf-lua": {
       "rev": "cae96b04f6cad98a3ad24349731df5e56b384c3c",
       "src": "https://github.com/ibhagwan/fzf-lua"
-    },
-    "ghcid": {
-      "rev": "b7dc5c4ee640b6c8137ecfd0a2b50df278015221",
-      "src": "https://github.com/ndmitchell/ghcid"
     },
     "gitsigns.nvim": {
       "rev": "5813e4878748805f1518cee7abb50fd7205a3a48",
@@ -49,15 +36,6 @@
       "rev": "87b1a3506211538f460786c23f98ec63ad9af4e5",
       "src": "https://github.com/theprimeagen/harpoon",
       "version": "'harpoon2'"
-    },
-    "haskell-tools.nvim": {
-      "rev": "5fb8eda3c4430cb1d473d3e2138b070bdca1c224",
-      "src": "https://github.com/mrcjkb/haskell-tools.nvim",
-      "version": "6.0.0 - 7.0.0"
-    },
-    "haskell-vim": {
-      "rev": "f35d02204b4813d1dbe8b0e98cc39701a4b8e15e",
-      "src": "https://github.com/neovimhaskell/haskell-vim"
     },
     "img-clip.nvim": {
       "rev": "e7e29f0d07110405adecd576b602306a7edd507a",
@@ -144,11 +122,6 @@
     "quicker.nvim": {
       "rev": "9983d4b28881e1df626e3682167b45c284d4da8c",
       "src": "https://github.com/stevearc/quicker.nvim"
-    },
-    "rustaceanvim": {
-      "rev": "88575b98bb9937fb9983ddec5e532b67e75ce677",
-      "src": "https://github.com/mrcjkb/rustaceanvim",
-      "version": "6.0.0 - 7.0.0"
     },
     "treesj": {
       "rev": "4770492244ccecdc9b01e0e81fa8f2f6b4a23841",
