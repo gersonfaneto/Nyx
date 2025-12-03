@@ -5,6 +5,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers (doCenterFloat, doRectFloat)
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Layout.NoBorders
@@ -64,6 +65,7 @@ mManageHook =
     composeAll
         [ className =? "Navigator" --> doFloat
         , className =? "Dunst" --> doFloat
+        , className =? "wiremix" --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
         , className =? "firefox" --> doShift "1"
         , className =? "Alacritty" --> doShift "2"
         , className =? "Emacs" --> doShift "10"
@@ -77,11 +79,12 @@ mKeys =
     , ("M-S-<Return>", spawn mTerminal')
     , ("M-e", spawn $ mTerminal <> " --command 'nvim'")
     , ("M-S-e", spawn "emacsclient --create-frame --alternate-editor 'emacs'")
-    , ("M-<Backspace>", spawn "~/.config/rofi/powermenu/powermenu.sh")
-    , ("M-d", spawn "~/.config/rofi/launchers/launcher.sh")
-    , ("M-M1-d", spawn "~/.config/rofi/applets/apps.sh")
-    , ("M-m", spawn "~/.config/rofi/applets/mpd.sh")
-    , ("M-p", spawn "~/.config/rofi/applets/screenshot.sh")
+    , ("M-<Backspace>", spawn "rofi-system")
+    , ("M-d", spawn "rofi-run")
+    , ("M-M1-d", spawn "rofi-apps")
+    , ("M-m", spawn "rofi-music")
+    , ("M-S-m", spawn "rofi-audio")
+    , ("M-p", spawn "rofi-capture")
     , ("M-n", spawn "silence")
     , ("M-c", spawn "caffeine")
     , ("M-S-n", spawn "dunstctl close-all")

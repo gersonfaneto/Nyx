@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
-## Author  : Aditya Shakya (adi1090x)
-## Github  : @adi1090x
-#
-## Applets : Screenshot
-
 # Import Current Theme
-theme="$HOME/.config/rofi/applets/style.rasi"
+theme="$HOME/.config/rofi/styles/style-02.rasi"
 
 # Theme Elements
 prompt='Screenshot'

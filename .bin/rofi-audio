@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
-## Author  : Aditya Shakya (adi1090x)
-## Github  : @adi1090x
-#
-## Applets : Volume
-
 # Import Current Theme
-theme="$HOME/.config/rofi/applets/style.rasi"
+theme="$HOME/.config/rofi/styles/style-02.rasi"
 
 # Volume Info
 mixer="$(amixer info Master | grep 'Mixer name' | cut -d':' -f2 | tr -d \',' ')"
@@ -92,7 +87,7 @@ run_cmd() {
   elif [[ "$1" == '--opt4' ]]; then
     amixer set Capture toggle
   elif [[ "$1" == '--opt5' ]]; then
-    pavucontrol
+    alacritty --class 'wiremix' --command 'wiremix'
   fi
 }
 

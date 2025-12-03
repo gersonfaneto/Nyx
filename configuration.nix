@@ -53,7 +53,21 @@
     };
     displayManager = {
       sessionCommands = ''
-        setwall
+        # Set the keyboard layout
+        setxkbmap -layout br -variant thinkpad &
+
+        # Set the background.
+        setwall &
+
+        # Start battery monitor
+        battery-watcher -L 20 -n &
+
+        # Setup xss-lock & xsecurelock.
+        xset s 600 &
+        xss-lock -l -- xsecurelock &
+
+        # Setup notification daemon.
+        killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc &
       '';
     };
   };
@@ -215,6 +229,7 @@
       # quartus-prime-lite
       acpi
       alacritty
+      alsa-utils
       ani-cli
       arandr
       aseprite

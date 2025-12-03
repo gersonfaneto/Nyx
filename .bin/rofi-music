@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-# Author: (Original) Aditya Shakya — (Improved) ChatGPT Version
-# MPD Rofi Controller — Persistent, Auto-Refreshing
-
-theme="$HOME/.config/rofi/applets/style.rasi"
+theme="$HOME/.config/rofi/styles/style-02.rasi"
 
 # ─────────────────────────────────────────────
 # Helpers
