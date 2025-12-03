@@ -32,7 +32,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-solarized-dark)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -76,5 +76,7 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(remove-hook 'text-mode-hook #'vi-tilde-fringe-mode)
-(remove-hook 'prog-mode-hook #'vi-tilde-fringe-mode)
+(remove-hook! ('prog-mode-hook
+               'text-mode-hook
+               'conf-mode-hook)
+  #'vi-tilde-fringe-mode)
