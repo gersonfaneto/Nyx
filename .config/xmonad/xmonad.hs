@@ -1,20 +1,20 @@
-import Data.Map qualified as M
-import XMonad
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.InsertPosition
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.StatusBar
-import XMonad.Hooks.StatusBar.PP
-import XMonad.Layout.NoBorders
-import XMonad.Layout.Renamed
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.Spacing
-import XMonad.Layout.Spiral
-import XMonad.StackSet qualified as W
-import XMonad.Util.EZConfig (additionalKeysP)
-import XMonad.Util.Loggers
-import XMonad.Util.SpawnOnce
+import qualified Data.Map                    as M
+import           XMonad
+import           XMonad.Hooks.DynamicLog
+import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Hooks.InsertPosition
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.StatusBar
+import           XMonad.Hooks.StatusBar.PP
+import           XMonad.Layout.NoBorders
+import           XMonad.Layout.Renamed
+import           XMonad.Layout.ResizableTile
+import           XMonad.Layout.Spacing
+import           XMonad.Layout.Spiral
+import qualified XMonad.StackSet             as W
+import           XMonad.Util.EZConfig        (additionalKeysP)
+import           XMonad.Util.Loggers
+import           XMonad.Util.SpawnOnce
 
 -- TokyoNight Colors
 colorBg = "#1a1b26" -- background
@@ -69,7 +69,8 @@ myLayoutHook =
 -- Window rules (matching dwm config)
 myManageHook =
   composeAll
-    [ className =? "firefox" --> doShift "1",
+    [ className =? "Navigator" --> doFloat,
+      className =? "firefox" --> doShift "1",
       className =? "Alacritty" --> doShift "2",
       className =? "Emacs" --> doShift "9"
     ]

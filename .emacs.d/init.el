@@ -351,6 +351,7 @@
   ((haskell-mode . interactive-haskell-mode) ;; Enable interactive Haskell mode
    (haskell-mode . turn-on-haskell-doc-mode) ;; Enable Haskell doc mode
    (haskell-mode . haskell-setup-outline-mode)) ;; Setup outline for Haskell
+  (haskell-mode . eglot-ensure)
   :config
   (setq haskell-stylish-on-save t)     ;; Use stylish-haskell on save
   ;; Custom function to set outline regexp for Haskell.
