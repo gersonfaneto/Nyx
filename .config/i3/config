@@ -51,13 +51,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 
-bindsym $mod+F1 exec --no-startup-id dmenu-background
-bindsym $mod+F2 exec --no-startup-id dmenu-color
-bindsym $mod+F3 exec --no-startup-id dmenu-wall
-bindsym $mod+F4 exec --no-startup-id dmenu-font
-
-bindsym $mod+comma exec --no-startup-id dmenu-files
-
+# NOTE: Alternatives for keyboards with no media keys...
 bindsym $mod+$alt+$left  exec --no-startup-id playerctl previous
 bindsym $mod+$alt+$right exec --no-startup-id playerctl next
 bindsym $mod+$alt+p      exec --no-startup-id playerctl play-pause
@@ -74,19 +68,24 @@ bindsym $mod+$shift+n exec --no-startup-id dunstctl close-all
 floating_modifier $mod
 
 # Open `dmenu`, the default application launcher.
-# bindsym $mod+d exec --no-startup-id dmenu-run
-bindsym $mod+d      exec --no-startup-id "~/.config/rofi/launchers/launcher.sh"
-bindsym $mod+$alt+d exec --no-startup-id "~/.config/rofi/applets/apps.sh"
+bindsym $mod+d exec --no-startup-id dmenu-run
 
 # Custom 'toolbox' using dmenu as a picker and some custom scripts.
 bindsym $mod+t exec --no-startup-id dmenu-toolbox
 
 # Let's groove!
-# bindsym $mod+m exec --no-startup-id dmenu-music
-bindsym $mod+m exec --no-startup-id "~/.config/rofi/applets/mpd.sh"
+bindsym $mod+m exec --no-startup-id dmenu-music
 
 # Cpature the moment...
-bindsym $mod+p exec --no-startup-id "~/.config/rofi/applets/screenshot.sh"
+bindsym $mod+p exec --no-startup-id dmenu-capture
+
+# All the menus!
+bindsym $mod+F1 exec --no-startup-id dmenu-background
+bindsym $mod+F2 exec --no-startup-id dmenu-color
+bindsym $mod+F3 exec --no-startup-id dmenu-wall
+bindsym $mod+F4 exec --no-startup-id dmenu-font
+
+bindsym $mod+comma exec --no-startup-id dmenu-files
 
 # Use `boomer` as a magnifying glass.
 bindsym $mod+z exec --no-startup-id boomer

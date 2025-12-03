@@ -1,4 +1,4 @@
-import qualified Data.Map as M
+import Data.Map qualified as M
 
 import XMonad
 import XMonad.Hooks.DynamicLog
@@ -12,7 +12,7 @@ import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
-import qualified XMonad.StackSet as W
+import XMonad.StackSet qualified as W
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Loggers
 import XMonad.Util.SpawnOnce
@@ -47,6 +47,7 @@ mModMask = mod4Mask
 
 -- Terminal
 mTerminal = "alacritty"
+mTerminal' = "ghostty"
 
 -- Layouts
 mLayoutHook =
@@ -62,6 +63,7 @@ mLayoutHook =
 mManageHook =
     composeAll
         [ className =? "Navigator" --> doFloat
+        , className =? "Dunst" --> doFloat
         , className =? "firefox" --> doShift "1"
         , className =? "Alacritty" --> doShift "2"
         , className =? "Emacs" --> doShift "10"
@@ -72,29 +74,40 @@ mManageHook =
 mKeys =
     -- Launch applications
     [ ("M-<Return>", spawn mTerminal)
-    , ("M-d", spawn "dmenu-run")
+    , ("M-S-<Return>", spawn mTerminal')
+    , ("M-e", spawn $ mTerminal <> " --command 'nvim'")
+    , ("M-S-e", spawn "emacsclient --create-frame --alternate-editor 'emacs'")
+    , ("M-<Backspace>", spawn "~/.config/rofi/powermenu/powermenu.sh")
+    , ("M-d", spawn "~/.config/rofi/launchers/launcher.sh")
+    , ("M-M1-d", spawn "~/.config/rofi/applets/apps.sh")
+    , ("M-m", spawn "~/.config/rofi/applets/mpd.sh")
+    , ("M-p", spawn "~/.config/rofi/applets/screenshot.sh")
+    , ("M-n", spawn "silence")
+    , ("M-c", spawn "caffeine")
+    , ("M-S-n", spawn "dunstctl close-all")
+    , ("M-z", spawn "boomer")
     , -- Window management
       ("M-q", kill)
     , ("M-j", windows W.focusDown)
     , ("M-k", windows W.focusUp)
     , ("M-<Tab>", windows W.focusDown)
-    , -- Master area
-      ("M-h", sendMessage Expand)
-    , ("M-g", sendMessage Shrink)
-    , ("M-i", sendMessage (IncMasterN 1))
-    , ("M-p", sendMessage (IncMasterN (-1)))
-    , -- Layout switching
-      ("M-t", sendMessage $ JumpToLayout "Tall")
-    , ("M-f", sendMessage $ JumpToLayout "Full")
-    , ("M-c", sendMessage $ JumpToLayout "Spiral")
-    , ("M-S-<Return>", sendMessage NextLayout)
-    , ("M-n", sendMessage NextLayout)
-    , -- Floating
+    , -- , -- Master area
+      --   ("M-h", sendMessage Expand)
+      -- , ("M-g", sendMessage Shrink)
+      -- , ("M-i", sendMessage (IncMasterN 1))
+      -- , ("M-p", sendMessage (IncMasterN (-1)))
+      -- , -- Layout switching
+      --   ("M-t", sendMessage $ JumpToLayout "Tall")
+      -- , ("M-f", sendMessage $ JumpToLayout "Full")
+      -- , ("M-c", sendMessage $ JumpToLayout "Spiral")
+      ("M-S-,", sendMessage NextLayout)
+    , -- , ("M-n", sendMessage NextLayout)
+      -- Floating
       ("M-S-<Space>", withFocused toggleFloat)
-    , -- Gaps (z to increase, x to decrease, a to toggle)
-      ("M-z", incWindowSpacing 8)
-    , ("M-x", decWindowSpacing 8)
-    , ("M-a", toggleWindowSpacingEnabled >> toggleScreenSpacingEnabled)
+    , -- , -- Gaps (z to increase, x to decrease, a to toggle)
+      --   ("M-z", incWindowSpacing 8)
+      -- , ("M-x", decWindowSpacing 8)
+      ("M-a", toggleWindowSpacingEnabled >> toggleScreenSpacingEnabled)
     , ("M-S-a", setWindowSpacing (Border 3 3 3 3) >> setScreenSpacing (Border 3 3 3 3))
     , -- Quit/Restart
       ("M-S-r", spawn "xmonad --recompile && xmonad --restart")
@@ -109,11 +122,26 @@ mKeys =
     , ("M-<Space> 8", windows $ W.greedyView "8")
     , ("M-<Space> 9", windows $ W.greedyView "9")
     , ("M-<Space> f", spawn "firefox")
+    , ("M-<Space> S-f", spawn "firefox --private-window")
     , -- Volume controls
       ("<XF86AudioRaiseVolume>", spawn "volume up")
     , ("<XF86AudioLowerVolume>", spawn "volume down")
     , ("<XF86AudioMute>", spawn "volume mute")
     , ("M-<XF86AudioMute>", spawn "volume mute")
+    , ("M-M1-k", spawn "volume up")
+    , ("M-M1-j", spawn "volume down")
+    , ("M-M1-m", spawn "volume mute")
+    , ("M-M1-v", spawn "volume mute")
+    , -- Playback control
+      ("<XF86AudioPrev>", spawn "playerctl previous")
+    , ("<XF86AudioNext>", spawn "playerctl next")
+    , ("<XF86AudioPlay>", spawn "playerctl play-pause")
+    , ("M-M1-h", spawn "playerctl previous")
+    , ("M-M1-l", spawn "playerctl next")
+    , ("M-M1-p", spawn "playerctl play-pause")
+    , -- Brightness control
+      ("<XF86MonBrightnessDown>", spawn "brightness down")
+    , ("<XF86MonBrightnessUp>", spawn "brightness up")
     ]
         ++
         -- Standard TAGKEYS behavior (Mod+# to view, Mod+Shift+# to move)
