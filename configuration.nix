@@ -296,6 +296,7 @@
       zoxide
     ])
     ++ (with pkgs; [
+      xmobar
       (haskellPackages.ghcWithPackages (self:
         with self; [
           xmonad

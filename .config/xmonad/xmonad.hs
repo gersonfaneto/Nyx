@@ -72,7 +72,7 @@ myManageHook =
     [ className =? "Navigator" --> doFloat,
       className =? "firefox" --> doShift "1",
       className =? "Alacritty" --> doShift "2",
-      className =? "Emacs" --> doShift "9"
+      className =? "Emacs" --> doShift "10"
     ]
     <+> insertPosition Below Newer
 
