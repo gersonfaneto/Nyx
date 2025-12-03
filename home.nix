@@ -33,7 +33,6 @@ in {
   home.file = {
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";
-    ".config/doom/" = mkSymlink ".config/doom/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
     ".config/fastfetch/" = mkSymlink ".config/fastfetch/";
     ".config/fd/" = mkSymlink ".config/fd/";
