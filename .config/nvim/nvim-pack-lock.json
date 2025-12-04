@@ -5,7 +5,7 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "7beba91fdc61fdc84ea6d6395d614671e609f895",
+      "rev": "57d900e6982f63c7cde689aa06d8af76c8da083e",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "cellular-automaton.nvim": {
@@ -38,7 +38,7 @@
       "version": "'harpoon2'"
     },
     "img-clip.nvim": {
-      "rev": "e7e29f0d07110405adecd576b602306a7edd507a",
+      "rev": "93fcf50924108262caec66b900077987dfcb7c7f",
       "src": "https://github.com/HakonHarnes/img-clip.nvim"
     },
     "markdown-preview.nvim": {
@@ -74,7 +74,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "e527584cf8508b2f99f127c2a20f93237e8fcf83",
+      "rev": "75797cdd8ac125c7ace065b17788b439dcf89a71",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
