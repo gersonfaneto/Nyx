@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x # Uncomment only for debugging!
+# set -x # WARN: Only used for debugging...
 set -euo pipefail
 
 show_help() {

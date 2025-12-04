@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x # WARN: Only used for debugging...
+# set -x # WARN: Only used for debugging...
 set -euo pipefail
 
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -14,13 +14,13 @@ usage() {
 }
 
 update_fish() {
-  ( 
+  (
     cd "$CONFIG_HOME/fish/themes" || return
     theme_path="Current.theme"
     if [ -z "$1" ]; then
       case "$DEFAULT_BG" in
-        dark) [ -e "Dark.theme" ] && ln -s "Dark.theme" "$theme_path" 2>/dev/null ;;
-        light) [ -e "Light.theme" ] && ln -s "Light.theme" "$theme_path" 2>/dev/null ;;
+        dark) [ -e "Dark.theme" ] && ln -s "Dark.theme" "$theme_path" 2> /dev/null ;;
+        light) [ -e "Light.theme" ] && ln -s "Light.theme" "$theme_path" 2> /dev/null ;;
       esac
     else
       case "$1" in
@@ -60,7 +60,7 @@ update_nvim() {
       --remote-expr "execute(\"if &bg !=# '$1' && &tgc \
       | let g:script_set_bg=1 | set bg=$1 | unlet g:script_set_bg \
       | endif\")" \
-      +qa! >/dev/null 2>&1 &
+      +qa! > /dev/null 2>&1 &
 
     nvim_clients="$nvim_clients $!"
   done
@@ -75,7 +75,7 @@ update_nvim() {
     bg=$(jq -r '.bg' "$colors_json")
     if [ "$bg" != "$1" ]; then
       jq --arg bg "$1" '.bg = $bg' \
-        "$colors_json" >"$colors_json.tmp"
+        "$colors_json" > "$colors_json.tmp"
       mv "$colors_json.tmp" "$colors_json"
     fi
   fi
@@ -87,18 +87,22 @@ update_nvim() {
 }
 
 update_ghostty() {
-  ( 
+  (
     cd "$CONFIG_HOME/ghostty/themes" || return
     theme_path="current"
     if [ -z "$1" ]; then
       [ -e "$DEFAULT_BG" ] &&
-        ln -s "$DEFAULT_BG" "$theme_path" 2>/dev/null
+        ln -s "$DEFAULT_BG" "$theme_path" 2> /dev/null
     else
       [ -e "$1" ] &&
         ln -sf "$1" "$theme_path"
     fi
 
-    kill -USR2 "$(pgrep ghostty)"
+    if has ghostty; then
+      for pid in $(pgrep ghostty); do
+        kill -USR2 "$pid"
+      done
+    fi
   )
 }
 
@@ -110,7 +114,7 @@ update_alacritty() {
     # If $1 is empty, only need to ensure symlink to color theme file exists
     if [ -z "$1" ]; then
       [ -e "$themes_dir/$DEFAULT_BG.toml" ] &&
-        ln -s "$themes_dir/$DEFAULT_BG.toml" "$theme_path" 2>/dev/null
+        ln -s "$themes_dir/$DEFAULT_BG.toml" "$theme_path" 2> /dev/null
     else
       [ -e "$themes_dir/$1.toml" ] &&
         ln -sf "$themes_dir/$1.toml" "$theme_path"
@@ -120,13 +124,13 @@ update_alacritty() {
 }
 
 update_highlight() {
-  ( 
+  (
     cd "$HOME/.highlight" || return
     themes_dir="themes"
     theme_path="highlight.theme"
     if [ -z "$1" ]; then
       [ -e "$themes_dir/$DEFAULT_BG.theme" ] &&
-        ln -s "$themes_dir/$DEFAULT_BG.theme" "$theme_path" 2>/dev/null
+        ln -s "$themes_dir/$DEFAULT_BG.theme" "$theme_path" 2> /dev/null
     else
       [ -e "$themes_dir/$1.theme" ] &&
         ln -sf "$themes_dir/$1.theme" "$theme_path"
@@ -137,7 +141,7 @@ update_highlight() {
 main() {
   lockfile="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/setbg.lock"
 
-  exec 9>"$lockfile"
+  exec 9> "$lockfile"
 
   if ! flock -n 9; then
     echo "Waiting for existing instance (lock: '$lockfile')" >&2

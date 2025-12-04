@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -e
+# set -x # WARN: Only used for debugging...
+set -euo pipefail
 
 STATE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/caffeine_state"
 
