@@ -2,7 +2,7 @@
 
 # Sets the image as a wallpaper for desktop
 
-wallpaper=${1:-$HOME/.local/share/backgrounds/3840x2160.png}
+wallpaper=${1:-$HOME/.local/share/backgrounds/default.png}
 
 feh --bg-fill "$wallpaper" &
 
