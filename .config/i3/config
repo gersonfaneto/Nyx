@@ -25,7 +25,7 @@ exec --no-startup-id setxkbmap -layout br -variant thinkpad
 exec --no-startup-id setwall
 
 # Start battery monitor
-exec --no-startup-id battery-watcher -L 20 -n &
+exec --no-startup-id battery -L 20 -n &
 
 # Setup xss-lock & xsecurelock.
 exec_always --no-startup-id xset s 600
@@ -235,7 +235,6 @@ mode "(S)uspend, (E)xit, (L)ock, (R)eboot, (P)oweroff" {
 bindsym $mod+BackSpace exec --no-startup-id "~/.config/rofi/powermenu/powermenu.sh"
 
 bar {
-  # status_command i3status | now-playing
   status_command i3status
   tray_output none
   colors {

@@ -74,7 +74,7 @@ myStartupHook :: X ()
 myStartupHook = do
     spawn "setxkbmap -layout br -variant thinkpad &"
     spawn "setwall &"
-    spawn "battery-watcher -L 20 -n &"
+    spawn "battery -L 20 -n &"
     spawn "xset s 600 &"
     spawn "xss-lock -l -- xsecurelock &"
     spawn "killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc &"
