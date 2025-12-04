@@ -51,25 +51,6 @@
       enableContribAndExtras = true;
       enableConfiguredRecompile = true;
     };
-    displayManager = {
-      sessionCommands = ''
-        # Set the keyboard layout
-        setxkbmap -layout br -variant thinkpad &
-
-        # Set the background.
-        setwall &
-
-        # Start battery monitor
-        battery-watcher -L 20 -n &
-
-        # Setup xss-lock & xsecurelock.
-        xset s 600 &
-        xss-lock -l -- xsecurelock &
-
-        # Setup notification daemon.
-        killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc &
-      '';
-    };
   };
 
   services.displayManager = {

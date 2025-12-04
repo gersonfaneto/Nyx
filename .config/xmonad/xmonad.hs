@@ -1,34 +1,34 @@
-import qualified Data.Map                    as M
+import Data.Map qualified as M
 
-import           XMonad
-import           XMonad.Actions.CycleWS
-import           XMonad.Hooks.DynamicLog
-import           XMonad.Hooks.EwmhDesktops
-import           XMonad.Hooks.InsertPosition
-import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.ManageHelpers  (doCenterFloat, doRectFloat)
-import           XMonad.Hooks.StatusBar
-import           XMonad.Hooks.StatusBar.PP
-import           XMonad.Layout.NoBorders
-import           XMonad.Layout.Renamed
-import           XMonad.Layout.ResizableTile
-import           XMonad.Layout.Spacing
-import           XMonad.Layout.Spiral
-import qualified XMonad.StackSet             as W
-import           XMonad.Util.EZConfig        (additionalKeysP)
-import           XMonad.Util.Loggers
-import           XMonad.Util.SpawnOnce
+import XMonad
+import XMonad.Actions.CycleWS
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.InsertPosition
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers (doCenterFloat, doRectFloat)
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Renamed
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Spacing
+import XMonad.Layout.Spiral
+import XMonad.StackSet qualified as W
+import XMonad.Util.EZConfig (additionalKeysP)
+import XMonad.Util.Loggers
+import XMonad.Util.SpawnOnce
 
 cBackground = "#002B36"
 cForeground = "#657B83"
-cBlack      = "#32344A"
-cBlack'     = "#444B6A"
-cRed        = "#DC322F"
-cGreen      = "#859900"
-cYellow     = "#B58900"
-cBlue       = "#268BD2"
-cMagenta    = "#D33682"
-cCyan       = "#2AA198"
+cBlack = "#32344A"
+cBlack' = "#444B6A"
+cRed = "#DC322F"
+cGreen = "#859900"
+cYellow = "#B58900"
+cBlue = "#268BD2"
+cMagenta = "#D33682"
+cCyan = "#2AA198"
 
 mSpacing = spacingWithEdge 3
 
@@ -69,6 +69,16 @@ mManageHook =
         -- , className =? "Emacs" --> doShift "10"
         ]
         <+> insertPosition Below Newer
+
+myStartupHook :: X ()
+myStartupHook = do
+    spawn "setxkbmap -layout br -variant thinkpad &"
+    spawn "setwall &"
+    spawn "battery-watcher -L 20 -n &"
+    spawn "xset s 600 &"
+    spawn "xss-lock -l -- xsecurelock &"
+    spawn "killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc &"
+    spawn "xsetroot -cursor_name left_ptr &"
 
 mKeys =
     [ ("M-<Escape>", spawn "rofi-system")
@@ -124,11 +134,10 @@ mKeys =
     , ("<XF86MonBrightnessDown>", spawn "brightness down")
     , ("<XF86MonBrightnessUp>", spawn "brightness up")
     ]
-    ++
-    [ (mask ++ "M-" ++ [key], windows $ action tag)
-    | (tag, key) <- zip mWorkspaces "1234567890"
-    , (action, mask) <- [(W.greedyView, ""), (W.shift, "S-")]
-    ]
+        ++ [ (mask ++ "M-" ++ [key], windows $ action tag)
+           | (tag, key) <- zip mWorkspaces "1234567890"
+           , (action, mask) <- [(W.greedyView, ""), (W.shift, "S-")]
+           ]
 
 toggleFloat w =
     windows
@@ -164,6 +173,7 @@ myConfig =
         , borderWidth = 2
         , normalBorderColor = cBlack
         , focusedBorderColor = cMagenta
+        , startupHook = myStartupHook
         , layoutHook = mLayoutHook
         , manageHook = mManageHook <+> manageDocks
         }
