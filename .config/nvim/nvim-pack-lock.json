@@ -123,6 +123,10 @@
       "rev": "9983d4b28881e1df626e3682167b45c284d4da8c",
       "src": "https://github.com/stevearc/quicker.nvim"
     },
+    "solarized": {
+      "rev": "62f656a02f93c5190a8753159e34b385588d5ff3",
+      "src": "https://github.com/altercation/solarized"
+    },
     "treesj": {
       "rev": "4770492244ccecdc9b01e0e81fa8f2f6b4a23841",
       "src": "https://github.com/Wansmer/treesj"
@@ -138,6 +142,10 @@
     "venn.nvim": {
       "rev": "b09c2f36ddf70b498281845109bedcf08a7e0de0",
       "src": "https://github.com/jbyuki/venn.nvim"
+    },
+    "vim-colors-solarized": {
+      "rev": "528a59f26d12278698bb946f8fb82a63711eec21",
+      "src": "https://github.com/altercation/vim-colors-solarized"
     },
     "vim-conjoin": {
       "rev": "14ad4e6321b43f9518a2dc99ed705895eef8800b",

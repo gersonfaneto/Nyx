@@ -3,50 +3,50 @@ Config {
    -- Appearance
      font            = "Recursive Sans Casual Static 10"
    , additionalFonts = [ "Recursive Sans Casual Static 12" ]
-   , bgColor         = "#1a1b26"
-   , fgColor         = "#a9b1d6"
+   , bgColor         = "#002B36"
+   , fgColor         = "#FDF6E3"
    , position        = BottomSize C 100 35 │ 
    , border          = BottomB
-   , borderColor     = "#444b6a"
+   , borderColor     = "#839496"
    , borderWidth     = 2
 
    -- Layout
    , sepChar         = "%"
    , alignSep        = "}{"
-   , template        = " %XMonadLog% }{ %cpu% <fc=#444b6a>│</fc> %memory% <fc=#444b6a>│</fc> %battery% <fc=#444b6a>│</fc> %date% "
+   , template        = " %XMonadLog% }{ %cpu% <fc=#839496>│</fc> %memory% <fc=#839496>│</fc> %battery% <fc=#839496>│</fc> %date% "
 
    -- Plugins
    , commands        =
         [ Run XMonadLog
         , Run Cpu
-            [ "-t", "<fc=#7aa2f7> CPU:</fc> <total>%"
+            [ "-t", "<fc=#FDF6E3> CPU:</fc> <total>%"
             , "-L", "30"
             , "-H", "70"
-            , "-l", "#9ece6a"
-            , "-n", "#e0af68"
-            , "-h", "#f7768e"
+            , "-l", "#859900"
+            , "-n", "#B58900"
+            , "-h", "#DC322F"
             ] 10
         , Run Memory
-            [ "-t", "<fc=#7aa2f7>󰍛 MEM:</fc> <usedratio>%"
+            [ "-t", "<fc=#FDF6E3>󰍛 MEM:</fc> <usedratio>%"
             , "-L", "30"
             , "-H", "70"
-            , "-l", "#9ece6a"
-            , "-n", "#e0af68"
-            , "-h", "#f7768e"
+            , "-l", "#859900"
+            , "-n", "#B58900"
+            , "-h", "#DC322F"
             ] 10
         , Run Battery
-            [ "-t", "<fc=#7aa2f7>󱐋 BAT:</fc> <acstatus>"
+            [ "-t", "<fc=#FDF6E3>󱐋 BAT:</fc> <acstatus>"
             , "-L", "20"
             , "-H", "80"
-            , "-l", "#f7768e"
-            , "-n", "#e0af68"
-            , "-h", "#9ece6a"
+            , "-l", "#859900"
+            , "-n", "#B58900"
+            , "-h", "#DC322F"
             , "--"
             , "-o", "<left>% (<timeleft>)"
-            , "-O", "<fc=#e0af68>Charging</fc> <left>%"
-            , "-i", "<fc=#9ece6a>Charged</fc>"
+            , "-O", "<fc=#B58900>Charging</fc> <left>%"
+            , "-i", "<fc=#859900>Charged</fc>"
             ] 50
-        , Run Date "<fc=#ad8ee6> %a %b %_d %H:%M</fc>" "date" 10
+        , Run Date "<fc=#FDF6E3> %a %b %_d %H:%M</fc>" "date" 10
         ]
    }
 

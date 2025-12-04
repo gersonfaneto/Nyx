@@ -19,16 +19,16 @@ import           XMonad.Util.EZConfig        (additionalKeysP)
 import           XMonad.Util.Loggers
 import           XMonad.Util.SpawnOnce
 
-cBackground = "#1A1B26"
-cForeground = "#A9B1D6"
+cBackground = "#002B36"
+cForeground = "#657B83"
 cBlack      = "#32344A"
 cBlack'     = "#444B6A"
-cRed        = "#F7768E"
-cGreen      = "#9ECE6A"
-cYellow     = "#E0AF68"
-cBlue       = "#7AA2F7"
-cMagenta    = "#AD8EE6"
-cCyan       = "#0DB9D7"
+cRed        = "#DC322F"
+cGreen      = "#859900"
+cYellow     = "#B58900"
+cBlue       = "#268BD2"
+cMagenta    = "#D33682"
+cCyan       = "#2AA198"
 
 mSpacing = spacingWithEdge 3
 
