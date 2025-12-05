@@ -9,8 +9,18 @@ return {
         prefix = 'self',
         granularity = { group = 'module' },
       },
-      cargo = { buildScripts = { enable = true } },
-      procMacro = { enable = true },
+      check = {
+        command = 'clippy',
+      },
+      cargo = {
+        buildScripts = { enable = true },
+      },
+      procMacro = {
+        enable = true,
+      },
+      diagnostic = {
+        enable = true,
+      },
     },
   },
   capabilities = {

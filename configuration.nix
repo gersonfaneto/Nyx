@@ -207,7 +207,6 @@
 
   environment.systemPackages =
     (with pkgs; [
-      # quartus-prime-lite
       acpi
       alacritty
       alsa-utils
@@ -273,6 +272,7 @@
       trash-cli
       tree
       tree-sitter
+      typst
       unzip
       vim
       vlc
@@ -292,13 +292,15 @@
       zoxide
     ])
     ++ (with pkgs; [
-      xmobar
       (haskellPackages.ghcWithPackages (self:
         with self; [
+          xmobar
           xmonad
           xmonad-extras
           xmonad-contrib
-          xmobar
+          stack
+          cabal-install
+          fourmolu
           stylish-haskell
           haskell-language-server
         ]))
@@ -355,7 +357,7 @@
 
       # Emojis
       noto-fonts-color-emoji
-      
+
       # UI
       recursive
 

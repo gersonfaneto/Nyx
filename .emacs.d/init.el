@@ -426,6 +426,25 @@
 ;; Keybinding to toggle the theme.
 (global-set-key (kbd "C-c t") 'minimal/toggle-theme)
 
+;; --- Transparency Toggling ---
+;; Change values of frame alpha to toggle it between solid and seetrough.
+(defun minimal/toggle-transparency ()
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (if (eq
+     (if (numberp alpha)
+	 alpha
+       (cdr alpha))
+     100)
+    (set-frame-parameter nil 'alpha '(85 . 50))
+      (set-frame-parameter nil 'alpha '(100 . 100)))))
+
+;; FIXME: Doesn't work on the first run...
+(minimal/toggle-transparency)
+
+;; Keybinding to toggle the transparency.
+(global-set-key (kbd "C-c o") 'minimal/toggle-transparency)
+
 ;; --- Frame Setup ---
 ;; Function to set up fonts and theme for new frames.
 (defun minimal/setup-frame (frame)
