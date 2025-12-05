@@ -424,7 +424,7 @@
     (custom-set-variables `(minimal/current-theme ',new-theme)))) ;; Save the new theme setting
 
 ;; Keybinding to toggle the theme.
-(global-set-key (kbd "C-c t") 'minimal/toggle-theme)
+(global-set-key (kbd "C-S-t") 'minimal/toggle-theme)
 
 ;; --- Transparency Toggling ---
 ;; Change values of frame alpha to toggle it between solid and seetrough.
@@ -443,7 +443,7 @@
 (minimal/toggle-transparency)
 
 ;; Keybinding to toggle the transparency.
-(global-set-key (kbd "C-c o") 'minimal/toggle-transparency)
+(global-set-key (kbd "C-S-o") 'minimal/toggle-transparency)
 
 ;; --- Frame Setup ---
 ;; Function to set up fonts and theme for new frames.

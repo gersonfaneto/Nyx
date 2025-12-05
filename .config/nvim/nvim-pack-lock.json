@@ -45,6 +45,10 @@
       "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
       "src": "https://github.com/iamcco/markdown-preview.nvim"
     },
+    "mini.nvim": {
+      "rev": "dca98843fab66d080779cd973e7139e258ff164c",
+      "src": "https://github.com/nvim-mini/mini.nvim"
+    },
     "molten-nvim": {
       "rev": "4fd7be6a12b5efda5179db642f13bad60893acca",
       "src": "https://github.com/benlubas/molten-nvim"
@@ -68,10 +72,6 @@
     "nvim-nio": {
       "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
       "src": "https://github.com/nvim-neotest/nvim-nio"
-    },
-    "nvim-surround": {
-      "rev": "fcfa7e02323d57bfacc3a141f8a74498e1522064",
-      "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
       "rev": "75797cdd8ac125c7ace065b17788b439dcf89a71",
