@@ -293,17 +293,12 @@
       zoxide
     ])
     ++ (with pkgs; [
+      xmobar
       (haskellPackages.ghcWithPackages (self:
         with self; [
-          xmobar
           xmonad
           xmonad-extras
           xmonad-contrib
-          stack
-          cabal-install
-          fourmolu
-          stylish-haskell
-          haskell-language-server
         ]))
     ])
     ++ (with pkgs; [
@@ -331,6 +326,13 @@
       gdb
       strace
       valgrind
+
+      # Haskell
+      stack
+      cabal-install
+      haskell-language-server
+      fourmolu
+      stylish-haskell
 
       # Python
       python312
