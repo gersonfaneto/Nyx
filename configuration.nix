@@ -273,7 +273,6 @@
       trash-cli
       tree
       tree-sitter
-      typst
       unzip
       vim
       vlc
@@ -348,6 +347,15 @@
 
       # HTML + CSS + JSON
       vscode-langservers-extracted
+
+      # LaTeX
+      texlive.combined.scheme-full
+      texlab
+      tectonic
+
+      # Typst
+      typst
+      tinymist
 
       # General
       efm-langserver

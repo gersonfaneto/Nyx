@@ -2,7 +2,35 @@
 
 # Sets the image as a wallpaper for desktop
 
-wallpaper=${1:-$HOME/.local/share/backgrounds/default.png}
+WALLPAPERS_DIR="$HOME/.local/share/wallpapers"
+
+if [[ $1 == "--help" || $1 == "-h" ]]; then
+  echo "Usage: wallpaper [image.png]"
+  echo "Sets the specified PNG as wallpaper. If no argument, selects randomly."
+  exit 0
+fi
+
+if [[ -z $1 ]]; then
+  # Random selection
+  files=("$WALLPAPERS_DIR"/*.png)
+  if [[ ${#files[@]} -gt 0 ]]; then
+    wallpaper="${files[RANDOM % ${#files[@]}]}"
+  else
+    wallpaper="$WALLPAPERS_DIR/default.png"
+  fi
+else
+  # Handle relative paths
+  if [[ $1 != /* ]]; then
+    wallpaper="$WALLPAPERS_DIR/$1"
+  else
+    wallpaper="$1"
+  fi
+fi
+
+# Fallback to default if file doesn't exist
+if [[ ! -f "$wallpaper" ]]; then
+  wallpaper="$WALLPAPERS_DIR/default.png"
+fi
 
 feh --bg-fill "$wallpaper" &
 
