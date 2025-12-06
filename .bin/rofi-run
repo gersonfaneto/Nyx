@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-rofi -show drun -theme "$HOME/.config/rofi/styles/style-01.rasi"
+rofi -show drun \
+  -theme "$HOME/.config/rofi/styles/style-01.rasi" \
+  -theme-str 'element-text { font: "Recursive Sans Casual Linear 10";  }'

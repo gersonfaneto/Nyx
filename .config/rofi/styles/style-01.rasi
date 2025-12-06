@@ -196,6 +196,7 @@ element-icon {
     cursor:                      inherit;
 }
 element-text {
+    font:                        "feather 28";
     background-color:            transparent;
     text-color:                  inherit;
     highlight:                   inherit;
