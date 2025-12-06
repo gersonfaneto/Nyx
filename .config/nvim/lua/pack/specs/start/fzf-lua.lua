@@ -388,6 +388,11 @@ return {
       ---Search & select files then add them to arglist
       ---@return nil
       function actions.arg_search_add()
+        local opts = {
+          query = fzf.config.__resume_data.last_query,
+          cwd = fzf.config.__resume_data.opts.cwd,
+        }
+
         fzf.files({
           cwd_header = true,
           cwd_prompt = false,
@@ -405,13 +410,13 @@ return {
                 if path.is_absolute(relpath) then
                   relpath = path.relative_to(relpath, fzf_utils.cwd())
                 end
-                vim.cmd('argadd ' .. string.gsub(relpath, ' ', [[\ ]]))
+                vim.cmd.argadd(vim.fn.fnameescape(relpath))
                 ::continue::
               end
-              fzf.args(o)
+              fzf.args(opts)
             end,
             ['esc'] = function()
-              fzf.args()
+              fzf.args(opts)
             end,
           },
           find_opts = [[-type f -not -path '*/\.git/*' -not -path '*/\.venv/*' -printf '%P\n']],
