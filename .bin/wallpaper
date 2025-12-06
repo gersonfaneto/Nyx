@@ -27,6 +27,7 @@ if [[ -z $wallpaper || ! -f "$wallpaper" ]]; then
   wallpaper="$WALLPAPERS_DIR/default.png"
 fi
 
+ln -sf "$wallpaper" "$WALLPAPERS_DIR/default.png" &
 feh --bg-fill "$wallpaper" &
 
 # vim:ft=sh:sw=2:ts=2:et:
