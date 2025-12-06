@@ -657,9 +657,13 @@ vim.api.nvim_create_autocmd('LspProgress', {
   callback = function(args)
     -- Update LSP progress data
     local id = args.data.client_id
-    local bufs = vim.lsp.get_buffers_by_client_id(id)
+    local client = vim.lsp.get_client_by_id(id)
+    if not client then
+      return
+    end
+    local bufs = vim.tbl_keys(client.attached_buffers)
     client_info[id] = {
-      name = vim.lsp.get_client_by_id(id).name,
+      name = client.name,
       bufs = bufs,
     }
 
