@@ -58,7 +58,7 @@ update_nvim() {
     # kill the nvim client if it does not exit within the threshold.
     timeout 1 nvim --clean --headless --server "$sock" \
       --remote-expr "execute(\"if &bg !=# '$1' && &tgc \
-      | let g:script_set_bg=1 | set bg=$1 | unlet g:script_set_bg \
+      | let g:script_background=1 | set bg=$1 | unlet g:script_background \
       | endif\")" \
       +qa! > /dev/null 2>&1 &
 
@@ -139,7 +139,7 @@ update_highlight() {
 }
 
 main() {
-  lockfile="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/setbg.lock"
+  lockfile="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/background.lock"
 
   exec 9> "$lockfile"
 

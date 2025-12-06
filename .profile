@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 has() {
-  command -v "$1" >/dev/null 2>&1
+  command -v "$1" > /dev/null 2>&1
 }
 
 export PYENV_ROOT="$HOME/.pyenv"
@@ -140,8 +140,7 @@ fi
 export FZF_CTRL_R_OPTS=--no-preview
 export FZF_PREVIEW_DISABLE_UB=true
 
-has setbg && ( setbg & ) 2>/dev/null
-has setcolors && ( setcolors & ) 2>/dev/null
+has background && (background &) 2> /dev/null
 
 if [ ! -e "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/greeted" ]; then
   touch "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/greeted"
@@ -153,7 +152,7 @@ if [ ! -e "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/greeted" ]; then
   fi
 
   if [ -n "$fetch" ]; then
-    if script -q /dev/null -c exit >/dev/null 2>&1; then
+    if script -q /dev/null -c exit > /dev/null 2>&1; then
       script -q /dev/null -c "$fetch"
     else
       script -q /dev/null "$fetch"
@@ -161,4 +160,4 @@ if [ ! -e "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/greeted" ]; then
   fi
 fi
 
-# vim:ts=2:sw=2:et:ft=bash:
+# vim:ts=2:sw=2:et:ft=sh:

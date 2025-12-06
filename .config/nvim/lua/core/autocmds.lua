@@ -639,9 +639,9 @@ do
     'Colorscheme',
     {
       nested = true,
-      desc = 'Spawn setbg/setcolors on colorscheme change.',
+      desc = 'Spawn background on colorscheme change.',
       callback = function()
-        if vim.g.script_set_bg or vim.g.script_set_colors then
+        if vim.g.script_background then
           return
         end
 
@@ -657,15 +657,12 @@ do
 
           if colors_config.colors_name ~= vim.g.colors_name then
             colors_config.colors_name = vim.g.colors_name
-            if vim.fn.executable('setcolor') == 1 then
-              vim.system({ 'setcolor', vim.g.colors_name })
-            end
           end
 
           if colors_config.bg ~= vim.go.bg and vim.go.termguicolors then
             colors_config.bg = vim.go.bg
-            if vim.fn.executable('setbg') == 1 then
-              vim.system({ 'setbg', vim.go.bg })
+            if vim.fn.executable('background') == 1 then
+              vim.system({ 'background', vim.go.bg })
             end
           end
 

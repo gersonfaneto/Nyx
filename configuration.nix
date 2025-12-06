@@ -250,6 +250,7 @@
       libqalculate
       libtool
       localsend
+      lsof
       maim
       man-pages
       man-pages-posix
