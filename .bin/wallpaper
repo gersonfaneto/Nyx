@@ -15,20 +15,15 @@ if [[ -z $1 ]]; then
   files=("$WALLPAPERS_DIR"/*.png)
   if [[ ${#files[@]} -gt 0 ]]; then
     wallpaper="${files[RANDOM % ${#files[@]}]}"
-  else
-    wallpaper="$WALLPAPERS_DIR/default.png"
   fi
+elif [[ $1 != /* ]]; then
+  wallpaper="$WALLPAPERS_DIR/$1"
 else
-  # Handle relative paths
-  if [[ $1 != /* ]]; then
-    wallpaper="$WALLPAPERS_DIR/$1"
-  else
-    wallpaper="$1"
-  fi
+  wallpaper="$1"
 fi
 
-# Fallback to default if file doesn't exist
-if [[ ! -f "$wallpaper" ]]; then
+# Fallback to default if not set or doesn't exist
+if [[ -z $wallpaper || ! -f "$wallpaper" ]]; then
   wallpaper="$WALLPAPERS_DIR/default.png"
 fi
 

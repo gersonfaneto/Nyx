@@ -73,7 +73,7 @@ mManageHook =
 myStartupHook :: X ()
 myStartupHook = do
     spawn "setxkbmap -layout br -variant thinkpad &"
-    spawn "wallpaper &"
+    spawn "wallpaper $HOME/.local/share/wallpapers/default.png &"
     spawn "background dark &"
     spawn "battery -L 20 -n &"
     spawn "xset s 600 &"
@@ -97,6 +97,7 @@ mKeys =
     , ("M-s n c", spawn "dunstctl close-all")
     , ("M-s x r", spawn "xmonad --recompile && xmonad --restart")
     , ("M-t z", spawn "boomer")
+    , ("M-<F1>", spawn "wallpaper")
     , ("M-q", kill)
     , ("M-C-l", nextWS)
     , ("M-C-h", prevWS)
