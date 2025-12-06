@@ -57,7 +57,7 @@ end
 
 # Ensure color theme files are correctly linked
 if not test -f $__fish_config_dir/themes/Current.theme
-    type -q background; and background &
+    type -q background; and background dark &
 end
 
 # Automatically login to proot-distro on termux

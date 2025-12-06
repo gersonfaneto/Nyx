@@ -1,1 +1,1 @@
-complete -f -c background -a 'dark light'
+complete -f -c background -a 'alt dark light'

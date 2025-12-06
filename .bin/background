@@ -9,7 +9,7 @@ STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 DEFAULT_BG='dark'
 
 usage() {
-  echo "Usage: $(basename "$0") [light|dark]"
+  echo "Usage: $(basename "$0") [light|dark|alt]"
   exit
 }
 
@@ -156,11 +156,41 @@ main() {
         bg="$arg"
         shift
         ;;
+      alt)
+        bg="alt"
+        shift
+        ;;
       *)
         usage
         ;;
     esac
   done
+
+  if [ "$bg" = "alt" ]; then
+    colors_json="$STATE_HOME/nvim/colors.json"
+    if has jq && [ -e "$colors_json" ]; then
+      current_bg=$(jq -r '.bg // empty' "$colors_json")
+      if [ -n "$current_bg" ]; then
+        if [ "$current_bg" = "light" ]; then
+          bg="dark"
+        else
+          bg="light"
+        fi
+      else
+        if [ "$DEFAULT_BG" = "light" ]; then
+          bg="dark"
+        else
+          bg="light"
+        fi
+      fi
+    else
+      if [ "$DEFAULT_BG" = "light" ]; then
+        bg="dark"
+      else
+        bg="light"
+      fi
+    fi
+  fi
 
   trap 'kill $(jobs -p) 2>/dev/null; wait' EXIT INT TERM HUP
 
