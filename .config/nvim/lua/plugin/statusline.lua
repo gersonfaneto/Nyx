@@ -117,29 +117,6 @@ local modes = {
 }
 -- stylua: ignore end
 
----Get buffer's current work tree and git dir, fallback to dotfiles bare repo
----if no local git repo is found
----@param buf integer? buffer handler, default to current buffer
----@return string? git_dir
----@return string? work_tree
-local function resolve_git_context_with_dotfiles_fallback(buf)
-  buf = vim._resolve_bufnr(buf)
-  if not vim.api.nvim_buf_is_valid(buf) then
-    return
-  end
-
-  if not vim.b[buf].git_work_tree then
-    vim.b[buf].git_work_tree =
-      utils.git.execute(buf, { 'rev-parse', '--show-toplevel' })
-  end
-
-  if not vim.b[buf].git_dir then
-    vim.b[buf].git_dir = utils.git.execute(buf, { 'rev-parse', '--git-dir' })
-  end
-
-  return vim.b[buf].git_work_tree, vim.b[buf].git_dir
-end
-
 ---Get string representation of the current mode
 ---@return string
 function _G._statusline.mode()
@@ -153,7 +130,10 @@ end
 ---Get diff stats for current buffer
 ---@return string
 function _G._statusline.gitdiff()
-  local work_tree, git_dir = resolve_git_context_with_dotfiles_fallback()
+  local work_tree, git_dir = utils.git.resolve_context(
+    0,
+    { { '--git-dir', vim.env.DOT_DIR, '--work-tree', vim.env.HOME } }
+  )
   if not work_tree or not git_dir then
     return ''
   end
@@ -195,7 +175,10 @@ end
 ---Get string representation of current git branch
 ---@return string
 function _G._statusline.gitbranch()
-  local work_tree, git_dir = resolve_git_context_with_dotfiles_fallback()
+  local work_tree, git_dir = utils.git.resolve_context(
+    0,
+    { { '--git-dir', vim.env.DOT_DIR, '--work-tree', vim.env.HOME } }
+  )
   if not work_tree or not git_dir then
     return ''
   end
@@ -674,13 +657,9 @@ vim.api.nvim_create_autocmd('LspProgress', {
   callback = function(args)
     -- Update LSP progress data
     local id = args.data.client_id
-    local client = vim.lsp.get_client_by_id(id)
-    if not client then
-      return
-    end
-    local bufs = vim.tbl_keys(client.attached_buffers)
+    local bufs = vim.lsp.get_buffers_by_client_id(id)
     client_info[id] = {
-      name = client.name,
+      name = vim.lsp.get_client_by_id(id).name,
       bufs = bufs,
     }
 

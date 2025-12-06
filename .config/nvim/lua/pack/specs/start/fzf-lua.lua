@@ -163,7 +163,7 @@ return {
                     'let g:_fzf_n_items =%d | %s | unlet g:_fzf_n_items',
                     n_items,
                     vim.trim(
-                      require('fzf-lua.config').setup_opts.winopts.split
+                      require('fzf-lua.config').setup_opts.winopts.split --[[@as string]]
                     ),
                     n_items
                   ),
@@ -388,27 +388,30 @@ return {
       ---Search & select files then add them to arglist
       ---@return nil
       function actions.arg_search_add()
-        local opts = fzf.config.__resume_data.opts
         fzf.files({
           cwd_header = true,
           cwd_prompt = false,
           prompt = 'Argadd> ',
           actions = {
             ['enter'] = function(selected, o)
-              local cmd = 'argadd'
-              vim.ui.input({
-                prompt = 'Argadd cmd: ',
-                default = cmd,
-              }, function(input)
-                if input then
-                  cmd = input
+              -- Ported from https://github.com/ibhagwan/fzf-lua/blob/cae96b04f6cad98a3ad24349731df5e56b384c3c/lua/fzf-lua/actions.lua#L478-L491
+              for _, sel in ipairs(selected) do
+                local entry = path.entry_to_file(sel, o)
+                local relpath = entry.bufname or entry.path
+                assert(relpath, "entry doesn't contain filepath")
+                if not relpath then
+                  goto continue
                 end
-              end)
-              actions.vimcmd_file(cmd, selected, o)
-              fzf.args(opts)
+                if path.is_absolute(relpath) then
+                  relpath = path.relative_to(relpath, fzf_utils.cwd())
+                end
+                vim.cmd('argadd ' .. string.gsub(relpath, ' ', [[\ ]]))
+                ::continue::
+              end
+              fzf.args(o)
             end,
             ['esc'] = function()
-              fzf.args(opts)
+              fzf.args()
             end,
           },
           find_opts = [[-type f -not -path '*/\.git/*' -not -path '*/\.venv/*' -printf '%P\n']],
@@ -547,7 +550,7 @@ return {
           return
         end
         vim.cmd.split()
-        actions.fugitive_edit(selected)
+        actions.fugitive_edit(selected, {})
       end
 
       ---Edit a git commit object in vertical split with vim-fugitive
@@ -556,7 +559,7 @@ return {
           return
         end
         vim.cmd.vsplit()
-        actions.fugitive_edit(selected)
+        actions.fugitive_edit(selected, {})
       end
 
       ---Edit a git commit object in vertical split with vim-fugitive
@@ -565,7 +568,7 @@ return {
           return
         end
         vim.cmd.tabnew()
-        actions.fugitive_edit(selected)
+        actions.fugitive_edit(selected, {})
       end
 
       core.ACTION_DEFINITIONS[actions.toggle_dir] = {
@@ -637,8 +640,42 @@ return {
         }))
       end
 
+      ---Wrap fzf git pickers with dotfiles fallback when not inside git repo
+      ---@param cb fun(opts: fzf-lua.config.GitBase?)
+      ---@return fun(opts: fzf-lua.config.GitBase?)
+      local function with_dotfiles_fallback(cb)
+        return function(opts)
+          local git_worktree, git_dir = utils.git.resolve_context(
+            0,
+            { { '--git-dir', vim.env.DOT_DIR, '--work-tree', vim.env.HOME } }
+          )
+          opts = vim.tbl_deep_extend('keep', opts or {}, {
+            git_worktree = git_worktree,
+            git_dir = git_dir,
+          })
+          return cb(opts)
+        end
+      end
+
+      -- Fallback to dotfiles bare repo if not inside a normal git repository
+      fzf.git_tags = with_dotfiles_fallback(fzf.git_tags)
+      fzf.git_stash = with_dotfiles_fallback(fzf.git_stash)
+      fzf.git_status = with_dotfiles_fallback(fzf.git_status)
+      fzf.git_commits = with_dotfiles_fallback(fzf.git_commits)
+      fzf.git_bcommits = with_dotfiles_fallback(fzf.git_bcommits)
+      fzf.git_branches = with_dotfiles_fallback(fzf.git_branches)
+      fzf.git_blame = with_dotfiles_fallback(fzf.git_blame)
+      fzf.git_tags = with_dotfiles_fallback(fzf.git_tags)
+      fzf.git_stash = with_dotfiles_fallback(fzf.git_stash)
+      fzf.git_status = with_dotfiles_fallback(fzf.git_status)
+      fzf.git_commits = with_dotfiles_fallback(fzf.git_commits)
+      fzf.git_bcommits = with_dotfiles_fallback(fzf.git_bcommits)
+      fzf.git_branches = with_dotfiles_fallback(fzf.git_branches)
+      fzf.git_blame = with_dotfiles_fallback(fzf.git_blame)
+
       ---Search symbols, fallback to treesitter nodes if no language server
       ---supporting symbol method is attached
+      ---@diagnostic disable-next-line: inject-field
       function fzf.symbols(opts)
         if
           vim.tbl_isempty(vim.lsp.get_clients({
@@ -668,7 +705,7 @@ return {
 
       vim.lsp.buf.incoming_calls = fzf.lsp_incoming_calls
       vim.lsp.buf.outgoing_calls = fzf.lsp_outgoing_calls
-      vim.lsp.buf.declaration = fzf.declarations
+      vim.lsp.buf.declaration = fzf.lsp_declarations
       vim.lsp.buf.definition = fzf.lsp_definitions
       vim.lsp.buf.document_symbol = fzf.lsp_document_symbols
       vim.lsp.buf.implementation = fzf.lsp_implementations
@@ -693,6 +730,7 @@ return {
 
       -- Select dirs from `z`
       ---@param opts table?
+      ---@diagnostic disable-next-line: inject-field
       function fzf.z(opts)
         local has_z_plugin, z = pcall(require, 'plugin.z')
         if not has_z_plugin then
@@ -722,6 +760,7 @@ return {
 
       -- Select/remove sessions from the session plugin
       ---@param opts table?
+      ---@diagnostic disable-next-line: inject-field
       function fzf.sessions(opts)
         local has_session_plugin, session = pcall(require, 'plugin.session')
         if not has_session_plugin then
@@ -776,6 +815,7 @@ return {
 
       ---Fuzzy complete cmdline command/search history
       ---@param opts table?
+      ---@diagnostic disable-next-line: inject-field
       function fzf.complete_cmdline(opts)
         opts = opts or {}
         opts.query = vim.fn.getcmdline()
@@ -795,6 +835,7 @@ return {
 
       ---Fuzzy complete from registers in insert mode
       ---@param opts table?
+      ---@diagnostic disable-next-line: inject-field
       function fzf.complete_from_registers(opts)
         fzf.registers(vim.tbl_deep_extend('force', opts or {}, {
           actions = {
@@ -832,6 +873,7 @@ return {
         -- See https://github.com/ibhagwan/fzf-lua/issues/1739
         'default-prompt',
         -- Use nbsp in tty to avoid showing box chars
+        ---@diagnostic disable-next-line: assign-type-mismatch
         nbsp = not vim.go.termguicolors and '\xc2\xa0' or nil,
         dir_icon = vim.trim(icons.Folder),
         winopts = {
@@ -933,11 +975,12 @@ return {
               end
             end)
           end,
+          ---@diagnostic disable-next-line: missing-fields
           preview = {
             border = 'none',
-            hidden = 'hidden',
             layout = 'horizontal',
-            scrollbar = false,
+            hidden = true,
+            scrollbar = false, ---@diagnostic disable-line: assign-type-mismatch
           },
         },
         -- Open help window at top of screen with single border
@@ -948,9 +991,10 @@ return {
           return vim.api.nvim_open_win(buf, enter, opts)
         end,
         fzf_colors = {
+          ---@diagnostic disable-next-line: assign-type-mismatch
           ['fg+'] = { 'fg', 'CursorLine' },
-          ['bg+'] = { 'bg', 'CursorLine' },
-          ['gutter'] = { 'bg', 'CursorLine' },
+          ['bg+'] = { 'bg', 'CursorLine' }, ---@diagnostic disable-line: assign-type-mismatch
+          ['gutter'] = { 'bg', 'CursorLine' }, ---@diagnostic disable-line: assign-type-mismatch
         },
         keymap = {
           -- Overrides default completion completely
@@ -989,6 +1033,7 @@ return {
         },
         defaults = {
           actions = {
+            ---@diagnostic disable-next-line: assign-type-mismatch
             ['ctrl-]'] = actions.switch_provider,
           },
         },
