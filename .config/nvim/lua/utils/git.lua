@@ -91,6 +91,7 @@ function M.execute(buf, args)
     return
   end
 
+  args = vim.iter(args):flatten():totable()
   local cache_key = vim.fn.sha256(table.concat(args)):sub(1, 8)
   local cache_key_writetick = cache_key .. '_writetick'
 
