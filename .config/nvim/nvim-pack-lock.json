@@ -135,6 +135,11 @@
       "rev": "35f79f6253dff5cc43cf943d74c4b2734370a81d",
       "src": "https://github.com/tronikelis/ts-autotag.nvim"
     },
+    "typst-preview.nvim": {
+      "rev": "87d0f3a1beedefe6fdd96422c04c3dceb69d1063",
+      "src": "https://github.com/chomosuke/typst-preview.nvim",
+      "version": "1.0.0 - 2.0.0"
+    },
     "ultimate-autopair.nvim": {
       "rev": "72e160cb1ce8c0db2ac4315f77d97420a2f4223d",
       "src": "https://github.com/altermo/ultimate-autopair.nvim"

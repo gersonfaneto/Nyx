@@ -1,0 +1,5 @@
+---@type pack.spec
+return {
+  src = 'https://github.com/chomosuke/typst-preview.nvim',
+  version = vim.version.range('1.*'),
+}
