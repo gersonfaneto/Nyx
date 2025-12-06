@@ -91,7 +91,17 @@ function M.execute(buf, args)
     return
   end
 
+  -- TODO: This seems to solve the issue where the args are weirdly construted:
+  --
+  --   args :: { "--git-dir",
+  --    [3] = "--work-tree",
+  --    [4] = "/home/gerson",
+  --    [5] = "rev-parse",
+  --    [6] = "--show-toplevel"
+  --  }
+  --
   args = vim.iter(args):flatten():totable()
+
   local cache_key = vim.fn.sha256(table.concat(args)):sub(1, 8)
   local cache_key_writetick = cache_key .. '_writetick'
 
