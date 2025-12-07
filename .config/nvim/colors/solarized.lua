@@ -291,6 +291,7 @@ local hlgroups = {
   LspReferenceText = { bg = c_base02 },
   LspReferenceWrite = { bg = c_base02, underline = true },
   LspSignatureActiveParameter = { fg = c_yellow },
+  LspInlayHint = { fg = c_base01 },
   -- }}}
 
   -- Diagnostic {{{
@@ -375,6 +376,7 @@ local hlgroups = {
   -- Qf
   qfFileName = { link = 'Directory' },
   qfLineNr = { link = 'lineNr' },
+
   -- }}}
 
   -- Plugins {{{
@@ -444,6 +446,160 @@ local hlgroups = {
   StatusLineGitBranch = { bg = c_base02, fg = c_base01 },
   StatusLineHeader = { bg = c_base01, fg = c_base0 },
   StatusLineHeaderModified = { bg = c_red, fg = c_base03 },
+
+  -- blink-cmp
+  BlinkCmpMenu = { bg = c_base02, fg = c_base0 },
+  BlinkCmpMenuSelection = { bg = c_base02, fg = c_base0, bold = true },
+  BlinkCmpItemKindClass = { fg = c_cyan },
+  BlinkCmpItemKindConstant = { fg = c_orange },
+  BlinkCmpItemKindFunction = { fg = c_blue },
+  BlinkCmpItemKindKeyword = { fg = c_violet },
+  BlinkCmpItemKindMethod = { fg = c_blue },
+  BlinkCmpItemKindModule = { fg = c_orange },
+  BlinkCmpItemKindProperty = { fg = c_base0 },
+  BlinkCmpItemKindSnippet = { fg = c_green },
+  BlinkCmpItemKindText = { fg = c_base0 },
+  BlinkCmpItemKindVariable = { fg = c_base0 },
+  BlinkCmpKindSel = { bg = c_base02, fg = c_base0 },
+  BlinkCmpSource = { fg = c_base01 },
+
+  -- which-key
+  WhichKey = { fg = c_base0 },
+  WhichKeyFloat = { bg = c_base03, fg = c_base0 },
+  WhichKeyGroup = { fg = c_blue },
+  WhichKeyDesc = { fg = c_base0 },
+  WhichKeyBorder = { fg = c_base01 },
+
+  -- vimtex
+  texCmd = { fg = c_violet },
+  texMath = { fg = c_blue },
+  texMathZoneV = { fg = c_blue },
+  texMathZoneLI = { fg = c_blue },
+  texConcealedChar = { fg = c_orange },
+  texError = { fg = c_red },
+
+  -- molten-nvim
+  MoltenCell = { bg = c_base02 },
+  MoltenOutput = { fg = c_base0 },
+  MoltenError = { fg = c_red },
+  MoltenVirtualText = { fg = c_base01 },
+
+  -- luasnip
+  LuasnipChoiceNode = { fg = c_yellow },
+  LuasnipInsertNode = { fg = c_green },
+
+  -- typst-preview
+  TypstCode = { fg = c_base0 },
+  TypstMath = { fg = c_blue },
+
+  -- vim-table-mode
+  Table = { fg = c_base0 },
+  TableBorder = { fg = c_base01 },
+
+  -- vim-test
+  TestPass = { fg = c_green },
+  TestFail = { fg = c_red },
+
+  -- vim-easy-align
+  EasyAlignPreview = { fg = c_yellow },
+
+  -- vim-dispatch
+  DispatchSuccess = { fg = c_green },
+  DispatchError = { fg = c_red },
+
+  -- nvim-metals
+  MetalsError = { fg = c_red },
+  MetalsWarning = { fg = c_yellow },
+
+  -- otter
+  OtterCode = { fg = c_base0 },
+  OtterOutput = { fg = c_base01 },
+
+  -- treesj
+  TreesjJoin = { fg = c_green },
+  TreesjSplit = { fg = c_red },
+
+  -- ts-autotag
+  TSAutotagOpen = { fg = c_green },
+  TSAutotagClose = { fg = c_red },
+
+  -- quicker
+  QuickerItem = { fg = c_base0 },
+  QuickerBorder = { fg = c_base01 },
+
+  -- img-clip
+  ImgClipPreview = { fg = c_base01 },
+
+  -- markdown-preview
+  MarkdownPreviewLink = { fg = c_blue, underline = true },
+
+  -- nvim-colorizer
+  ColorizerColor = { fg = c_base0 },
+
+  -- harpoon
+  HarpoonWindow = { bg = c_base02, fg = c_base0 },
+  HarpoonBorder = { fg = c_base01 },
+
+  -- oil
+  OilDir = { fg = c_blue },
+  OilFile = { fg = c_base0 },
+
+  -- venn
+  VennCursor = { fg = c_red },
+
+  -- fzf-lua
+  FzfLuaNormal = { bg = c_base02, fg = c_base0 },
+  FzfLuaBorder = { fg = c_base01 },
+  FzfLuaTitle = { fg = c_blue },
+  FzfLuaTitleFlags = { bg = c_base02 },
+  FzfLuaBackdrop = { bg = c_base03 },
+  FzfLuaPreviewNormal = { bg = c_base02, fg = c_base0 },
+  FzfLuaPreviewBorder = { fg = c_base01 },
+  FzfLuaPreviewTitle = { fg = c_blue },
+  FzfLuaCursor = { bg = c_base0, fg = c_base03 },
+  FzfLuaCursorLine = { bg = c_base02 },
+  FzfLuaCursorLineNr = { fg = c_base0, bold = true },
+  FzfLuaSearch = { bg = c_yellow, fg = c_base03 },
+  FzfLuaScrollBorderEmpty = { fg = c_base01 },
+  FzfLuaScrollBorderFull = { fg = c_base01 },
+  FzfLuaScrollFloatEmpty = { bg = c_base02 },
+  FzfLuaScrollFloatFull = { bg = c_base01 },
+  FzfLuaHelpNormal = { bg = c_base02, fg = c_base0 },
+  FzfLuaHelpBorder = { fg = c_base01 },
+  FzfLuaHeaderBind = { fg = c_base1 },
+  FzfLuaHeaderText = { fg = c_red },
+  FzfLuaPathColNr = { fg = c_cyan },
+  FzfLuaPathLineNr = { fg = c_green },
+  FzfLuaBufName = { fg = c_blue },
+  FzfLuaBufId = { bg = c_base02, fg = c_base01 },
+  FzfLuaBufNr = { fg = c_base1 },
+  FzfLuaBufLineNr = { fg = c_base01 },
+  FzfLuaBufFlagCur = { fg = c_red },
+  FzfLuaBufFlagAlt = { fg = c_cyan },
+  FzfLuaTabTitle = { fg = c_blue },
+  FzfLuaTabMarker = { fg = c_base1 },
+  FzfLuaDirIcon = { fg = c_blue },
+  FzfLuaDirPart = { fg = c_base01 },
+  FzfLuaFilePart = { fg = c_base0 },
+  FzfLuaLivePrompt = { fg = c_magenta },
+  FzfLuaLiveSym = { fg = c_magenta },
+  FzfLuaCmdEx = { fg = c_violet },
+  FzfLuaCmdBuf = { fg = c_green },
+  FzfLuaCmdGlobal = { fg = c_blue },
+  FzfLuaFzfNormal = { bg = c_base02, fg = c_base0 },
+  FzfLuaFzfCursorLine = { bg = c_base02, fg = c_base0 },
+  FzfLuaFzfMatch = { fg = c_cyan },
+  FzfLuaFzfBorder = { fg = c_base01 },
+  FzfLuaFzfScrollbar = { fg = c_base01 },
+  FzfLuaFzfSeparator = { fg = c_base01 },
+  FzfLuaFzfGutter = { bg = c_base02, fg = c_base0 },
+  FzfLuaFzfHeader = { fg = c_blue },
+  FzfLuaFzfInfo = { fg = c_base01 },
+  FzfLuaFzfPointer = { fg = c_cyan },
+  FzfLuaFzfMarker = { fg = c_cyan },
+  FzfLuaFzfSpinner = { fg = c_cyan },
+  FzfLuaFzfPrompt = { fg = c_cyan },
+  FzfLuaFzfQuery = { bg = c_base02, fg = c_base0 },
 
   -- }}}
 }

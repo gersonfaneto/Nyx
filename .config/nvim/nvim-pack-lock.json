@@ -65,10 +65,6 @@
       "rev": "cf91d5e2d07c72903d052f5207511bf7ecdb7122",
       "src": "https://github.com/rcarriga/nvim-dap-ui"
     },
-    "nvim-metals": {
-      "rev": "40f7b9ea6ded898319136f4d6a94da9487584309",
-      "src": "https://github.com/scalameta/nvim-metals"
-    },
     "nvim-nio": {
       "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
       "src": "https://github.com/nvim-neotest/nvim-nio"
