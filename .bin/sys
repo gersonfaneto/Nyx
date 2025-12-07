@@ -5,7 +5,7 @@
 time=$(date "+%H:%M")
 date=$(date "+%a %B %d")
 
-terminal_font=$(awk '/font-family/ {sub("font-family = ",""); print; exit}' ~/.config/ghostty/config)
+terminal_font=$(ghostty +show-config | grep font-family | awk -F ' = ' '{print $2}' | uniq)
 
 uptime=$(uptime --pretty | sed -r 's/up //; s/ days?,/d/; s/ hours?,/h/; s/ minutes?/m/')
 
