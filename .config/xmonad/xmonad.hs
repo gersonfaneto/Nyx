@@ -64,9 +64,9 @@ mManageHook =
         [ className =? "Navigator" --> doFloat
         , className =? "Dunst" --> doFloat
         , className =? "wiremix" --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
-        -- , className =? "firefox" --> doShift "1"
-        -- , className =? "Alacritty" --> doShift "2"
-        -- , className =? "Emacs" --> doShift "10"
+        , className =? "firefox" --> doShift "1"
+        , className =? "Alacritty" --> doShift "2"
+        , className =? "Emacs" --> doShift "10"
         ]
         <+> insertPosition Below Newer
 
