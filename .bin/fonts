@@ -61,7 +61,11 @@ switch_ghostty() {
       sed -i "s|^font-family = .*|font-family = \"$FONT\"|" "$GHOSTTY_CONFIGURATION"
     fi
 
-    kill -USR2 "$(pgrep ghostty)"
+    if has ghostty; then
+      for pid in $(pgrep ghostty); do
+        kill -USR2 "$pid"
+      done
+    fi
   )
 }
 
