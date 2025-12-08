@@ -14,19 +14,21 @@ FONT_STATE=$(cat "$STATES/fonts.txt" 2> /dev/null || exit 0)
 FONT_IN_USE="${FONT_STATE:-$DEFAULT_FONT}"
 
 FONTS_IGNORED=(
-  'cursor.pcf'
-  'Fixed'
-  'Grape*'
-  'feather'
-  'Free*'
-  'DejaVu*'
-  'Noto*'
-  'Unifont'
-  '*Mono'
-  '*Propo'
-  'TeX*'
-  'Symbols*'
-  'Recursive*'
+  'Mono$'
+  'Propo$'
+  '^DejaVu'
+  '^Fixed$'
+  '^Free'
+  '^Grape'
+  '^Liberation*'
+  '^Noto'
+  '^Rec Mono*'
+  '^Recursive'
+  '^Symbols'
+  '^TeX'
+  '^Unifont$'
+  '^feather$'
+  'cursor\.pcf'
 )
 
 FONTS_AVAILABLE=()
@@ -38,7 +40,7 @@ FONTS_FILTERED=()
 for font in "${FONTS_AVAILABLE[@]}"; do
   skip=false
   for pat in "${FONTS_IGNORED[@]}"; do
-    if [[ "$font" == $pat ]]; then
+    if [[ "$font" =~ $pat ]]; then
       skip=true
       break
     fi
