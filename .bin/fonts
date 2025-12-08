@@ -13,12 +13,41 @@ FONT_STATE=$(cat "$STATES/fonts.txt" 2> /dev/null || exit 0)
 
 FONT_IN_USE="${FONT_STATE:-$DEFAULT_FONT}"
 
-FONTS_IGNORED=(cursor.pcf *TeX*)
+FONTS_IGNORED=(
+  'cursor.pcf'
+  'Fixed'
+  'Grape*'
+  'feather'
+  'Free*'
+  'DejaVu*'
+  'Noto*'
+  'Unifont'
+  '*Mono'
+  '*Propo'
+  'TeX*'
+  'Symbols*'
+  'Recursive*'
+)
 
 FONTS_AVAILABLE=()
 while IFS= read -r font; do
   FONTS_AVAILABLE+=("$font")
 done < <(ghostty +list-fonts | grep -v '^[[:blank:]]' | grep -v '^$' | sort | uniq)
+
+FONTS_FILTERED=()
+for font in "${FONTS_AVAILABLE[@]}"; do
+  skip=false
+  for pat in "${FONTS_IGNORED[@]}"; do
+    if [[ "$font" == $pat ]]; then
+      skip=true
+      break
+    fi
+  done
+  if [ "$skip" = false ]; then
+    FONTS_FILTERED+=("$font")
+  fi
+done
+FONTS_AVAILABLE=("${FONTS_FILTERED[@]}")
 
 switch_alacritty() {
   (
