@@ -373,8 +373,29 @@
       recursive
 
       # Coding
+      nerd-fonts._3270
+      nerd-fonts.blex-mono
+      nerd-fonts.comic-shanns-mono
+      nerd-fonts.commit-mono
+      nerd-fonts.daddy-time-mono
+      nerd-fonts.departure-mono
+      nerd-fonts.geist-mono
+      nerd-fonts.gohufont
+      nerd-fonts.iosevka
+      nerd-fonts.iosevka-term
+      nerd-fonts.iosevka-term-slab
+      nerd-fonts.martian-mono
+      nerd-fonts.meslo-lg
       nerd-fonts.monaspace
+      nerd-fonts.monofur
+      nerd-fonts.monoid
+      nerd-fonts.mononoki
+      nerd-fonts.recursive-mono
+      nerd-fonts.sauce-code-pro
+      nerd-fonts.shure-tech-mono
       nerd-fonts.space-mono
+      nerd-fonts.terminess-ttf
+      nerd-fonts.victor-mono
     ];
     fontconfig = {
       enable = true;
