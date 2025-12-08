@@ -36,21 +36,6 @@ while IFS= read -r font; do
   FONTS_AVAILABLE+=("$font")
 done < <(ghostty +list-fonts | grep -v '^[[:blank:]]' | grep -v '^$' | sort | uniq)
 
-FONTS_FILTERED=()
-for font in "${FONTS_AVAILABLE[@]}"; do
-  skip=false
-  for pat in "${FONTS_IGNORED[@]}"; do
-    if [[ "$font" =~ $pat ]]; then
-      skip=true
-      break
-    fi
-  done
-  if [ "$skip" = false ]; then
-    FONTS_FILTERED+=("$font")
-  fi
-done
-FONTS_AVAILABLE=("${FONTS_FILTERED[@]}")
-
 switch_alacritty() {
   (
     ALACRITTY_CONFIGURATION="$CONFIGURATIONS/alacritty/local.toml"
@@ -110,6 +95,7 @@ usage() {
   echo
   echo "       -h,--help    Display this message"
   echo "       -l,--list    List all the available fonts"
+  echo "       -f,--filter  Filter out ignored fonts when listing"
 }
 
 list_fonts() {
@@ -123,6 +109,8 @@ list_fonts() {
 }
 
 main() {
+  FILTER=false
+  LIST=false
   while [ $# -gt 0 ]; do
     case $1 in
       -h | --help)
@@ -130,8 +118,10 @@ main() {
         exit 0
         ;;
       -l | --list)
-        list_fonts
-        exit 0
+        LIST=true
+        ;;
+      -f | --filter)
+        FILTER=true
         ;;
       -*)
         echo "Unknown option: $1" >&2
@@ -145,6 +135,27 @@ main() {
     esac
     shift
   done
+
+  if [ "$LIST" = true ]; then
+    if [ "$FILTER" = true ]; then
+      FONTS_FILTERED=()
+      for font in "${FONTS_AVAILABLE[@]}"; do
+        skip=false
+        for pat in "${FONTS_IGNORED[@]}"; do
+          if [[ "$font" =~ $pat ]]; then
+            skip=true
+            break
+          fi
+        done
+        if [ "$skip" = false ]; then
+          FONTS_FILTERED+=("$font")
+        fi
+      done
+      FONTS_AVAILABLE=("${FONTS_FILTERED[@]}")
+    fi
+    list_fonts
+    exit 0
+  fi
 
   if [ $# -ne 1 ]; then
     usage "$@"
