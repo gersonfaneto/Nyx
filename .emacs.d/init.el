@@ -113,7 +113,6 @@
     (server-start)))
 
 ;; --- Themes and Appearance ---
-;; Configure doom-modeline for the status bar.
 (use-package solarized-theme
   :config
   (progn
@@ -126,7 +125,7 @@
        (intern
         (format "solarized-%s" frame-background-mode)))
     (mapc 'frame-set-background-mode (frame-list)))
-  (global-set-key (kbd "C-M-0") 'minimal/toggle-solarized-background))
+  (global-set-key (kbd "C-M-0") 'minimal/toggle-solarized-background)))
 
 ;; Install all-the-icons if in graphical mode.
 (use-package all-the-icons
@@ -418,9 +417,9 @@
   (format "%s-%s" minimal/default-theme minimal/default-background)))
 
 ;; Set the frame default background.
-;; (progn
-;;   (setq frame-background-mode minimal/default-background)
-;;   (mapc 'frame-set-background-mode (frame-list)))
+(progn
+  (setq frame-background-mode minimal/default-background)
+  (mapc 'frame-set-background-mode (frame-list)))
 
 ;; --- UI :: Transparency ---
 ;; Change values of frame alpha to toggle it between solid and seetrough.
@@ -439,7 +438,7 @@
 (minimal/toggle-transparency)
 
 ;; Keybinding to toggle the transparency.
-(global-set-key (kbd "C-S-o") 'minimal/toggle-transparency)
+(global-set-key (kbd "C-M-9") 'minimal/toggle-transparency)
 
 ;; --- Frame Setup ---
 ;; Function to set up fonts and theme for new frames.
@@ -455,16 +454,3 @@
     (add-hook 'after-make-frame-functions #'minimal/setup-frame)
   ;; Otherwise, set up the current frame.
   (minimal/setup-frame (selected-frame)))
-
-;; --- Custom File Loading ---
-;; Path to the custom file.
-(setq minimal/custom-file "~/.emacs.d/custom.el")
-
-;; Create the custom file if it doesn't exist.
-(if (not (file-exists-p minimal/custom-file))
-    (make-empty-file minimal/custom-file))
-
-;; Load custom file if it exists.
-(when (file-exists-p minimal/custom-file)
-  (setq custom-file minimal/custom-file) ;; Set Emacs's custom-file variable
-  (load-file custom-file))             ;; Load the custom file

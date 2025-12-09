@@ -24,7 +24,7 @@ for editor in nvim vim vi; do
   fi
 done
 
-export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+export RIPGREP_CONFIG_PATH="$HOME/.config/rg/ripgreprc"
 
 export BAT_THEME=ansi
 
