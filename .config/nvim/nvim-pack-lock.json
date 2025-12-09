@@ -21,7 +21,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "0284d640fd88c56f100a43f41103c5b564699e15",
+      "rev": "de0fd4a21ee29cf6532d0c3bcae08a0b25d99b6a",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -46,7 +46,7 @@
       "src": "https://github.com/iamcco/markdown-preview.nvim"
     },
     "mini.nvim": {
-      "rev": "dca98843fab66d080779cd973e7139e258ff164c",
+      "rev": "6f11e41a137590e4a5f13624a2a9a845686e719f",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "molten-nvim": {
@@ -70,7 +70,7 @@
       "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
-      "rev": "9d47b2558b29fc8c0bce5f54b8424c5f8e2c80c7",
+      "rev": "b6271b678e035a5cbf62d637364f3eeca0890171",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -83,7 +83,7 @@
       "src": "https://github.com/shushtain/nvim-treesitter-incremental-selection"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "ee9cc6fc8674dadd79c757bff6d2a974dd66cf5b",
+      "rev": "76deedf0f1cec4496ef8d49b6d1f020f6d0c6ec9",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
@@ -104,7 +104,7 @@
       "src": "https://github.com/navarasu/onedark.nvim"
     },
     "opencode.nvim": {
-      "rev": "02507859214fe40fdd77665283d4ddd86a1ab67b",
+      "rev": "efe3d8cd0fd0722ed443cf5efaf9ec391174fca3",
       "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "otter.nvim": {
@@ -124,7 +124,7 @@
       "src": "https://github.com/altercation/solarized"
     },
     "treesj": {
-      "rev": "4770492244ccecdc9b01e0e81fa8f2f6b4a23841",
+      "rev": "186084dee5e9c8eec40f6e39481c723dd567cb05",
       "src": "https://github.com/Wansmer/treesj"
     },
     "ts-autotag.nvim": {
@@ -185,7 +185,7 @@
       "src": "https://github.com/vim-test/vim-test"
     },
     "vimtex": {
-      "rev": "32bcb3922c20588e00de68f73c86312eda2141ad",
+      "rev": "6e1229e23c3bbe93487ef62458b1241a2d8ff6af",
       "src": "https://github.com/lervag/vimtex"
     },
     "which-key.nvim": {
