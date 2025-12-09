@@ -2,8 +2,6 @@
 configuration {
   modi:                       "drun";
   show-icons:                 true;
-  display-drun:               " Apps";
-  drun-display-format:        "{name}";
 }
 
 /*****----- Global Properties -----*****/
@@ -17,6 +15,7 @@ window {
     anchor:                      center;
     fullscreen:                  false;
     width:                       100%;
+    height:                      50%;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -87,8 +86,8 @@ entry {
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
-    columns:                     2;
-    lines:                       2;
+    columns:                     3;
+    lines:                       1;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -140,7 +139,7 @@ element-icon {
     padding:                     0px 0px 0px 0px;
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        420px;
+    size:                        275px;
     cursor:                      inherit;
 }
 element-text {
