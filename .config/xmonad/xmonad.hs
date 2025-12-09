@@ -97,7 +97,7 @@ mKeys =
     , ("M-s n c", spawn "dunstctl close-all")
     , ("M-s x r", spawn "xmonad --recompile && xmonad --restart")
     , ("M-t z", spawn "boomer")
-    , ("M-<F1>", spawn "wallpaper")
+    , ("M-<F1>", spawn "rofi-wallpaper")
     , ("M-S-<F1>", spawn "wallpaper $HOME/.local/share/wallpapers/default.png")
     , ("M-<F2>", spawn "background alt")
     , ("M-q", kill)
