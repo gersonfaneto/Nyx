@@ -102,9 +102,8 @@
 ;; Define paths and initial settings for custom files, font, and theme.
 (setq minimal/local-file            "~/.emacs.d/local.el"
       minimal/default-font          "Departure Mono 10"
-      minimal/current-theme         'doom-solarized-dark
-      minimal/current-theme-dark    'doom-solarized-dark
-      minimal/current-theme-light   'doom-solarized-light)
+      minimal/default-theme         'solarized
+      minimal/default-background    'dark)
 
 ;; Load local customizations if the file exists.
 (if (file-exists-p minimal/local-file)

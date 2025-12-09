@@ -96,6 +96,7 @@
 
 ;; Enable use-package and set its behavior.
 (straight-use-package 'use-package)
+
 (setq use-package-verbose nil             ;; Suppress verbose output from use-package
       use-package-always-ensure t)         ;; Automatically install packages if not present
 
@@ -112,20 +113,20 @@
     (server-start)))
 
 ;; --- Themes and Appearance ---
-;; Load doom-themes and configure them.
-(use-package doom-themes
-  :init
-  (load-theme minimal/current-theme t) ;; Load the initial theme
-  :custom
-  (doom-themes-enable-bold t)          ;; Enable bold font in themes
-  (doom-themes-enable-italic t))       ;; Enable italic font in themes
-
 ;; Configure doom-modeline for the status bar.
-(use-package doom-modeline
-  :init
-  (doom-modeline-mode 1)               ;; Enable doom-modeline
-  :custom
-  (doom-modeline-icon (display-graphic-p))) ;; Show icons if Emacs is running graphically
+(use-package solarized-theme
+  :config
+  (progn
+    (defun minimal/toggle-solarized-background ()
+      "Switch between dark/light modes of the Solarized color theme."
+      (interactive)
+      (setq frame-background-mode
+            (if (eq frame-background-mode 'dark) 'light 'dark))
+      (load-theme
+       (intern
+        (format "solarized-%s" frame-background-mode)))
+    (mapc 'frame-set-background-mode (frame-list)))
+  (global-set-key (kbd "C-M-0") 'minimal/toggle-solarized-background))
 
 ;; Install all-the-icons if in graphical mode.
 (use-package all-the-icons
@@ -136,22 +137,6 @@
   :config
   (unless (find-font (font-spec :name "all-the-icons"))
     (all-the-icons-install-fonts t))) ;; Install icons if not found
-
-(use-package solarized-theme :straight (color-theme-solarized :type git :host github :repo "sellout/emacs-color-theme-solarized")
-  :config
-  (progn
-    (defun minimal/toggle-solarized-background ()
-      "Switch between dark/light modes of the Solarized color theme."
-      (interactive)
-      (setq frame-background-mode
-            (if (eq frame-background-mode 'dark) 'light 'dark))
-      (load-theme
-       (intern
-        (format "solarized-%s" frame-background-mode))
-        (format "solarized-%s-high-contrast" frame-background-mode))
-       t)
-      (mapc 'frame-set-background-mode (frame-list)))
-    (global-set-key (kbd "C-M-0") 'minimal/toggle-solarized-background))
 
 ;; --- UI Enhancements ---
 ;; Enable which-key to show keybindings.
@@ -418,7 +403,7 @@
   :custom
   (ready-player-my-media-collection-location "~/Music/"))
 
-;; --- Theme Toggling ---
+;; --- UI :: Theme ---
 ;; Advice to clear previous themes before loading a new one.
 (defadvice load-theme (before clear-previous-themes activate)
   "Clear existing theme settings instead of layering them."
@@ -427,22 +412,17 @@
 ;; Allow safe custom themes.
 (setq custom-safe-themes t)
 
-;; Function to toggle between light and dark variants of the current theme.
-(defun minimal/toggle-theme ()
-  "Toggle between light & dark variants of current theme."
-  (interactive)
-  (let ((new-theme (if (eq minimal/current-theme minimal/current-theme-dark)
-		       minimal/current-theme-light
-                     minimal/current-theme-dark)))
-    (disable-theme minimal/current-theme) ;; Disable the current theme
-    (load-theme new-theme t)             ;; Load the new theme
-    (setq minimal/current-theme new-theme) ;; Update the variable holding the current theme
-    (custom-set-variables `(minimal/current-theme ',new-theme)))) ;; Save the new theme setting
+;; Load default theme with default background.
+(load-theme
+ (intern
+  (format "%s-%s" minimal/default-theme minimal/default-background)))
 
-;; Keybinding to toggle the theme.
-(global-set-key (kbd "C-S-t") 'minimal/toggle-theme)
+;; Set the frame default background.
+;; (progn
+;;   (setq frame-background-mode minimal/default-background)
+;;   (mapc 'frame-set-background-mode (frame-list)))
 
-;; --- Transparency Toggling ---
+;; --- UI :: Transparency ---
 ;; Change values of frame alpha to toggle it between solid and seetrough.
 (defun minimal/toggle-transparency ()
   (interactive)
