@@ -65,7 +65,7 @@ main() {
     # Interactive selection
     files=$(find "$WALLPAPERS_DIR" -type f -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg")
     if [[ -z $files ]]; then
-      wallpaper="$WALLPAPERS_DIR/default.png"
+      wallpaper="$WALLPAPERS_DEFAULT"
     else
       # Build rofi menu with icons
       ROFI_MENU=""
@@ -80,7 +80,7 @@ main() {
       if [[ -n $selected ]]; then
         wallpaper="$WALLPAPERS_DIR/$selected"
       else
-        wallpaper="$WALLPAPERS_DIR/default.png"
+        wallpaper="$WALLPAPERS_DEFAULT"
       fi
     fi
   elif [[ $1 == "--default" ]]; then

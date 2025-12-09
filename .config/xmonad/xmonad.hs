@@ -73,7 +73,7 @@ mManageHook =
 myStartupHook :: X ()
 myStartupHook = do
     spawn "setxkbmap -layout br -variant thinkpad &"
-    spawn "wallpaper $HOME/.local/share/wallpapers/default.png &"
+    spawn "wallpaper --default &"
     spawn "background dark &"
     spawn "battery -L 20 -n &"
     spawn "xset s 600 &"
