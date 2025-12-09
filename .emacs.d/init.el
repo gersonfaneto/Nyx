@@ -137,6 +137,22 @@
   (unless (find-font (font-spec :name "all-the-icons"))
     (all-the-icons-install-fonts t))) ;; Install icons if not found
 
+(use-package solarized-theme :straight (color-theme-solarized :type git :host github :repo "sellout/emacs-color-theme-solarized")
+  :config
+  (progn
+    (defun minimal/toggle-solarized-background ()
+      "Switch between dark/light modes of the Solarized color theme."
+      (interactive)
+      (setq frame-background-mode
+            (if (eq frame-background-mode 'dark) 'light 'dark))
+      (load-theme
+       (intern
+        (format "solarized-%s" frame-background-mode))
+        (format "solarized-%s-high-contrast" frame-background-mode))
+       t)
+      (mapc 'frame-set-background-mode (frame-list)))
+    (global-set-key (kbd "C-M-0") 'minimal/toggle-solarized-background))
+
 ;; --- UI Enhancements ---
 ;; Enable which-key to show keybindings.
 (use-package which-key
