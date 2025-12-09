@@ -459,11 +459,13 @@
 	 alpha
        (cdr alpha))
      100)
-    (set-frame-parameter nil 'alpha '(85 . 50))
+    (set-frame-parameter nil 'alpha '(90 . 50))
       (set-frame-parameter nil 'alpha '(100 . 100)))))
 
 ;; FIXME: Doesn't work on the first run...
-(minimal/toggle-transparency)
+(progn
+  (minimal/toggle-transparency)
+  (minimal/toggle-transparency))
 
 ;; Keybinding to toggle the transparency.
 (global-set-key (kbd "C-M-9") 'minimal/toggle-transparency)

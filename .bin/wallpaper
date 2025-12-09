@@ -74,7 +74,7 @@ main() {
         ROFI_MENU+="${name}\0icon\x1f${img}\n"
       done <<< "$files"
       selected=$(echo -e "$ROFI_MENU" | rofi -dmenu \
-        -p "Select Wallpaper:" \
+        -p "Select Wallpaper" \
         -theme "$IMAGE_PICKER_CONFIG" \
         -markup-rows)
       if [[ -n $selected ]]; then
