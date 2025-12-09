@@ -2,31 +2,104 @@
 
 # Sets the image as a wallpaper for desktop
 
-WALLPAPERS_DIR="$HOME/.local/share/wallpapers"
+# set -x # WARN: Only used for debugging...
+set -e
+set -u
+set -o pipefail
 
-if [[ $1 == "--help" || $1 == "-h" ]]; then
-  echo "Usage: wallpaper [image.png]"
-  echo "Sets the specified PNG as wallpaper. If no argument, selects randomly."
-  exit 0
-fi
+COLOR_RESET='\033[0m'
+COLOR_RED='\033[0;31m'
+COLOR_GREEN='\033[0;32m'
+COLOR_YELLOW='\033[0;33m'
+COLOR_BLUE='\033[0;34m'
+COLOR_CYAN='\033[0;36m'
 
-if [[ -z $1 ]]; then
-  # Random selection
-  files=("$WALLPAPERS_DIR"/*.png)
-  if [[ ${#files[@]} -gt 0 ]]; then
-    wallpaper="${files[RANDOM % ${#files[@]}]}"
+WALLPAPERS_DIR="$HOME/.local/share/wallpapers/"
+WALLPAPERS_DEFAULT="$WALLPAPERS_DIR/abstract.png"
+
+IMAGE_PICKER_CONFIG="$HOME/.config/rofi/styles/style-04.rasi"
+
+die() {
+  printf "[${COLOR_RED}ERROR${COLOR_RESET}]: %s\n" "$1" >&2
+  exit 1
+}
+
+has() {
+  command -v "$1" > /dev/null 2>&1 || die "Missing dependency: $1"
+}
+
+usage() {
+  echo -e "${COLOR_CYAN}Usage:${COLOR_RESET} $(basename "$0") [OPTIONS] [IMAGE | --select | --default | --random]"
+  echo ""
+  echo -e "${COLOR_CYAN}Description:${COLOR_RESET}"
+  echo "  Sets the specified image (PNG/JPG/JPEG) as wallpaper."
+  echo ""
+  echo -e "${COLOR_CYAN}Options:${COLOR_RESET}"
+  echo -e "  ${COLOR_GREEN}-h, --help${COLOR_RESET}             Display this help message and exit."
+  echo ""
+  echo -e "${COLOR_CYAN}Arguments:${COLOR_RESET}"
+  echo "  IMAGE            Sets the specified image (PNG/JPG/JPEG) as the wallpaper."
+  echo "  --select         Uses ROFI as a interactive selector."
+  echo "  --random         Picks a random wallpaper from WALLPAPERS_DIR."
+  echo "  --default        Sets WALLPAPERS_DEFAULT as the wallpaper."
+}
+
+main() {
+  if [[ ! $# -eq 1 ]]; then
+    usage
+    exit 1
   fi
-elif [[ $1 != /* ]]; then
-  wallpaper="$WALLPAPERS_DIR/$1"
-else
-  wallpaper="$1"
-fi
 
-# Fallback to default if not set or doesn't exist
-if [[ -z $wallpaper || ! -f "$wallpaper" ]]; then
-  wallpaper="$WALLPAPERS_DIR/default.png"
-fi
+  if [[ $1 == "--help" || $1 == "-h" ]]; then
+    usage
+    exit 0
+  fi
 
-feh --bg-fill "$wallpaper" &
+  if [[ $1 == "--random" ]]; then
+    # Random selection
+    files=("$WALLPAPERS_DIR"/*.png)
+    if [[ ${#files[@]} -gt 0 ]]; then
+      wallpaper="${files[RANDOM % ${#files[@]}]}"
+    fi
+  elif [[ $1 == "--select" ]]; then
+    # Interactive selection
+    files=$(find "$WALLPAPERS_DIR" -type f -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg")
+    if [[ -z $files ]]; then
+      wallpaper="$WALLPAPERS_DIR/default.png"
+    else
+      # Build rofi menu with icons
+      ROFI_MENU=""
+      while IFS= read -r img; do
+        name=$(basename "$img")
+        ROFI_MENU+="${name}\0icon\x1f${img}\n"
+      done <<< "$files"
+      selected=$(echo -e "$ROFI_MENU" | rofi -dmenu \
+        -p "Select Wallpaper:" \
+        -theme "$IMAGE_PICKER_CONFIG" \
+        -markup-rows)
+      if [[ -n $selected ]]; then
+        wallpaper="$WALLPAPERS_DIR/$selected"
+      else
+        wallpaper="$WALLPAPERS_DIR/default.png"
+      fi
+    fi
+  elif [[ $1 == "--default" ]]; then
+    wallpaper="$WALLPAPERS_DEFAULT"
+  elif [[ $1 != /* ]]; then
+    wallpaper="$WALLPAPERS_DIR/$1"
+  else
+    wallpaper="$1"
+  fi
 
-# vim:ft=sh:sw=2:ts=2:et:
+  # Fallback to default if not set or doesn't exist
+  if [[ -z $wallpaper || ! -f "$wallpaper" ]]; then
+    usage
+    exit 1
+  fi
+
+  feh --bg-fill "$wallpaper" &
+}
+
+main "$@"
+
+# vim:ft=bash:sw=2:ts=2:et:
