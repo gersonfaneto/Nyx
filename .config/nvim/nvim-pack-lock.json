@@ -5,16 +5,12 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "57d900e6982f63c7cde689aa06d8af76c8da083e",
+      "rev": "d7f1c64f704ade8cdd0c9719796cdf0054455fde",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "cellular-automaton.nvim": {
       "rev": "1606e9d5d04ff254023c3f3c62842d065708d6d3",
       "src": "https://github.com/Eandrju/cellular-automaton.nvim"
-    },
-    "everforest": {
-      "rev": "b10ed9a8b37d6b7448908be98ff8f58f550adc48",
-      "src": "https://github.com/sainnhe/everforest"
     },
     "fugitive-gitlab.vim": {
       "rev": "3584cf7e607ba7822f991d407a8d780e05aae287",
@@ -31,10 +27,6 @@
     "goyo.vim": {
       "rev": "fa0263d456dd43f5926484d1c4c7022dfcb21ba9",
       "src": "https://github.com/junegunn/goyo.vim"
-    },
-    "gruvbox-material": {
-      "rev": "cc47341018320a2c82262958a1af889e5eeacd6e",
-      "src": "https://github.com/sainnhe/gruvbox-material"
     },
     "harpoon": {
       "rev": "87b1a3506211538f460786c23f98ec63ad9af4e5",
@@ -103,10 +95,6 @@
       "rev": "87eeca2bd4d90a94eed1ef0dbc66885117e7bacb",
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
     },
-    "onedark.nvim": {
-      "rev": "213c23ae45a04797572242568d5d51937181792d",
-      "src": "https://github.com/navarasu/onedark.nvim"
-    },
     "opencode.nvim": {
       "rev": "efe3d8cd0fd0722ed443cf5efaf9ec391174fca3",
       "src": "https://github.com/sudo-tee/opencode.nvim"
@@ -122,10 +110,6 @@
     "quicker.nvim": {
       "rev": "9983d4b28881e1df626e3682167b45c284d4da8c",
       "src": "https://github.com/stevearc/quicker.nvim"
-    },
-    "solarized": {
-      "rev": "62f656a02f93c5190a8753159e34b385588d5ff3",
-      "src": "https://github.com/altercation/solarized"
     },
     "treesj": {
       "rev": "186084dee5e9c8eec40f6e39481c723dd567cb05",
@@ -147,10 +131,6 @@
     "venn.nvim": {
       "rev": "b09c2f36ddf70b498281845109bedcf08a7e0de0",
       "src": "https://github.com/jbyuki/venn.nvim"
-    },
-    "vim-colors-solarized": {
-      "rev": "528a59f26d12278698bb946f8fb82a63711eec21",
-      "src": "https://github.com/altercation/vim-colors-solarized"
     },
     "vim-conjoin": {
       "rev": "14ad4e6321b43f9518a2dc99ed705895eef8800b",
