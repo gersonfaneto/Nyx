@@ -128,6 +128,33 @@
 
   services.gnome.gnome-keyring.enable = true;
 
+  services.fprintd = {
+    enable = true;
+    tod = {
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-goodix;
+    };
+  };
+
+  security.pam.services = {
+    login = {
+      fprintAuth = true;
+      enableGnomeKeyring = true;
+    };
+    ly = {
+      enableGnomeKeyring = true;
+      text = ''
+        auth     include login
+        account  include login
+        password include login
+        session  include login
+      '';
+    };
+    xsecurelock = {
+      fprintAuth = true;
+    };
+  };
+
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
