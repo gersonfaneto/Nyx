@@ -327,11 +327,12 @@
       valgrind
 
       # Haskell
+      ghcid
       stack
       cabal-install
-      haskell-language-server
       fourmolu
       stylish-haskell
+      haskell-language-server
 
       # Python
       python312

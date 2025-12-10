@@ -1,4 +1,5 @@
-import Data.Map qualified as M
+import Data.Map qualified as Map
+import Data.Maybe qualified as Maybe
 
 import XMonad
 import XMonad.Actions.CycleWS
@@ -14,10 +15,14 @@ import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
-import XMonad.StackSet qualified as W
+import XMonad.StackSet qualified as StackSet
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Loggers
 import XMonad.Util.SpawnOnce
+
+import Text.Regex.Posix ((=~))
+
+q ~? x = fmap (=~ x) q
 
 cBackground = "#002B36"
 cForeground = "#657B83"
@@ -59,14 +64,19 @@ mLayoutHook =
   where
     tall = ResizableTall 1 (3 / 100) (11 / 20) []
 
+mFloat :: ManageHook
+mFloat = doRectFloat (StackSet.RationalRect 0.15 0.15 0.7 0.7)
+
 mManageHook =
     composeAll
         [ className =? "Navigator" --> doFloat
         , className =? "Dunst" --> doFloat
-        , className =? "wiremix" --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
+        , className =? "wiremix" --> mFloat
         , className =? "firefox" --> doShift "1"
         , className =? "Alacritty" --> doShift "2"
         , className =? "Emacs" --> doShift "10"
+        , className ~? "^Minecraft*" --> doShift "5"
+        , className =? "PrismLauncher" --> mFloat <> doShift "5"
         ]
         <+> insertPosition Below Newer
 
@@ -106,21 +116,21 @@ mKeys =
     , ("M-S-l", shiftToNext >> nextWS)
     , ("M-S-h", shiftToPrev >> prevWS)
     , ("M-<Tab>", toggleWS)
-    , ("M-j", windows W.focusDown)
-    , ("M-k", windows W.focusUp)
+    , ("M-j", windows StackSet.focusDown)
+    , ("M-k", windows StackSet.focusUp)
     , ("M-,", sendMessage NextLayout)
     , ("M-S-<Space>", withFocused toggleFloat)
     , ("M-a", toggleWindowSpacingEnabled >> toggleScreenSpacingEnabled)
     , ("M-S-a", setWindowSpacing (Border 3 3 3 3) >> setScreenSpacing (Border 3 3 3 3))
-    , ("M-<Space> 1", windows $ W.greedyView "1")
-    , ("M-<Space> 2", windows $ W.greedyView "2")
-    , ("M-<Space> 3", windows $ W.greedyView "3")
-    , ("M-<Space> 4", windows $ W.greedyView "4")
-    , ("M-<Space> 5", windows $ W.greedyView "5")
-    , ("M-<Space> 6", windows $ W.greedyView "6")
-    , ("M-<Space> 7", windows $ W.greedyView "7")
-    , ("M-<Space> 8", windows $ W.greedyView "8")
-    , ("M-<Space> 9", windows $ W.greedyView "9")
+    , ("M-<Space> 1", windows $ StackSet.greedyView "1")
+    , ("M-<Space> 2", windows $ StackSet.greedyView "2")
+    , ("M-<Space> 3", windows $ StackSet.greedyView "3")
+    , ("M-<Space> 4", windows $ StackSet.greedyView "4")
+    , ("M-<Space> 5", windows $ StackSet.greedyView "5")
+    , ("M-<Space> 6", windows $ StackSet.greedyView "6")
+    , ("M-<Space> 7", windows $ StackSet.greedyView "7")
+    , ("M-<Space> 8", windows $ StackSet.greedyView "8")
+    , ("M-<Space> 9", windows $ StackSet.greedyView "9")
     , ("<XF86AudioRaiseVolume>", spawn "volume up")
     , ("<XF86AudioLowerVolume>", spawn "volume down")
     , ("<XF86AudioMute>", spawn "volume mute")
@@ -140,15 +150,15 @@ mKeys =
     ]
         ++ [ (mask ++ "M-" ++ [key], windows $ action tag)
            | (tag, key) <- zip mWorkspaces "1234567890"
-           , (action, mask) <- [(W.greedyView, ""), (W.shift, "S-")]
+           , (action, mask) <- [(StackSet.greedyView, ""), (StackSet.shift, "S-")]
            ]
 
 toggleFloat w =
     windows
         ( \s ->
-            if M.member w (W.floating s)
-                then W.sink w s
-                else W.float w (W.RationalRect 0.15 0.15 0.7 0.7) s
+            if Map.member w (StackSet.floating s)
+                then StackSet.sink w s
+                else StackSet.float w (StackSet.RationalRect 0.15 0.15 0.7 0.7) s
         )
 
 myXmobarPP :: PP
