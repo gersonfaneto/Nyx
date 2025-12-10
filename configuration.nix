@@ -261,6 +261,7 @@
       file
       firefox
       fish
+      fprintd
       fzf
       gh
       ghostty
