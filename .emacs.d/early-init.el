@@ -119,5 +119,5 @@
 
 ;; Load custom file if it exists.
 (when (file-exists-p minimal/custom-file)
-  (setq custom-file minimal/custom-file) ;; Set Emacs's custom-file variable
-  (load-file custom-file))             ;; Load the custom file
+  (setq custom-file minimal/custom-file)	;; Set Emacs's custom-file variable
+  (load-file custom-file))			;; Load the custom file

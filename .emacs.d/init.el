@@ -361,6 +361,40 @@
   (setq-default eglot-stay-out-of '(flymake-diagnostic-functions
                                     eldoc-documentation-strategy)))
 
+;; --- Lisp ---
+(use-package paredit
+  :defer t
+  :bind
+  (:map paredit-mode-map ("RET" . nil))
+  :hook
+  ((cider-repl-mode
+    clojure-mode
+    emacs-lisp-mode
+    geiser-repl-mode
+    ielm-mode
+    lisp-interaction-mode
+    lisp-mode
+    racket-mode
+    racket-repl-mode
+    scheme-mode
+    slime-repl-mode)
+   . paredit-mode))
+
+;; (use-package paredit
+;;   :ensure t
+;;   :config
+;;   (dolist (m '(emacs-lisp-mode-hook
+;;                racket-mode-hook
+;;                racket-repl-mode-hook))
+;;     (add-hook m #'paredit-mode))
+;;   (bind-keys :map paredit-mode-map
+;;              ("{"   . paredit-open-curly)
+;;              ("}"   . paredit-close-curly))
+;;   (unless terminal-frame
+;;     (bind-keys :map paredit-mode-map
+;;                ("M-[" . paredit-wrap-square)
+;;                ("M-{" . paredit-wrap-curly))))
+
 ;; --- Markdown Mode ---
 (use-package markdown-mode
   :init
@@ -440,9 +474,12 @@
 (setq custom-safe-themes t)
 
 ;; Load default theme with default background.
-(load-theme
- (intern
-  (format "%s-%s" minimal/default-theme minimal/default-background)))
+(progn
+  (defun minimal/load-theme ()
+    (load-theme
+     (intern
+      (format "%s-%s" minimal/default-theme minimal/default-background))))
+  (minimal/load-theme))
 
 ;; Set the frame default background.
 (progn
@@ -475,8 +512,8 @@
 (defun minimal/setup-frame (frame)
   "Setup fonts, theme, and modeline for new frames."
   (with-selected-frame frame
-    (load-theme minimal/current-theme t) ;; Load the current theme
-    (set-frame-font minimal/default-font nil t))) ;; Set the default font
+    (minimal/load-theme)				;; Load the current theme
+    (set-frame-font minimal/default-font nil t)))	;; Set the default font
 
 ;; Apply frame setup when Emacs starts or when a new frame is created.
 (if (daemonp)

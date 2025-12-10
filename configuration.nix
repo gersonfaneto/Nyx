@@ -400,6 +400,7 @@
 
       # UI
       recursive
+      (iosevka-bin.override {variant = "SS09";})
 
       # Coding
       nerd-fonts._3270
