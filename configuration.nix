@@ -268,6 +268,7 @@
       gifsicle
       git
       highlight
+      hyperfine
       imagemagick
       ispell
       jq

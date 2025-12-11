@@ -276,7 +276,8 @@
 ;; Magit for Git integration.
 (use-package magit
   :bind
-  ("C-x g" . 'magit-status))          ;; Open Magit status buffer
+  ("C-c m s" . 'magit-status)
+  ("C-c m l" . 'magit-log))
 
 ;; --- Environment ----
 ;; Direnv for managing environment variables in projects.
@@ -501,7 +502,6 @@
 
 ;; FIXME: Doesn't work on the first run...
 (progn
-  (minimal/toggle-transparency)
   (minimal/toggle-transparency))
 
 ;; Keybinding to toggle the transparency.
