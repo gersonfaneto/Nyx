@@ -3,6 +3,7 @@ import Data.Maybe qualified as Maybe
 
 import XMonad
 import XMonad.Actions.CycleWS
+import XMonad.Actions.Submap  -- <<< NEW
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
@@ -20,7 +21,25 @@ import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Loggers
 import XMonad.Util.SpawnOnce
 
+import System.IO (writeFile)        -- <<< NEW
+import qualified Data.Map as M       -- <<< NEW
+
 import Text.Regex.Posix ((=~))
+
+------------------------------------------------------------------------
+-- SUBMAP INDICATOR HELPERS
+------------------------------------------------------------------------
+
+setSubmap :: String -> X ()
+setSubmap name = io $ writeFile "/home/gerson/.cache/xmonad-submap" name
+
+namedSubmap :: String -> M.Map (KeyMask, KeySym) (X ()) -> X ()
+namedSubmap name mp = do
+    setSubmap name
+    submap mp
+    setSubmap ""
+
+------------------------------------------------------------------------
 
 q ~? x = fmap (=~ x) q
 
@@ -90,22 +109,56 @@ myStartupHook = do
     spawn "xss-lock -l -- xsecurelock &"
     spawn "killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc &"
     spawn "xsetroot -cursor_name left_ptr &"
+    io $ writeFile "/home/gerson/.cache/xmonad-submap" ""   -- <<< NEW
+
+------------------------------------------------------------------------
+-- SUBMAPS
+------------------------------------------------------------------------
+
+openSubmap = namedSubmap "Open" $ M.fromList
+    [ ((0, xK_e), spawn mEditor)
+    , ((0, xK_b), spawn mBrowser)
+    ]
+
+rofiSubmap = namedSubmap "Rofi" $ M.fromList
+    [ ((0, xK_r), spawn "rofi-run")
+    , ((0, xK_a), spawn "rofi-apps")
+    , ((0, xK_m), spawn "rofi-music")
+    , ((0, xK_s), spawn "rofi-audio")
+    , ((0, xK_p), spawn "rofi-capture")
+    ]
+
+systemSubmap = namedSubmap "System" $ M.fromList
+    [ ((0, xK_c), spawn "caffeine")
+    , ((0, xK_s), spawn "silence")
+    , ((0, xK_d), spawn "dunstctl close-all")
+    , ((0, xK_x), spawn "xmonad --recompile && xmonad --restart")
+    ]
+
+mediaSubmap = namedSubmap "Media" $ M.fromList
+    [ ((0, xK_k), spawn "volume up")
+    , ((0, xK_j), spawn "volume down")
+    , ((0, xK_m), spawn "volume mute")
+    , ((0, xK_v), spawn "volume mute")
+    , ((0, xK_p), spawn "playerctl play-pause")
+    , ((0, xK_h), spawn "playerctl previous")
+    , ((0, xK_l), spawn "playerctl next")
+    , ((0, xK_w), spawn "alacritty --class 'wiremix' --command 'wiremix'")
+    ]
+
+------------------------------------------------------------------------
 
 mKeys =
     [ ("M-<Escape>", spawn "rofi-system")
     , ("M-<Return>", spawn mTerminal)
     , ("M-S-<Return>", spawn mTerminal')
-    , ("M-<Space> o e", spawn mEditor)
-    , ("M-<Space> o b", spawn mBrowser)
-    , ("M-<Space> r r", spawn "rofi-run")
-    , ("M-<Space> r a", spawn "rofi-apps")
-    , ("M-<Space> r m", spawn "rofi-music")
-    , ("M-<Space> r v", spawn "rofi-audio")
-    , ("M-<Space> r s", spawn "rofi-capture")
-    , ("M-s c t", spawn "caffeine")
-    , ("M-s n t", spawn "silence")
-    , ("M-s n c", spawn "dunstctl close-all")
-    , ("M-s x r", spawn "xmonad --recompile && xmonad --restart")
+
+      -- SUBMAP prefixes:
+    , ("M-o", openSubmap)
+    , ("M-r", rofiSubmap)
+    , ("M-s", systemSubmap)
+    , ("M-m", mediaSubmap)
+
     , ("M-t z", spawn "boomer")
     , ("M-<F1>", spawn "wallpaper --select")
     , ("M-S-<F1>", spawn "wallpaper --default")
@@ -122,36 +175,13 @@ mKeys =
     , ("M-S-<Space>", withFocused toggleFloat)
     , ("M-a", toggleWindowSpacingEnabled >> toggleScreenSpacingEnabled)
     , ("M-S-a", setWindowSpacing (Border 3 3 3 3) >> setScreenSpacing (Border 3 3 3 3))
-    , ("M-<Space> 1", windows $ StackSet.greedyView "1")
-    , ("M-<Space> 2", windows $ StackSet.greedyView "2")
-    , ("M-<Space> 3", windows $ StackSet.greedyView "3")
-    , ("M-<Space> 4", windows $ StackSet.greedyView "4")
-    , ("M-<Space> 5", windows $ StackSet.greedyView "5")
-    , ("M-<Space> 6", windows $ StackSet.greedyView "6")
-    , ("M-<Space> 7", windows $ StackSet.greedyView "7")
-    , ("M-<Space> 8", windows $ StackSet.greedyView "8")
-    , ("M-<Space> 9", windows $ StackSet.greedyView "9")
-    , ("<XF86AudioRaiseVolume>", spawn "volume up")
-    , ("<XF86AudioLowerVolume>", spawn "volume down")
-    , ("<XF86AudioMute>", spawn "volume mute")
-    , ("M-<XF86AudioMute>", spawn "volume mute")
-    , ("M-M1-k", spawn "volume up")
-    , ("M-M1-j", spawn "volume down")
-    , ("M-M1-m", spawn "volume mute")
-    , ("M-M1-v", spawn "volume mute")
-    , ("<XF86AudioPrev>", spawn "playerctl previous")
-    , ("<XF86AudioNext>", spawn "playerctl next")
-    , ("<XF86AudioPlay>", spawn "playerctl play-pause")
-    , ("M-M1-h", spawn "playerctl previous")
-    , ("M-M1-l", spawn "playerctl next")
-    , ("M-M1-p", spawn "playerctl play-pause")
-    , ("<XF86MonBrightnessDown>", spawn "brightness down")
-    , ("<XF86MonBrightnessUp>", spawn "brightness up")
     ]
-        ++ [ (mask ++ "M-" ++ [key], windows $ action tag)
-           | (tag, key) <- zip mWorkspaces "1234567890"
-           , (action, mask) <- [(StackSet.greedyView, ""), (StackSet.shift, "S-")]
-           ]
+    ++ [ (mask ++ "M-" ++ [key], windows $ action tag)
+       | (tag, key) <- zip mWorkspaces "1234567890"
+       , (action, mask) <- [(StackSet.greedyView, ""), (StackSet.shift, "S-")]
+       ]
+
+------------------------------------------------------------------------
 
 toggleFloat w =
     windows

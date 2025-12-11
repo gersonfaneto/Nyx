@@ -2,7 +2,6 @@
 Config {
    -- Appearance
      font            = "Recursive Sans Casual Static 10"
-   , additionalFonts = [ "Recursive Sans Casual Static 12" ]
    , bgColor         = "#002B36"
    , fgColor         = "#FDF6E3"
    , position        = BottomSize C 100 35 │ 
@@ -13,7 +12,7 @@ Config {
    -- Layout
    , sepChar         = "%"
    , alignSep        = "}{"
-   , template        = " %XMonadLog% }{ %cpu% <fc=#839496>│</fc> %memory% <fc=#839496>│</fc> %battery% <fc=#839496>│</fc> %date% "
+   , template        = " %XMonadLog% } %submap% { %cpu% <fc=#839496>│</fc> %memory% <fc=#839496>│</fc> %battery% <fc=#839496>│</fc> %date% "
 
    -- Plugins
    , commands        =
@@ -43,10 +42,11 @@ Config {
             , "-h", "#DC322F"
             , "--"
             , "-o", "<left>% (<timeleft>)"
-            , "-O", "<fc=#B58900>Charging</fc> <left>%"
-            , "-i", "<fc=#859900>Charged</fc>"
+            , "-O", "<left>%"
+            , "-i", ""
             ] 50
-        , Run Date "<fc=#FDF6E3> %a %b %_d %H:%M</fc>" "date" 10
+        , Run Date "<fc=#FDF6E3> %a %_d/%m %H:%M</fc>" "date" 10
+        , Run Com "cat" ["/home/gerson/.cache/xmonad-submap"] "submap" 1
         ]
    }
 
