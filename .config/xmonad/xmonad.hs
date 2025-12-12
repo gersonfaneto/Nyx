@@ -3,7 +3,7 @@ import Data.Maybe qualified as Maybe
 
 import XMonad
 import XMonad.Actions.CycleWS
-import XMonad.Actions.Submap  -- <<< NEW
+import XMonad.Actions.Submap
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
@@ -21,25 +21,10 @@ import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Loggers
 import XMonad.Util.SpawnOnce
 
-import System.IO (writeFile)        -- <<< NEW
-import qualified Data.Map as M       -- <<< NEW
+import Data.Map qualified as M
+import System.IO (writeFile)
 
 import Text.Regex.Posix ((=~))
-
-------------------------------------------------------------------------
--- SUBMAP INDICATOR HELPERS
-------------------------------------------------------------------------
-
-setSubmap :: String -> X ()
-setSubmap name = io $ writeFile "/home/gerson/.cache/xmonad-submap" name
-
-namedSubmap :: String -> M.Map (KeyMask, KeySym) (X ()) -> X ()
-namedSubmap name mp = do
-    setSubmap name
-    submap mp
-    setSubmap ""
-
-------------------------------------------------------------------------
 
 q ~? x = fmap (=~ x) q
 
@@ -80,11 +65,11 @@ mCalc = "qalculate-gtk"
 
 mLayoutHook =
     avoidStruts $
-    smartBorders $
-        renamed [Replace "Tall"] (mSpacing tall)
-            ||| renamed [Replace "Wide"] (mSpacing (Mirror tall))
-            ||| renamed [Replace "Full"] (mSpacing Full)
-            ||| renamed [Replace "Spiral"] (mSpacing (spiral (6 / 7)))
+        smartBorders $
+            renamed [Replace "Tall"] (mSpacing tall)
+                ||| renamed [Replace "Wide"] (mSpacing (Mirror tall))
+                ||| renamed [Replace "Full"] (mSpacing Full)
+                ||| renamed [Replace "Spiral"] (mSpacing (spiral (6 / 7)))
   where
     tall = ResizableTall 1 (3 / 100) (11 / 20) []
 
@@ -115,50 +100,65 @@ myStartupHook = do
     spawn "xss-lock -l -- xsecurelock &"
     spawn "killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc &"
     spawn "xsetroot -cursor_name left_ptr &"
-    io $ writeFile "/home/gerson/.cache/xmonad-submap" ""   -- <<< NEW
+    io $ writeFile "/home/gerson/.cache/xmonad-submap" "" -- <<< NEW
 
-------------------------------------------------------------------------
--- SUBMAPS
-------------------------------------------------------------------------
+setSubmap :: String -> X ()
+setSubmap name = io $ writeFile "/home/gerson/.cache/xmonad-submap" name
 
-openSubmap = namedSubmap "Open" $ M.fromList
-    [ ((0, xK_e), spawn mEditor)
-    , ((0, xK_b), spawn mBrowser)
-    , ((0, xK_q), spawn mCalc)
-    ]
+namedSubmap :: String -> M.Map (KeyMask, KeySym) (X ()) -> X ()
+namedSubmap name mp = do
+    setSubmap name
+    submap mp
+    setSubmap ""
 
-rofiSubmap = namedSubmap "Rofi" $ M.fromList
-    [ ((0, xK_r), spawn "rofi-run")
-    , ((0, xK_a), spawn "rofi-apps")
-    , ((0, xK_m), spawn "rofi-music")
-    , ((0, xK_s), spawn "rofi-audio")
-    , ((0, xK_p), spawn "rofi-capture")
-    ]
+openSubmap =
+    namedSubmap "Open" $
+        M.fromList
+            [ ((0, xK_e), spawn mEditor)
+            , ((0, xK_b), spawn mBrowser)
+            , ((0, xK_q), spawn mCalc)
+            ]
 
-systemSubmap = namedSubmap "System" $ M.fromList
-    [ ((0, xK_c), spawn "caffeine")
-    , ((0, xK_s), spawn "silence")
-    , ((0, xK_d), spawn "dunstctl close-all")
-    , ((0, xK_x), spawn "xmonad --recompile && xmonad --restart")
-    ]
+rofiSubmap =
+    namedSubmap "Rofi" $
+        M.fromList
+            [ ((0, xK_r), spawn "rofi-run")
+            , ((0, xK_a), spawn "rofi-apps")
+            , ((0, xK_m), spawn "rofi-music")
+            , ((0, xK_s), spawn "rofi-audio")
+            , ((0, xK_p), spawn "rofi-capture")
+            ]
 
-mediaSubmap = namedSubmap "Media" $ M.fromList
-    [ ((0, xK_k), spawn "volume up")
-    , ((0, xK_j), spawn "volume down")
-    , ((0, xK_m), spawn "volume mute")
-    , ((0, xK_v), spawn "volume mute")
-    , ((0, xK_p), spawn "playerctl play-pause")
-    , ((0, xK_h), spawn "playerctl previous")
-    , ((0, xK_l), spawn "playerctl next")
-    , ((0, xK_w), spawn "alacritty --class 'wiremix' --command 'wiremix'")
-    ]
+systemSubmap =
+    namedSubmap "System" $
+        M.fromList
+            [ ((0, xK_c), spawn "caffeine")
+            , ((0, xK_s), spawn "silence")
+            , ((0, xK_d), spawn "dunstctl close-all")
+            , ((0, xK_x), spawn "xmonad --recompile && xmonad --restart")
+            ]
 
-workspaceSubmap = namedSubmap "Workspace" $ M.fromList
-    [ ((0, xK_t), sendMessage $ JumpToLayout "Tall")
-    , ((0, xK_w), sendMessage $ JumpToLayout "Wide")
-    , ((0, xK_f), sendMessage $ JumpToLayout "Full")
-    , ((0, xK_s), sendMessage $ JumpToLayout "Spiral")
-    ]
+mediaSubmap =
+    namedSubmap "Media" $
+        M.fromList
+            [ ((0, xK_k), spawn "volume up")
+            , ((0, xK_j), spawn "volume down")
+            , ((0, xK_m), spawn "volume mute")
+            , ((0, xK_v), spawn "volume mute")
+            , ((0, xK_p), spawn "playerctl play-pause")
+            , ((0, xK_h), spawn "playerctl previous")
+            , ((0, xK_l), spawn "playerctl next")
+            , ((0, xK_w), spawn "alacritty --class 'wiremix' --command 'wiremix'")
+            ]
+
+workspaceSubmap =
+    namedSubmap "Workspace" $
+        M.fromList
+            [ ((0, xK_t), sendMessage $ JumpToLayout "Tall")
+            , ((0, xK_w), sendMessage $ JumpToLayout "Wide")
+            , ((0, xK_f), sendMessage $ JumpToLayout "Full")
+            , ((0, xK_s), sendMessage $ JumpToLayout "Spiral")
+            ]
 
 ------------------------------------------------------------------------
 
@@ -166,14 +166,11 @@ mKeys =
     [ ("M-<Escape>", spawn "rofi-system")
     , ("M-<Return>", spawn mTerminal)
     , ("M-S-<Return>", spawn mTerminal')
-
-      -- SUBMAP prefixes:
     , ("M-o", openSubmap)
     , ("M-r", rofiSubmap)
     , ("M-s", systemSubmap)
     , ("M-m", mediaSubmap)
     , ("M-w", workspaceSubmap)
-
     , ("M-t z", spawn "boomer")
     , ("M-<F1>", spawn "wallpaper --select")
     , ("M-S-<F1>", spawn "wallpaper --default")
@@ -207,20 +204,19 @@ mKeys =
     , ("<XF86MonBrightnessDown>", spawn "brightness down")
     , ("<XF86MonBrightnessUp>", spawn "brightness up")
     ]
-    ++ [ (mask ++ "M-" ++ [key], windows $ action tag)
-       | (tag, key) <- zip mWorkspaces "1234567890"
-       , (action, mask) <- [(StackSet.greedyView, ""), (StackSet.shift, "S-")]
-       ]
+    ++
+    [ (mask ++ "M-" ++ [key], windows $ action tag)
+    | (tag, key) <- zip mWorkspaces "1234567890"
+    , (action, mask) <- [(StackSet.greedyView, ""), (StackSet.shift, "S-")]
+    ]
 
 ------------------------------------------------------------------------
 
 toggleFloat w =
     windows
-        ( \s ->
-            if Map.member w (StackSet.floating s)
-                then StackSet.sink w s
-                else StackSet.float w (StackSet.RationalRect 0.15 0.15 0.7 0.7) s
-        )
+        (\s -> if Map.member w (StackSet.floating s)
+               then StackSet.sink w s
+               else StackSet.float w (StackSet.RationalRect 0.15 0.15 0.7 0.7) s)
 
 myXmobarPP :: PP
 myXmobarPP =
