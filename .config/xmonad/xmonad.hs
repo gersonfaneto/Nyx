@@ -1,6 +1,3 @@
-import qualified Data.Map                     as Map
-import qualified Data.Maybe                   as Maybe
-
 import           XMonad
 import           XMonad.Actions.CycleWS
 import           XMonad.Actions.Submap
@@ -22,7 +19,9 @@ import           XMonad.Util.Loggers
 import           XMonad.Util.SpawnOnce
 import           XMonad.Util.WindowProperties
 
-import qualified Data.Map                     as M
+import qualified Data.Map                     as Map
+import qualified Data.Maybe                   as Maybe
+
 import           System.IO                    (writeFile)
 
 import           Text.Regex.Posix             ((=~))
@@ -103,12 +102,12 @@ myStartupHook = do
     spawn "xss-lock -l -- xsecurelock &"
     spawn "killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc &"
     spawn "xsetroot -cursor_name left_ptr &"
-    io $ writeFile "/home/gerson/.cache/xmonad-submap" "" -- <<< NEW
+    io $ writeFile "/home/gerson/.cache/xmonad-submap" ""
 
 setSubmap :: String -> X ()
 setSubmap name = io $ writeFile "/home/gerson/.cache/xmonad-submap" name
 
-namedSubmap :: String -> M.Map (KeyMask, KeySym) (X ()) -> X ()
+namedSubmap :: String -> Map.Map (KeyMask, KeySym) (X ()) -> X ()
 namedSubmap name mp = do
     setSubmap name
     submap mp
@@ -116,7 +115,7 @@ namedSubmap name mp = do
 
 openSubmap =
     namedSubmap "Open" $
-        M.fromList
+        Map.fromList
             [ ((0, xK_e), spawn mEditor)
             , ((0, xK_b), spawn mBrowser)
             , ((0, xK_q), spawn mCalc)
@@ -125,7 +124,7 @@ openSubmap =
 
 rofiSubmap =
     namedSubmap "Rofi" $
-        M.fromList
+        Map.fromList
             [ ((0, xK_r), spawn "rofi-run")
             , ((0, xK_a), spawn "rofi-apps")
             , ((0, xK_m), spawn "rofi-music")
@@ -135,7 +134,7 @@ rofiSubmap =
 
 systemSubmap =
     namedSubmap "System" $
-        M.fromList
+        Map.fromList
             [ ((0, xK_c), spawn "caffeine")
             , ((0, xK_s), spawn "silence")
             , ((0, xK_d), spawn "dunstctl close-all")
@@ -144,7 +143,7 @@ systemSubmap =
 
 mediaSubmap =
     namedSubmap "Media" $
-        M.fromList
+        Map.fromList
             [ ((0, xK_k), spawn "volume up")
             , ((0, xK_j), spawn "volume down")
             , ((0, xK_m), spawn "volume mute")
@@ -157,7 +156,7 @@ mediaSubmap =
 
 workspaceSubmap =
     namedSubmap "Workspace" $
-        M.fromList
+        Map.fromList
             [ ((0, xK_t), sendMessage $ JumpToLayout "Tall")
             , ((0, xK_w), sendMessage $ JumpToLayout "Wide")
             , ((0, xK_f), sendMessage $ JumpToLayout "Full")
