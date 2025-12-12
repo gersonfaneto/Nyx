@@ -80,6 +80,7 @@ mCalc = "qalculate-gtk"
 
 mLayoutHook =
     avoidStruts $
+    smartBorders $
         renamed [Replace "Tall"] (mSpacing tall)
             ||| renamed [Replace "Wide"] (mSpacing (Mirror tall))
             ||| renamed [Replace "Full"] (mSpacing Full)
@@ -152,6 +153,13 @@ mediaSubmap = namedSubmap "Media" $ M.fromList
     , ((0, xK_w), spawn "alacritty --class 'wiremix' --command 'wiremix'")
     ]
 
+workspaceSubmap = namedSubmap "Workspace" $ M.fromList
+    [ ((0, xK_t), sendMessage $ JumpToLayout "Tall")
+    , ((0, xK_w), sendMessage $ JumpToLayout "Wide")
+    , ((0, xK_f), sendMessage $ JumpToLayout "Full")
+    , ((0, xK_s), sendMessage $ JumpToLayout "Spiral")
+    ]
+
 ------------------------------------------------------------------------
 
 mKeys =
@@ -164,6 +172,7 @@ mKeys =
     , ("M-r", rofiSubmap)
     , ("M-s", systemSubmap)
     , ("M-m", mediaSubmap)
+    , ("M-w", workspaceSubmap)
 
     , ("M-t z", spawn "boomer")
     , ("M-<F1>", spawn "wallpaper --select")
