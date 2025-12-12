@@ -72,7 +72,11 @@ mEditor :: String
 mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
 
 mBrowser :: String
-mBrowser = "firefox"
+-- mBrowser = "firefox"
+mBrowser = "brave"
+
+mCalc :: String
+mCalc = "qalculate-gtk"
 
 mLayoutHook =
     avoidStruts $
@@ -91,6 +95,7 @@ mManageHook =
         [ className =? "Navigator" --> doFloat
         , className =? "Dunst" --> doFloat
         , className =? "wiremix" --> mFloat
+        , className =? "Qalculate-gtk" --> mFloat
         , className =? "firefox" --> doShift "1"
         , className =? "Alacritty" --> doShift "2"
         , className =? "Emacs" --> doShift "10"
@@ -118,6 +123,7 @@ myStartupHook = do
 openSubmap = namedSubmap "Open" $ M.fromList
     [ ((0, xK_e), spawn mEditor)
     , ((0, xK_b), spawn mBrowser)
+    , ((0, xK_q), spawn mCalc)
     ]
 
 rofiSubmap = namedSubmap "Rofi" $ M.fromList
@@ -175,6 +181,22 @@ mKeys =
     , ("M-S-<Space>", withFocused toggleFloat)
     , ("M-a", toggleWindowSpacingEnabled >> toggleScreenSpacingEnabled)
     , ("M-S-a", setWindowSpacing (Border 3 3 3 3) >> setScreenSpacing (Border 3 3 3 3))
+    , ("<XF86AudioRaiseVolume>", spawn "volume up")
+    , ("<XF86AudioLowerVolume>", spawn "volume down")
+    , ("<XF86AudioMute>", spawn "volume mute")
+    , ("M-<XF86AudioMute>", spawn "volume mute")
+    , ("M-M1-k", spawn "volume up")
+    , ("M-M1-j", spawn "volume down")
+    , ("M-M1-m", spawn "volume mute")
+    , ("M-M1-v", spawn "volume mute")
+    , ("<XF86AudioPrev>", spawn "playerctl previous")
+    , ("<XF86AudioNext>", spawn "playerctl next")
+    , ("<XF86AudioPlay>", spawn "playerctl play-pause")
+    , ("M-M1-h", spawn "playerctl previous")
+    , ("M-M1-l", spawn "playerctl next")
+    , ("M-M1-p", spawn "playerctl play-pause")
+    , ("<XF86MonBrightnessDown>", spawn "brightness down")
+    , ("<XF86MonBrightnessUp>", spawn "brightness up")
     ]
     ++ [ (mask ++ "M-" ++ [key], windows $ action tag)
        | (tag, key) <- zip mWorkspaces "1234567890"

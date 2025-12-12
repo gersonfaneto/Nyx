@@ -47,6 +47,10 @@
         pkgs.alejandra
     );
 
+    packages = forAllSystems (system: {
+      default = nixpkgs.legacyPackages.${system}.hello;
+    });
+
     nixosConfigurations = {
       Nyx = inputs.nixpkgs.lib.nixosSystem {
         inherit system;

@@ -1,4 +1,3 @@
--- TokyoNight XMobar Config
 Config {
    -- Appearance
      font            = "Recursive Sans Casual Static 10"
@@ -42,8 +41,8 @@ Config {
             , "-h", "#DC322F"
             , "--"
             , "-o", "<left>% (<timeleft>)"
-            , "-O", "<left>%"
-            , "-i", ""
+            , "-O", "<fc=#B58900>Charging</fc> <left>%"
+            , "-i", "<fc=#859900>Charged</fc>"
             ] 50
         , Run Date "<fc=#FDF6E3> %a %_d/%m %H:%M</fc>" "date" 10
         , Run Com "cat" ["/home/gerson/.cache/xmonad-submap"] "submap" 1

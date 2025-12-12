@@ -2,7 +2,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}: 
+{
   imports = [
     ./hardware-configuration.nix
   ];
@@ -155,12 +156,15 @@
     };
   };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-    ];
-    config.common.default = ["gtk"];
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal
+        xdg-desktop-portal-gtk
+      ];
+      config.common.default = "*";
+    };
   };
 
   users.users.gerson = {
@@ -206,6 +210,10 @@
     package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
   };
 
+  programs.dconf = {
+    enable = true;
+  };
+
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
@@ -244,6 +252,7 @@
       beets
       bluetui
       bottom
+      brave
       brightnessctl
       cava
       chafa
@@ -415,6 +424,7 @@
       nerd-fonts.iosevka
       nerd-fonts.iosevka-term
       nerd-fonts.iosevka-term-slab
+      nerd-fonts.jetbrains-mono
       nerd-fonts.martian-mono
       nerd-fonts.meslo-lg
       nerd-fonts.monaspace

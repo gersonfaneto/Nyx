@@ -39,7 +39,6 @@ in {
     ".config/feh/" = mkSymlink ".config/feh/";
     ".config/fish/" = mkSymlink ".config/fish/";
     ".config/ghostty/" = mkSymlink ".config/ghostty/";
-    ".config/gtk-3.0/" = mkSymlink ".config/gtk-3.0/";
     ".config/kew/" = mkSymlink ".config/kew/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/nvim/" = mkSymlink ".config/nvim/";
@@ -67,6 +66,34 @@ in {
     kew
     dmenu
   ];
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "NumixSolarizedDarkCyan";
+      package = pkgs.numix-solarized-gtk-theme;
+    };
+    iconTheme = {
+      name = "Numix-Square";
+      package = pkgs.numix-icon-theme-square;
+    };
+    cursorTheme = {
+      name = "Numix-Cursor";
+      package = pkgs.numix-cursor-theme;
+      size = 16;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+  };
 
   services.picom = {
     enable = true;
