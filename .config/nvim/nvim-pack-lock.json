@@ -5,7 +5,7 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "d7f1c64f704ade8cdd0c9719796cdf0054455fde",
+      "rev": "3033d278848129899f94843e12ebb83a31342faa",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "cellular-automaton.nvim": {
@@ -17,7 +17,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "de0fd4a21ee29cf6532d0c3bcae08a0b25d99b6a",
+      "rev": "bd69cbae60eeb4589fbd285cb112265530fe1a5e",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -42,7 +42,7 @@
       "src": "https://github.com/iamcco/markdown-preview.nvim"
     },
     "mini.nvim": {
-      "rev": "6f11e41a137590e4a5f13624a2a9a845686e719f",
+      "rev": "9087880da9ed1e5b06a28b75b4424fd8218bd189",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "molten-nvim": {
@@ -66,7 +66,7 @@
       "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
-      "rev": "b6271b678e035a5cbf62d637364f3eeca0890171",
+      "rev": "2979e048b356cfd32dc419d5803dc356b9832adf",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -96,11 +96,11 @@
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
     },
     "opencode.nvim": {
-      "rev": "efe3d8cd0fd0722ed443cf5efaf9ec391174fca3",
+      "rev": "6094564e935b034c9ec6088d8333cd45553dc34e",
       "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "otter.nvim": {
-      "rev": "fc0aa35b1985077d11a20ddf4006bf40f2cd7397",
+      "rev": "50d2f22998eab05f410ba8c6499f1637699f2505",
       "src": "https://github.com/jmbuhr/otter.nvim"
     },
     "plenary.nvim": {
