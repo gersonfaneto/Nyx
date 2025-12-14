@@ -57,8 +57,7 @@ mEditor :: String
 mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
 
 mBrowser :: String
--- mBrowser = "firefox"
-mBrowser = "brave"
+mBrowser = "firefox"
 
 mCalc :: String
 mCalc = "qalculate-gtk"
@@ -78,17 +77,8 @@ mFloat = doRectFloat (StackSet.RationalRect 0.15 0.15 0.7 0.7)
 
 mManageHook =
     composeAll
-        [ className =? "Dunst" --> doFloat
-        , className =? "wiremix" --> mFloat
+        [ className =? "wiremix" --> mFloat
         , className =? "Qalculate-gtk" --> mFloat
-        , className =? "Brave-browser" --> doShift "1"
-        , className =? "firefox" --> doShift "1"
-        , className =? "Alacritty" --> doShift "2"
-        , className =? "com.mitchellh.ghostty" --> doShift "2"
-        , className =? "Emacs" --> doShift "10"
-        , className ~? "^Minecraft*" --> doShift "5"
-        , className =? "PrismLauncher" --> mFloat <> doShift "5"
-        , stringProperty "WM_WINDOW_ROLE" ~? "[pop-up|Popup]" --> doFloat
         ]
         <+> insertPosition Below Newer
 

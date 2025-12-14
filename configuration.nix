@@ -2,8 +2,7 @@
   pkgs,
   inputs,
   ...
-}: 
-{
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -46,8 +45,8 @@
     autoRepeatInterval = 35;
   };
 
-  services.xserver = {
-    windowManager.xmonad = {
+  services.xserver.windowManager = {
+    xmonad = {
       enable = true;
       enableContribAndExtras = true;
       enableConfiguredRecompile = true;
@@ -88,18 +87,14 @@
     user = "gerson";
     dataDir = "/home/gerson/Syncthing";
     configDir = "/home/gerson/.config/syncthing";
-    overrideDevices = true;
+    overrideDevices = false;
     overrideFolders = true;
     settings = {
-      devices = {
-      };
       folders = {
         "Alexandria" = {
           path = "/home/gerson/Alexandria";
           devices = [];
         };
-      };
-      folders = {
         "Music" = {
           path = "/home/gerson/Music";
           devices = [];
@@ -107,13 +102,6 @@
       };
     };
   };
-
-  # Syncthing ports: 8384 for remote access to GUI
-  # 22000 TCP and/or UDP for sync traffic
-  # 21027/UDP for discovery
-  # source: https://docs.syncthing.net/users/firewall.html
-  # networking.firewall.allowedTCPPorts = [8384 22000];
-  # networking.firewall.allowedUDPPorts = [22000 21027];
 
   hardware.bluetooth = {
     enable = true;
@@ -141,15 +129,6 @@
     login = {
       fprintAuth = true;
       enableGnomeKeyring = true;
-    };
-    ly = {
-      enableGnomeKeyring = true;
-      text = ''
-        auth     include login
-        account  include login
-        password include login
-        session  include login
-      '';
     };
     xsecurelock = {
       fprintAuth = true;
@@ -210,10 +189,6 @@
     package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
   };
 
-  programs.dconf = {
-    enable = true;
-  };
-
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
@@ -233,7 +208,7 @@
       "${XDG_BIN_HOME}"
     ];
 
-    TERM = "ghostty";
+    TERM = "alacritty";
 
     XSECURELOCK_BLANK_TIMEOUT = 5;
     XSECURELOCK_AUTH_TIMEOUT = 5;
@@ -252,7 +227,6 @@
       beets
       bluetui
       bottom
-      brave
       brightnessctl
       cava
       chafa
@@ -343,7 +317,6 @@
     ])
     ++ (with pkgs; [
       # Nyx
-      nil
       nixd
       alejandra
 

@@ -8,24 +8,6 @@
   mkSymlink = path: {
     source = config.lib.file.mkOutOfStoreSymlink "${NYX_PATH}/${path}";
   };
-
-  dmenu = pkgs.dmenu.overrideAttrs (old: {
-    patches = [
-      (pkgs.fetchpatch {
-        url = "https://tools.suckless.org/dmenu/patches/lines-below-prompt/dmenu-linesbelowprompt-and-fullwidth-20211014.diff";
-        hash = "sha256-ZrnFJeeA4atZ2fwsJN15FLU8WhtCKZju790CgE19bks=";
-      })
-      # (pkgs.fetchpatch {
-      #   url = "https://tools.suckless.org/dmenu/patches/center/dmenu-center-20240616-36c3d68.diff";
-      #   hash = "sha256-sTDzNi6VRPddFcR9pPKcfP588ZwaYWRlk28ehjnR0xo=";
-      # })
-      # (pkgs.fetchpatch {
-      #   url = "https://tools.suckless.org/dmenu/patches/png_images/dmenu-png-images-5.3.diff";
-      #   hash = "sha256-HjgdM6peQwYUhV3QEX7JEw3bvCSvzJ1Bd2naHxNUPy0=";
-      # })
-    ];
-    buildInputs = old.buildInputs ++ [pkgs.libspng];
-  });
 in {
   home.username = "gerson";
   home.homeDirectory = "/home/gerson";
@@ -39,6 +21,7 @@ in {
     ".config/feh/" = mkSymlink ".config/feh/";
     ".config/fish/" = mkSymlink ".config/fish/";
     ".config/ghostty/" = mkSymlink ".config/ghostty/";
+    ".config/gtk-3.0/" = mkSymlink ".config/gtk-3.0/";
     ".config/kew/" = mkSymlink ".config/kew/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/nvim/" = mkSymlink ".config/nvim/";
@@ -63,36 +46,52 @@ in {
 
   home.packages = with pkgs; [
     mpc
-    kew
-    dmenu
   ];
 
-  gtk = {
+  services.kdeconnect = {
     enable = true;
-    theme = {
-      name = "NumixSolarizedDarkCyan";
-      package = pkgs.numix-solarized-gtk-theme;
-    };
-    iconTheme = {
-      name = "Numix-Square";
-      package = pkgs.numix-icon-theme-square;
-    };
-    cursorTheme = {
-      name = "Numix-Cursor";
-      package = pkgs.numix-cursor-theme;
-      size = 16;
-    };
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
+    indicator = true;
   };
 
-  qt = {
+  services.mpdris2 = {
     enable = true;
-    platformTheme = "gtk";
+    notifications = true;
+  };
+
+  services.mpd = {
+    enable = true;
+    musicDirectory = "/home/gerson/Music";
+    extraConfig = ''
+      auto_update                "yes"
+      restore_paused             "yes"
+
+      log_file                   "syslog"
+      pid_file                   "/tmp/mpd.pid"
+      db_file                    "~/.config/mpd/mpd.db"
+      state_file                 "~/.config/mpd/mpd.state"
+
+      audio_output {
+          type                   "pipewire"
+          name                   "PipeWire Sound Server"
+      }
+
+      audio_output {
+          type                   "fifo"
+          name                   "Visualizer"
+          format                 "44100:16:2"
+          path                   "/tmp/mpd.fifo"
+      }
+
+      audio_output {
+        type           "httpd"
+        name           "lossless"
+        encoder        "flac"
+        port           "8000"
+        max_clients     "8"
+        mixer_type     "software"
+        format         "44100:16:2"
+      }
+    '';
   };
 
   services.picom = {
@@ -173,52 +172,6 @@ in {
 
       xrender-sync-fence = true;
     };
-  };
-
-  services.kdeconnect = {
-    enable = true;
-    indicator = true;
-  };
-
-  services.mpd = {
-    enable = true;
-    musicDirectory = "/home/gerson/Music";
-    extraConfig = ''
-      auto_update                "yes"
-      restore_paused             "yes"
-
-      log_file                   "syslog"
-      pid_file                   "/tmp/mpd.pid"
-      db_file                    "~/.config/mpd/mpd.db"
-      state_file                 "~/.config/mpd/mpd.state"
-
-      audio_output {
-          type                   "pipewire"
-          name                   "PipeWire Sound Server"
-      }
-
-      audio_output {
-          type                   "fifo"
-          name                   "Visualizer"
-          format                 "44100:16:2"
-          path                   "/tmp/mpd.fifo"
-      }
-
-      audio_output {
-        type           "httpd"
-        name           "lossless"
-        encoder        "flac"
-        port           "8000"
-        max_clients     "8"
-        mixer_type     "software"
-        format         "44100:16:2"
-      }
-    '';
-  };
-
-  services.mpdris2 = {
-    enable = true;
-    notifications = true;
   };
 
   # FIX: This might cause some problems in the future...
