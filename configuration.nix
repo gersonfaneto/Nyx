@@ -382,10 +382,9 @@
       noto-fonts-color-emoji
 
       # UI
-      recursive
-      aporetic
       iosevka
-      iosevka-comfy
+      aporetic
+      recursive
 
       # Coding
       nerd-fonts._3270

@@ -7,23 +7,19 @@ CONFIGURATIONS="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 STATES="${XDG_STATE_HOME:-$HOME/.local/state}"
 
-DEFAULT_FONT="Departure Mono"
+DEFAULT_FONT="MonaspiceKr Nerd Font"
 
 FONT_STATE=$(cat "$STATES/fonts.txt" 2> /dev/null || exit 0)
 
 FONT_IN_USE="${FONT_STATE:-$DEFAULT_FONT}"
 
 FONTS_IGNORED=(
-  'Mono$'
-  'Propo$'
   '^DejaVu'
   '^Fixed$'
   '^Free'
   '^Grape'
   '^Liberation*'
   '^Noto'
-  '^Rec Mono*'
-  '^Recursive'
   '^Symbols'
   '^TeX'
   '^Unifont$'
