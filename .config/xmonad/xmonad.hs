@@ -5,7 +5,7 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.InsertPosition
 import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.ManageHelpers   (doCenterFloat, doRectFloat)
+import           XMonad.Hooks.ManageHelpers   (isDialog, doCenterFloat, doRectFloat)
 import           XMonad.Hooks.StatusBar
 import           XMonad.Hooks.StatusBar.PP
 import           XMonad.Layout.NoBorders
@@ -79,6 +79,7 @@ mManageHook =
     composeAll
         [ className =? "wiremix" --> mFloat
         , className =? "Qalculate-gtk" --> mFloat
+        , isDialog --> doFloat
         ]
         <+> insertPosition Below Newer
 

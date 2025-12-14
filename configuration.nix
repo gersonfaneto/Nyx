@@ -383,7 +383,9 @@
 
       # UI
       recursive
-      (iosevka-bin.override {variant = "SS09";})
+      aporetic
+      iosevka
+      iosevka-comfy
 
       # Coding
       nerd-fonts._3270
