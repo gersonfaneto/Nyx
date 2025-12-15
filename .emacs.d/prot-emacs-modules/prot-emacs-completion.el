@@ -1,8 +1,10 @@
 ;;; General minibuffer settings
 (prot-emacs-configure
 ;;;; Completion styles
-  (setq completion-styles '(basic substring initials flex orderless)) ; also see `completion-category-overrides'
-  (setq completion-pcm-leading-wildcard t)) ; Emacs 31: make `partial-completion' behave like `substring'
+  (setq completion-styles '(basic substring)) ; also see `completion-category-overrides'
+  (setq completion-pcm-leading-wildcard nil) ; Emacs 31
+  (with-eval-after-load 'orderless
+    (setq completion-styles (append completion-styles '(orderless)))))
 
 ;;;; Completion category overrides
 (prot-emacs-configure
@@ -12,72 +14,47 @@
   ;; explicitly override everything.
   (setq completion-category-defaults nil)
 
-  ;; A non-exhaustve list of known completion categories:
-  ;;
-  ;; - `bookmark'
-  ;; - `buffer'
-  ;; - `charset'
-  ;; - `coding-system'
-  ;; - `color'
-  ;; - `command' (e.g. `M-x')
-  ;; - `customize-group'
-  ;; - `environment-variable'
-  ;; - `expression'
-  ;; - `face'
-  ;; - `file'
-  ;; - `function' (the `describe-function' command bound to `C-h f')
-  ;; - `info-menu'
-  ;; - `imenu'
-  ;; - `input-method'
-  ;; - `kill-ring'
-  ;; - `library'
-  ;; - `minor-mode'
-  ;; - `multi-category'
-  ;; - `package'
-  ;; - `project-buffer'
-  ;; - `project-file'
-  ;; - `symbol' (the `describe-symbol' command bound to `C-h o')
-  ;; - `theme'
-  ;; - `unicode-name' (the `insert-char' command bound to `C-x 8 RET')
-  ;; - `variable' (the `describe-variable' command bound to `C-h v')
-  ;; - `consult-grep'
-  ;; - `consult-isearch'
-  ;; - `consult-kmacro'
-  ;; - `consult-location'
-  ;; - `embark-keybinding'
+  ;; Add some missing completion categories to let me configure the
+  ;; relevant prompts via the `completion-category-overrides'.
+  (define-advice read-from-kill-ring (:around (&rest args) prot)
+    (let ((completion-extra-properties (list :category 'kill-ring)))
+      (apply args)))
+
+  (define-advice read-library-name (:around (&rest args) prot)
+    (let ((completion-extra-properties (list :category 'library)))
+      (apply args)))
+
+  (define-advice emoji--read-emoji (:around (&rest args) prot)
+    (let ((completion-extra-properties (list :category 'emoji)))
+      (apply args)))
+
+  ;; NOTE 2025-12-02: The `eager-display' and `eager-update' are part of Emacs 31.
   (setq completion-category-overrides
-        (if prot-emacs-completion-ui
-            ;; NOTE 2021-10-25: I am adding `basic' because it works better as a
-            ;; default for some contexts.  Read:
-            ;; <https://debbugs.gnu.org/cgi/bugreport.cgi?bug=50387>.
-            ;;
-            ;; `partial-completion' is a killer app for files, because it
-            ;; can expand ~/.l/s/fo to ~/.local/share/fonts.
-            ;;
-            ;; If `basic' cannot match my current input, Emacs tries the
-            ;; next completion style in the given order.  In other words,
-            ;; `orderless' kicks in as soon as I input a space or one of its
-            ;; style dispatcher characters.
-            '((file (styles . (basic partial-completion orderless)))
-              (bookmark (styles . (basic substring)))
-              (library (styles . (basic substring)))
-              (embark-keybinding (styles . (basic substring)))
-              (imenu (styles . (basic substring orderless)))
-              (consult-location (styles . (basic substring orderless)))
-              (kill-ring (styles . (emacs22 orderless)))
-              (eglot (styles . (emacs22 substring orderless))))
-          '((file (styles . (basic partial-completion orderless)) (eager-display . t))
-            (bookmark (styles . (basic substring)))
-            (library (styles . (basic substring)))
-            (embark-keybinding (styles . (basic substring)) (eager-display . t))
-            (imenu (styles . (basic substring orderless)) (eager-display . t))
-            (consult-location (styles . (basic substring orderless)) (eager-display . t))
-            (kill-ring (styles . (emacs22 orderless)) (eager-display . t))
-            (eglot (styles . (emacs22 substring orderless)))))))
+        `(,@(mapcar
+             (lambda (category)
+               (cons category
+                     '((styles . (partial-completion))
+                       (eager-display . nil)
+                       (eager-update . t))))
+             '(file bookmark symbol-help))
+          (emoji . ((styles . (orderless))
+                    (eager-display . t)
+                    (eager-update . t)))
+          (unicode-name . ((styles . (orderless))
+                           (eager-display . nil)
+                           (eager-update . t)))
+          ,@(mapcar
+             (lambda (category)
+               (cons category
+                     '((styles . (basic substring orderless))
+                       (eager-display . t)
+                       (eager-update . t))))
+             '(buffer project-file eglot kill-ring theme consult-location imenu embark-keybinding library)))))
 
 ;;; Orderless completion style (and prot-orderless.el)
 (prot-emacs-configure
   (prot-emacs-install orderless)
+  (require 'orderless)
   ;; Remember to check my `completion-styles' and the
   ;; `completion-category-overrides'.
   (setq orderless-matching-styles '(orderless-prefixes orderless-regexp))
@@ -122,59 +99,117 @@
   (file-name-shadow-mode 1))
 
 (prot-emacs-configure
-  (add-hook 'minibuffer-setup #'prot-common-truncate-lines-silently)
+  (add-hook 'minibuffer-setup-hook #'prot-common-truncate-lines-silently)
 
-  ;; (setq completions-header-format (propertize "%s candidates:\n" 'face 'bold-italic))
-  (setq completions-header-format "")
-  (setq completions-highlight-face 'completions-highlight)
-  (setq completions-max-height 10)
-  (setq completions-sort 'historical)
-
-  ;; These settings make the generic minibuffer completion interface
-  ;; work more like my `mct' package.  Though it still has some issues
-  ;; with how candidates are selected.  Those might be fixed
-  ;; eventually.  The concrete problem I see with these settings is
-  ;; how the Completions can behave in very different ways, so we need
-  ;; to figure out which combination of these options works correctly.
   (unless prot-emacs-completion-ui
-    (setq completion-auto-help 'always)
     (setq completion-show-help nil)
     (setq completion-show-inline-help nil)
-    (setq completion-auto-select nil)
-    (setq completion-auto-deselect nil)
     (setq completions-detailed t)
     (setq completions-format 'one-column)
-    (setq minibuffer-completion-auto-choose nil)
-    (setq minibuffer-visible-completions nil) ; Emacs 30
-    ;; This one is for Emacs 31.  It relies on what I am doing with the `completion-category-overrides'.
+    ;; (setq completions-header-format (propertize "%s candidates:\n" 'face 'bold-italic))
+    (setq completions-header-format "")
+    (setq completions-highlight-face 'completions-highlight)
+    (setq completions-max-height 10)
+    (setq completions-sort 'historical)
+    (setq completion-auto-help 'always)
+    (setq completion-auto-select 'second-tab)
+    ;; (setq minibuffer-visible-completions t) ; Emacs 30
+
+    ;; These two are for Emacs 31.  The value they have now means that
+    ;; each completion category will have its own behaviour based on
+    ;; what I am setting in the `completion-category-overrides'.
     (setq completion-eager-display 'auto)
-    ;; This is also for Emacs 31 and it too leverages the `completion-category-overrides' if set to `auto'.
-    (setq completion-eager-update t)
-
-    (prot-emacs-keybind minibuffer-local-completion-map
-      "<up>" #'minibuffer-previous-line-completion
-      "<down>" #'minibuffer-next-line-completion
-      "C-l" #'minibuffer-completion-help) ; "list completions" mnemonic
-
-    (prot-emacs-keybind completion-in-region-mode-map
-      "<up>" #'minibuffer-previous-completion
-      "<down>" #'minibuffer-next-completion
-      "RET" #'minibuffer-choose-completion)
+    (setq completion-eager-update 'auto)
 
     (defun prot/completions-tweak-style ()
       "Tweak the style of the Completions buffer."
-      (setq-local mode-line-format nil)
+      ;; (setq-local mode-line-format "*Completions*)
       (setq-local cursor-in-non-selected-windows nil)
       (when (and completions-header-format
                  (not (string-blank-p completions-header-format)))
         (setq-local display-line-numbers-offset -1))
-      (display-line-numbers-mode 1)
-      (unless (eq (prot-common-completion-category) 'file)
-        (setq-local minibuffer-visible-completions t)))
+      (display-line-numbers-mode 1))
 
     (prot-emacs-hook
       completion-list-mode-hook
-      (prot/completions-tweak-style prot-common-truncate-lines-silently))))
+      (prot/completions-tweak-style prot-common-truncate-lines-silently))
+
+    (defun prot/quit-completions ()
+      "Always quit the Completions window."
+      (when-let* ((window (get-buffer-window "*Completions*")))
+        (quit-window nil window)))
+
+    (add-hook 'minibuffer-exit-hook #'prot/quit-completions)
+
+    (defun prot/choose-completion-no-exit ()
+      "Call `choose-completion' without exiting the minibuffer.
+Also see `prot/choose-completion-exit' and `prot/choose-completion-dwim'."
+      (interactive)
+      (choose-completion nil :no-exit :no-quit)
+      (switch-to-minibuffer))
+
+    (defun prot/choose-completion-exit ()
+      "Call `choose-completion' and exit the minibuffer.
+Also see `prot/choose-completion-no-exit' and `prot/choose-completion-dwim'."
+      (interactive)
+      (choose-completion nil :no-exit)
+      (exit-minibuffer))
+
+    (defun prot/choose-completion-dwim ()
+      "Call `choose-completion' that exits only on a unique match.
+If the match is not unique, then complete up to the largest common
+prefix or, anyhow, continue with the completion (e.g. in `find-file'
+switch into the directory and then show the files therein).
+
+Also see `prot/choose-completion-no-exit' and `prot/choose-completion-exit'."
+      (interactive)
+      (choose-completion nil :no-exit :no-quit)
+      (switch-to-minibuffer)
+      (minibuffer-completion-help)
+      (unless (get-buffer-window "*Completions*")
+        (exit-minibuffer)))
+
+    (define-advice minibuffer-completion-help (:around (&rest args) prot)
+      "Make `minibuffer-completion-help' display *Completions* in a side window.
+Make the window be at slot 0, such that the *Help* buffer produced by
+`prot/completions-describe-at-point' is to its right."
+      (let ((display-buffer-overriding-action
+             '((display-buffer-reuse-mode-window display-buffer-in-side-window)
+               (side . bottom)
+               (slot . 0))))
+        (apply args)))
+
+    (defun prot/completions-describe-at-point (symbol)
+      "Describe SYMBOL at point inside the *Completions* buffer.
+Place the *Help* buffer in a side window, situated to the right of the
+*Completions* buffer.  Make the window have the `prot-minibuffer-help'
+property, such that it can be found by `prot/completions-close-help'."
+      (interactive (list (intern-soft (thing-at-point 'symbol))))
+      (unless (derived-mode-p 'completion-list-mode)
+        (user-error "Can only do this from the *Completions* buffer"))
+      (when symbol
+        (let ((help-window-select nil)
+              (display-buffer-overriding-action
+               '((display-buffer-reuse-mode-window display-buffer-in-side-window)
+                 (slot . 1) ;  next to `prot/minibuffer-completion-help'
+                 (window-parameters . ((prot-minibuffer-help . t))))))
+          (describe-symbol symbol))))
+
+    (defun prot/completions-close-help ()
+      "Close the window that has a `'prot-minibuffer-help' parameter."
+      (when-let* ((help (seq-find
+                         (lambda (window)
+                           (window-parameter window 'prot-minibuffer-help))
+                         (window-list))))
+        (delete-window help)))
+
+    (add-hook 'minibuffer-exit-hook #'prot/completions-close-help)
+
+    (prot-emacs-keybind completion-list-mode-map
+      "h" #'prot/completions-describe-at-point ; "Help" mnemonic
+      "c" #'prot/choose-completion-no-exit ; "Choose" mnemonic
+      "TAB" #'prot/choose-completion-dwim
+      "RET" #'prot/choose-completion-exit)))
 
 ;;;; `savehist' (minibuffer and related histories)
 (prot-emacs-configure
@@ -303,7 +338,7 @@ Development continues on GitHub with GitLab as a mirror."))
   (remove-hook 'save-some-buffers-functions #'abbrev--possibly-save))
 
 ;;; Corfu (in-buffer completion popup)
-(when (and prot-emacs-completion-ui prot-display-graphic-p)
+(when (and prot-emacs-completion-extras prot-display-graphic-p)
   (prot-emacs-configure
     (prot-emacs-install corfu)
 
@@ -380,10 +415,11 @@ Development continues on GitHub with GitLab as a mirror."))
       (require 'embark-consult))))
 
 ;;; Detailed completion annotations (marginalia.el)
-(prot-emacs-configure
-  (prot-emacs-install marginalia)
-  (setq marginalia-max-relative-age 0) ; absolute time
-  (marginalia-mode 1))
+(when prot-emacs-completion-extras
+  (prot-emacs-configure
+    (prot-emacs-install marginalia)
+    (setq marginalia-max-relative-age 0) ; absolute time
+    (marginalia-mode 1)))
 
 ;;; The minibuffer user interface (mct, vertico, or none)
 (when prot-emacs-completion-ui

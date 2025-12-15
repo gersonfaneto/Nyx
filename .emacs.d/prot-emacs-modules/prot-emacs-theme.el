@@ -57,7 +57,7 @@
              :mode-line-width 6
              :tab-width 4
              :right-divider-width 15
-             :scroll-bar-width ,(if x-toolkit-scroll-bars 8 6)
+             :scroll-bar-width ,(if prot-pgtk-p 12 6)
              :left-fringe-width 20
              :right-fringe-width 20))
 
@@ -65,7 +65,7 @@
 
     ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
     ;; is very flexible.  Here we make the mode lines be a single
-    ;; overline.
+    ;; overline, while header lines have an underline.
     (setq spacious-padding-subtle-frame-lines
           '( :mode-line-active spacious-padding-line-active
              :mode-line-inactive spacious-padding-line-inactive
@@ -191,7 +191,7 @@
           (regular) ; like this it uses all the fallback values and is named `regular'
           (medium
            :default-family "Aporetic Serif Mono"
-           :default-height 105
+           :default-height 115
            :fixed-pitch-family "Aporetic Serif Mono"
            :variable-pitch-family "Aporetic Sans")
           (large

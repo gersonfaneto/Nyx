@@ -20,6 +20,9 @@
     (setq elisp-eldoc-docstring-length-limit 1000)
     (set-default-toplevel-value 'lexical-binding t) ; Emacs 31
 
+    (dolist (package prot-emacs-my-packages)
+      (add-to-list 'elisp-flymake-byte-compile-load-path (expand-file-name (format "%s" package) "/home/prot/Git/Projects/")))
+
     (require 'prot-elisp)
 
     (prot-emacs-keybind emacs-lisp-mode-map
@@ -227,7 +230,8 @@
   (prot-emacs-keybind global-map
     "C-c n n" #'denote
     "C-c n N" #'denote-type
-    "C-c n d" #'denote-sort-dired
+    "C-c n d" #'denote-dired
+    "C-c n g" #'denote-grep
     "C-c n r" #'denote-rename-file)
 
   (with-eval-after-load 'text-mode

@@ -23,9 +23,9 @@ before all other modules of my setup."
   :group 'prot-emacs
   :type '(choice :tag "Set of themes to load" :value modus
                  (const :tag "The `doric-themes' module" doric)
-                 (const :tag "The `solarized-themes' module" solarized)
                  (const :tag "The `ef-themes' module" ef)
                  (const :tag "The `modus-themes' module" modus)
+                 (const :tag "The `solarized-themes' module" solarized)
                  (const :tag "The `standard-themes' module" standard)
                  (const :tag "Do not load a theme module" nil)))
 
@@ -45,7 +45,8 @@ before all other modules of my setup."
 
 (defcustom prot-emacs-completion-extras t
   "When non-nil load extras for minibuffer completion.
-These include packages such as `consult' and `embark'."
+These include the packages `marginalia', `consult', `corfu', and
+`embark'."
   :group 'prot-emacs
   :type 'boolean)
 
@@ -276,24 +277,34 @@ given feature is available."
      (t
       (car hooks)))))
 
-  (defmacro prot-emacs-keybind (keymap &rest definitions)
-    "Expand key binding DEFINITIONS for the given KEYMAP.
-  DEFINITIONS is a sequence of string and command pairs."
-    (declare (indent 1))
-    (unless (zerop (% (length definitions) 2))
-      (error "Uneven number of key+command pairs"))
-    (let ((keys (seq-filter #'stringp definitions))
-          ;; We do accept nil as a definition: it unsets the given key.
-          (commands (seq-remove #'stringp definitions)))
-      `(when-let* (((keymapp ,keymap))
-                   (map ,keymap))
-         ,@(mapcar
-            (lambda (pair)
-              (let* ((key (car pair))
-                     (command (cdr pair)))
-                (unless (and (null key) (null command))
-                  `(define-key map (kbd ,key) ,command))))
-            (cl-mapcar #'cons keys commands)))))
+(defmacro prot-emacs-keybind (keymap &rest definitions)
+  "Expand key binding DEFINITIONS for the given KEYMAP.
+DEFINITIONS is a sequence of string and command pairs."
+  (declare (indent 1))
+  (unless (zerop (% (length definitions) 2))
+    (error "Uneven number of key+command pairs"))
+  (let ((keys (seq-filter #'stringp definitions))
+        ;; We do accept nil as a definition: it unsets the given key.
+        (commands (seq-remove #'stringp definitions)))
+    `(when-let* (((keymapp ,keymap))
+                 (map ,keymap))
+       ,@(mapcar
+          (lambda (pair)
+            (let* ((key (car pair))
+                   (command (cdr pair)))
+              (unless (and (null key) (null command))
+                `(define-key map (kbd ,key) ,command))))
+          (cl-mapcar #'cons keys commands)))))
+
+;; Sample of `prot-emacs-keybind'
+
+;; (prot-emacs-keybind global-map
+;;   "C-z" nil
+;;   "C-x b" #'switch-to-buffer
+;;   "C-x C-c" nil
+;; ;; Notice the -map as I am binding keymap here, not a command:
+;;   "C-c b" beframe-prefix-map
+;;   "C-x k" #'kill-buffer)
 
 (defmacro prot-emacs-autoload (functions file)
   "Declare autoloads for FUNCTIONS for FILE."
