@@ -16,6 +16,9 @@ transparent_background_colors = true
 [font]
 size = 10
 
+[font.normal]
+family = 'Aporetic Sans Mono'
+
 [scrolling]
 history = 0
 

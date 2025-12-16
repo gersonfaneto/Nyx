@@ -5,5 +5,7 @@ eshell/
 games/
 elfeed/
 transient/
-cursory-latest-state.eld
+bookmarks
+projects
+*-latest-state.eld
 savehist
