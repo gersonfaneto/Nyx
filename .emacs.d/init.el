@@ -1,14 +1,14 @@
 ;; For those who use my dotfiles and need an easy way to write their
 ;; own extras on top of what I already load: search below for the files
-;; prot-emacs-pre-custom.el and prot-emacs-post-custom.el
-(defgroup prot-emacs nil
+;; minimal-emacs-pre-custom.el and minimal-emacs-post-custom.el
+(defgroup minimal-emacs nil
   "User options for my dotemacs.
 These produce the expected results only when set in a file called
-prot-emacs-pre-custom.el.  This file must be in the same
+minimal-emacs-pre-custom.el.  This file must be in the same
 directory as the init.el."
   :group 'file)
 
-(defcustom prot-emacs-load-theme-family 'solarized
+(defcustom minimal-emacs-load-theme-family 'solarized
   "Set of themes to load.
 Valid values are the symbols `doric', `ef', `modus', `solarized',
 and `standard', which reference the `doric-themes',  `ef-themes',
@@ -17,10 +17,10 @@ and `standard', which reference the `doric-themes',  `ef-themes',
 A nil value does not load any of the above (use Emacs without a
 theme).
 
-This user option must be set in the `prot-emacs-pre-custom.el'
+This user option must be set in the `minimal-emacs-pre-custom.el'
 file.  If that file exists in the Emacs directory, it is loaded
 before all other modules of my setup."
-  :group 'prot-emacs
+  :group 'minimal-emacs
   :type '(choice :tag "Set of themes to load" :value modus
                  (const :tag "The `doric-themes' module" doric)
                  (const :tag "The `ef-themes' module" ef)
@@ -29,45 +29,45 @@ before all other modules of my setup."
                  (const :tag "The `standard-themes' module" standard)
                  (const :tag "Do not load a theme module" nil)))
 
-(defcustom prot-emacs-completion-ui 'vertico
+(defcustom minimal-emacs-completion-ui 'vertico
   "Choose minibuffer completion UI between `mct' or `vertico'.
 If the value is nil, the default completion user interface is
 used.  On Emacs 30, this is close the experience with `mct'.
 
-This user option must be set in the `prot-emacs-pre-custom.el'
+This user option must be set in the `minimal-emacs-pre-custom.el'
 file.  If that file exists in the Emacs directory, it is loaded
 before all other modules of my setup."
-  :group 'prot-emacs
+  :group 'minimal-emacs
   :type '(choice :tag "Minibuffer user interface"
                  (const :tag "Default user interface" nil)
                  (const :tag "The `mct' module" mct)
                  (const :tag "The `vertico' module" vertico)))
 
-(defcustom prot-emacs-completion-extras t
+(defcustom minimal-emacs-completion-extras t
   "When non-nil load extras for minibuffer completion.
 These include the packages `marginalia', `consult', `corfu', and
 `embark'."
-  :group 'prot-emacs
+  :group 'minimal-emacs
   :type 'boolean)
 
-(defcustom prot-emacs-load-which-key t
+(defcustom minimal-emacs-load-which-key t
   "When non-nil, display key binding hints after a short delay.
-This user option must be set in the `prot-emacs-pre-custom.el'
+This user option must be set in the `minimal-emacs-pre-custom.el'
 file.  If that file exists in the Emacs directory, it is loaded
 before all other modules of my setup."
-  :group 'prot-emacs
+  :group 'minimal-emacs
   :type 'boolean)
 
-(defcustom prot-emacs-load-icons t
+(defcustom minimal-emacs-load-icons t
   "When non-nil, enable iconography in various contexts.
 This installs and uses the `nerd-icons' package and its variants.
 NOTE that you still need to invoke `nerd-icons-install-fonts'
 manually to first get the icon files.
 
-This user option must be set in the `prot-emacs-pre-custom.el'
+This user option must be set in the `minimal-emacs-pre-custom.el'
 file.  If that file exists in the Emacs directory, it is loaded
 before all other modules of my setup."
-  :group 'prot-emacs
+  :group 'minimal-emacs
   :type 'boolean)
 
 (setq make-backup-files nil)
@@ -108,7 +108,7 @@ before all other modules of my setup."
 (mapc
  (lambda (string)
    (add-to-list 'load-path (locate-user-emacs-file string)))
- '("prot-lisp" "prot-emacs-modules"))
+ '("minimal-lisp" "minimal-emacs-modules"))
 
 ;;;; Packages
 
@@ -134,7 +134,7 @@ before all other modules of my setup."
 ;; solution to set to non-nil if I ever switch to a stable release.
 (setq package-install-upgrade-built-in nil)
 
-(defvar prot-emacs-my-packages
+(defvar minimal-emacs-my-packages
   '(agitate
     altcaps
     beframe
@@ -171,11 +171,11 @@ before all other modules of my setup."
       `(,@(mapcar
            (lambda (package)
              (cons package "gnu-elpa-devel"))
-           prot-emacs-my-packages)))
+           minimal-emacs-my-packages)))
 
 (setq custom-safe-themes t)
 
-(defmacro prot-emacs-comment (&rest body)
+(defmacro minimal-emacs-comment (&rest body)
   "Determine what to do with BODY.
 
 If BODY contains an unquoted plist of the form (:eval t) then
@@ -194,20 +194,20 @@ effects."
               body (delq element body))))
     (when eval `(progn ,@body))))
 
-;; Sample use of `prot-emacs-comment'.  The function
-;; `prot-emacs-insert-comment-macro' is never evaluated.
-(prot-emacs-comment
-  (defun prot-emacs-insert-comment-macro (beg end)
-    "Wrap region between BEG and END in `prot-emacs-comment'."
+;; Sample use of `minimal-emacs-comment'.  The function
+;; `minimal-emacs-insert-comment-macro' is never evaluated.
+(minimal-emacs-comment
+  (defun minimal-emacs-insert-comment-macro (beg end)
+    "Wrap region between BEG and END in `minimal-emacs-comment'."
     (interactive "r")
     (if (region-active-p)
         (let ((text (buffer-substring beg end)))
           (delete-region beg end)
-          (insert (format "(prot-emacs-comment\n%s)" text))
+          (insert (format "(minimal-emacs-comment\n%s)" text))
           (indent-region beg end))
-      (user-error "No active region; will not insert `prot-emacs-comment' here"))))
+      (user-error "No active region; will not insert `minimal-emacs-comment' here"))))
 
-(defmacro prot-emacs-install (package &rest vc-args)
+(defmacro minimal-emacs-install (package &rest vc-args)
   "Prepare to install PACKAGE.
 PACKAGE is an unquoted symbol, referring to the name of the package.  If
 VC-ARGS are nil, then install PACKAGE using `package-install'.
@@ -239,7 +239,7 @@ At all times, do nothing if PACKAGE is already installled."
              (package-install ',package)
            (error (message "Cannot install `%s'; try `M-x package-refresh-contents' first" ',package))))))))
 
-(defmacro prot-emacs-hook (hooks functions &optional remove after)
+(defmacro minimal-emacs-hook (hooks functions &optional remove after)
   "For each HOOKS `add-hook' the FUNCTIONS.
 With optional REMOVE as non-nil, then `remove-hook' the FUNCTIONS from
 HOOKS.
@@ -277,7 +277,7 @@ given feature is available."
      (t
       (car hooks)))))
 
-(defmacro prot-emacs-keybind (keymap &rest definitions)
+(defmacro minimal-emacs-keybind (keymap &rest definitions)
   "Expand key binding DEFINITIONS for the given KEYMAP.
 DEFINITIONS is a sequence of string and command pairs."
   (declare (indent 1))
@@ -296,9 +296,9 @@ DEFINITIONS is a sequence of string and command pairs."
                 `(define-key map (kbd ,key) ,command))))
           (cl-mapcar #'cons keys commands)))))
 
-;; Sample of `prot-emacs-keybind'
+;; Sample of `minimal-emacs-keybind'
 
-;; (prot-emacs-keybind global-map
+;; (minimal-emacs-keybind global-map
 ;;   "C-z" nil
 ;;   "C-x b" #'switch-to-buffer
 ;;   "C-x C-c" nil
@@ -306,7 +306,7 @@ DEFINITIONS is a sequence of string and command pairs."
 ;;   "C-c b" beframe-prefix-map
 ;;   "C-x k" #'kill-buffer)
 
-(defmacro prot-emacs-autoload (functions file)
+(defmacro minimal-emacs-autoload (functions file)
   "Declare autoloads for FUNCTIONS for FILE."
   (declare (indent 0))
   (when (symbolp functions)
@@ -319,7 +319,7 @@ DEFINITIONS is a sequence of string and command pairs."
       `(progn ,@(mapcar (lambda (f) `(autoload #',f ,file)) functions))
     `(autoload #',(car functions) ,file)))
 
-(defmacro prot-emacs-abbrev (table &rest definitions)
+(defmacro minimal-emacs-abbrev (table &rest definitions)
   "Expand abbrev DEFINITIONS for the given TABLE.
 DEFINITIONS is a sequence of (i) string pairs mapping the
 abbreviation to its expansion or (ii) a string and symbol pair
@@ -339,7 +339,7 @@ making an abbreviation to a function."
             (seq-split definitions 2)))
      (error "%s is not an abbrev table" ,table)))
 
-(defmacro prot-emacs-configure (&rest body)
+(defmacro minimal-emacs-configure (&rest body)
   "Evaluate BODY and catch any errors."
   (declare (indent 0))
   `(condition-case err
@@ -349,42 +349,42 @@ making an abbreviation to a function."
 
 ;; For those who use my dotfiles and need an easy way to write their
 ;; own extras on top of what I already load.  The file must exist at
-;; ~/.emacs.d/prot-emacs-pre-custom.el
+;; ~/.emacs.d/minimal-emacs-pre-custom.el
 ;;
 ;; The purpose of this file is for the user to define their
 ;; preferences BEFORE loading any of the modules.
-(load (locate-user-emacs-file "prot-emacs-pre-custom.el") :no-error :no-message)
+(load (locate-user-emacs-file "minimal-emacs-pre-custom.el") :no-error :no-message)
 
-(defvar prot-display-graphic-p (display-graphic-p)
+(defvar minimal-display-graphic-p (display-graphic-p)
   "When non-nil, the display is graphical.")
 
-(defun prot-emacs-gnome-prefers-dark-p ()
+(defun minimal-emacs-gnome-prefers-dark-p ()
   "Return non-nil if GNOME color-scheme is set to dark."
   (string-match-p
    "dark"
    (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")))
 
-(require 'prot-emacs-theme)
-(require 'prot-emacs-essentials)
-(require 'prot-emacs-modeline)
-(require 'prot-emacs-completion)
-(require 'prot-emacs-search)
-(require 'prot-emacs-dired)
-(require 'prot-emacs-window)
-(require 'prot-emacs-git)
-(require 'prot-emacs-org)
-(require 'prot-emacs-langs)
-(require 'prot-emacs-email)
-(require 'prot-emacs-web)
-(when prot-emacs-load-which-key
-  (require 'prot-emacs-which-key))
-(when prot-emacs-load-icons
-  (require 'prot-emacs-icons))
+(require 'minimal-emacs-theme)
+(require 'minimal-emacs-essentials)
+(require 'minimal-emacs-modeline)
+(require 'minimal-emacs-completion)
+(require 'minimal-emacs-search)
+(require 'minimal-emacs-dired)
+(require 'minimal-emacs-window)
+(require 'minimal-emacs-git)
+(require 'minimal-emacs-org)
+(require 'minimal-emacs-langs)
+(require 'minimal-emacs-email)
+(require 'minimal-emacs-web)
+(when minimal-emacs-load-which-key
+  (require 'minimal-emacs-which-key))
+(when minimal-emacs-load-icons
+  (require 'minimal-emacs-icons))
 
 ;; For those who use my dotfiles and need an easy way to write their
 ;; own extras on top of what I already load.  The file must exist at
-;; ~/.emacs.d/prot-emacs-post-custom.el
+;; ~/.emacs.d/minimal-emacs-post-custom.el
 ;;
 ;; The purpose of the "post customisations" is to evaluate arbitrary
 ;; code AFTER loading all my configurations.
-(load (locate-user-emacs-file "prot-emacs-post-custom.el") :no-error :no-message)
+(load (locate-user-emacs-file "minimal-emacs-post-custom.el") :no-error :no-message)

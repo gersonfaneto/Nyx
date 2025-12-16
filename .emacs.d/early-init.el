@@ -15,13 +15,13 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(defvar prot-laptop-p (null (directory-empty-p "/sys/class/power_supply/"))
+(defvar minimal-laptop-p (null (directory-empty-p "/sys/class/power_supply/"))
   "When non-nil, we assume to be working on a laptop.")
 
-(when prot-laptop-p
+(when minimal-laptop-p
   (add-hook 'window-size-change-functions #'frame-hide-title-bar-when-maximized))
 
-(defvar prot-pgtk-p (string-match-p "PGTK" system-configuration-features)
+(defvar minimal-pgtk-p (string-match-p "PGTK" system-configuration-features)
   "When non-nil, this is a build --with-pgtk.
 PGTK is the Wayland-specific build of Emacs.")
 
@@ -29,13 +29,13 @@ PGTK is the Wayland-specific build of Emacs.")
                             (menu-bar-lines . 0)
                             (tool-bar-lines . 0)
                             (vertical-scroll-bars . nil)
-                            (scroll-bar-width . ,(if prot-pgtk-p 12 6))
+                            (scroll-bar-width . ,(if minimal-pgtk-p 12 6))
                             (width . (text-pixels . 800))
                             (height . (text-pixels . 900))
-                            ,@(unless prot-pgtk-p
+                            ,@(unless minimal-pgtk-p
                                 (list '(undecorated . t)))
                             (border-width . 0)
-                            ,@(when prot-laptop-p
+                            ,@(when minimal-laptop-p
                                 (list '(fullscreen . maximized)))))
 
 ;; Do it again after init so that any intermediate changes are not
@@ -50,21 +50,21 @@ PGTK is the Wayland-specific build of Emacs.")
                                                          (menu-bar-lines . 0)
                                                          (tool-bar-lines . 0)
                                                          (vertical-scroll-bars . nil)
-                                                         (scroll-bar-width . (if prot-pgtk-p 12 6))
+                                                         (scroll-bar-width . (if minimal-pgtk-p 12 6))
                                                          (width . (text-pixels . 800))
                                                          (height . (text-pixels . 900))
-                                                         ,@(unless prot-pgtk-p
+                                                         ,@(unless minimal-pgtk-p
                                                              (list '(undecorated . t)))
                                                          (border-width . 0)
-                                                         ,@(when prot-laptop-p
+                                                         ,@(when minimal-laptop-p
                                                              (list '(fullscreen . maximized)))))))
 
-(defun prot-emacs-no-minibuffer-scroll-bar (frame)
+(defun minimal-emacs-no-minibuffer-scroll-bar (frame)
   "Remove the minibuffer scroll bars from FRAME."
   (when scroll-bar-mode
     (set-window-scroll-bars (minibuffer-window frame) nil nil nil nil :persistent)))
 
-(add-hook 'after-make-frame-functions #'prot-emacs-no-minibuffer-scroll-bar)
+(add-hook 'after-make-frame-functions #'minimal-emacs-no-minibuffer-scroll-bar)
 
 ;; Temporarily increase the garbage collection threshold.  These
 ;; changes help shave off about half a second of startup time.  The
@@ -77,8 +77,8 @@ PGTK is the Wayland-specific build of Emacs.")
 ;; `vc-handled-backends' with regard to startup speed optimisation.
 ;; Here I am storing the default value with the intent of restoring it
 ;; via the `emacs-startup-hook'.
-(defvar prot-emacs--file-name-handler-alist file-name-handler-alist)
-(defvar prot-emacs--vc-handled-backends vc-handled-backends)
+(defvar minimal-emacs--file-name-handler-alist file-name-handler-alist)
+(defvar minimal-emacs--vc-handled-backends vc-handled-backends)
 
 (setq file-name-handler-alist nil
       vc-handled-backends nil)
@@ -87,8 +87,8 @@ PGTK is the Wayland-specific build of Emacs.")
           (lambda ()
             (setq gc-cons-threshold (* 100 100 8)
                   gc-cons-percentage 0.1
-                  file-name-handler-alist prot-emacs--file-name-handler-alist
-                  vc-handled-backends prot-emacs--vc-handled-backends)))
+                  file-name-handler-alist minimal-emacs--file-name-handler-alist
+                  vc-handled-backends minimal-emacs--vc-handled-backends)))
 
 ;; Initialise installed packages at this early stage, by using the
 ;; available cache.  I had tried a setup with this set to nil in the
@@ -97,6 +97,6 @@ PGTK is the Wayland-specific build of Emacs.")
 ;; packages to work with, requiring a `package-refresh-contents'.
 (setq package-enable-at-startup t)
 
-(setq user-lisp-directory (locate-user-emacs-file "prot-lisp/"))
+(setq user-lisp-directory (locate-user-emacs-file "minimal-lisp/"))
 
 (add-hook 'after-init-hook (lambda () (set-frame-name "home")))
