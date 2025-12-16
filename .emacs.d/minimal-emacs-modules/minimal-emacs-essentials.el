@@ -83,6 +83,79 @@
   ;; invoked with M-x: I have a good reason to use it that way.
   (advice-add #'execute-extended-command--describe-binding-msg :override #'minimal-common-ignore))
 
+(minimal-emacs-configure
+  (require 'minimal-simple)
+
+  (setq minimal-simple-date-specifier "%F")
+  (setq minimal-simple-time-specifier "%R %z")
+
+  (advice-add #'save-buffers-kill-emacs :before #'minimal-simple-display-unsaved-buffers-on-exit)
+
+  ;; All `minimal-simple-override-mode' does is activate a key map.
+  ;; Below I add keys to that map.  Because the mode is enabled
+  ;; globally, those keys take precedence over the ones specified by
+  ;; any given major mode.  In principle, this means that my keys will
+  ;; always work (though technically they can be overriden by another
+  ;; minor mode, depending on which one is evaluated last).
+  (minimal-simple-override-mode 1)
+
+  (minimal-emacs-keybind minimal-simple-override-mode-map
+    "C-a" #'minimal-simple-duplicate-line-or-region ; "again" mnemonic, overrides `move-beginning-of-line'
+    "C-d" #'minimal-simple-delete-line ; overrides `delete-char'
+    "C-v" #'minimal-simple-multi-line-below ; overrides `scroll-up-command'
+    "<next>" #'minimal-simple-multi-line-below ; overrides `scroll-up-command'
+    "M-v" #'minimal-simple-multi-line-above ; overrides `scroll-down-command'
+    "<prior>" #'minimal-simple-multi-line-above ; overrides `scroll-down-command'
+    "C-M-i" #'minimal-simple-indent-dwim ; overrides `completion-at-point'
+    "C-M-\\" #'minimal-simple-indent-dwim ; overrides `indent-region'
+    "C-M-c" #'completion-at-point) ; overrides `exit-recursive-edit'
+
+  (minimal-emacs-keybind global-map
+    "C-h h" #'minimal-simple-describe-at-point
+    "<escape>" #'minimal-simple-keyboard-quit-dwim
+    "C-g" #'minimal-simple-keyboard-quit-dwim
+    "C-M-SPC" #'minimal-simple-mark-sexp
+    ;; Commands for lines
+    "C-S-d" #'minimal-simple-delete-line-backward
+    "C-S-k" #'minimal-simple-kill-line-backward
+    "M-k" #'minimal-simple-copy-line-forward
+    "M-K" #'minimal-simple-copy-line-backward
+    "M-j" #'delete-indentation
+    "C-w" #'minimal-simple-kill-region
+    "M-w" #'minimal-simple-kill-ring-save
+    "C-S-w" #'minimal-simple-copy-line
+    "C-S-y" #'minimal-simple-yank-replace-line-or-region
+    "<C-return>" #'minimal-simple-new-line-below
+    "<C-S-return>" #'minimal-simple-new-line-above
+    "C-x x a" #'minimal-simple-auto-fill-visual-line-mode ; auto-fill/visual-line toggle
+    ;; Commands for text insertion or manipulation
+    "C-=" #'minimal-simple-insert-date
+    "C-<" #'minimal-simple-escape-url-dwim
+    "C->" #'minimal-simple-escape-url-dwim
+    "M-Z" #'minimal-simple-zap-to-char-backward
+    ;; Commands for object transposition
+    "C-S-p" #'minimal-simple-move-above-dwim
+    "C-S-n" #'minimal-simple-move-below-dwim
+    "C-t" #'minimal-simple-transpose-chars
+    "C-x C-t" #'minimal-simple-transpose-lines
+    "C-S-t" #'minimal-simple-transpose-paragraphs
+    "C-x M-t" #'minimal-simple-transpose-sentences
+    "C-M-t" #'minimal-simple-transpose-sexps
+    "M-t" #'minimal-simple-transpose-words
+    ;; Commands for paragraphs
+    "M-Q" #'minimal-simple-unfill-region-or-paragraph
+    ;; Commands for windows and pages
+    "C-x o" #'minimal-simple-other-window
+    "C-x n k" #'minimal-simple-delete-page-delimiters
+    "M-r" #'window-layout-transpose ; Emacs 31 override `move-to-window-line-top-bottom'
+    "M-S-r" #'rotate-windows-back ; Emacs 31
+    ;; Commands for buffers
+    "<C-f2>" #'minimal-simple-rename-file-and-buffer
+    "C-x k" #'minimal-simple-kill-buffer-dwim
+    "C-x K" #'kill-buffer ; leaving this here to contrast with the above
+    "M-s b" #'minimal-simple-buffers-major-mode
+    "M-s v" #'minimal-simple-buffers-vc-root))
+
 ;;;; Scratch buffers per major mode (minimal-scratch.el)
 (minimal-emacs-configure
   (setq minimal-scratch-default-mode 'text-mode)

@@ -3,6 +3,7 @@
 #+EMAIL: gersonfaneto.dev@gmail.com
 #+LANGUAGE: en
 #+OPTIONS: ':t toc:nil num:t author:t email:t
+#+OPTIONS: broken-links:mark
 #+STARTUP: content indent
 #+MACRO: latest-export-date (eval (format-time-string "%F %T %z"))
 #+MACRO: word-count (eval (count-words (point-min) (point-max)))
@@ -108,17 +109,13 @@ shown here may not reflect the latest state of the project):
 │   ├── minimal-emacs-dired.el
 │   ├── minimal-emacs-doric-themes.el
 │   ├── minimal-emacs-ef-themes.el
-│   ├── minimal-emacs-email.el
 │   ├── minimal-emacs-essentials.el
 │   ├── minimal-emacs-git.el
-│   ├── minimal-emacs-gnus.el
 │   ├── minimal-emacs-icons.el
 │   ├── minimal-emacs-langs.el
 │   ├── minimal-emacs-mct.el
 │   ├── minimal-emacs-modeline.el
 │   ├── minimal-emacs-modus-themes.el
-│   ├── minimal-emacs-mu4e.el
-│   ├── minimal-emacs-notmuch.el
 │   ├── minimal-emacs-org.el
 │   ├── minimal-emacs-search.el
 │   ├── minimal-emacs-solarized-themes.el
@@ -154,7 +151,7 @@ shown here may not reflect the latest state of the project):
 ├── init.el
 └── README.org
 
-3 directories, 48 files
+3 directories, 44 files
 #+end_example
 
 The reason I have this modular setup is because it is easier to debug
@@ -2718,7 +2715,7 @@ here:
   (advice-add #'execute-extended-command--describe-binding-msg :override #'minimal-common-ignore))
 #+end_src
 
-*** COMMENT The =minimal-emacs-essentials.el= section about =minimal-simple.el= (custom basic commands)
+*** The =minimal-emacs-essentials.el= section about =minimal-simple.el= (custom basic commands)
 :PROPERTIES:
 :CUSTOM_ID: h:f15bc843-2dd1-4792-95ec-9b7b6e561804
 :END:
@@ -9577,7 +9574,7 @@ heading/section becomes its own "slide" simply by narrowing to it.
 (provide 'minimal-emacs-langs)
 #+end_src
 
-** The =minimal-emacs-email.el= module
+** COMMENT The =minimal-emacs-email.el= module
 :PROPERTIES:
 :CUSTOM_ID: h:755e195b-9471-48c7-963b-33055969b4e2
 :END:
@@ -10839,7 +10836,7 @@ I keep this here in case I need to test the setup.
 (provide 'minimal-emacs-gnus)
 #+end_src
 
-*** Overview of my email setup (~mbsync~, ~msmtp~, mail indexer, and MUA)
+*** COMMENT Overview of my email setup (~mbsync~, ~msmtp~, mail indexer, and MUA)
 :PROPERTIES:
 :CUSTOM_ID: h:33151014-3621-4be6-9185-aacc34ee2d2c
 :END:
@@ -10948,7 +10945,7 @@ communications: I need it to be reliable and efficient. Having the MUA
 in Emacs is extra nice because it integrates an essential part of my
 daily computing with the rest of what I do ([[#h:755e195b-9471-48c7-963b-33055969b4e2][The =minimal-emacs-email.el= module]]).
 
-**** Contents of my =.mbsyncrc=
+**** COMMENT Contents of my =.mbsyncrc=
 :PROPERTIES:
 :CUSTOM_ID: h:bf540a85-12a6-4005-bf00-2ff3370e5adb
 :END:
@@ -11050,7 +11047,7 @@ SyncState *
 # SyncState *
 #+end_example
 
-**** Contents of my ~msmtp~ configuration file
+**** COMMENT Contents of my ~msmtp~ configuration file
 :PROPERTIES:
 :CUSTOM_ID: h:c7b8940b-7452-429e-ba2d-dd39da5e9cd9
 :END:
