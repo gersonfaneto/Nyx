@@ -314,7 +314,7 @@
 
 ;;;; Display current time
 (prot-emacs-configure
-  (setq display-time-format " %a %e %b, %H:%M ")
+  (setq display-time-format " %a %e/%m, %H:%M ")
   ;;;; Covered by `display-time-format'
   ;; (setq display-time-24hr-format t)
   ;; (setq display-time-day-and-date t)
@@ -512,9 +512,9 @@
     (setq battery-mode-line-format
           (cond
            ((eq battery-status-function #'battery-linux-proc-acpi)
-	        "⏻%b%p%%,%d°C ")
+	        "⏻ %b%p%%,%d°C ")
 	       (battery-status-function
-	        "⏻%b%p%% ")))
+	        "⏻ %b%p%% ")))
     (display-battery-mode 1)))
 
 (provide 'prot-emacs-essentials)

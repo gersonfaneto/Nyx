@@ -3225,7 +3225,7 @@ are best handled by my ~notmuch-indicator~ package
 #+begin_src emacs-lisp :tangle "prot-emacs-modules/prot-emacs-essentials.el"
 ;;;; Display current time
 (prot-emacs-configure
-  (setq display-time-format " %a %e %b, %H:%M ")
+  (setq display-time-format " %a %e/%m, %H:%M ")
   ;;;; Covered by `display-time-format'
   ;; (setq display-time-24hr-format t)
   ;; (setq display-time-day-and-date t)
@@ -3749,9 +3749,9 @@ here because it is still useful as a sample.
     (setq battery-mode-line-format
           (cond
            ((eq battery-status-function #'battery-linux-proc-acpi)
-	        "⏻%b%p%%,%d°C ")
+	        "⏻ %b%p%%,%d°C ")
 	       (battery-status-function
-	        "⏻%b%p%% ")))
+	        "⏻ %b%p%% ")))
     (display-battery-mode 1)))
 #+end_src
 
@@ -7510,7 +7510,7 @@ changes I make here are not necessary.
   (setq magit-log-auto-more t)
 
   (setq magit-repository-directories
-        '(("~/Git/Projects" . 1)))
+        '(("~/Developer/Personal" . 1)))
   (setq magit-repolist-columns
         `(("Name" 25 ,#'magit-repolist-column-ident)
           ("Version" 15 ,#'magit-repolist-column-version
@@ -7729,7 +7729,7 @@ on how I use Org.
 #+begin_src emacs-lisp :tangle "prot-emacs-modules/prot-emacs-org.el"
 ;;; Org-mode (personal information manager)
 (prot-emacs-configure
-  (setq org-directory (expand-file-name "~/Documents/org/"))
+  (setq org-directory (expand-file-name "~/Notes/"))
   (setq org-imenu-depth 7)
 
   (add-to-list 'safe-local-variable-values '(org-hide-leading-stars . t))
@@ -9100,7 +9100,7 @@ of packaging. I use it whenever I work on my numerous Emacs packages.
 ;;; Flymake
 (prot-emacs-configure
   (defvar prot/flymake-mode-projects-path
-    (file-name-as-directory (expand-file-name "Projects" "~/Git/"))
+    (file-name-as-directory (expand-file-name "Projects" "~/Developer/"))
     "Path to my Git projects.")
 
   (defun prot/flymake-mode-lexical-binding ()
@@ -9323,7 +9323,7 @@ facilities to rename files, regardless of file type.
       "C-c C-d C-f" #'denote-dired-rename-marked-files-using-front-matter))
 
   (with-eval-after-load 'denote
-    (setq denote-directory (expand-file-name "~/Documents/notes/"))
+    (setq denote-directory (expand-file-name "~/Notes/"))
     (setq denote-file-type 'text) ; Org is the default file type
 
     (setq denote-known-keywords '("emacs" "philosophy" "politics"))
@@ -9539,7 +9539,7 @@ default/global ~denote-directory~ and other silos.
   (with-eval-after-load 'denote
     (setq denote-silo-directories
           (append (denote-directories)
-                  (list "~/Documents/books/" "~/Documents/denote-test-silo/")))))
+                  (list "~/Alexandria/")))))
 #+end_src
 
 *** The =prot-emacs-langs.el= settings for ~logos~ (writing extras and buffer navigation)

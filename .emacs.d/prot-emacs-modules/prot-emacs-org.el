@@ -40,7 +40,7 @@
 
 ;;; Org-mode (personal information manager)
 (prot-emacs-configure
-  (setq org-directory (expand-file-name "~/Documents/org/"))
+  (setq org-directory (expand-file-name "~/Notes/"))
   (setq org-imenu-depth 7)
 
   (add-to-list 'safe-local-variable-values '(org-hide-leading-stars . t))

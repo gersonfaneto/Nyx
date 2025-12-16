@@ -142,7 +142,7 @@
 ;;; Flymake
 (prot-emacs-configure
   (defvar prot/flymake-mode-projects-path
-    (file-name-as-directory (expand-file-name "Projects" "~/Git/"))
+    (file-name-as-directory (expand-file-name "Projects" "~/Developer/"))
     "Path to my Git projects.")
 
   (defun prot/flymake-mode-lexical-binding ()
@@ -249,7 +249,7 @@
       "C-c C-d C-f" #'denote-dired-rename-marked-files-using-front-matter))
 
   (with-eval-after-load 'denote
-    (setq denote-directory (expand-file-name "~/Documents/notes/"))
+    (setq denote-directory (expand-file-name "~/Notes/"))
     (setq denote-file-type 'text) ; Org is the default file type
 
     (setq denote-known-keywords '("emacs" "philosophy" "politics"))
@@ -340,7 +340,7 @@ retroactively follow that order."
   (with-eval-after-load 'denote
     (setq denote-silo-directories
           (append (denote-directories)
-                  (list "~/Documents/books/" "~/Documents/denote-test-silo/")))))
+                  (list "~/Alexandria/")))))
 
 ;;; Custom extensions for "focus mode" (logos.el)
 ;; Read the manual: <https://protesilaos.com/emacs/logos>.

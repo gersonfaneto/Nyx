@@ -194,7 +194,7 @@
   (setq magit-log-auto-more t)
 
   (setq magit-repository-directories
-        '(("~/Git/Projects" . 1)))
+        '(("~/Developer/Personal" . 1)))
   (setq magit-repolist-columns
         `(("Name" 25 ,#'magit-repolist-column-ident)
           ("Version" 15 ,#'magit-repolist-column-version
