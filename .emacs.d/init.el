@@ -374,7 +374,7 @@ making an abbreviation to a function."
 (require 'minimal-emacs-git)
 (require 'minimal-emacs-org)
 (require 'minimal-emacs-langs)
-(require 'minimal-emacs-email)
+;; (require 'minimal-emacs-email)
 (require 'minimal-emacs-web)
 (when minimal-emacs-load-which-key
   (require 'minimal-emacs-which-key))
