@@ -1,11 +1,3 @@
-auto-save-list/
-eln-cache/
-elpa/
-eshell/
-games/
-elfeed/
-transient/
-bookmarks
-projects
-*-latest-state.eld
-savehist
+*
+
+!README.org

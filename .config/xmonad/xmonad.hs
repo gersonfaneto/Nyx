@@ -5,7 +5,8 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.InsertPosition
 import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.ManageHelpers   (isDialog, doCenterFloat, doRectFloat)
+import           XMonad.Hooks.ManageHelpers   (doCenterFloat, doRectFloat,
+                                               isDialog)
 import           XMonad.Hooks.StatusBar
 import           XMonad.Hooks.StatusBar.PP
 import           XMonad.Layout.NoBorders

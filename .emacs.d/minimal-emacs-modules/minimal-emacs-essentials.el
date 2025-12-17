@@ -20,7 +20,7 @@
   (setq save-interprogram-paste-before-kill t)
   (setq scroll-error-top-bottom t)
   (setq tramp-connection-timeout (* 60 10)) ; seconds
-  (setq trusted-content '("~/Git/Projects/")) ; Emacs 30
+  (setq trusted-content '("~/Developer/Personal/")) ; Emacs 30
   (setq truncate-partial-width-windows nil)
 
   ;; Keys I unbind here are either to avoid accidents or to bind them
@@ -101,7 +101,7 @@
 
   (minimal-emacs-keybind minimal-simple-override-mode-map
     "C-a" #'minimal-simple-duplicate-line-or-region ; "again" mnemonic, overrides `move-beginning-of-line'
-    "C-d" #'minimal-simple-delete-line ; overrides `delete-char'
+    "C-d" #'minimal-simple-delete-line      ; overrides `delete-char'
     "C-v" #'minimal-simple-multi-line-below ; overrides `scroll-up-command'
     "<next>" #'minimal-simple-multi-line-below ; overrides `scroll-up-command'
     "M-v" #'minimal-simple-multi-line-above ; overrides `scroll-down-command'
@@ -111,7 +111,7 @@
     "C-M-c" #'completion-at-point) ; overrides `exit-recursive-edit'
 
   (minimal-emacs-keybind global-map
-    "C-h h" #'minimal-simple-describe-at-point
+    "c-h h" #'minimal-simple-describe-at-point
     "<escape>" #'minimal-simple-keyboard-quit-dwim
     "C-g" #'minimal-simple-keyboard-quit-dwim
     "C-M-SPC" #'minimal-simple-mark-sexp

@@ -56,6 +56,9 @@
   services.displayManager = {
     ly = {
       enable = true;
+      settings = {
+        hide_f1_commands = true;
+      };
     };
   };
 
@@ -126,12 +129,22 @@
   };
 
   security.pam.services = {
+    ly = {
+      text = ''
+        auth       substack     login
+        account    include      login
+        password   substack     login
+        session    include      login
+      '';
+      enableGnomeKeyring = true;
+    };
     login = {
       fprintAuth = true;
       enableGnomeKeyring = true;
     };
     xsecurelock = {
       fprintAuth = true;
+      enableGnomeKeyring = true;
     };
   };
 
@@ -232,6 +245,7 @@
       chafa
       detach
       diff-so-fancy
+      betterlockscreen
       dig
       dmidecode
       dragon-drop
