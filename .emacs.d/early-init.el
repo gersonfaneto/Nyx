@@ -99,4 +99,4 @@ PGTK is the Wayland-specific build of Emacs.")
 
 (setq user-lisp-directory (locate-user-emacs-file "minimal-lisp/"))
 
-(add-hook 'after-init-hook (lambda () (set-frame-name "home")))
+(add-hook 'after-init-hook (lambda () (set-frame-name "Home")))

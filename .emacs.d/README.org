@@ -550,7 +550,7 @@ can tell). For minimalist window managers on Linux, something like the
 ~rofi~ program can select system windows based on their name.
 
 #+begin_src emacs-lisp :tangle "early-init.el"
-(add-hook 'after-init-hook (lambda () (set-frame-name "home")))
+(add-hook 'after-init-hook (lambda () (set-frame-name "Home")))
 #+end_src
 
 * The main initialisation of Emacs (=init.el=)
