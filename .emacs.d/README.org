@@ -2760,7 +2760,7 @@ this via some hook.
     "C-M-c" #'completion-at-point) ; overrides `exit-recursive-edit'
 
   (minimal-emacs-keybind global-map
-    "c-h h" #'minimal-simple-describe-at-point
+    "C-h h" #'minimal-simple-describe-at-point
     "<escape>" #'minimal-simple-keyboard-quit-dwim
     "C-g" #'minimal-simple-keyboard-quit-dwim
     "C-M-SPC" #'minimal-simple-mark-sexp
