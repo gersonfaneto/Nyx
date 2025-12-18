@@ -7224,9 +7224,9 @@ They make more sense to me.
       "M-q" #'vc-annotate-toggle-annotation-visibility
       "C-c C-c" #'vc-annotate-goto-line
       "<return>" #'vc-annotate-find-revision-at-line)
-    (minimal-emacs-keybind log-edit-mode-map
-      "M-s" #'nil ; I use M-s for my search commands
-      "M-r" #'nil) ; I use `consult-history'
+    ;; (minimal-emacs-keybind log-edit-mode-map
+      ;; "M-s" #'nil ; I use M-s for my search commands
+      ;; "M-r" #'nil) ; I use `consult-history'
     (minimal-emacs-keybind log-view-mode-map
       "<tab>" #'log-view-toggle-entry-display
       "<return>" #'log-view-find-revision

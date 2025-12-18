@@ -56,9 +56,6 @@
   services.displayManager = {
     ly = {
       enable = true;
-      settings = {
-        hide_f1_commands = true;
-      };
     };
   };
 
@@ -245,7 +242,6 @@
       chafa
       detach
       diff-so-fancy
-      betterlockscreen
       dig
       dmidecode
       dragon-drop
@@ -378,6 +374,10 @@
       texlive.combined.scheme-full
       texlab
       tectonic
+
+      # Typst
+      typst
+      tinymist
 
       # General
       efm-langserver
