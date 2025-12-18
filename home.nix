@@ -47,6 +47,8 @@ in {
     mpc
   ];
 
+  services.caffeine.enable = true;
+
   services.picom = {
     enable = true;
     backend = "glx";
