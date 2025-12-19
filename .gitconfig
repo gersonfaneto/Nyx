@@ -197,7 +197,7 @@
 
   gr = "!r() { git rev-list --all | xargs git grep $@ | fzf; }; r"
 
-  url  = "!echo $(git config remote.origin.url | sed -Ee 's!(git@|git://|ssh://)!https://!' -e 's!:([^/])!/\\1!' | sed -e 's/.git$//')"
-  open = "!$(command -v open || command -v xdg-open) $(git url)"
+  ln  = "!echo $(git config remote.origin.url | sed -Ee 's!(git@|git://|ssh://)!https://!' -e 's!:([^/])!/\\1!' | sed -e 's/.git$//')"
+  op = "!$(command -v open || command -v xdg-open) $(git ln)"
 
 ; vim:ft=gitconfig:
