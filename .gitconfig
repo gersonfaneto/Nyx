@@ -154,6 +154,7 @@
 
   st = status
   ss = status --short
+  si = "!sh -c 'nvim +\"Git|only\"'" # [S]tatus [I]nteractive
 
   ft = fetch
   fa = fetch --all
