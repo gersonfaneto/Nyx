@@ -16,7 +16,7 @@
 [user]
   name = Gerson Ferreira
   email = gersonfaneto.dev@gmail.com
-  signingkey = 6323233E26E4DB49
+  signingkey = A662F53CEAB04DFF
 
 [commit]
   verbose = true
