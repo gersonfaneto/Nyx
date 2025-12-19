@@ -521,4 +521,3 @@
     (add-hook 'after-make-frame-functions #'minimal/setup-frame)
   ;; Otherwise, set up the current frame.
   (minimal/setup-frame (selected-frame)))
-

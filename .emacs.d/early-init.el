@@ -101,12 +101,23 @@
 ;; --- Custom File and Theme Definitions ---
 ;; Define paths and initial settings for custom files, font, and theme.
 (setq minimal/local-file            "~/.emacs.d/local.el"
-      minimal/default-font          "Departure Mono 10"
-      minimal/current-theme         'doom-solarized-dark
-      minimal/current-theme-dark    'doom-solarized-dark
-      minimal/current-theme-light   'doom-solarized-light)
+      minimal/default-font          "Aporetic Sans Mono 10"
+      minimal/default-theme         'solarized
+      minimal/default-background    'dark)
 
 ;; Load local customizations if the file exists.
 (if (file-exists-p minimal/local-file)
     (load-file minimal/local-file))
 
+;; --- Custom File Loading ---
+;; Path to the custom file.
+(setq minimal/custom-file "~/.emacs.d/custom.el")
+
+;; Create the custom file if it doesn't exist.
+(if (not (file-exists-p minimal/custom-file))
+    (make-empty-file minimal/custom-file))
+
+;; Load custom file if it exists.
+(when (file-exists-p minimal/custom-file)
+  (setq custom-file minimal/custom-file)	;; Set Emacs's custom-file variable
+  (load-file custom-file))			;; Load the custom file
