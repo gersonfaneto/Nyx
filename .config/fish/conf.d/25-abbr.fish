@@ -19,7 +19,8 @@ __command_abbr df   'df -h'
 __command_abbr du   'du -hs'
 __command_abbr free 'free -h'
 
-__command_abbr g 'git'
+__command_abbr g   'git'
+__command_abbr tig 'nvim +"Git|only"'
 
 __command_abbr cl 'clear'
 
