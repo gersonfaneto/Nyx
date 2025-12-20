@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,6 +24,14 @@
     system = "x86_64-linux";
 
     pkgs = nixpkgs.legacyPackages.${system};
+
+    fonts = {
+      apple = inputs.apple-fonts.packages.${pkgs.system};
+    };
+
+    overlays = {
+      neovim = inputs.neovim-nightly-overlay.packages.${pkgs.system};
+    };
 
     forAllSystems = nixpkgs.lib.genAttrs [
       "aarch64-linux"
@@ -43,6 +56,8 @@
         inherit system;
         specialArgs = {
           inherit inputs;
+          inherit fonts;
+          inherit overlays;
         };
 
         modules = [
@@ -62,7 +77,7 @@
     homeConfigurations = {
       gerson = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ 
+        modules = [
           ./home.nix
         ];
         extraSpecialArgs = {};

@@ -1,6 +1,7 @@
 {
   pkgs,
-  inputs,
+  fonts,
+  overlays,
   ...
 }: {
   imports = [
@@ -196,7 +197,7 @@
 
   programs.neovim = {
     enable = true;
-    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    package = overlays.neovim.default;
   };
 
   virtualisation.docker = {
@@ -390,6 +391,10 @@
 
       # Emojis
       noto-fonts-color-emoji
+
+      # O.o
+      fonts.apple.sf-mono
+      fonts.apple.sf-pro
 
       # General
       aporetic
