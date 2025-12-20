@@ -7,10 +7,6 @@ cursor-style-blink = false
 
 shell-integration-features = no-cursor
 
-font-size = 10
-
-font-family = Aporetic Sans Mono
-
 window-padding-x = 8
 window-padding-y = 8
 window-padding-balance = true
