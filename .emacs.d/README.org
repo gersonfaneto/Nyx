@@ -104,7 +104,7 @@ shown here may not reflect the latest state of the project):
 #+begin_example
 ~/Developer/Personal/Nyx/.emacs.d $ tree -N -L 4 -C --gitignore --dirsfirst
 .
-├── minimal-emacs-modules
+├── minimal-modules
 │   ├── minimal-emacs-completion.el
 │   ├── minimal-emacs-dired.el
 │   ├── minimal-emacs-doric-themes.el
@@ -905,7 +905,7 @@ In the code snippet further below, I add two directories to the
 is thus declared to Emacs and we can load it properly. Here is what
 these two directories are about:
 
-- The =minimal-emacs-modules= directory :: This is where I store all the
+- The =minimal-modules= directory :: This is where I store all the
   individual components of my Emacs setup. When I run Emacs, the
   directory is a subdirectory of =~/.emacs.d/=. All files are prefixed
   with =minimal-emacs-=, followed by a word that broadly describes their
@@ -952,7 +952,7 @@ takes effect before loading the rest of the configuration ([[#h:d4e2145a-0aae-4c
 (mapc
  (lambda (string)
    (add-to-list 'load-path (locate-user-emacs-file string)))
- '("minimal-lisp" "minimal-emacs-modules"))
+ '("minimal-lisp" "minimal-modules"))
 #+end_src
 
 ** The =init.el= settings for packages (=package.el=)
@@ -1571,7 +1571,7 @@ We start by loading one of my themes ([[#h:5612b5b8-45a5-4a79-a25b-6fa3d9146c39]
 These are actually defined in modules of their own, though this is the
 only place where they are used.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el" :mkdirp yes
 ;;; Theme setup and related
 
 ;;;; Load the desired theme module
@@ -1635,7 +1635,7 @@ The manual has a section about building on top of Modus. My
 Note that the ~minimal-emacs-comment~ is there for my testing purposes
 ([[#h:3b14faa6-83fd-4d5f-b3bc-85f72fd572d4][The =init.el= macro to do nothing with Elisp code (~minimal-emacs-comment~)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-modus-themes.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-modus-themes.el"
 ;;; The Modus themes
 
 ;; The themes are highly customisable.  Read the manual:
@@ -1713,7 +1713,7 @@ Note that the ~minimal-emacs-comment~ is there for my testing purposes
 :CUSTOM_ID: h:b7923dc9-5e93-4646-be41-396c92253996
 :END:
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-solarized-themes.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-solarized-themes.el"
 (minimal-emacs-configure
   (minimal-emacs-install solarized-theme)
   (load-theme 'solarized-dark t))
@@ -1756,7 +1756,7 @@ to blend Ef and Modus into one collection).
 Note that the ~minimal-emacs-comment~ is there for my testing purposes
 ([[#h:3b14faa6-83fd-4d5f-b3bc-85f72fd572d4][The =init.el= macro to do nothing with Elisp code (~minimal-emacs-comment~)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-ef-themes.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-ef-themes.el"
 ;;; The Ef (εὖ) themes
 
 (minimal-emacs-configure
@@ -1836,7 +1836,7 @@ editor, opt for my ~modus-themes~ ([[#h:36af519a-67e1-42b6-a38a-2052638108f9][Th
 + Backronym: Doric Only Really Intensifies Conservatively ... themes.
 
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-doric-themes.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-doric-themes.el"
 ;;; The Doric themes
 
 (minimal-emacs-configure
@@ -1910,7 +1910,7 @@ to blend Standard and Modus into one collection).
 + Backronym: Standard Themes Are Not Derivatives but the
   Affectionately Reimagined Default ... themes.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-standard-themes.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-standard-themes.el"
 ;;; The Standard themes
 
 (minimal-emacs-configure
@@ -1991,7 +1991,7 @@ are called. The pulse effect is added there (~pulsar-after-function-hook~).
   - GitLab: <https://gitlab.com/protesilaos/pulsar>
 + Backronym: Pulsar Unquestionably Luminates, Strictly Absent the Radiation
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 ;;;; Pulsar
 ;; Read the pulsar manual: <https://protesilaos.com/emacs/pulsar>.
 (minimal-emacs-configure
@@ -2043,7 +2043,7 @@ vertical axis.
   - GitLab: <https://gitlab.com/protesilaos/lin>
 + Backronym: LIN Is Noticeable
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 ;;;; Lin
 ;; Read the lin manual: <https://protesilaos.com/emacs/lin>.
 (minimal-emacs-configure
@@ -2081,7 +2081,7 @@ and [[https://github.com/minad/org-modern][Daniel Mendler's ~org-modern~ package
 I also take care to make it work with my customised mode line
 ([[#h:41ee38d0-9099-4444-85e4-cc8dce00fb9a][The =minimal-emacs-modeline.el= module]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 ;;;; Increase padding of windows/frames
 ;; Yet another one of my packages:
 ;; <https://protesilaos.com/codelog/2023-06-03-emacs-spacious-padding/>.
@@ -2127,7 +2127,7 @@ This package produces an in-buffer preview of a colour value. I use
 those while developing my themes, hence the ~prot/rainbow-mode-in-themes~
 to activate ~rainbow-mode~ if I am editing a theme file.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 ;;;; Rainbow mode for colour previewing (rainbow-mode.el)
 (minimal-emacs-configure
   (minimal-emacs-install rainbow-mode)
@@ -2178,7 +2178,7 @@ such as in the difference between writing and reading.
   - GitLab: <https://gitlab.com/protesilaos/cursory>
 + Backronym: Cursor Usability Requires Styles Objectively Rated Yearlong
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 ;;; Cursor appearance (cursory)
 ;; Read the manual: <https://protesilaos.com/emacs/cursory>.
 (when minimal-display-graphic-p
@@ -2256,7 +2256,7 @@ Bruno Boal is the lead developer and I am a co-maintainer.
 + Backronym: Themes Harmoniously Exchanged Mid Evening Beget
   Understandable Feelings of Fascination, Excitement, and Thrill.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 ;;;; Theme buffet
 (minimal-emacs-configure
   (minimal-emacs-install theme-buffet)
@@ -2302,7 +2302,7 @@ Another section defines some complementary functionality
 
 Also check my ~show-font~ package ([[#h:60a005be-77bd-49f1-a865-78d7cf75bd2a][The =minimal-emacs-theme.el= section about ~show-font~]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 ;;;; Fontaine (font configurations)
 ;; Read the manual: <https://protesilaos.com/emacs/fontaine>
 (minimal-emacs-configure
@@ -2441,7 +2441,7 @@ Check out its sources:
 
 To actually set fonts, I use my ~fontaine~ package ([[#h:cb41fef0-41a5-4a85-9552-496d96290258][The =minimal-emacs-theme.el= section about ~fontaine~]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 ;;;; Show Font (preview fonts)
 ;; Read the manual: <https://protesilaos.com/emacs/show-font>
 (when minimal-display-graphic-p
@@ -2480,7 +2480,7 @@ want those to have a global effect, meaning that they affect all
 buffers and the minibuffer, instead of the default behaviour to only
 adjust the current buffer's text size ([[#h:6b6778af-8bd2-4f97-a794-e23774aa6cf3][Why don't you remap keys?]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 ;;;;; `variable-pitch-mode' setup
 (minimal-emacs-configure
   (define-key ctl-x-x-map (kbd "v") #'variable-pitch-mode)
@@ -2579,7 +2579,7 @@ technicalities.
 Finally, we ~provide~ the module. This is the mirror function of
 ~require~ ([[#h:e6c4acf5-5b51-4b38-a86a-bf3f698ac872][The init.el final part to load the individual modules]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-theme.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-theme.el"
 (provide 'minimal-emacs-theme)
 #+end_src
 
@@ -2601,7 +2601,7 @@ Better use =C-h v= (=M-x describe-variable=) to learn about each of
 these variables. Since I am here, I also unbind or repurpose some of the default
 key bindings.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el" :mkdirp yes
 ;;; Essential configurations
 (minimal-emacs-configure
 
@@ -2692,7 +2692,7 @@ here:
    something with =M-x= instead of a key binding, I have a good reason
    for it and do not want the extra noise.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 (minimal-emacs-configure
   (require 'minimal-common)
 
@@ -2731,7 +2731,7 @@ using the advice mechanism to redefine the behaviour of the original
 command (~save-buffers-kill-emacs~), since I cannot find a way to do
 this via some hook.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 (minimal-emacs-configure
   (require 'minimal-simple)
 
@@ -2817,7 +2817,7 @@ buffer for a given major mode. It has the option to set a default
 major mode to use. It can also copy the active region into the scratch
 buffer. Read the doc string of the command ~minimal-scratch-buffer~.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Scratch buffers per major mode (minimal-scratch.el)
 (minimal-emacs-configure
   (setq minimal-scratch-default-mode 'text-mode)
@@ -2837,7 +2837,7 @@ pairs. This can also run a function to set a pair according to some
 context, environment, or any such condition. I use it to insert
 quotation marks specific to natural languages I have set up.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Insert character pairs (minimal-pair.el)
 (minimal-emacs-configure
   (minimal-emacs-autoload
@@ -2869,7 +2869,7 @@ I have a custom library that builds on what Emacs makes available by
 default ([[#h:7affcbca-0808-4159-8eab-faa7973aefc7][The =minimal-comment.el= library]]). While I use this section of
 the module to set my desired configurations.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Comments (minimal-comment.el)
 (minimal-emacs-configure
   (setq comment-empty-lines t)
@@ -2907,7 +2907,7 @@ thematically and rely on strong mnemonics, such as =b= for buffers,
 for this purpose, as it visualises incomplete key bindings after a
 configurable amount of time ([[#h:ddb1070d-2f91-4224-ad43-ef03f038f787][The =minimal-emacs-which-key.el= module]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Prefix keymap (minimal-prefix.el)
 (minimal-emacs-configure
   (require 'minimal-prefix)
@@ -2936,7 +2936,7 @@ I generally do not rely on ~recentf-mode~, as most of my work is done
 in projects, which I switch to directly. Though I sometimes need to
 revisit a file that I do not need to keep track of.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 (minimal-emacs-configure
   (define-key global-map (kbd "C-x C-r") #'recentf-open) ; override `find-file-read-only'
 
@@ -2960,7 +2960,7 @@ revisit a file that I do not need to keep track of.
 I do use the mouse on occasion. More so when I am doing a video
 demonstration.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Mouse and mouse wheel behaviour
 (minimal-emacs-configure
   (mouse-wheel-mode 1)
@@ -3007,7 +3007,7 @@ a bit easier for users, though it still is a rather advanced feature.
 In most cases, just know that ~repeat-mode~ is nice to have, though
 you can probably use Emacs just fine without it.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Repeatable key chords (repeat-mode)
 (minimal-emacs-configure
   (repeat-mode 1)
@@ -3038,7 +3038,7 @@ bookmark and then visit one of your bookmarks with ~bookmark-jump~
 
 Also see [[#h:5685df62-4484-42ad-a062-d55ab19022e3][the =minimal-emacs-essentials.el= settings for registers]].
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Built-in bookmarking framework (bookmark.el)
 (minimal-emacs-configure
   (add-hook 'bookmark-bmenu-mode-hook #'hl-line-mode)
@@ -3079,7 +3079,7 @@ defines the ~minimal-register-persist-mode~ which saves the registers to
 a file (controlled by ~minimal-register-save-file~) whenever I make a
 change to them.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Registers (register.el) and my extensions (minimal-register.el)
 (minimal-emacs-configure
   (require 'minimal-register)
@@ -3115,7 +3115,7 @@ for example, when a =git pull= modifies the file we are already
 displaying in a buffer. Emacs thus automatically reverts the buffer to
 reflect the new file contents.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Auto revert mode
 (minimal-emacs-configure
   (global-auto-revert-mode 1)
@@ -3131,7 +3131,7 @@ Every graphical application I have ever used will delete the selected
 text upon the insertion of new text. Emacs does not do this by
 default. With ~delete-selection-mode~ we get it.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Delete selection
 (minimal-emacs-configure
   (delete-selection-mode 1))
@@ -3147,7 +3147,7 @@ infrastructure to display tooltips. I prefer it this way because then
 we can benefit from the text properties that can be added to these
 messages (e.g. a different colour or a slant).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Tooltips (tooltip-mode)
 (minimal-emacs-configure
   (tooltip-mode 1)
@@ -3177,7 +3177,7 @@ new emails. I have no use for the load avergae, while emails counters
 are best handled by my ~notmuch-indicator~ package
 ([[#h:b26c6297-ebe8-4f99-b069-df53cfd90520][The =minimal-emacs-email.el= submodule for ~notmuch~ (=minimal-emacs-notmuch.el=)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Display current time
 (minimal-emacs-configure
   (setq display-time-format " %a %e/%m, %H:%M ")
@@ -3220,7 +3220,7 @@ the ~world-clock-time-format~. Note that I control the placement of
 these and many other buffers by configuring the ~display-buffer-alist~
 ([[#h:b5fa481d-8549-4424-869e-91091cdf730b][The =minimal-emacs-window.el= module]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; World clock (M-x world-clock)
 (minimal-emacs-configure
   (setq display-time-world-list t)
@@ -3265,7 +3265,7 @@ Help buffer is telling me (check its documentation with =C-h v= or
 =M-x describe-variable=), so I suspect this was never updated to
 conform with the newer ~display-buffer-alist~...
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; `man' (manpages)
 (minimal-emacs-configure
   (setq Man-notify-method 'pushy)) ; does not obey `display-buffer-alist'
@@ -3282,7 +3282,7 @@ While inside the =*Proced*= buffer, type =C-h m= (=M-x describe-mode=)
 to learn about keys/commands you can use therein. Personally, I mostly
 use this interface to check if some process is doing more than it should.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; `proced' (process monitor, similar to `top')
 (minimal-emacs-configure
   (setq proced-auto-update-flag 'visible) ; Emacs 30 supports more the `visible' value
@@ -3315,7 +3315,7 @@ evaluation. Whereas the server works just fine.
 Note that I only ever ~server-start~ if there is no server running.
 One is enough.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;;; Emacs server (allow emacsclient to connect to running session)
 (minimal-emacs-configure
   (setq server-client-instructions nil)
@@ -3351,7 +3351,7 @@ the point. Better check the video I did on the matter:
 + Backronym: Some Utilities Built to Substitute Targets Independent of
   Their Utterances, Thoroughly and Easily.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;; Substitute
 ;; Another package of mine... Video demo:
 ;; <https://protesilaos.com/codelog/2023-01-16-emacs-substitute-package-demo/>.
@@ -3387,7 +3387,7 @@ Vasilij Schneidermann, moves the cursor to the point where the last
 change happened. Calling the command again cycles to the point before
 that and so on. Simple and super effective.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 (minimal-emacs-configure
   (minimal-emacs-install goto-chg)
   (minimal-emacs-keybind global-map
@@ -3427,7 +3427,7 @@ to learn about all the available commands and their respective key bindings.
   - GitLab: <https://gitlab.com/protesilaos/tmr>
 + Backronym: TMR May Ring; Timer Must Run
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;; TMR May Ring (tmr is used to set timers)
 ;; Read the manual: <https://protesilaos.com/emacs/tmr>.
 (minimal-emacs-configure
@@ -3465,7 +3465,7 @@ password from it. On this note, I have a convention of naming password
 files based on their scope, like =username@website=. This makes it
 easy to retrieve what I need.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;; Pass interface (password-store)
 (minimal-emacs-configure
   (minimal-emacs-install password-store)
@@ -3505,7 +3505,7 @@ distort the output when there are lots of them. In the section about
 =M-x compile=, I have a similar setting for the compilation buffers
 ([[#h:61c101b0-fd5e-41ba-9031-9236851af696][The =minimal-emacs-essentials.el= section about the compilation interface (~compile~)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;; Generic interface for shells or REPLs (comint)
 (minimal-emacs-configure
   ;; Support for OS-specific escape sequences such as what `ls
@@ -3559,7 +3559,7 @@ above---check there for an example of an ANSI escape sequence).
 Note that for version controlled projects, we have the command
 ~project-compile~ ([[#h:7dcbcadf-8af6-487d-b864-e4ce56d69530][The =minimal-emacs-git.el= section about =project.el=]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;; Compilation interface (M-x compile)
 (minimal-emacs-configure
   (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
@@ -3637,7 +3637,7 @@ me to that shell in its directory.
 
 Now the actual configurations:
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;; Standard Unix Shell (M-x shell)
 (minimal-emacs-configure
   (minimal-emacs-autoload (minimal-shell minimal-shell-mode) "minimal-shell")
@@ -3697,7 +3697,7 @@ laptop-specific use with regard to the default behaviour of frames
 ([[#h:0403b581-142b-4613-bc81-51c5dccd831d][The =early-init.el= code to set frame parameters]]). I am keeping this
 here because it is still useful as a sample.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 ;;; Show battery status on the mode line with `display-battery-mode'
 (when minimal-laptop-p
   (minimal-emacs-configure
@@ -3719,7 +3719,7 @@ here because it is still useful as a sample.
 Finally, we ~provide~ the module. This is the mirror function of
 ~require~ ([[#h:e6c4acf5-5b51-4b38-a86a-bf3f698ac872][The init.el final part to load the individual modules]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-essentials.el"
 (provide 'minimal-emacs-essentials)
 #+end_src
 
@@ -3754,7 +3754,7 @@ add a box to them as well. They then adopt whatever padding is there.
 The ~with-eval-after-load~ pattern is how to evaluate some code
 as soon as the given package/feature is loaded.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-modeline.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-modeline.el" :mkdirp yes
 ;;; Mode line
 (minimal-emacs-configure
   (require 'minimal-modeline)
@@ -3822,7 +3822,7 @@ The ~which-func-format~ controls what the indicator looks like. This
 is a bit more advanced in terms of the data structure it uses. All I
 did what to take the original value and make some minor tweaks to it.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-modeline.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-modeline.el"
 ;;; Show the name of the current definition or heading for context (`which-function-mode')
 (minimal-emacs-configure
   (setq which-func-modes '(prog-mode org-mode))
@@ -3920,7 +3920,7 @@ shows an indicator on the focused mode line.
 Note that the value of ~keycast-mode-line-insert-after~ only works
 with my customised mode line ([[#h:41ee38d0-9099-4444-85e4-cc8dce00fb9a][The =minimal-emacs-modeline.el= module]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-modeline.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-modeline.el"
 ;;; Keycast mode
 (minimal-emacs-configure
   (minimal-emacs-install keycast)
@@ -3945,7 +3945,7 @@ with my customised mode line ([[#h:41ee38d0-9099-4444-85e4-cc8dce00fb9a][The =mi
 Finally, we ~provide~ the module. This is the mirror function of
 ~require~ ([[#h:e6c4acf5-5b51-4b38-a86a-bf3f698ac872][The init.el final part to load the individual modules]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-modeline.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-modeline.el"
 (provide 'minimal-emacs-modeline)
 #+end_src
 
@@ -4033,7 +4033,7 @@ category. We can arrange to have different ~completion-styles~ per
 category and many more customisations which, of course, I do take care
 of ([[#h:0d49218d-4199-4847-9765-60a3f94e515d][The =minimal-emacs-completion.el= settings for completion category overrides]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el" :mkdirp yes
 ;;; General minibuffer settings
 (minimal-emacs-configure
 ;;;; Completion styles
@@ -4083,7 +4083,7 @@ to get one and thus to be subject to the customisations I define
 herein. The ~minimal-minibuffer-missing-categories-mode~ is responsible
 for this.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el" :mkdirp yes
 ;;;; Completion category overrides
 (minimal-emacs-configure
   ;; Reset all the per-category defaults so that (i) we use the
@@ -4091,6 +4091,8 @@ for this.
   ;; in the `completion-category-overrides' without having to
   ;; explicitly override everything.
   (setq completion-category-defaults nil)
+
+  (require 'minimal-minibuffer)
 
   (minimal-minibuffer-missing-categories-mode 1)
 
@@ -4159,7 +4161,7 @@ annotations displayed by ~marginalia~ ([[#h:bd3f7a1d-a53d-4d3e-860e-25c5b35d8e7e
 The remaining dispatch characters affect how the input is treated as a
 literal string, initialism, et cetera, which is not as useful to me.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 ;;; Orderless completion style (and minimal-orderless.el)
 (when minimal-emacs-completion-extras
   (minimal-emacs-configure
@@ -4189,7 +4191,7 @@ minibuffer. Let's have everything ignore casing by default.
   ~case-fold-search~ to make the search case-sensitive. But those are
   the exceptions. ]
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 (setq completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
 (setq-default case-fold-search t)   ; For general regexp
@@ -4221,7 +4223,7 @@ The ~minibuffer-depth-indicate-mode~ shows a number next to the
 minibuffer prompt, indicating the level of depth in the recursion,
 starting with =2=.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 (minimal-emacs-configure
   (setq read-minibuffer-restore-windows nil)
   (setq enable-recursive-minibuffers t) ; Emacs 28
@@ -4247,7 +4249,7 @@ the =[some-default-value]= indicator disappears, since it is no longer
 applicable. Without this mode, the indicator stays there at all times,
 which can be confusing or distracting.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 (minimal-emacs-configure
   (setq minibuffer-default-prompt-format " [%s]") ; Emacs 29
   (minibuffer-electric-default-mode 1))
@@ -4307,7 +4309,7 @@ experience.
   completion style called ~partial-completion~
   ([[#h:14b09958-279e-4069-81e3-5a16c9b69892][The =minimal-emacs-completion.el= settings for completion styles]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 (minimal-emacs-configure
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
   ;; Not everything here comes from rfn-eshadow.el, but this is fine.
@@ -4347,7 +4349,7 @@ completion are collectively enabled through the minor mode ~minimal-minibuffer-c
 - [[#h:cff33514-d3ac-4c16-a889-ea39d7346dc5][The =minimal-emacs-completion.el= submodule for ~vertico~ (=minimal-emacs-vertico.el=)]]
 - [[#h:e9fb09f0-f2e6-4943-83bf-e5fadcfa530a][The =minimal-emacs-completion.el= submodule for ~mct~ (=minimal-emacs-mct.el=)]]
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 (minimal-emacs-configure
   (minimal-emacs-hook
     (completion-list-mode-hook minibuffer-setup-hook)
@@ -4397,7 +4399,7 @@ history variable: it is not about all histories combined.
 Overall, I am happy with this feature and benefit from it on a daily
 basis.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 ;;;; `savehist' (minibuffer and related histories)
 (minimal-emacs-configure
   (setq savehist-file (locate-user-emacs-file "savehist"))
@@ -4439,7 +4441,7 @@ along).
 The term "dabbrev" stands for "dynamic abbreviation". Emacs also has
 static, user-defined abbreviations ([[#h:fd84b79a-351e-40f0-b383-bf520d77834b][The =minimal-emacs-completion.el= settings for static text expansion (~abbrev~)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 (minimal-emacs-configure
 ;;;; `dabbrev' (dynamic word completion (dynamic abbreviations))
   (setq dabbrev-abbrev-char-regexp "\\sw\\|\\s_")
@@ -4499,7 +4501,7 @@ mind that the underlying mechanism is powerful and can evaluate
 arbitrary Elisp code (I played around with it, though I don't use
 templates to have a real need for it---but it works).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 ;;;; `abbrev' (Abbreviations, else Abbrevs)
 (minimal-emacs-configure
   ;; message-mode derives from text-mode, so we don't need a separate
@@ -4625,7 +4627,7 @@ subsequent popups are subject to the second number of that same variable.
 
 Also see [[#h:567bb00f-1d82-4746-93e5-e0f60721728a][the =minimal-emacs-completion.el= settings for dynamic text expansion (~dabbrev~)]].
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 ;;; Corfu (in-buffer completion popup)
 (when (and (eq minimal-emacs-completion-ui 'vertico)
            minimal-emacs-completion-extras
@@ -4692,7 +4694,7 @@ overarching theme of my choices is to reduce noise. More specifically:
   ~completion-preview-minimum-symbol-length~ is fairly high as I only
   need a hint for longer words/symbols.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 (minimal-emacs-comment
   (minimal-emacs-configure
     (setq completion-preview-exact-match-only nil)
@@ -4762,7 +4764,7 @@ current candidate's context.
 
 Also check: [[#h:e0f9c30e-3a98-4479-b709-7008277749e4][The =minimal-emacs-search.el= module]].
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 ;;; Enhanced minibuffer commands (consult.el)
 (when minimal-emacs-completion-extras
   (minimal-emacs-configure
@@ -4903,7 +4905,7 @@ had a need for. Eventually I realised that I was still not using
 Embark the way it is intended, so I decided to only focus on
 ~embark-collect~ and ~embark-export~.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 ;;; Extended minibuffer actions and more (embark.el)
 (when minimal-emacs-completion-extras
   (minimal-emacs-configure
@@ -4945,7 +4947,7 @@ by modifying the user option ~marginalia-annotator-registry~. I used
 to do that, but ultimately decided that I did not need to make any
 changes.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 ;;; Detailed completion annotations (marginalia.el)
 (when minimal-emacs-completion-extras
   (minimal-emacs-configure
@@ -4980,7 +4982,7 @@ function as close to ~mct~ as possible.
 - [[#h:e9fb09f0-f2e6-4943-83bf-e5fadcfa530a][The =minimal-emacs-completion.el= submodule for ~mct~ (=minimal-emacs-mct.el=)]]
 - [[#h:cff33514-d3ac-4c16-a889-ea39d7346dc5][The =minimal-emacs-completion.el= submodule for ~vertico~ (=minimal-emacs-vertico.el=)]]
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-completion.el"
 ;;; The minibuffer user interface (mct, vertico, or none)
 (when minimal-emacs-completion-ui
   (require
@@ -5018,7 +5020,7 @@ Note that I normally use ~vertico~ in my setup, but configure it to
 behave similar to what I have here for ~mct~, meaning that it does not
 pop up the minibuffer eagerly ([[#h:cff33514-d3ac-4c16-a889-ea39d7346dc5][The =minimal-emacs-completion.el= submodule for ~vertico~ (=minimal-emacs-vertico.el=)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-mct.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-mct.el" :mkdirp yes
 ;;; Minibuffer and Completions in Tandem or Minibuffer Confines Transcended (mct)
 ;; Read the manual: <https://protesilaos.com/emacs/mct>.
 (minimal-emacs-configure
@@ -5111,7 +5113,7 @@ predictable scheme.
 
 The extras I provide for ~vertico~ are in [[#h:3796a4c9-8659-4782-8aaa-3cf4e950927d][the =minimal-vertico.el= library]].
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-vertico.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-vertico.el" :mkdirp yes
 ;;; Vertical completion layout (vertico)
 (minimal-emacs-configure
  (minimal-emacs-install vertico)
@@ -5278,7 +5280,7 @@ to just type =one two= and have the space be interpreted as
 do exactly this for regular =C-s= (~isearch-forward~) and =C-r=
 (~isearch-backward~).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el" :mkdirp yes
 ;;; Isearch, occur, grep, and extras (minimal-search.el)
 (minimal-emacs-configure
  (setq search-whitespace-regexp ".*?")
@@ -5296,7 +5298,7 @@ highlights are applied. The current match is highlighted immediately.
 The rest are done after ~lazy-highlight-initial-delay~ unless they are
 longer in character count than ~lazy-highlight-no-delay-length~.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el"
 (minimal-emacs-configure
   (setq search-highlight t)
   (setq isearch-lazy-highlight t)
@@ -5317,7 +5319,7 @@ We have the option to place this information after the search terms,
 though I prefer to have them as a prefix so as not to interfere with
 what I am typing.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el"
 (minimal-emacs-configure
   (setq isearch-lazy-count t)
   (setq lazy-count-prefix-format "(%s/%s) ")
@@ -5350,7 +5352,7 @@ exits the keyboard macro, which is exactly what you want if you are
 calling it with a =0= numeric argument (to run from point until the
 end of the buffer).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el"
 (minimal-emacs-configure
   (setq isearch-wrap-pause t) ; `no-ding' makes keyboard macros never quit
   (setq isearch-repeat-on-direction-change t))
@@ -5372,7 +5374,7 @@ for this to be done silently without messaging me about it.
 The latter depends on my =minimal-common.el= library, which is loaded
 early at startup ([[#h:713ede33-3802-40c6-a8e3-7e1fc0d0a924][The =minimal-emacs-essentials.el= block that loads my custom libraries]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el"
 (minimal-emacs-configure
  (setq list-matching-lines-jump-to-current-line nil) ; do not jump to current line in `*occur*' buffers
  (minimal-emacs-hook occur-mode-hook (minimal-common-truncate-lines-silently hl-line-mode)))
@@ -5388,7 +5390,7 @@ don't feel strongly about the rest, but the change to =C-g= is
 important for me as I want to exit the search altogether, not resume
 the search of the previous succesful match.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el"
 (minimal-emacs-configure
  (define-key global-map (kbd "C-.") #'isearch-forward-symbol-at-point) ; easier than M-s . // I also have `minimal-simple-mark-sexp' on C-,
  (define-key minibuffer-local-isearch-map (kbd "M-/") #'isearch-complete-edit)
@@ -5470,7 +5472,7 @@ Depending on your workflow, this is better, though I seldom need the
 preview as I know what to expect or otherwise peruse contents either
 by visiting individual files or by using a grep buffer as an index.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el"
 (minimal-emacs-configure
  (require 'minimal-search)
  (minimal-emacs-keybind global-map
@@ -5525,7 +5527,7 @@ current buffer, allowing us to test it live.
 Note the use of the ~let~ to decide whether I use the ~grep~ or ~rg~
 (~ripgrep~) program: this covers Xref as well.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el"
 ;;; grep and xref
 (minimal-emacs-configure
   (setq reb-re-syntax 'read)
@@ -5565,7 +5567,7 @@ For older versions of Emacs, we have the ~wgrep~ package by Masahiro
 Hayashi. I configure it to have key bindings like those of the ~occur~
 edit mode, which ~grep-edit-mode~ also uses.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el"
 ;;; wgrep (writable grep)
 ;; See the `grep-edit-mode' for the new built-in feature.
 (unless (>= emacs-major-version 31)
@@ -5588,7 +5590,7 @@ edit mode, which ~grep-edit-mode~ also uses.
 Finally, we ~provide~ the module. This is the mirror function of
 ~require~ ([[#h:e6c4acf5-5b51-4b38-a86a-bf3f698ac872][The init.el final part to load the individual modules]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-search.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-search.el"
 (provide 'minimal-emacs-search)
 #+end_src
 
@@ -5634,7 +5636,7 @@ them manually. I prefer this extra layer of safety. Plus, we have the
 ~trashed~ package to navigate the trash folder in a Dired-like way
 ([[#h:2e005bd1-d098-426d-91f9-2a31a6e55caa][The =minimal-emacs-dired.el= section about =trashed.el=]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el" :mkdirp yes
 ;;; Dired file manager and minimal-dired.el extras
 (minimal-emacs-configure
   (setq dired-recursive-copies 'always)
@@ -5685,7 +5687,7 @@ for the ~ls~ manpage to learn about what I have here. In short:
   representation in the file listing. So we have something like
   =2023-12-30 06:38= to show the last modified time.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
 #+end_src
 
@@ -5707,7 +5709,7 @@ value, as we can always type =M-p= (~previous-history-element~) and
 =M-n= (~next-history-element~) to cycle through the minibuffer
 history ([[#h:25765797-27a5-431e-8aa4-cc890a6a913a][The =minimal-emacs-completion.el= settings for saving the history (~savehist-mode~)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (setq dired-dwim-target t)
 #+end_src
 
@@ -5747,7 +5749,7 @@ space followed by the asterisk to the given program, like =mpv *=.
 Otherwise, Emacs will launch a separate instance for each file (thanks
 to @mac68tm on YouTube for providing this tip).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (setq dired-guess-shell-alist-user ; those are the suggestions for ! and & in Dired
       '(("\\.\\(png\\|jpe?g\\|tiff\\)" "feh *" "feh" "xdg-open")
         ("\\.\\(mp[34]\\|m4a\\|ogg\\|flac\\|webm\\|mkv\\)" "mpv *" "mpv" "xdg-open")
@@ -5769,7 +5771,7 @@ We can toggle this effect at any time with the =(= key, by default.
 I disable the repetition of the =j= key as I do use ~repeat-mode~
 ([[#h:fbe6f9da-25ee-46a3-bb03-8fa7c1d48dab][The =minimal-emacs-essentials.el= settings for ~repeat-mode~]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (minimal-emacs-configure
   (with-eval-after-load 'dired
     (setq dired-auto-revert-buffer #'dired-directory-changed-p) ; also see `dired-do-revert-buffer'
@@ -5805,7 +5807,7 @@ are:
 - the key binding for ~dired-do-open~, which opens the file or
   directory externally ([[#h:d7d5e619-3d50-4d9e-a951-7262462a60c9][The =minimal-emacs-dired.el= settings to open files externally]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (minimal-emacs-configure
   (with-eval-after-load 'dired
     (require 'dired-aux)
@@ -5864,7 +5866,7 @@ The other commands have situational uses. For example, the
 times where ~minimal-search-grep~ would produce too many results in a
 given directory ([[#h:b902e6a3-cdd2-420f-bc99-3d973c37cd20][The =minimal-emacs-search.el= extras provided by the =minimal-search.el= library]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (minimal-emacs-configure
   (with-eval-after-load 'dired
     (require 'minimal-dired)
@@ -5895,7 +5897,7 @@ to check if we need to go further.
 I do not use this feature frequently, though I appreciate it when I do
 need it.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (minimal-emacs-configure
   (minimal-emacs-install dired-subtree)
   (with-eval-after-load 'dired
@@ -5922,7 +5924,7 @@ cannot remember the last time I benefited from them.
 Note that we have a variant of ~wdired~ for ~grep~ buffers
 ([[#h:9a3581df-ab18-4266-815e-2edd7f7e4852][The =minimal-emacs-search.el= setup for editable grep buffers (~wgrep~)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (minimal-emacs-configure
   (setq wdired-allow-to-change-permissions t)
   (setq wdired-create-parent-directories t))
@@ -5942,7 +5944,7 @@ the graphical file manager. It is not a sin to use something outside
 of Emacs and, anyway, I don't think Emacs' editing capabilities are of
 any relevance when we are just previewing a picture.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (minimal-emacs-configure
   (with-eval-after-load 'image-dired
     (define-key image-dired-thumbnail-mode-map (kbd "<return>") #'image-dired-thumbnail-display-external)
@@ -5978,7 +5980,7 @@ are where we need to be.
 + Backronym: Directories Invariably Render Everything Decently; PDFs
   Require Extra Viewing Instructions for Emacs to Work.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 ;;; Automatically preview Dired file at point (dired-preview.el)
 ;; One of my packages: <https://protesilaos.com/emacs>
 (minimal-emacs-configure
@@ -6019,7 +6021,7 @@ restore a file, I do =M-x dired=, then type =r= to mark the file to be
 restored (=M-x trashed-flag-restore=), and then type =x= (=M-x trashed-do-execute=)
 to apply the effect.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 ;;; dired-like mode for the trash (trashed.el)
 (minimal-emacs-configure
   (minimal-emacs-install trashed)
@@ -6049,7 +6051,7 @@ a package for Emacs 29.
   - GitLab: <https://gitlab.com/protesilaos/mandoura>
 + Backronym: MPV Access Needs Dired to Output User's Requested Audio.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 ;;; Play back media with Dired (mandoura.el)
 ;; This is yet another package of mine: <https://protesilaos.com/emacs>
 (minimal-emacs-configure
@@ -6073,7 +6075,7 @@ a package for Emacs 29.
 Finally, we ~provide~ the module. This is the mirror function of
 ~require~ ([[#h:e6c4acf5-5b51-4b38-a86a-bf3f698ac872][The init.el final part to load the individual modules]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-dired.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-dired.el"
 (provide 'minimal-emacs-dired)
 #+end_src
 
@@ -6178,7 +6180,7 @@ At any rate, all I have here are some basic settings. They do not
 enable any mode and are meant to be there for when my other
 configurations, which I linked to above, come into effect.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el" :mkdirp "yes"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el" :mkdirp "yes"
 (minimal-emacs-configure
   (setq tab-bar-new-button-show nil)
   (setq tab-bar-close-button-show nil)
@@ -6211,7 +6213,7 @@ would have the following buffer names in the various styles:
 I use the =forward= style, which is the closest to the actual file
 name.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 ;;; General window and buffer configurations
 (minimal-emacs-configure
 ;;;; `uniquify' (unique names for buffers)
@@ -6237,7 +6239,7 @@ decides which background should take precedence. You most probably do
 not need this, though I had a case for it a while ago: the specifics
 do not matter.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 ;;;; Line highlight
 (minimal-emacs-configure
   (setq hl-line-sticky-flag nil)
@@ -6260,7 +6262,7 @@ busy, by highlighting fewer elements. For example, I do not highlight
 newline characters (represented as a =$=) because these are easy to
 infer in most cases.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 ;;;; Negative space highlight
 (minimal-emacs-configure
   (setq whitespace-style
@@ -6294,7 +6296,7 @@ help me navigate a buffer, nor are they relevant in most cases. I
 enable the mode only when I need to compare buffers or to get a sense
 of how far apart two relevant sections are in a file.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 ;;; Line numbers on the side of the window
 (minimal-emacs-configure
   (define-key global-map (kbd "<f7>") #'display-line-numbers-mode)
@@ -6358,7 +6360,7 @@ on how much width is available, and ~minimal-window-select-fit-size~ to
 perform the two-fold task of selecting a window and making it fit up
 to a certain height.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 ;;;; `window', `display-buffer-alist', and related
 (minimal-emacs-configure
   (require 'minimal-window)
@@ -6468,7 +6470,7 @@ and ~split-width-threshold~ which determine when to split the frame by
 height or width. These are relevant for ~minimal-window-display-buffer-below-or-pop~
 and the other more basic functions I have defined for this purpose.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 (minimal-emacs-configure
   (setq split-window-preferred-direction 'horizontal) ; Emacs 31
   (setq window-combination-resize t)
@@ -6494,7 +6496,7 @@ visualisation is as a paragraph.
 For the cases where I am fine with ~visual-line-mode~, I enable the
 mode by adding it to these mode hooks.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 (minimal-emacs-configure
   (minimal-emacs-hook (epa-info-mode-hook help-mode-hook custom-mode-hook) visual-line-mode))
 #+end_src
@@ -6519,7 +6521,7 @@ completely broken.
 The whole point of using hooks is to make these decisions on a
 case-by-case basis.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 (minimal-emacs-configure
   (minimal-emacs-hook (world-clock-mode-hook calendar-mode-hook) minimal-common-truncate-lines-silently))
 #+end_src
@@ -6534,7 +6536,7 @@ this list are ~delete-other-windows-vertically~, ~previous-buffer~,
 and ~next-buffer~. I rarely resize windows, though I am happy to use
 the mouse for such a case.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 (minimal-emacs-configure
   (minimal-emacs-keybind global-map
     ;; NOTE 2022-09-17: Also see `minimal-simple-swap-window-buffers'.
@@ -6581,7 +6583,7 @@ best changes I ever did to boost my productivity:
 Note that I disable this mode on the laptop because of its limited
 screen real estate ([[#h:080aa291-95b4-4d54-8783-d156b13190e9][The =minimal-emacs-essentials.el= section about the laptop-specific settings]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 ;;; Frame-isolated buffers
 ;; Another package of mine.  Read the manual:
 ;; <https://protesilaos.com/emacs/beframe>.
@@ -6642,7 +6644,7 @@ binding I use for this purpose. It overrides one of the alternatives
 for the standard ~undo~ command, though I personally only ever use
 =C-/=: everything else is free to use as I see fit.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 ;;; Frame history (undelete-frame-mode)
 (minimal-emacs-configure
   (define-key global-map (kbd "C-x u") #'undelete-frame) ; I use only C-/ for `undo'
@@ -6655,7 +6657,7 @@ round, given that ~winner~ is the older package. But the point is that
 we can quickly go back to an earlier arrangement of windows in a
 frame.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 ;;; Window history (winner-mode)
 (minimal-emacs-configure
   (minimal-emacs-keybind global-map
@@ -6678,7 +6680,7 @@ Nevertheless, the built-in ~windmove~ package provides a set of useful
 commands to move focus directionally between windows but also to shift
 the placement of a window in the given direction.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 ;;; Directional window motions (windmove)
 (minimal-emacs-configure
   ;; Those override some commands that are already available with
@@ -6704,7 +6706,7 @@ the placement of a window in the given direction.
 As always, we ~provide~ the module. This is the mirror function of
 ~require~ ([[#h:e6c4acf5-5b51-4b38-a86a-bf3f698ac872][The init.el final part to load the individual modules]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-window.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-window.el"
 (provide 'minimal-emacs-window)
 #+end_src
 
@@ -6781,7 +6783,7 @@ singular frame where each projects occupies its own ~tab-bar-mode~ tab ([[#h:b4e
 Note that [[#h:654cfe49-f59d-4a0d-84ee-094ddce06848][the =minimal-project.el= library]] defines some of the
 functionality I rely on, so do take a look at what it has to offer.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-git.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-git.el"
 ;;;; `project'
 (minimal-emacs-configure
   (minimal-emacs-keybind global-map
@@ -6843,7 +6845,7 @@ it here: <https://protesilaos.com/codelog/2021-01-26-git-diff-hunk-elisp-org/>.
 The configurations are part of my dotfiles (linked to at the opening
 section of this file).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-git.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-git.el"
 ;;;; `diff-mode'
 (minimal-emacs-configure
   (setq diff-default-read-only t)
@@ -6887,7 +6889,7 @@ refinements to the core Ediff functionality ([[#h:3937b784-af0f-47c0-8c89-c74d90
 - Command ~minimal-ediff-buffers-2~ :: Produce an Ediff with the current two visible buffers.
 - Command ~minimal-ediff-buffers-3~ :: Produce an Ediff with the current three visible buffers.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-git.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-git.el" :mkdirp yes
 ;;;; `ediff'
 (minimal-emacs-configure
   (setq ediff-split-window-function 'split-window-horizontally)
@@ -6935,7 +6937,7 @@ of the latter, it even works in the Magit status buffer:
 - [[#h:50add1d8-f0f4-49be-9e57-ab280a4aa300][The =minimal-emacs-git.el= section about =vc.el= and related]].
 - [[#h:b08af527-9ebf-4425-ac3a-24b4f371a4fd][The =minimal-emacs-git.el= section about ~magit~ (great Git interface)]].
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-git.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-git.el"
 ;;;; `smerge-mode'
 (minimal-emacs-configure
   (setq smerge-diff-buffer-name "*smerge-diff*")
@@ -7021,7 +7023,7 @@ command-line or the wonderful ~magit~ Emacs package
 Note that in the following code block I redefine lots of key bindings.
 They make more sense to me.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-git.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-git.el"
 ;;; Version control framework (vc.el, vc-git.el, and more)
 (minimal-emacs-configure
   (setq vc-follow-symlinks t)
@@ -7156,7 +7158,7 @@ Control framework and its accoutrements (`diff-mode.el`,
   - GitLab: <https://gitlab.com/protesilaos/agitate>
 + Backronym: Another Git Interface Trying to Agitate Tranquil Emacsers
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-git.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-git.el"
 ;;; Agitate
 ;; A package of mine to complement VC and friends.  Read the manual
 ;; here: <https://protesilaos.com/emacs/agitate>.
@@ -7272,7 +7274,7 @@ functionality, such as with Ediff and Smerge:
 Magit is highly configurable though comes with good defaults. The
 changes I make here are not necessary.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-git.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-git.el"
 ;;; Interactive and powerful git front-end (Magit)
 (minimal-emacs-configure
   (setq transient-show-popup 0.5)
@@ -7336,7 +7338,7 @@ changes I make here are not necessary.
 Finally, we ~provide~ the module. This is the mirror function of
 ~require~ ([[#h:e6c4acf5-5b51-4b38-a86a-bf3f698ac872][The init.el final part to load the individual modules]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-git.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-git.el"
 (provide 'minimal-emacs-git)
 #+end_src
 
@@ -7413,7 +7415,7 @@ create a journal entry for the given date or visit an existing one
 Note that Emacs also has a ~diary~ command. I used it for a while, but
 Org is far more capable, so I switched to it completely.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el" :mkdirp yes
 ;;; Calendar
 (minimal-emacs-configure
   (with-eval-after-load 'calendar
@@ -7461,7 +7463,7 @@ a numeric value representing minutes for a forewarning from =appt.el=.
 I use this in tandem with ~org-capture~ for tasks that need to be
 done at a specific time, such as coaching sessions ([[#h:f8f06938-0dfe-45c3-b4cf-996d36cba82d][The =minimal-emacs-org.el= Org capture templates (~org-capture~)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;; Appt (appointment reminders which also integrate with Org agenda)
 (minimal-emacs-configure
   (setq appt-display-diary nil)
@@ -7520,7 +7522,7 @@ liking. I do as much, though know that Org is perfectly usable without
 any configuration. The following sections contain further commentary
 on how I use Org.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;; Org-mode (personal information manager)
 (minimal-emacs-configure
   (setq org-directory (expand-file-name "~/Notes/"))
@@ -7661,7 +7663,7 @@ The other small tweak I make is to make the indentation a bit more
 pronounced, by setting ~org-indent-indentation-per-level~ to =4=
 instead of =2=.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;;; `org-indent-mode' and initial folding
 (minimal-emacs-configure
   (add-hook 'org-mode-hook #'org-indent-mode)
@@ -7734,7 +7736,7 @@ In terms of workflow, I have not done a refile in a very long time,
 because my entries always stay in the same place as I had envisaged at
 the capture phase ([[#h:f8f06938-0dfe-45c3-b4cf-996d36cba82d][The =minimal-emacs-org.el= Org capture templates (~org-capture~)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;;; refile, todo
 (with-eval-after-load 'org
   (setq org-refile-targets
@@ -7821,7 +7823,7 @@ Note that in the settings below I disable the auto-alignment that Org
 does where it shifts tags to the right of the heading. I do not like
 it.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;;; tags
 (minimal-emacs-configure
   (with-eval-after-load 'org
@@ -7843,7 +7845,7 @@ keep track of this information, as it is sometimes useful to capture
 mistakes or figure out intent in the absence of further clarification
 (though I do tend to write why something happened).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;;; log
 (minimal-emacs-configure
   (with-eval-after-load 'org
@@ -7898,7 +7900,7 @@ from what was already stored.
 I bind ~org-store-link~ in main section of the Org configuration:
 [[#h:e03df1e0-b43e-49b5-978e-6a511165617c][The =minimal-emacs-org.el= section with basic Org settings]].
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;;; links
 (minimal-emacs-configure
   (with-eval-after-load 'org
@@ -7973,7 +7975,7 @@ different things, such as:
 
 This is a wonderful world of possibilities!
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;;; code blocks
 (minimal-emacs-configure
   (with-eval-after-load 'org
@@ -8005,7 +8007,7 @@ we can load an export backend by finding the correspond =ox-FORMAT.el=
 file and either ~require~ it or load it with ~use-package~, like what
 I showed for Org Babel ([[#h:1f5a0d46-5202-48dd-8048-b48ce17f3df8][The =minimal-emacs-org.el= Org code block settings]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;;; export
 (minimal-emacs-configure
   ;; NOTE 2023-05-20: Must be evaluated before Org is loaded,
@@ -8086,7 +8088,7 @@ As for my workflow, here is an overview:
   calls, again with their distinct tags. The agenda views help me find
   everything ([[#h:7fe87b83-2815-4617-a5f9-d3417dd9d248][The =minimal-emacs-org.el= Org agenda settings]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;;; capture
 (minimal-emacs-configure
   (define-key global-map (kbd "C-c c") #'org-capture)
@@ -8186,7 +8188,7 @@ The Org agenda has lots of other extras, such as to filter the view.
 Though I never use them. My custom agenda does exactly what I need
 from it and thus keeps me focused.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 ;;;; agenda
 (minimal-emacs-configure
   ;; I bind `org-agenda' to C-c A, so this one puts me straight into my
@@ -8404,7 +8406,7 @@ from it and thus keeps me focused.
 Finally, we ~provide~ the module. This is the mirror function of
 ~require~ ([[#h:e6c4acf5-5b51-4b38-a86a-bf3f698ac872][The init.el final part to load the individual modules]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-org.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-org.el"
 (provide 'minimal-emacs-org)
 #+end_src
 
@@ -8451,7 +8453,7 @@ buffer-local. This is very important, otherwise we will be setting the
 value only in the Emacs init file, which contradicts our intent. There
 are a few cases where ~setq-default~ is needed, so keep this in mind.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el" :mkdirp yes
 ;;;; Tabs, indentation, and the TAB key
 (minimal-emacs-configure
   (setq tab-always-indent 'complete)
@@ -8488,7 +8490,7 @@ whose primary goal is to conform with the ~display-buffer-alist~
 I can thus macroexpand with the confidence that the resulting buffer
 will not mess up with my work.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Emacs Lisp major mode
 (minimal-emacs-configure
   (with-eval-after-load 'elisp-mode
@@ -8535,7 +8537,7 @@ from the indentation of a list or something.
 If I need to manually wrap the symbol at point or a region in a pair
 of characters, I use my ~minimal-pair-insert~ command ([[#h:48d2bab5-241f-49dd-9554-8a4dcedce75e][The =minimal-emacs-essentials.el= section about =minimal-pair.el= (insert character pairs)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Disable "electric" behaviour
 (minimal-emacs-configure
   (add-hook 'prog-mode-hook #'electric-indent-local-mode)
@@ -8559,7 +8561,7 @@ using parentheses like Lisp: for instance, in a ~bash~ shell script it
 highlights the ~if~ and ~fi~ keywords. This mode also works for prose
 and I use it globally. Simple and effective!
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Parentheses (show-paren-mode)
 (minimal-emacs-configure
   (add-hook 'prog-mode-hook #'show-paren-local-mode)
@@ -8613,7 +8615,7 @@ Finally, notice how I am adding an association to the ~auto-mode-alist~.
 The file names specified in that regular expression will be using
 ~text-mode~ when I visit them.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Plain text (text-mode)
 (minimal-emacs-configure
   (add-to-list 'auto-mode-alist '("\\`\\(README\\|CHANGELOG\\|COPYING\\|LICENSE\\)\\'" . text-mode))
@@ -8639,7 +8641,7 @@ this is how we tell Emacs what major mode to use for files that match
 the given regular expression. The =PKGBUILD= is for Arch Linux package
 recipes, by the way.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 (minimal-emacs-configure
   ;; Arch Linux and AUR package scripts (sh-mode)
   (add-to-list 'auto-mode-alist '("PKGBUILD" . sh-mode))
@@ -8664,7 +8666,7 @@ puts the first line of their documentation string in the echo area.
 Of course, this works out-of-the-box for Emacs Lisp code. Other modes
 need to arrange how to use this feature.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Eldoc (Emacs live documentation feedback)
 (minimal-emacs-configure
   (add-hook 'prog-mode-hook #'eldoc-mode)
@@ -8720,7 +8722,7 @@ I only code in Emacs Lisp, so I am actually not using ~eglot~
 anywhere. Though I have tried it in Bash and JavaScript files and it
 worked fine.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Eglot (built-in client for the language server protocol)
 (minimal-emacs-configure
   (setq eglot-sync-connect nil)
@@ -8740,7 +8742,7 @@ with really long lines, such as minified JavaScript. I have not used
 it enough to know how reliable this is, though it is nice to have just
 in case.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Handle performance for very long lines (so-long.el)
 (minimal-emacs-configure
   (global-so-long-mode 1))
@@ -8758,7 +8760,7 @@ functionality for GitHub-flavoured Markdown and to preview a Markdown
 file's HTML representation on a web page. Though I only use it for
 basic text editing.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;; Markdown (markdown-mode)
 (minimal-emacs-configure
   (minimal-emacs-install markdown-mode)
@@ -8776,7 +8778,7 @@ killer feature is the ability to create a virtual tabulated listing
 with the command ~csv-align-mode~: it hides the field delimiter (comma
 or space) and shows a tab stop in its stead.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;; csv-mode
 (minimal-emacs-configure
   (minimal-emacs-install csv-mode))
@@ -8800,7 +8802,7 @@ commands. For the technicalities, read the man page ~sxhkd(1)~.
 + Backronym: Such Xenotropic Hot Keys Demonstrate Robustness and
   Configurability ... mode.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;; SXHKDRC mode (one of my many packages)
 (minimal-emacs-configure
   (minimal-emacs-install sxhkdrc-mode)
@@ -8825,7 +8827,7 @@ times before about my "alla prima" approach to creativity). It is
 harder to set up multilingual spell checking with ~flyspell~ and I do
 not even bother trying as I seldom have that need.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;; Flyspell and minimal-spell.el (spell check)
 (minimal-emacs-configure
   (minimal-emacs-autoload
@@ -8890,7 +8892,7 @@ The ~package-lint-flymake~ package by Steve Purcell adds the glue code
 to make ~flymake~ report issues with Emacs Lisp files for the purposes
 of packaging. I use it whenever I work on my numerous Emacs packages.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;; Flymake
 (minimal-emacs-configure
   (defvar prot/flymake-mode-projects-path
@@ -8983,7 +8985,7 @@ well.
 
 [ Also read: [[#h:2d28a65c-bef6-4829-89d9-aef3581da7cd][Why use Org when you can have an outline in Elisp?]] ]
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;; General configurations for prose/writing
 
 ;;;; `outline' (`outline-mode' and `outline-minor-mode')
@@ -9006,7 +9008,7 @@ also smart enough to use the word at point as the default value, so we
 can type =RET= at the minibuffer prompt to select it without typing it
 out. A neat package overall!
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; `dictionary'
 (minimal-emacs-configure
   (define-key global-map (kbd "C-c d") #'dictionary-search)
@@ -9041,7 +9043,7 @@ affects.
   Statements.  ALTCAPS Lets Trolls Convert Aphorisms to Proper
   Shitposts.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;; aLtCaPs
 ;; Read the manual: <https://protesilaos.com/emacs/altcaps>.
 (minimal-emacs-configure
@@ -9084,7 +9086,7 @@ facilities to rename files, regardless of file type.
 + Backronyms: Denote Everything Neatly; Omit The Excesses.  Don't Ever
   Note Only The Epiphenomenal.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;; Denote (simple note-taking and file-naming)
 
 ;; Read the manual: <https://protesilaos.com/emacs/denote>.  This does
@@ -9169,7 +9171,7 @@ preview of the file-to-linked/opened and by adding more sources to the
 + Backronym: Consult-Orchestrated Navigation and Selection of
   Unambiguous Targets...denote.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Integrate Consult with Denote
 
 (when minimal-emacs-completion-extras
@@ -9203,7 +9205,7 @@ Watch:
 - [[https://protesilaos.com/codelog/2024-07-30-emacs-denote-exclude-dirs-org-blocks/][Exclude directories in Denote's Org dynamic blocks]] (2024-07-30)
 - [[https://protesilaos.com/codelog/2024-01-20-emacs-denote-link-org-headings/][Denote links to Org headings]] (2024-01-20)
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Denote Org extras (denote-org)
 (minimal-emacs-configure
   (minimal-emacs-install denote-org))
@@ -9226,7 +9228,7 @@ complement those of another.
 + Backronym: Denote... Sequences Efficiently Queue Unsorted Entries
   Notwithstanding Curation Efforts.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Denote Sequence notes or folgezettel (denote-sequence)
 (minimal-emacs-configure
   (minimal-emacs-install denote-sequence)
@@ -9258,7 +9260,7 @@ standardised way to define custom link types).
   Knowingly Dilute Obvious Widespread Norms; Denote... Markup
   Agnosticism Requires Knowhow to Do Only What's Necessary.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Denote Markdown extras (denote-markdown)
 (minimal-emacs-configure
   (minimal-emacs-install denote-markdown))
@@ -9284,7 +9286,7 @@ journal entry for the current date or create a new entry ([[#h:94d48381-1711-4d6
 + Backronym: Denote... Journaling Obviously Utilises Reasonableness
   Notwithstanding Affectionate Longing.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Denote Journal extras (denote-journal)
 (minimal-emacs-configure
   (minimal-emacs-install denote-journal)
@@ -9326,7 +9328,7 @@ default/global ~denote-directory~ and other silos.
 + Git repository: <https://github.com/protesilaos/denote-silo>
 + Backronym: Denote... Silos Insulate Localised Objects.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;;; Denote Silo extras (denote-silo)
 (minimal-emacs-configure
   (minimal-emacs-install denote-silo)
@@ -9360,7 +9362,7 @@ heading/section becomes its own "slide" simply by narrowing to it.
 + Video demo: <https://protesilaos.com/codelog/2022-03-11-emacs-logos-demo/>
 + Backronyms: =^L= Only Generates Ostensible Slides; Logos Optionally Goes through Outline Sections
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 ;;; Custom extensions for "focus mode" (logos.el)
 ;; Read the manual: <https://protesilaos.com/emacs/logos>.
 (minimal-emacs-configure
@@ -9410,7 +9412,7 @@ heading/section becomes its own "slide" simply by narrowing to it.
     (add-hook 'logos-page-motion-hook #'prot/logos-recenter-top)))
 #+end_src
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-langs.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-langs.el"
 (provide 'minimal-emacs-langs)
 #+end_src
 
@@ -9471,7 +9473,7 @@ programs include ~mbsync~ and ~msmtp~ ([[#h:33151014-3621-4be6-9185-aacc34ee2d2c
 Other than that, all I do in this snippet is set the default name and
 email, which are consulted by miscellaneous pieces Emacs functionality.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-email.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-email.el" :mkdirp yes
 ;;;; File with authentication credentials (`auth-source')
 (minimal-emacs-configure
   (setq auth-sources '("~/.authinfo.gpg")
@@ -9562,7 +9564,7 @@ Between frictionless encryption and the ease of editing text in a
 message composition buffer, the email setup I have in Emacs is the
 most potent I have ever used ([[#h:33151014-3621-4be6-9185-aacc34ee2d2c][Overview of my email setup (~mbsync~, ~msmtp~, mail indexer, and MUA)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-email.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-email.el"
 ;;;; Encryption settings (`mm-encode' and `mml-sec')
 (minimal-emacs-configure
   (setq mm-encrypt-option nil ; use 'guided for both if you need more control
@@ -9614,7 +9616,7 @@ Note that the minor mode which sets up the relevant settings is called
 ~gnus-dired-mode~, although it does not require ~gnus~ and its
 numerous accoutrements.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-email.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-email.el"
 ;;;; Add attachments from Dired (`gnus-dired' does not require `gnus')
 (minimal-emacs-configure
   (add-hook 'dired-mode-hook #'turn-on-gnus-dired-mode))
@@ -9657,7 +9659,7 @@ Whereas the following is for single-account setups, even though we can
 technically make it work with more of them via hooks and custom
 functions.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-email.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-email.el"
 ;;;; `sendmail' (mail transfer agent)
 (minimal-emacs-configure
   (with-eval-after-load 'message
@@ -9682,7 +9684,7 @@ enough ([[#h:b26c6297-ebe8-4f99-b069-df53cfd90520][The =minimal-emacs-email.el= 
 Finally, we ~provide~ the module. This is the mirror function of
 ~require~ ([[#h:e6c4acf5-5b51-4b38-a86a-bf3f698ac872][The init.el final part to load the individual modules]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-email.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-email.el"
 (when (executable-find "notmuch")
   (require 'minimal-emacs-notmuch))
 
@@ -9719,7 +9721,7 @@ Emacs ~load-path~. The ~load-path~ is where Emacs checks to find Elisp
 programs (when we ~require~ some feature, it works because of its
 directory being part of the ~load-path~).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el" :mkdirp yes
 ;;; Notmuch (mail indexer and mail user agent (MUA))
 
 ;; I install notmuch from the distro's repos because the CLI program is
@@ -9766,7 +9768,7 @@ structure looks like this:
 
 Now the actual code I use:
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el" :mkdirp yes
 ;;; Account settings
 (minimal-emacs-configure
   (with-eval-after-load 'minimal-common
@@ -9804,7 +9806,7 @@ total message count. Everything else is removed. As such, the values
 of ~notmuch-hello-recent-searches-max~ and ~notmuch-show-all-tags-list~
 are not relevant.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 ;;;; General UI
 (minimal-emacs-configure
   (setq notmuch-show-logo nil
@@ -9835,7 +9837,7 @@ search= invocation, or inside of the mail user agent by typing =s=
 The emoji spotted here and elsewhere are purely cosmetic: they do not
 form part of the search terms or tags.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 ;;;; Search
 (minimal-emacs-configure
   (setq notmuch-search-oldest-first nil)
@@ -9911,7 +9913,7 @@ here because I give some of my custom functions, hence its
 incorporation in the subsequent section about setting up
 =minimal-notmuch.el= ([[#h:dbd2b775-8f51-451a-8e24-9c8424fd2e89][The =minimal-emacs-notmuch.el= custom extensions (per =minimal-notmuch.el=)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 ;;;; Tags
 (minimal-emacs-configure
   (setq notmuch-archive-tags nil ; I do not archive email
@@ -9957,7 +9959,7 @@ can give false positives, as I may write something that is about
 "emotional attachment", but on the balance I do like being asked for
 confirmation where needed.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 ;;;; Email composition
 (minimal-emacs-configure
   (setq notmuch-mua-compose-in 'current-window)
@@ -10018,7 +10020,7 @@ newletters, receipts, etc., which are usually rendered on a white
 background will be dark while using a dark theme. This is considerably
 nicer.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 ;;;; Reading messages
 (minimal-emacs-configure
   (setq notmuch-show-relative-dates t)
@@ -10062,7 +10064,7 @@ Here I set up the following:
   reply to all recipients by default. I define some more key bindings
   in the section about my custom extensions for Notmuch ([[#h:dbd2b775-8f51-451a-8e24-9c8424fd2e89][The =minimal-emacs-notmuch.el= custom extensions (per =minimal-notmuch.el=)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 ;;;; Hooks and key bindings
 (minimal-emacs-configure
   (add-hook 'notmuch-mua-send-hook #'notmuch-mua-attachment-check) ; also see `notmuch-mua-attachment-regexp'
@@ -10102,7 +10104,7 @@ quickly perform a tagging operation, such as to mark a messge for
 deletion and remove it from the inbox. The key bindings here extend
 those that are for the base Notmuch package ([[#h:6148eea6-7859-4b53-95ce-7e198fc831e0][The =minimal-emacs-notmuch.el= section about hooks and key bindings]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 ;;; My own tweaks for notmuch (minimal-notmuch.el)
 (minimal-emacs-configure
   (with-eval-after-load 'notmuch
@@ -10153,7 +10155,7 @@ how I build up my agenda of appointments. It highlights the power of
 Emacs' interconnectedness, as I go from my email to the agenda, to
 editing, file management, and related.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 ;;; Glue code for notmuch and org-link (ol-notmuch.el)
 (minimal-emacs-configure
   (minimal-emacs-install ol-notmuch)
@@ -10184,7 +10186,7 @@ respectively.
 + Backronym: notmuch-... Interested in Notmuch Data Indicators that
   Count Any Terms Ordinarily Requested.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 ;;; notmuch-indicator (another package of mine)
 (minimal-emacs-configure
   (minimal-emacs-install notmuch-indicator)
@@ -10225,7 +10227,7 @@ respectively.
 Finally, we ~provide~ the submodule. This is the mirror function of
 ~require~ ([[#h:200bc618-678a-4dc8-9d30-876d89e1edae][The =minimal-emacs-email.el= loading of the email client and call to ~provide~]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-notmuch.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-notmuch.el"
 (provide 'minimal-emacs-notmuch)
 #+end_src
 
@@ -10248,7 +10250,7 @@ I prefer Notmuch over Mu4e due to stylistic choices and the overall
 workflow. I keep this setup around for two reasons: (i) to be able to
 test it for my themes and (ii) help others who are using it.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-mu4e.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-mu4e.el" :mkdirp yes
 ;; This is deprecated code as I stopped using mu4e a long time ago.  I
 ;; keep it here for when I need to test it for my themes (`ef-themes',
 ;; `modus-themes', `standard-themes', `doric-themes').
@@ -10493,7 +10495,7 @@ test it for my themes and (ii) help others who are using it.
 I have long now stopped using Gnus ([[#h:33151014-3621-4be6-9185-aacc34ee2d2c][Overview of my email setup (~mbsync~, ~msmtp~, mail indexer, and MUA)]]).
 I keep this here in case I need to test the setup.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-gnus.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-gnus.el" :mkdirp yes
 ;; This is deprecated code as I stopped using Gnus a long time ago.  I
 ;; keep it here for when I need to test it for my themes (`ef-themes',
 ;; `modus-themes', `standard-themes', `doric-themes').
@@ -10976,7 +10978,7 @@ with RSS and IRC clients:
 - [[#h:adc258d3-f444-4bb5-8a8d-43025a689167][The =minimal-emacs-web.el= RSS/Atom reader (~elfeed~)]]
 - [[#h:b9e6834b-e636-414e-8c50-9e04ba77a0a3][The =minimal-emacs-web.el= settings for the IRC client]]
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-web.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-web.el" :mkdirp yes
 ;;;; `browse-url'
 (minimal-emacs-configure
   (setq browse-url-browser-function 'eww-browse-url)
@@ -10995,7 +10997,7 @@ use this directly, though there are other packages that may request
 the functionality. As such, I define the configurations I prefer to
 have, which are strictly stylistic.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-web.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-web.el"
 ;;;; `goto-addr'
 (minimal-emacs-configure
   (add-hook 'text-mode-hook #'goto-address-mode)
@@ -11036,7 +11038,7 @@ render text in ~variable-pitch~ because for me the right way to opt in
 to this feature is by enabling ~variable-pitch-mode~ in the given
 buffer (as I do, for example, via the ~text-mode-hook~ ([[#h:60d6aae2-6e4b-402c-b6a8-411fc49a6857][The =minimal-emacs-theme.el= section about ~variable-pitch-mode~ and font resizing]])).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-web.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-web.el"
 ;;;; `shr' (Simple HTML Renderer)
 (minimal-emacs-configure
   (setq shr-use-colors nil)             ; t is bad for accessibility
@@ -11066,7 +11068,7 @@ not trust any page. Whatever we set here will affect the behaviour of
 - [[#h:edb70963-d590-4959-bc59-1e5435c8e78a][The =minimal-emacs-web.el= settings about following links (~browse-url~)]]
 - [[#h:b09b4fce-31fe-4381-a49a-6a7206ac5f1b][The =minimal-emacs-web.el= settings about the web browser (~eww~)]]
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-web.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-web.el"
 ;;;; `url-cookie'
 (minimal-emacs-configure
   (setq url-cookie-untrusted-urls '(".*")))
@@ -11094,7 +11096,7 @@ properly, then I type =&= (~eww-browse-with-external-browser~) to use
 my "secondary" browser, which should be a fully fledged application
 like Firefox ([[#h:edb70963-d590-4959-bc59-1e5435c8e78a][The =minimal-emacs-web.el= settings about following links (~browse-url~)]]).
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-web.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-web.el"
 ;;;; `eww' (Emacs Web Wowser)
 (minimal-emacs-configure
   (with-eval-after-load 'eww
@@ -11161,7 +11163,7 @@ file to provide only these commands:
 - ~minimal-eww-open-in-other-window~ :: Like ~eww~, but operate in a new
   Emacs window instead of using the current one.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-web.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-web.el"
 ;;;; `minimal-eww' extras
 (minimal-emacs-configure
   (with-eval-after-load 'eww
@@ -11231,7 +11233,7 @@ effect of evaluating the Elisp therein. By default ~load~ will throw
 an error if it cannot load the given file, which is exactly what I
 want in this case.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-web.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-web.el"
 ;;; Elfeed feed/RSS reader
 (minimal-emacs-configure
   (minimal-emacs-install elfeed)
@@ -11307,7 +11309,7 @@ It then uses the ~rcirc-default-nick~ to establish a connection. The
 only channel I join automatically whenever I do =M-x rcirc= is that of
 =#emacs=. Again, I am not into IRC.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-web.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-web.el"
 ;;; Rcirc (IRC client)
 (minimal-emacs-configure
   (with-eval-after-load 'rcirc
@@ -11334,7 +11336,7 @@ only channel I join automatically whenever I do =M-x rcirc= is that of
     (rcirc-track-minor-mode 1)))
 #+end_src
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-web.el"
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-web.el"
 (provide 'minimal-emacs-web)
 #+end_src
 
@@ -11357,7 +11359,7 @@ demonstration.
 Note that ~which-key~ is built into Emacs 30. If you are on a previous
 version, use =:ensure t= to install it from a package archive.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-which-key.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-which-key.el" :mkdirp yes
 (minimal-emacs-configure
   (setq which-key-separator "  ")
   (setq which-key-prefix-prefix "... ")
@@ -11387,7 +11389,7 @@ Remember that these packages do not automatically install any font
 files. The user must handle this step by invoking the command
 ~nerd-icons-install-fonts~.
 
-#+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-icons.el" :mkdirp yes
+#+begin_src emacs-lisp :tangle "minimal-modules/minimal-emacs-icons.el" :mkdirp yes
 ;;; Icons
 (when minimal-display-graphic-p
   (minimal-emacs-configure
