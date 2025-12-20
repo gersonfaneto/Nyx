@@ -1,11 +1,11 @@
-*
+/*
 
-!/.gitignore
+!.gitignore
 
-!/init.el
-!/early-init.el
+!README.org
 
-!/minimal-modules/
-!/minimal-lisp/
+!init.el
+!early-init.el
 
-!/README.org
+!minimal-modules/
+!minimal-lisp/
