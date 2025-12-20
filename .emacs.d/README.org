@@ -684,8 +684,8 @@ Remember to read how these options come into effect ([[#h:5a41861f-4c38-45ac-8da
 #+begin_src emacs-lisp :tangle "init.el"
 (defcustom minimal-emacs-completion-extras t
   "When non-nil load extras for minibuffer completion.
-These include the packages `marginalia', `consult', `corfu', and
-`embark'."
+These include the packages `marginalia', `consult', `corfu',
+`orderless', and `embark'."
   :group 'minimal-emacs
   :type 'boolean)
 #+end_src
@@ -2764,6 +2764,7 @@ this via some hook.
     "<escape>" #'minimal-simple-keyboard-quit-dwim
     "C-g" #'minimal-simple-keyboard-quit-dwim
     "C-M-SPC" #'minimal-simple-mark-sexp
+    "C-x 0" #'minimal-simple-delete-window-dwim ; overrides `delete-window'
     ;; Commands for lines
     "C-S-d" #'minimal-simple-delete-line-backward
     "C-S-k" #'minimal-simple-kill-line-backward
@@ -3073,21 +3074,23 @@ with ~savehist-mode~ ([[#h:25765797-27a5-431e-8aa4-cc890a6a913a][The =minimal-em
 
 My =minimal-register.el= library defines a new register method to store
 the point in a given file. It also introduces two "Do-What-I-Mean"
-commands, one to store a register, and another to load it.
+commands, one to store a register, and another to load it. Finally, it
+defines the ~minimal-register-persist-mode~ which saves the registers to
+a file (controlled by ~minimal-register-save-file~) whenever I make a
+change to them.
 
 #+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
 ;;;; Registers (register.el) and my extensions (minimal-register.el)
 (minimal-emacs-configure
-  (minimal-emacs-autoload
-    (minimal-simple-file-to-register
-     minimal-register-add-dwim
-     minimal-register-use-dwim)
-    "minimal-register")
+  (require 'minimal-register)
+
+  (unless register-alist
+    (setq register-alist (minimal-register-load)))
 
   (minimal-emacs-keybind global-map
-    "C-, ," #'minimal-register-add-dwim
-    "C-, ." #'minimal-register-use-dwim
-    "C-, /" #'bookmark-jump) ; alternattive to C-x r b
+    "C-, a" #'minimal-register-add-dwim
+    "C-, u" #'minimal-register-use-dwim
+    "C-, j" #'bookmark-jump) ; alternattive to C-x r b
 
   (minimal-emacs-hook
     minimal-simple-file-to-register-jump-hook
@@ -3095,12 +3098,10 @@ commands, one to store a register, and another to load it.
     nil
     pulsar)
 
-  (with-eval-after-load 'register
-    (setq register-preview-delay 0.8
-          register-preview-function #'register-preview-default))
+  (setq register-preview-delay 0.5
+        register-preview-function #'register-preview-default)
 
-  (with-eval-after-load 'savehist
-    (add-to-list 'savehist-additional-variables 'register-alist)))
+  (minimal-register-persist-mode 1))
 #+end_src
 
 *** The =minimal-emacs-essentials.el= settings for auto revert
@@ -3639,7 +3640,13 @@ Now the actual configurations:
 #+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-essentials.el"
 ;;; Standard Unix Shell (M-x shell)
 (minimal-emacs-configure
-  (with-eval-after-load 'shell
+  (minimal-emacs-autoload (minimal-shell minimal-shell-mode) "minimal-shell")
+
+  (define-key global-map (kbd "<f1>") #'minimal-shell) ; I don't use F1 for help commands
+
+  (with-eval-after-load 'minimal-shell
+    (add-hook 'shell-mode-hook #'minimal-shell-mode)
+
     (minimal-emacs-keybind shell-mode-map
       "C-c C-k" #'comint-clear-buffer
       "C-c C-w" #'comint-write-output)
@@ -3674,12 +3681,7 @@ Now the actual configurations:
     (setq shell-font-lock-keywords
           '(("[ \t]\\([+-][^ \t\n]+\\)" 1 font-lock-builtin-face)
             ("^[^ \t\n]+:.*" . font-lock-string-face)
-            ("^\\[[1-9][0-9]*\\]" . font-lock-constant-face)))
-
-    (minimal-emacs-autoload (minimal-shell minimal-shell-mode) "minimal-shell")
-
-    (define-key global-map (kbd "<f1>") #'minimal-shell) ; I don't use F1 for help commands
-    (add-hook 'shell-mode-hook #'minimal-shell-mode)))
+            ("^\\[[1-9][0-9]*\\]" . font-lock-constant-face)))))
 #+end_src
 
 *** The =minimal-emacs-essentials.el= section about the laptop battery (~display-battery-mode~)
@@ -4013,28 +4015,29 @@ interpret user input and match candidates accordingly.
   and even styles that are the same as the aforementioned ~flex~ and
   ~initials~.
 
-Now that you know about the completion styles I use, take a look at
-the value of my ~completion-styles~. You will notice that ~orderless~,
-which is the most powerful/flexible is placed last. I do this because
-Emacs tries the styles in the given order from left to right, moving
-the next one until it finds a match. As such, I usually want to start
-with tight matches (e.g. =li-fa-di= for ~list-faces-display~) and only
-widen the scope of the search as I need to. This is easy to do because
-none of the built-in completion styles parses the empty space, so as
-soon as I type a space after some characters I am using ~orderless~.
+Now that you know about the completion styles I use or have
+experimented with, take a look at the value of my ~completion-styles~.
+You will notice that when ~orderless~ is loaded, it is placed at the
+end of the list. I do this because Emacs tries the styles in the given
+order from left to right, moving to the next one until it finds a match.
+As such, I usually want to start with tight matches (e.g. =li-fa-di=
+for ~list-faces-display~) and only widen the scope of the search as I
+need to. This is easy to do because as soon as I type =word1 word2= I
+am likely switching to ~orderless~ because nothing else will
+match---and if something else does yield results, than that is
+probably what I am looking for, anyway.
 
-Notice that this is not all, as we still have to consider what happens
-when the minibuffer prompt we are using defines a specific completion
-category whose pattern matching styles differ from what we have in the
-~completion-styles~. To that end, we also set up a more fine-grained
-set of completion styles on a per-category basis using overrides
-([[#h:0d49218d-4199-4847-9765-60a3f94e515d][The =minimal-emacs-completion.el= settings for completion category overrides]]).
+This is not all though, as we still have to consider what happens when
+the minibuffer prompt we are using defines a specific completion
+category. We can arrange to have different ~completion-styles~ per
+category and many more customisations which, of course, I do take care
+of ([[#h:0d49218d-4199-4847-9765-60a3f94e515d][The =minimal-emacs-completion.el= settings for completion category overrides]]).
 
 #+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el" :mkdirp yes
 ;;; General minibuffer settings
 (minimal-emacs-configure
 ;;;; Completion styles
-  (setq completion-styles '(basic substring)) ; also see `completion-category-overrides'
+  (setq completion-styles '(basic flex)) ; also see `completion-category-overrides'
   (setq completion-pcm-leading-wildcard nil) ; Emacs 31
   (with-eval-after-load 'orderless
     (setq completion-styles (append completion-styles '(orderless)))))
@@ -4067,12 +4070,18 @@ overrides where those make sense to me.
 We can opt for per-category styles by configuring the user option
 ~completion-category-overrides~. Notice, for example, how I arrange
 for ~partial-completion~ to be set only for the =file= completion
-category, as I only ever need it there. Also bear in mind what I
-described above about why ~orderless~ is placed last on the list:
-Emacs uses the completion styles from left to right until something
-matches the given input. So I do not need to have ~partial-completion~
-first as ~basic~ will never match something like =~/.l/s/fo= for
-=~/.local/share/fonts=.
+category, as I only ever need it there: it expands something like
+=~/.l/s/fo= into =~/.local/share/fonts=.
+
+Overrides are not limited to completion styles. We can also set our
+own metadata, as described in the documentation of the function
+~completion-metadata~. Concretely, we can set our own functions for
+annotating, sorting, and grouping candidates. My =minimal-minibuffer.el=
+defines several such functions ([[#h:761861c9-9a0e-4c97-b98d-20f13a6b3b79][The =minimal-minibuffer= library]]). It
+also sets things up for certain prompts without a completion category
+to get one and thus to be subject to the customisations I define
+herein. The ~minimal-minibuffer-missing-categories-mode~ is responsible
+for this.
 
 #+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el" :mkdirp yes
 ;;;; Completion category overrides
@@ -4083,77 +4092,39 @@ first as ~basic~ will never match something like =~/.l/s/fo= for
   ;; explicitly override everything.
   (setq completion-category-defaults nil)
 
-  ;; Add some missing completion categories to let me configure the
-  ;; relevant prompts via the `completion-category-overrides'.
-  (define-advice read-from-kill-ring (:around (&rest args) prot)
-    (let ((completion-extra-properties (list :category 'kill-ring)))
-      (apply args)))
-
-  (define-advice read-library-name (:around (&rest args) prot)
-    (let ((completion-extra-properties (list :category 'library)))
-      (apply args)))
-
-  (define-advice emoji--read-emoji (:around (&rest args) prot)
-    (let ((completion-extra-properties (list :category 'emoji)))
-      (apply args)))
-
-  (defun prot/file-sort-directories-first (files)
-    "Sort FILES to have directories first and then `completions-sort' sorting."
-    (setq files (delete "../" files))
-    (setq files
-          (pcase completions-sort
-            ('nil files)
-            ('alphabetical (minibuffer-sort-alphabetically files))
-            ('historical (minibuffer-sort-by-history files))
-            (_ (funcall completions-sort files))))
-    (let ((directory-p (lambda (file) (string-suffix-p "/" file))))
-      (nconc (seq-filter directory-p files)
-             (seq-remove directory-p files))))
-
-  (defun prot/file-group (file transform)
-    "Return FILE group name unless TRANSFORM is non-nil."
-    (cond
-     (transform file)
-     ((string-suffix-p "/" file) "Directories")
-     ((string-match-p "\\.\\(tar\\|rar\\|zip\\)\\'" file) "Archives")
-     ((string-match-p "\\.\\(txt\\|md\\|org\\)\\'" file) "Text")
-     ((string-match-p "\\.\\(jpg\\|jpeg\\|png\\)\\'" file) "Images")
-     ((string-match-p "\\.\\(mkv\\|webm\\|mp4\\|mp3\\|ogg\\|flac\\|wav\\)\\'" file) "Media")
-     ((string-match-p "\\.\\(pdf\\|epub\\|texi\\|info\\)\\'" file) "Documents")
-     (t "Other")))
-
-  (defun prot/symbol-group (symbol transform)
-    "Return SYMBOL group name unless TRANSFORM is non-nil."
-    (cond
-     (transform symbol)
-     ((string-match-p "--" symbol) "Private")
-     (t "Public")))
+  (minimal-minibuffer-missing-categories-mode 1)
 
   ;; NOTE 2025-12-02: The `eager-display' and `eager-update' are part of Emacs 31.
-  (setq completion-category-overrides
-        `((file . ((styles . (partial-completion))
-                   (eager-display . nil)
-                   (eager-update . t)
-                   (group-function . ,#'prot/file-group)
-                   (display-sort-function . ,#'prot/file-sort-directories-first)))
-          (bookmark . ((eager-display . nil)
-                       (eager-update . nil)))
-          (symbol-help . ((eager-display . nil)
-                          (eager-update . t)
-                          (group-function . ,#'prot/symbol-group)))
-          (emoji . ((styles . (orderless))
-                    (eager-display . t)
-                    (eager-update . t)))
-          (unicode-name . ((styles . (orderless))
-                           (eager-display . nil)
-                           (eager-update . t)))
-          ,@(mapcar
-             (lambda (category)
-               (cons category
-                     '((styles . (basic substring orderless))
-                       (eager-display . t)
-                       (eager-update . t))))
-             '(buffer project-file eglot kill-ring theme consult-location imenu embark-keybinding library)))))
+  (let* ((eager-update-properties '((styles . (basic substring flex))
+                                    (eager-display . nil)
+                                    (eager-update . t)))
+         (eager-update-properties-no-sort (append eager-update-properties (list (cons 'display-sort-function #'identity)))))
+    (setq completion-category-overrides
+          `((file . ((styles . (partial-completion))
+                     (eager-display . nil)
+                     (eager-update . t)
+                     (group-function . ,#'minimal-minibuffer-file-group)
+                     (display-sort-function . ,#'minimal-minibuffer-file-sort-directories-first)))
+            (bookmark . ((eager-display . nil)
+                         (eager-update . nil)
+                         (annotation-function . ,#'minimal-minibuffer-bookmark-annotate)))
+            (project-file . (,@eager-update-properties
+                             (group-function . ,#'minimal-minibuffer-file-group)))
+            (library . (,@eager-update-properties
+                        (annotation-function . ,#'minimal-minibuffer-library-annotate)
+                        (display-sort-function . ,#'minimal-minibuffer-library-sort)))
+            (symbol-help . (,@eager-update-properties
+                            (display-sort-function . ,#'minimal-minibuffer-symbol-sort)))
+            (buffer . (,@eager-update-properties
+                       (annotation-function . ,#'minimal-minibuffer-buffer-annotate)))
+            (command . ((affixation-function . nil)
+                        (annotation-function . ,#'minimal-minibuffer-command-annotate)))
+            (emoji . ,eager-update-properties)
+            (theme . ,eager-update-properties)
+            (unicode-name . ,eager-update-properties)
+            (kill-ring . ,eager-update-properties-no-sort)
+            (imenu . ,eager-update-properties-no-sort)
+            (consult-location . ,eager-update-properties-no-sort)))))
 #+end_src
 
 *** The =minimal-emacs-completion.el= for the ~orderless~ completion style
@@ -4190,19 +4161,20 @@ literal string, initialism, et cetera, which is not as useful to me.
 
 #+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
 ;;; Orderless completion style (and minimal-orderless.el)
-(minimal-emacs-configure
-  (minimal-emacs-install orderless)
-  (require 'orderless)
-  ;; Remember to check my `completion-styles' and the
-  ;; `completion-category-overrides'.
-  (setq orderless-matching-styles '(orderless-prefixes orderless-regexp))
-  (setq orderless-smart-case nil)
+(when minimal-emacs-completion-extras
+  (minimal-emacs-configure
+    (minimal-emacs-install orderless)
+    (require 'orderless)
+    ;; Remember to check my `completion-styles' and the
+    ;; `completion-category-overrides'.
+    (setq orderless-matching-styles '(orderless-prefixes orderless-regexp))
+    (setq orderless-smart-case nil)
 
-  ;; SPC should never complete: use it for `orderless' groups.
-  ;; The `?' is a regexp construct.
-  (minimal-emacs-keybind minibuffer-local-completion-map
-    "SPC" nil
-    "?" nil))
+    ;; SPC should never complete: use it for `orderless' groups.
+    ;; The `?' is a regexp construct.
+    (minimal-emacs-keybind minibuffer-local-completion-map
+      "SPC" nil
+      "?" nil)))
 #+end_src
 
 *** The =minimal-emacs-completion.el= settings to ignore letter casing
@@ -4362,48 +4334,14 @@ experience.
 
 These are some settings for the default completion user interface.
 These do not come into effect unless ~minimal-emacs-completion-ui~ is set
-to a ~nil~ value or when we are not using any package for in-buffer
-completion (such as the ~corfu~ package).
+to a ~nil~ value.
 
-For a few days around early December 2025 I tried to use the following
-setup exclusively on the Emacs 31 development target. It mostly works
-and is better than it used to be, though there are several important
-limitations:
-
-- The eager update (recalculate the results as you type) is noticeably
-  choppy. I could improve it by making the function
-  ~completions--background-update~ do a ~sit-for~ a few miliseconds,
-  but was not happy with this.
-
-- The built-in =minibuffer.el= package lacks focus. There are options
-  that support conflicting workflows. One is a =TAB=-intensive
-  approach, where =TAB= triggers the display of completions, switches
-  to that buffer, and cycles through the results. Another way is to
-  set the user option ~minibuffer-visible-completions~ to a non-~nil~
-  value, which makes the cursor stay in the minibuffer and you select
-  a completion from there without switching to the =*Completions*=
-  buffer. Compounding the problem are confusingly named variables like
-  ~completion-show-help~ and ~completion-auto-help~, which mean
-  completely different things. Even after setting all this up and
-  trying it full-time for several days (plus me maintaining ~mct~ for
-  years), I still do not know exactly what I need to configure to get
-  a consistent experience.
-
-- The ~find-file~ navigation makes it harder to select a directory.
-  Whether with the =TAB=-centric workflow of its alternative, when I
-  do something like =~/G/P/= followed by =TAB= and then =RET= I expect
-  to navigate to a ~dired~ buffer that shows =~/Git/Projects/= (this
-  is possible thanks to the ~partial-completion~ style ([[#h:14b09958-279e-4069-81e3-5a16c9b69892][The =minimal-emacs-completion.el= settings for completion styles]])).
-  Instead it takes me to =~/Git/= or, more precisely, to whatever the
-  top candidate is in the completions buffer. That candidate is not
-  even highlighted when I do all this!
-
-Of course, I can keep adding functions to make things work the way I
-want, but it ultimately is not worth it. Vertico is robust, super
-fast, focused, and still highly configurable. My ~mct~ package is
-there just because I started it all those years ago, before ~vertico~
-was a thing and before the generic completions got most of what ~mct~
-offers.
+Because I do not like how the default minibuffer user interface works,
+I maintain some customisations as part of my =minimal-minibuffer.el= ([[#h:761861c9-9a0e-4c97-b98d-20f13a6b3b79][The =minimal-minibuffer= library]]).
+Some of those are about the completion category overrides to add
+grouping and sorting facilities ([[#h:0d49218d-4199-4847-9765-60a3f94e515d][The =minimal-emacs-completion.el= settings for completion category overrides]]).
+The changes that are specific to the minibuffer interface for
+completion are collectively enabled through the minor mode ~minimal-minibuffer-completions-mode~.
 
 - [[#h:f012a254-2716-4c29-a64b-c2b3df34f57f][The =init.el= option to load a minibuffer user interface]]
 - [[#h:cff33514-d3ac-4c16-a889-ea39d7346dc5][The =minimal-emacs-completion.el= submodule for ~vertico~ (=minimal-emacs-vertico.el=)]]
@@ -4411,129 +4349,18 @@ offers.
 
 #+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
 (minimal-emacs-configure
-  (add-hook 'minibuffer-setup-hook #'minimal-common-truncate-lines-silently)
+  (minimal-emacs-hook
+    (completion-list-mode-hook minibuffer-setup-hook)
+    minimal-common-truncate-lines-silently)
 
   (unless minimal-emacs-completion-ui
-    (setq completion-show-help nil)
-    (setq completion-show-inline-help nil)
-    (setq completions-detailed t)
-    (setq completions-format 'one-column)
-    ;; (setq completions-header-format (propertize "%s candidates:\n" 'face 'bold-italic))
-    (setq completions-header-format "")
-    (setq completions-highlight-face 'completions-highlight)
-    (setq completions-max-height 12)
-    (setq completions-sort 'historical)
-    (setq completion-auto-help 'always)
-    (setq completion-auto-select 'second-tab)
-    ;; (setq minibuffer-visible-completions t) ; Emacs 30
-
-    ;; These two are for Emacs 31.  The value they have now means that
-    ;; each completion category will have its own behaviour based on
-    ;; what I am setting in the `completion-category-overrides'.
-    (setq completion-eager-display 'auto)
-    (setq completion-eager-update 'auto)
-
-    (defun prot/completions-tweak-style ()
-      "Tweak the style of the Completions buffer."
-      ;; (setq-local mode-line-format "*Completions*)
-      (setq-local cursor-in-non-selected-windows nil)
-      (when (and completions-header-format
-                 (not (string-blank-p completions-header-format)))
-        (setq-local display-line-numbers-offset -1))
-      (display-line-numbers-mode 1))
-
-    (minimal-emacs-hook
-      completion-list-mode-hook
-      (prot/completions-tweak-style minimal-common-truncate-lines-silently))
-
-    (defun prot/quit-completions ()
-      "Always quit the Completions window."
-      (when-let* ((window (get-buffer-window "*Completions*")))
-        (quit-window nil window)))
-
-    (add-hook 'minibuffer-exit-hook #'prot/quit-completions)
-
-    (defun prot/choose-completion-no-exit ()
-      "Call `choose-completion' without exiting the minibuffer.
-Also see `prot/choose-completion-exit' and `prot/choose-completion-dwim'."
-      (interactive)
-      (choose-completion nil :no-exit :no-quit)
-      (switch-to-minibuffer))
-
-    (defun prot/choose-completion-exit ()
-      "Call `choose-completion' and exit the minibuffer.
-Also see `prot/choose-completion-no-exit' and `prot/choose-completion-dwim'."
-      (interactive)
-      (choose-completion nil :no-exit)
-      (exit-minibuffer))
-
-    (defun prot/crm-p ()
-      "Return non-nil if `completing-read-multiple' is in use."
-      (when-let* ((window (active-minibuffer-window))
-                  (buffer (window-buffer window)))
-        (buffer-local-value 'crm-completion-table buffer)))
-
-    (defun prot/choose-completion-dwim ()
-      "Call `choose-completion' that exits only on a unique match.
-If the match is not unique, then complete up to the largest common
-prefix or, anyhow, continue with the completion (e.g. in `find-file'
-switch into the directory and then show the files therein).
-
-Also see `prot/choose-completion-no-exit' and `prot/choose-completion-exit'."
-      (interactive)
-      (if (prot/crm-p)
-          (prot/choose-completion-no-exit)
-        (choose-completion nil :no-exit :no-quit)
-        (switch-to-minibuffer)
-        (minibuffer-completion-help)
-        (unless (get-buffer-window "*Completions*")
-          (exit-minibuffer))))
-
-    (define-advice minibuffer-completion-help (:around (&rest args) prot)
-      "Make `minibuffer-completion-help' display *Completions* in a side window.
-Make the window be at slot 0, such that the *Help* buffer produced by
-`prot/completions-describe-at-point' is to its right."
-      (let ((display-buffer-overriding-action
-             `((display-buffer-reuse-mode-window display-buffer-in-side-window)
-               (mode . completion-list-mode)
-               (side . bottom)
-               (slot . 0))))
-        (apply args)))
-
-    (defun prot/completions-describe-at-point (symbol)
-      "Describe SYMBOL at point inside the *Completions* buffer.
-Place the *Help* buffer in a side window, situated to the right of the
-,*Completions* buffer.  Make the window have the `minimal-minibuffer-help'
-property, such that it can be found by `prot/completions-close-help'."
-      (interactive (list (intern-soft (thing-at-point 'symbol))))
-      (unless (derived-mode-p 'completion-list-mode)
-        (user-error "Can only do this from the *Completions* buffer"))
-      (when symbol
-        (let ((help-window-select nil)
-              (display-buffer-overriding-action
-               `((display-buffer-reuse-mode-window display-buffer-in-side-window)
-                 (mode . help-mode)
-                 (side . bottom)
-                 (slot . 1)
-                 (window-height . fit-window-to-buffer)
-                 (window-parameters . ((minimal-minibuffer-help . t))))))
-          (describe-symbol symbol))))
-
-    (defun prot/completions-close-help ()
-      "Close the window that has a `'minimal-minibuffer-help' parameter."
-      (when-let* ((help (seq-find
-                         (lambda (window)
-                           (window-parameter window 'minimal-minibuffer-help))
-                         (window-list))))
-        (delete-window help)))
-
-    (add-hook 'minibuffer-exit-hook #'prot/completions-close-help)
+    (minimal-minibuffer-completions-mode 1)
 
     (minimal-emacs-keybind completion-list-mode-map
-      "h" #'prot/completions-describe-at-point ; "Help" mnemonic
-      "c" #'prot/choose-completion-no-exit ; "Choose" mnemonic
-      "TAB" #'prot/choose-completion-dwim
-      "RET" #'prot/choose-completion-exit)))
+      "h" #'minimal-minibuffer-completions-describe-at-point ; "Help" mnemonic
+      "c" #'minimal-minibuffer-choose-completion-no-exit ; "Choose" mnemonic
+      "TAB" #'minimal-minibuffer-choose-completion-dwim
+      "RET" #'minimal-minibuffer-choose-completion-exit)))
 #+end_src
 
 *** The =minimal-emacs-completion.el= settings for saving the history (~savehist-mode~)
@@ -4777,27 +4604,32 @@ Development continues on GitHub with GitLab as a mirror."))
   (remove-hook 'save-some-buffers-functions #'abbrev--possibly-save))
 #+end_src
 
-*** The =minimal-emacs-completion.el= for in-buffer completion popup (~corfu~)
+*** The =minimal-emacs-completion.el= settings for in-buffer completion popup (~corfu~)
 :PROPERTIES:
 :CUSTOM_ID: h:804b858f-7913-47ef-aaf4-8eef5b59ecb4
 :END:
 
-I generally do not rely on in-buffer text completion. I feel it slows
-me down and distracts me. When I do, however, need to rely on it, I
-have the ~corfu~ package by Daniel Mendler: it handles the task
-splendidly as it works with Emacs' underlying infrastructure for
-~completion-at-point-functions~.
+I generally do not rely on in-buffer text completion, no matter how
+minimalist it is ([[#h:bb7959b3-d8e6-4163-8e32-bec2b96b7dde][The =minimal-emacs-completion.el= for in-buffer completion hints (~completion-preview-mode~)]]).
+I feel it slows me down and distracts me. When I do, however, need to
+rely on it, I appreciate the ~corfu~ package by Daniel Mendler: it handles
+the task splendidly and works with Emacs' underlying infrastructure
+for ~completion-at-point-functions~.
 
 Completion is triggered with the =TAB= key, which produces a popup
-where the cursor is. The companion ~corfu-popupinfo-mode~ will show a
-secondary documentation popup if we move over a candidate but do not
-do anything with it.
+where the cursor is, if re-indentation cannot be performed there ([[#h:559713c8-0e1e-44aa-bca8-0caae01cc8bb][The =minimal-emacs-langs.el= settings for TAB]]).
+The companion ~corfu-popupinfo-mode~ will show a secondary
+documentation popup if we move over a candidate but do not do anything
+with it for the first number in ~corfu-popupinfo-delay~ and then
+subsequent popups are subject to the second number of that same variable.
 
 Also see [[#h:567bb00f-1d82-4746-93e5-e0f60721728a][the =minimal-emacs-completion.el= settings for dynamic text expansion (~dabbrev~)]].
 
 #+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
 ;;; Corfu (in-buffer completion popup)
-(when (and minimal-emacs-completion-extras minimal-display-graphic-p)
+(when (and (eq minimal-emacs-completion-ui 'vertico)
+           minimal-emacs-completion-extras
+           minimal-display-graphic-p)
   (minimal-emacs-configure
     (minimal-emacs-install corfu)
 
@@ -4819,12 +4651,19 @@ Also see [[#h:567bb00f-1d82-4746-93e5-e0f60721728a][the =minimal-emacs-completio
       (add-to-list 'savehist-additional-variables 'corfu-history))))
 #+end_src
 
-*** COMMENT The =minimal-emacs-completion.el= for in-buffer completion hints (~completion-preview-mode~)
+*** The =minimal-emacs-completion.el= for in-buffer completion hints (~completion-preview-mode~)
 :PROPERTIES:
 :CUSTOM_ID: h:bb7959b3-d8e6-4163-8e32-bec2b96b7dde
 :END:
 
-[ NOTE 2025-12-10: I stopped using this because I find it distracting. ]
+[ NOTE 2025-12-10: I stopped using this because I find it distracting.
+  Same with ~corfu~, by the way ([[#h:804b858f-7913-47ef-aaf4-8eef5b59ecb4][The =minimal-emacs-completion.el= settings for in-buffer completion popup (~corfu~)]]):
+  I ultimately prefer to type than to have things come in and out of
+  focus all the time. Though the ~completion-preview-mode~ is extra
+  difficult for me because it usually gives me a false positive,
+  meaning that I get distracted about something I do not need to know,
+  anyway. I keep this configuration here in case anybody wants to
+  learn from it. ]
 
 The built-in ~completion-preview~ by Eshel Yaron provides a minimalist
 interface for in-buffer completion. Instead of popping up a list with
@@ -4854,24 +4693,25 @@ overarching theme of my choices is to reduce noise. More specifically:
   need a hint for longer words/symbols.
 
 #+begin_src emacs-lisp :tangle "minimal-emacs-modules/minimal-emacs-completion.el"
-(minimal-emacs-configure
-  (setq completion-preview-exact-match-only nil)
-  (setq completion-preview-commands '(self-insert-command
-                                      insert-char
-                                      analyze-text-conversion
-                                      completion-preview-insert-word))
-  (setq completion-preview-minimum-symbol-length 4)
-  (setq completion-preview-idle-delay 0.3)
-  (setq completion-preview-ignore-case t)
-  (setq completion-preview-sort-function #'identity)
+(minimal-emacs-comment
+  (minimal-emacs-configure
+    (setq completion-preview-exact-match-only nil)
+    (setq completion-preview-commands '(self-insert-command
+                                        insert-char
+                                        analyze-text-conversion
+                                        completion-preview-insert-word))
+    (setq completion-preview-minimum-symbol-length 4)
+    (setq completion-preview-idle-delay 0.3)
+    (setq completion-preview-ignore-case t)
+    (setq completion-preview-sort-function #'identity)
 
-  (add-hook 'prog-mode-hook #'completion-preview-mode)
+    (add-hook 'prog-mode-hook #'completion-preview-mode)
 
-  (with-eval-after-load 'completion-preview
-    (minimal-emacs-keybind completion-preview-active-mode-map
-      "M-n" #'completion-preview-next-candidate
-      "M-p" #'completion-preview-prev-candidate
-      "<tab>" #'completion-preview-complete)))
+    (with-eval-after-load 'completion-preview
+      (minimal-emacs-keybind completion-preview-active-mode-map
+        "M-n" #'completion-preview-next-candidate
+        "M-p" #'completion-preview-prev-candidate
+        "<tab>" #'completion-preview-complete))))
 #+end_src
 
 *** The =minimal-emacs-completion.el= settings for ~consult~
@@ -7224,9 +7064,9 @@ They make more sense to me.
       "M-q" #'vc-annotate-toggle-annotation-visibility
       "C-c C-c" #'vc-annotate-goto-line
       "<return>" #'vc-annotate-find-revision-at-line)
-    ;; (minimal-emacs-keybind log-edit-mode-map
-      ;; "M-s" #'nil ; I use M-s for my search commands
-      ;; "M-r" #'nil) ; I use `consult-history'
+    (minimal-emacs-keybind log-edit-mode-map
+      "M-s" #'nil ; I use M-s for my search commands
+      "M-r" #'nil) ; I use `consult-history'
     (minimal-emacs-keybind log-view-mode-map
       "<tab>" #'log-view-toggle-entry-display
       "<return>" #'log-view-find-revision
@@ -9031,7 +8871,7 @@ not even bother trying as I seldom have that need.
 The built-in ~flymake~ feature defines an interface for viewing the
 output of linter programs. A "linter" parses a file and reports
 possible notes/warnings/errors in it. With ~flymake~ we get these
-tdiagnostics in the form of a standalone buffer as well as inline
+diagnostics in the form of a standalone buffer as well as inline
 highlights (typically underlines combined with fringe indicators) for
 the portion of text in question. The linter report is displayed with
 the command ~flymake-show-buffer-diagnostics~, or ~flymake-show-project-diagnostics~.
@@ -11635,11 +11475,6 @@ not test it as much and do not try to make it perfect.
 ;;; Commentary:
 ;;
 ;; Functions for use with `abbrev-mode'.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -11757,11 +11592,6 @@ Use completion among previous entries, retrieving their data from
 ;;
 ;; This covers my newcomment.el extras, for use in my Emacs setup:
 ;; https://protesilaos.com/emacs/dotemacs.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -11918,11 +11748,6 @@ an alternative date format, as specified by
 ;;; Commentary:
 ;;
 ;; Common functions for my Emacs: <https://protesilaos.com/emacs/dotemacs/>.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -12349,11 +12174,6 @@ belong to the given subset of CONSEQUENCES.
 ;;
 ;; This covers my dired.el extensions, for use in my Emacs setup:
 ;; https://protesilaos.com/emacs/dotemacs.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -12634,11 +12454,6 @@ Add this to `dired-mode-hook'."
 ;;
 ;; Extensions for Ediff, intended for use in my Emacs setup:
 ;; https://protesilaos.com/emacs/dotemacs.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 (require 'ediff)
@@ -12723,11 +12538,6 @@ Also see `minimal-ediff-store-layout'."
 ;;
 ;; Extensions for Emacs Lisp, intended for use in my Emacs setup:
 ;; https://protesilaos.com/emacs/dotemacs.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -12794,7 +12604,7 @@ Now use `display-buffer-alist' like the Lisp gods intended."
 #+begin_src emacs-lisp :tangle "minimal-lisp/minimal-eww.el" :mkdirp yes
 ;;; minimal-eww.el --- Extensions for EWW -*- lexical-binding: t -*-
 
-;; Copyright (C) 2021-2025  Protesilaos Stavrou, Abhiseck Paira
+;; Copyright (C) 2021-2025  Protesilaos Stavrou
 
 ;; Author: Protesilaos Stavrou <info@protesilaos.com>
 ;; Maintainer: Protesilaos Stavrou <info@protesilaos.com>
@@ -12821,11 +12631,6 @@ Now use `display-buffer-alist' like the Lisp gods intended."
 ;;
 ;; Extensions for the eww, intended for my Emacs setup:
 ;; <https://protesilaos.com/emacs/dotemacs/>.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -12937,6 +12742,316 @@ buffer instead of the current one."
 ;;; minimal-eww.el ends here
 #+end_src
 
+** The =minimal-minibuffer= library
+:PROPERTIES:
+:CUSTOM_ID: h:761861c9-9a0e-4c97-b98d-20f13a6b3b79
+:END:
+
+#+begin_src emacs-lisp :tangle "minimal-lisp/minimal-minibuffer.el" :mkdirp yes
+;;; minimal-minibuffer.el --- Extensions for the minibuffer and completions -*- lexical-binding: t -*-
+
+;; Copyright (C) 2025  Protesilaos Stavrou
+
+;; Author: Protesilaos Stavrou <info@protesilaos.com>
+;; Maintainer: Protesilaos Stavrou <info@protesilaos.com>
+;; URL: https://protesilaos.com/emacs/dotemacs
+;; Version: 0.1.0
+;; Package-Requires: ((emacs "30.1"))
+
+;; This file is NOT part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Extensions for the minibuffer and completions, intended for my
+;; Emacs setup: <https://protesilaos.com/emacs/dotemacs/>.
+
+;;; Code:
+
+(defgroup minimal-minibuffer nil
+  "Extensions for the minibuffer and completions."
+  :group 'minibuffer)
+
+;;;; Completion category grouping, sorting, and affixating
+
+;; Add some missing completion categories to let me configure the
+;; relevant prompts via the `completion-category-overrides'.
+(defun minimal-minibuffer@read-from-kill-ring (&rest args)
+  (let ((completion-extra-properties (list :category 'kill-ring)))
+    (apply args)))
+
+(defun minimal-minibuffer@read-library-name (&rest args)
+  (let ((completion-extra-properties (list :category 'library)))
+    (apply args)))
+
+(defun minimal-minibuffer@emoji--read-emoji (&rest args)
+  (let ((completion-extra-properties (list :category 'emoji)))
+    (apply args)))
+
+;;;###autoload
+(define-minor-mode minimal-minibuffer-missing-categories-mode
+  "When enabled, add missing compleiton categories to relevant prompts."
+  :global t
+  (if minimal-minibuffer-missing-categories-mode
+      (dolist (original (list #'read-from-kill-ring #'read-library-name #'emoji--read-emoji))
+        (when-let* ((my-function-name (format "minimal-minibuffer@%s" original))
+                    (my-function-symbol (intern-soft my-function-name)))
+          (advice-add original :around my-function-symbol)))
+    (dolist (original (list #'read-from-kill-ring #'read-library-name #'emoji--read-emoji))
+        (when-let* ((my-function-name (format "minimal-minibuffer@%s" original))
+                    (my-function-symbol (intern-soft my-function-name)))
+          (advice-remove original my-function-symbol)))))
+
+(defun minimal-minibuffer--set-default-sort (candidates)
+  "Sort CANDIDATES according to `completions-sort' and return the sorted list."
+  (setq candidates
+        (pcase completions-sort
+          ('nil candidates)
+          ('alphabetical (minibuffer-sort-alphabetically candidates))
+          ('historical (minibuffer-sort-by-history candidates))
+          (_ (funcall completions-sort candidates)))))
+
+(defun minimal-minibuffer-file-sort-directories-first (files)
+  "Sort FILES to have directories first and then `completions-sort' sorting.
+Omit the .. directory from FILES."
+  (setq files (delete "../" files))
+  (setq files (minimal-minibuffer--set-default-sort files))
+  (let ((directory-p (lambda (file) (string-suffix-p "/" file))))
+    (nconc (seq-filter directory-p files)
+           (seq-remove directory-p files))))
+
+(defvar minimal-minibuffer-file-extensions
+  '((archive "tar" "rar" "zip")
+    (image "jpg" "png" "jpeg")
+    (audio "mp3" "flac" "ogg" "wav")
+    (video "mkv" "webm" "mp4")
+    (text "org" "txt" "md")
+    (document "pdf" "epub" "info" "texi")
+    (program "sh" "el" "c" "py" "yaml" "toml" "conf" "js" "html"))
+  "Some common file extensions grouped by type.")
+
+(defun minimal-minibuffer--get-file-type-regexp (type)
+  "Return regular expression for file TYPE.
+TYPE is a `car' among the elements of `minimal-minibuffer-file-extensions'."
+  (when-let* ((extensions (alist-get type minimal-minibuffer-file-extensions)))
+    (format "\\.%s\\'" (regexp-opt extensions))))
+
+(defun minimal-minibuffer-file-group (file transform)
+  "Return FILE group name unless TRANSFORM is non-nil."
+  (cond
+   (transform file)
+   ((string-suffix-p "/" file) "Directory")
+   ((string-match-p (minimal-minibuffer--get-file-type-regexp 'archive) file) "Archive")
+   ((string-match-p (minimal-minibuffer--get-file-type-regexp 'text) file) "Text")
+   ((string-match-p (minimal-minibuffer--get-file-type-regexp 'image) file) "Image")
+   ((string-match-p (minimal-minibuffer--get-file-type-regexp 'audio) file) "Audio")
+   ((string-match-p (minimal-minibuffer--get-file-type-regexp 'video) file) "Video")
+   ((string-match-p (minimal-minibuffer--get-file-type-regexp 'document) file) "Document")
+   ((string-match-p (minimal-minibuffer--get-file-type-regexp 'program) file) "Program")
+   (t "Other")))
+
+(defun minimal-minibuffer-symbol-sort (symbols)
+  "Sort SYMBOLS so that public ones come first."
+  (setq symbols (minimal-minibuffer--set-default-sort symbols))
+  (let ((private-p (lambda (symbol) (string-suffix-p "--" symbol))))
+    (nconc (seq-remove private-p symbols)
+           (seq-filter private-p symbols))))
+
+(defun minimal-minibuffer--propertize-suffix-with-space (string)
+  "Propertize STRING with spacing before it."
+  (format " %s%s"
+          (if (eq completions-format 'one-column)
+              (propertize " " 'display '(space :align-to 60))
+            " ")
+          (propertize string 'face 'completions-annotations)))
+
+(defun minimal-minibuffer-buffer-annotate (buffer)
+  "Return the major mode of BUFFER or nil."
+  (with-current-buffer (get-buffer buffer)
+    (minimal-minibuffer--propertize-suffix-with-space (format "%s" major-mode))))
+
+(defun minimal-minibuffer-bookmark-annotate (bookmark)
+  "Return the filename data of BOOKMARK or nil."
+  (when-let* ((data (bookmark-get-bookmark bookmark))
+              (filename (bookmark-prop-get data 'filename)))
+    (minimal-minibuffer--propertize-suffix-with-space filename)))
+
+(defun minimal-minibuffer-library-sort (libraries)
+  "Sort LIBRARIES, omitting autoloads and bytecode files."
+  (setq libraries (seq-remove
+                   (lambda (library)
+                     (string-match-p "\\(-autoload\\|\\.elc\\)" library))
+                   libraries))
+  (minimal-minibuffer--set-default-sort libraries))
+
+;; NOTE 2025-12-19: Maybe there is a better way, but this is okay to start with.
+(defun minimal-minibuffer-library-annotate (library)
+  "Return the group documentation of LIBRARY."
+  (when-let* ((group-documentation (get (intern-soft library) 'group-documentation)))
+    (minimal-minibuffer--propertize-suffix-with-space group-documentation)))
+
+(defun minimal-minibuffer-command-annotate (command)
+  "Annotate COMMAND with its key binding and shortened documentation string."
+  (let ((symbol (intern-soft command)))
+    (format "%s%s%s"
+            (if-let* ((binding (where-is-internal symbol overriding-local-map t))
+                      (description (key-description binding))
+                      (key (when (and binding (not (stringp binding)))
+                             (format " %s " description))))
+                (propertize key 'face 'help-key-binding)
+              "")
+            (if (eq completions-format 'one-column)
+                (propertize " " 'display '(space :align-to 60))
+              " ")
+            (if-let* ((doc (condition-case nil (documentation symbol) (error nil)))
+                      (first-line (substring doc 0 (string-search "\n" doc))))
+                (propertize first-line 'face 'completions-annotations)
+              ""))))
+
+;;;; Completions
+
+(defun minimal-minibuffer-completions-tweak-style ()
+  "Tweak the style of the Completions buffer."
+  (setq-local mode-line-format nil)
+  (setq-local cursor-in-non-selected-windows nil)
+  (when (and completions-header-format
+             (not (string-blank-p completions-header-format)))
+    (setq-local display-line-numbers-offset -1))
+  (display-line-numbers-mode 1))
+
+(defun minimal-minibuffer-quit-completions ()
+  "Always quit the Completions window."
+  (when-let* ((window (get-buffer-window "*Completions*")))
+    (quit-window nil window)))
+
+(defun minimal-minibuffer-choose-completion-no-exit ()
+  "Call `choose-completion' without exiting the minibuffer.
+Also see `minimal-minibuffer-choose-completion-exit' and `minimal-minibuffer-choose-completion-dwim'."
+  (interactive)
+  (choose-completion nil :no-exit :no-quit)
+  (switch-to-minibuffer))
+
+(defun minimal-minibuffer-choose-completion-exit ()
+  "Call `choose-completion' and exit the minibuffer.
+Also see `minimal-minibuffer-choose-completion-no-exit' and `minimal-minibuffer-choose-completion-dwim'."
+  (interactive)
+  (choose-completion nil :no-exit)
+  (exit-minibuffer))
+
+(defun minimal-minibuffer-crm-p ()
+  "Return non-nil if `completing-read-multiple' is in use."
+  (when-let* ((_ (featurep 'crm))
+              (window (active-minibuffer-window))
+              (buffer (window-buffer window)))
+    (buffer-local-value 'crm-completion-table buffer)))
+
+(defun minimal-minibuffer-choose-completion-dwim ()
+  "Call `choose-completion' that exits only on a unique match.
+If the match is not unique, then complete up to the largest common
+prefix or, anyhow, continue with the completion (e.g. in `find-file'
+switch into the directory and then show the files therein).
+
+Also see `minimal-minibuffer-choose-completion-no-exit' and `minimal-minibuffer-choose-completion-exit'."
+  (interactive)
+  (if (minimal-minibuffer-crm-p)
+      (minimal-minibuffer-choose-completion-no-exit)
+    (choose-completion nil :no-exit :no-quit)
+    (switch-to-minibuffer)
+    (minibuffer-completion-help)
+    (unless (get-buffer-window "*Completions*")
+      (exit-minibuffer))))
+
+(define-advice minibuffer-completion-help (:around (&rest args) prot)
+  "Make `minibuffer-completion-help' display *Completions* in a side window.
+Make the window be at slot 0, such that the *Help* buffer produced by
+`minimal-minibuffer-completions-describe-at-point' is to its right."
+  (let ((display-buffer-overriding-action
+         `((display-buffer-reuse-mode-window display-buffer-in-side-window)
+           (mode . completion-list-mode)
+           (side . bottom)
+           (slot . 0))))
+    (apply args)))
+
+(defun minimal-minibuffer-completions-describe-at-point (symbol)
+  "Describe SYMBOL at point inside the *Completions* buffer.
+Place the *Help* buffer in a side window, situated to the right of the
+,*Completions* buffer.  Make the window have the `minimal-minibuffer-help'
+property, such that it can be found by `minimal-minibuffer-completions-close-help'."
+  (interactive (list (intern-soft (thing-at-point 'symbol))))
+  (unless (derived-mode-p 'completion-list-mode)
+    (user-error "Can only do this from the *Completions* buffer"))
+  (when symbol
+    (let ((help-window-select nil)
+          (display-buffer-overriding-action
+           `((display-buffer-reuse-mode-window display-buffer-in-side-window)
+             (mode . help-mode)
+             (side . bottom)
+             (slot . 1)
+             (window-height . fit-window-to-buffer)
+             (window-parameters . ((minimal-minibuffer-help . t))))))
+      (describe-symbol symbol))))
+
+(defun minimal-minibuffer-completions-close-help ()
+  "Close the window that has a `minimal-minibuffer-help' parameter."
+  (when-let* ((help (seq-find
+                     (lambda (window)
+                       (window-parameter window 'minimal-minibuffer-help))
+                     (window-list))))
+    (delete-window help)))
+
+;;;###autoload
+(define-minor-mode minimal-minibuffer-completions-mode
+  "Tweak the interface of the minibuffer and the *Completions*."
+  :global t
+  (if minimal-minibuffer-completions-mode
+      (progn
+        (setq completion-show-help nil)
+        (setq completion-show-inline-help nil)
+        (setq completions-detailed t)
+        (setq completions-format 'one-column)
+        (setq completions-header-format "")
+        (setq completions-highlight-face 'success)
+        (setq completions-max-height 12)
+        (setq completions-sort 'historical)
+        (setq completion-auto-help t)
+        (setq completion-auto-select t)
+        (setq completion-eager-display 'auto)
+        (setq completion-eager-update 'auto)
+        (add-hook 'completion-list-mode-hook #'minimal-minibuffer-completions-tweak-style)
+        (add-hook 'minibuffer-exit-hook #'minimal-minibuffer-quit-completions)
+        (add-hook 'minibuffer-exit-hook #'minimal-minibuffer-completions-close-help))
+    (setq completion-show-help t)
+    (setq completion-show-inline-help nil)
+    (setq completions-detailed nil)
+    (setq completions-format 'horizontal)
+    (setq completions-header-format (propertize "%s possible completions:\n" 'face 'shadow))
+    (setq completions-highlight-face 'completions-highlight)
+    (setq completions-max-height nil)
+    (setq completions-sort 'alphabetical)
+    (setq completion-auto-help t)
+    (setq completion-auto-select nil)
+    (setq completion-eager-display 'auto)
+    (setq completion-eager-update 'auto)
+    (remove-hook 'completion-list-mode-hook #'minimal-minibuffer-completions-tweak-style)
+    (remove-hook 'minibuffer-exit-hook #'minimal-minibuffer-quit-completions)
+    (remove-hook 'minibuffer-exit-hook #'minimal-minibuffer-completions-close-help)))
+
+(provide 'minimal-minibuffer)
+;;; minimal-minibuffer.el ends here
+#+end_src
+
 ** The =minimal-modeline.el= library
 :PROPERTIES:
 :CUSTOM_ID: h:935adc09-abaa-4413-a5ab-a7a562081c20
@@ -12970,11 +13085,6 @@ buffer instead of the current one."
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -13603,11 +13713,6 @@ Specific to the current window's mode line.")
 ;;
 ;; This covers my tweaks for notmuch.el that are meant for use in my
 ;; Emacs setup: https://protesilaos.com/emacs/dotemacs.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -13886,11 +13991,6 @@ Add this to `notmuch-mua-send-hook'."
 ;;
 ;; Extensions for the Orderless completion style for use in my Emacs
 ;; setup: <https://protesilaos.com/emacs/dotemacs/>.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -13954,11 +14054,6 @@ Add this to `notmuch-mua-send-hook'."
 ;;
 ;; This covers my tweaks for Org that are meant for use in my
 ;; Emacs setup: https://protesilaos.com/emacs/dotemacs.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -14541,11 +14636,6 @@ from the heading text instead of a UUID."
 ;;
 ;; Insert character pair around symbol or region using minibuffer
 ;; completion.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -14731,11 +14821,6 @@ controlled by `delete-pair-blink-delay'."
 ;;; Commentary:
 ;;
 ;; Prefix keymap for my custom keymaps.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -15099,11 +15184,6 @@ controlled by `delete-pair-blink-delay'."
 ;;; Commentary:
 ;;
 ;; Extensions for project.el.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -15288,22 +15368,19 @@ is a string."
 ;;; Commentary:
 ;;
 ;; Extensions for register.el.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
 (require 'register)
 
+;;;; Define new register for file with point
+
 (cl-defmethod register--type ((_regval vector)) 'vector)
 
 (cl-defmethod register-val-describe ((val vector) _verbose)
-  (if-let* ((pos (aref val 2))
+  (if-let* ((position (aref val 2))
             (file (aref val 1)))
-      (princ (format "%s at position %s" file pos))
+      (princ (format "%s at position %s" file position))
     (princ "Garbage data")))
 
 ;;;###autoload
@@ -15327,6 +15404,8 @@ outright."
     (goto-char (aref val 2))
     (run-hooks 'minimal-simple-file-to-register-jump-hook))
    (t (cl-call-next-method val delete))))
+
+;;;; Do-What-I-Mean commands
 
 ;;;###autoload
 (defun minimal-register-add-dwim (register &optional number)
@@ -15381,6 +15460,40 @@ Also see `minimal-register-use-dwim'."
      (t
       (error "The register is unknown: %S" contents)))))
 
+;;;; The `minimal-register-persist-mode'
+
+(defcustom minimal-register-save-file (locate-user-emacs-file "minimal-register.eld")
+  "File to store registers to and retrieve from."
+  :type 'file)
+
+(defun minimal-register-store ()
+  "Write `register-alist' to `minimal-register-save-file'."
+  (with-temp-file minimal-register-save-file
+    (insert ";; Auto-generated file: DO NOT EDIT -*- mode: emacs-lisp -*-\n")
+    (pp register-alist (current-buffer))))
+
+(defun minimal-register-load ()
+  "Read `minimal-register-save-file' and return its contents."
+  (with-temp-buffer
+    (when (file-exists-p minimal-register-save-file)
+      (insert-file-contents minimal-register-save-file)
+      (read (buffer-string)))))
+
+(defun minimal-register-watcher (symbol newval operation where)
+  (when (and (eq operation 'set) (null where) newval)
+    (minimal-register-store)))
+
+;;;###autoload
+(define-minor-mode minimal-register-persist-mode
+  "When enabled save `register-alist' to `minimal-register-save-file' when a change occurs."
+  :globat t
+  (if minimal-register-persist-mode
+      (progn
+        (add-variable-watcher 'register-alist #'minimal-register-watcher)
+        (add-hook 'kill-emacs-hook #'minimal-register-store))
+    (remove-variable-watcher 'register-alist #'minimal-register-watcher)
+    (remove-hook 'kill-emacs-hook #'minimal-register-store)))
+
 (provide 'minimal-register)
 ;;; minimal-register.el ends here
 #+end_src
@@ -15420,11 +15533,6 @@ Also see `minimal-register-use-dwim'."
 ;; Set up a scratch buffer for an editable major mode of choice.  The
 ;; idea is based on the `scratch.el' package by Ian Eure:
 ;; <https://github.com/ieure/scratch-el>.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -15556,11 +15664,6 @@ for the given MAJOR-MODE, any text is appended to it."
 ;;
 ;; This covers my isearch.el, replace.el, and grep.el extensions, for
 ;; use in my Emacs setup: <https://protesilaos.com/emacs/dotemacs>.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -16110,11 +16213,6 @@ and function as links to the context they reference."
 ;;
 ;; This covers my shell.el extensions, for use in my Emacs setup:
 ;; <https://protesilaos.com/emacs/dotemacs>.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -16463,11 +16561,6 @@ Add a bookmark handler for shell buffer and activate the
 ;;; Commentary:
 ;;
 ;; Common commands for my Emacs: <https://protesilaos.com/emacs/dotemacs/>.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -16591,6 +16684,25 @@ The DWIM behaviour of this command is as follows:
     (abort-recursive-edit))
    (t
     (keyboard-quit))))
+
+;;;###autoload
+(defun minimal-simple-delete-window-dwim ()
+  "Do What I Mean to delete the current THING.
+When there is more than one window, THING is a window.
+When there are more than one `tab-bar-mode' tabs, THING is a tab.
+Else THING is a frame if frames are more than one."
+  (declare (interactive-only t))
+  (interactive)
+  (cond
+   ((length> (window-list) 1)
+    (delete-window))
+   ((and (featurep 'tab-bar)
+         (length> (tab-bar-tabs) 1))
+    (tab-close))
+   ((length> (frame-list) 1)
+    (delete-frame))
+   (t
+    (user-error "Nothing to delete"))))
 
 ;; DEPRECATED 2023-12-26: The `minimal-simple-goto-definition' is a good
 ;; idea but it needs more work.  Ultimately though, it is easier to
@@ -17605,11 +17717,6 @@ major mode.")
 ;;
 ;; This covers my spelling-related extensions, for use in my Emacs
 ;; setup: https://protesilaos.com/emacs/dotemacs.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -17715,11 +17822,6 @@ function.  Then you can control the buffer's specifics via
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -17854,11 +17956,6 @@ Else do `vertico-exit'."
 ;;
 ;; This covers my window and display-buffer extensions, for use in my
 ;; Emacs setup: https://protesilaos.com/emacs/dotemacs.
-;;
-;; Remember that every piece of Elisp that I write is for my own
-;; educational and recreational purposes.  I am not a programmer and I
-;; do not recommend that you copy any of this if you are not certain of
-;; what it does.
 
 ;;; Code:
 
@@ -18316,4 +18413,3 @@ and other programs I use:
 I have been using tiling window managers for most of my time on Linux
 (I switched to Linux in the summer of 2016 and I think I started with
 i3wm in 2017).
-
