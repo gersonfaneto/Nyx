@@ -190,10 +190,10 @@
            :default-height 80)
           (regular) ; like this it uses all the fallback values and is named `regular'
           (medium
-           :default-family "SpaceMono Nerd Font"
+           :default-family "Aporetic Serif Mono"
            :default-height 115
-           :fixed-pitch-family "SpaceMono Nerd Font Mono"
-           :variable-pitch-family "SpaceMono Nerd Font Propo")
+           :fixed-pitch-family "Aporetic Serif Mono"
+           :variable-pitch-family "Aporetic Sans")
           (large
            :default-height 150)
           (presentation
@@ -205,13 +205,13 @@
            ;; I keep all properties for didactic purposes, but most can be
            ;; omitted.  See the fontaine manual for the technicalities:
            ;; <https://protesilaos.com/emacs/fontaine>.
-           :default-family "SpaceMono Nerd Font Mono"
+           :default-family "Aporetic Sans Mono"
            :default-weight regular
            :default-slant normal
            :default-width normal
            :default-height 100
 
-           :fixed-pitch-family "Space Mono Nerd Font Mono"
+           :fixed-pitch-family "Aporetic Sans Mono"
            :fixed-pitch-weight nil
            :fixed-pitch-slant nil
            :fixed-pitch-width nil
@@ -223,7 +223,7 @@
            :fixed-pitch-serif-width nil
            :fixed-pitch-serif-height 1.0
 
-           :variable-pitch-family "SpaceMono Nerd Font Propo"
+           :variable-pitch-family "Aporetic Serif"
            :variable-pitch-weight nil
            :variable-pitch-slant nil
            :variable-pitch-width nil

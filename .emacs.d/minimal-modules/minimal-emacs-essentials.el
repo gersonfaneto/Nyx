@@ -101,7 +101,7 @@
 
   (minimal-emacs-keybind minimal-simple-override-mode-map
     "C-a" #'minimal-simple-duplicate-line-or-region ; "again" mnemonic, overrides `move-beginning-of-line'
-    "C-d" #'minimal-simple-delete-line      ; overrides `delete-char'
+    "C-d" #'minimal-simple-delete-line ; overrides `delete-char'
     "C-v" #'minimal-simple-multi-line-below ; overrides `scroll-up-command'
     "<next>" #'minimal-simple-multi-line-below ; overrides `scroll-up-command'
     "M-v" #'minimal-simple-multi-line-above ; overrides `scroll-down-command'
