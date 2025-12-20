@@ -1,6 +1,11 @@
 *
 
+!.gitignore
+
 !init.el
 !early-init.el
+
+!minimal-modules/
+!minimal-libs/
 
 !README.org
