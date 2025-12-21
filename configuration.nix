@@ -236,6 +236,8 @@
       aseprite
       bat
       beets
+      bitwarden-cli
+      bitwarden-cli
       bluetui
       bottom
       brightnessctl
@@ -288,7 +290,7 @@
       pulseaudio
       qalculate-gtk
       qutebrowser
-      bitwarden-cli
+      qutebrowser
       ripgrep
       rofi
       rsync

@@ -58,7 +58,7 @@ mEditor :: String
 mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
 
 mBrowser :: String
-mBrowser = "firefox"
+mBrowser = "qutebrowser"
 
 mCalc :: String
 mCalc = "qalculate-gtk"
