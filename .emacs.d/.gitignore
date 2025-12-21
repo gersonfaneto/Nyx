@@ -2,10 +2,5 @@
 
 !.gitignore
 
-!README.org
-
 !init.el
 !early-init.el
-
-!minimal-modules/
-!minimal-lisp/
