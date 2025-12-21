@@ -25,6 +25,7 @@ in {
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/nvim/" = mkSymlink ".config/nvim/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
+    ".config/qutebrowser/" = mkSymlink ".config/qutebrowser/";
     ".config/rg/" = mkSymlink ".config/rg/";
     ".config/rofi/" = mkSymlink ".config/rofi/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
