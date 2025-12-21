@@ -102,8 +102,31 @@ Here is a schematic representation of this directory structure (files
 shown here may not reflect the latest state of the project):
 
 #+begin_example
-~/Developer/Personal/Nyx/.emacs.d $ tree -N -L 4 -C --gitignore --dirsfirst
+~/.emacs.d $ tree --gitignore --dirsfirst
 .
+├── minimal-lisp
+│   ├── minimal-abbrev.el
+│   ├── minimal-comment.el
+│   ├── minimal-common.el
+│   ├── minimal-dired.el
+│   ├── minimal-ediff.el
+│   ├── minimal-elisp.el
+│   ├── minimal-eww.el
+│   ├── minimal-minibuffer.el
+│   ├── minimal-modeline.el
+│   ├── minimal-notmuch.el
+│   ├── minimal-org.el
+│   ├── minimal-pair.el
+│   ├── minimal-prefix.el
+│   ├── minimal-project.el
+│   ├── minimal-register.el
+│   ├── minimal-scratch.el
+│   ├── minimal-search.el
+│   ├── minimal-shell.el
+│   ├── minimal-simple.el
+│   ├── minimal-spell.el
+│   ├── minimal-vertico.el
+│   └── minimal-window.el
 ├── minimal-modules
 │   ├── minimal-emacs-completion.el
 │   ├── minimal-emacs-dired.el
@@ -125,33 +148,11 @@ shown here may not reflect the latest state of the project):
 │   ├── minimal-emacs-web.el
 │   ├── minimal-emacs-which-key.el
 │   └── minimal-emacs-window.el
-├── minimal-lisp
-│   ├── minimal-abbrev.el
-│   ├── minimal-comment.el
-│   ├── minimal-common.el
-│   ├── minimal-dired.el
-│   ├── minimal-ediff.el
-│   ├── minimal-elisp.el
-│   ├── minimal-eww.el
-│   ├── minimal-modeline.el
-│   ├── minimal-notmuch.el
-│   ├── minimal-org.el
-│   ├── minimal-pair.el
-│   ├── minimal-prefix.el
-│   ├── minimal-project.el
-│   ├── minimal-register.el
-│   ├── minimal-scratch.el
-│   ├── minimal-search.el
-│   ├── minimal-shell.el
-│   ├── minimal-simple.el
-│   ├── minimal-spell.el
-│   ├── minimal-vertico.el
-│   └── minimal-window.el
 ├── early-init.el
 ├── init.el
 └── README.org
 
-3 directories, 44 files
+3 directories, 45 files
 #+end_example
 
 The reason I have this modular setup is because it is easier to debug
