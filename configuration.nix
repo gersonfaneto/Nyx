@@ -287,6 +287,8 @@
       procps
       pulseaudio
       qalculate-gtk
+      qutebrowser
+      bitwarden-cli
       ripgrep
       rofi
       rsync
