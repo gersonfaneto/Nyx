@@ -9,11 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    apple-fonts = {
-      url = "github:Lyndeno/apple-fonts.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,10 +24,6 @@
     system = "x86_64-linux";
 
     pkgs = nixpkgs.legacyPackages.${system};
-
-    fonts = {
-      apple = inputs.apple-fonts.packages.${pkgs.system};
-    };
 
     overlays = {
       neovim = inputs.neovim-nightly-overlay.packages.${pkgs.system};
@@ -59,9 +50,8 @@
     nixosConfigurations = {
       Nyx = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit fonts;
-          inherit overlays;
           inherit inputs;
+          inherit overlays;
         };
 
         modules = [

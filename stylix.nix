@@ -22,21 +22,34 @@ in {
 
   stylix.fonts = {
     serif = {
-      package = pkgs.aporetic;
-      name = "Aporetic Serif";
+      package = pkgs.recursive;
+      name = "Recursive Sans Linear Static";
     };
     sansSerif = {
-      package = pkgs.aporetic;
-      name = "Aporetic Sans";
+      package = pkgs.recursive;
+      name = "Recursive Sans Casual Static";
     };
     monospace = {
-      package = pkgs.aporetic;
-      name = "Aporetic Sans Mono";
+      package = pkgs.recursive;
+      name = "Recursive Mono Casual Static";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;
       name = "Noto Color Emoji";
     };
+  };
+
+  stylix.cursor = {
+    package = pkgs.numix-cursor-theme;
+    name = "Numix-Cursor";
+    size = 24;
+  };
+
+  stylix.icons = {
+    enable = true;
+    package = pkgs.numix-icon-theme-square;
+    dark = "Numix-Square";
+    light = "Numix-Square-Light";
   };
 
   # Declare all 16 base16 colors as session variables to be used by applications

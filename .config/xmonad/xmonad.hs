@@ -60,6 +60,9 @@ mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
 mBrowser :: String
 mBrowser = "qutebrowser"
 
+mFiles :: String
+mFiles = "nautilus"
+
 mCalc :: String
 mCalc = "qalculate-gtk"
 
@@ -111,6 +114,7 @@ openSubmap =
             [ ((0, xK_e), spawn mEditor)
             , ((0, xK_b), spawn mBrowser)
             , ((0, xK_q), spawn mCalc)
+            , ((0, xK_f), spawn mFiles)
             , ((0, xK_z), spawn "boomer")
             ]
 

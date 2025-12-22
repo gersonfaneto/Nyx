@@ -101,7 +101,7 @@
 ;; --- Custom File and Theme Definitions ---
 ;; Define paths and initial settings for custom files, font, and theme.
 (setq minimal/local-file            "~/.emacs.d/local.el"
-      minimal/default-font          "Aporetic Sans Mono 10"
+      minimal/default-font          "Recursive 10"
       minimal/default-theme         'solarized
       minimal/default-background    'dark)
 

@@ -51,6 +51,7 @@ in {
   home.packages = with pkgs; [
     mpc
     zathura
+    nautilus
   ];
 
   services.picom = {

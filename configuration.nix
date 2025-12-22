@@ -1,6 +1,5 @@
 {
   pkgs,
-  fonts,
   overlays,
   ...
 }: {
@@ -399,48 +398,18 @@
       # Emojis
       noto-fonts-color-emoji
 
-      # O.o
-      fonts.apple.sf-mono
-      fonts.apple.sf-pro
-
       # General
-      aporetic
-
-      # Coding
-      nerd-fonts._3270
-      nerd-fonts.blex-mono
-      nerd-fonts.comic-shanns-mono
-      nerd-fonts.commit-mono
-      nerd-fonts.daddy-time-mono
-      nerd-fonts.departure-mono
-      nerd-fonts.geist-mono
-      nerd-fonts.gohufont
-      nerd-fonts.iosevka
-      nerd-fonts.iosevka-term
-      nerd-fonts.iosevka-term-slab
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.martian-mono
-      nerd-fonts.meslo-lg
-      nerd-fonts.monaspace
-      nerd-fonts.monofur
-      nerd-fonts.monoid
-      nerd-fonts.mononoki
-      nerd-fonts.recursive-mono
-      nerd-fonts.sauce-code-pro
-      nerd-fonts.shure-tech-mono
-      nerd-fonts.space-mono
-      nerd-fonts.terminess-ttf
-      nerd-fonts.victor-mono
+      recursive
     ];
-    # fontconfig = {
-    #   enable = true;
-    #   defaultFonts = {
-    #     emoji = ["Noto Emoji"];
-    #     serif = ["Aporetic Serif"];
-    #     sansSerif = ["Aporetic Sans"];
-    #     monospace = ["Apoertic Sans Mono"];
-    #   };
-    # };
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        emoji = ["Noto Emoji"];
+        serif = ["Recursive Sans Linear Static"];
+        sansSerif = ["Recursive Sans Casual Static"];
+        monospace = ["Recursive Mono Casual Static"];
+      };
+    };
   };
 
   system.stateVersion = "24.11"; # DON'T CHANGE THIS!
