@@ -41,7 +41,6 @@ in {
     ".highlight/" = mkSymlink ".highlight/";
     ".local/share/fonts/" = mkSymlink ".local/share/fonts/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
-    ".local/share/applications/" = mkSymlink ".local/share/applications/";
     ".gitconfig" = mkSymlink ".gitconfig";
     ".bashrc" = mkSymlink ".bashrc";
     ".profile" = mkSymlink ".profile";

@@ -1,5 +1,5 @@
 [Default Applications]
-inode/directory=file-manager.desktop
+inode/directory=org.gnome.Nautilus.desktop
 
 [Default Applications]
 application/pdf=org.pwmt.zathura.desktop
@@ -7,3 +7,10 @@ application/pdf=org.pwmt.zathura.desktop
 [Default Applications]
 image/png=feh.desktop
 image/jpeg=feh.desktop
+
+[Default Applications]
+text/html=qutebrowser.desktop
+x-scheme-handler/http=qutebrowser.desktop
+x-scheme-handler/https=qutebrowser.desktop
+x-scheme-handler/about=qutebrowser.desktop
+x-scheme-handler/unknown=qutebrowser.desktop

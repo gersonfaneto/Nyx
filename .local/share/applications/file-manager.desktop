@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=File Manager
-Comment=Use NeoVIM as a file manager
-Exec=alacritty --command nvim %f
-Terminal=true
-MimeType=inode/directory;
-Categories=Utility;FileManager;
-NoDisplay=false
