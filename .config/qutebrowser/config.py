@@ -667,12 +667,32 @@ c.url.default_page = "https://start.duckduckgo.com/"
 c.url.incdec_segments = ["path", "query"]
 c.url.open_base_url = False
 c.url.searchengines = {
-    'DEFAULT': 'https://duckduckgo.com/?q={}',
-    # NixOS search queries.
-    # NOTE: We're using a blank URL as a redirector for all Nix-related calls.
-    "nix": "https://nix.default-redirector/{}",
-    # Wikipedia search queries.
-    "wiki": "https://en.wikipedia.org/w/index.php?search={}",
+    # ...
+    "DEFAULT": "https://duckduckgo.com/?q={}",
+    # ...
+    "@bc": "https://bandcamp.com/search?q={}",
+    "@yt": "https://www.youtube.com/results?search_query={}",
+    # ...
+    "@cd": "https://dictionary.cambridge.org/dictionary/english/{}",
+    "@ud": "https://www.urbandictionary.com/define.php?term={}",
+    # ...
+    "@wiki": "https://en.wikipedia.org/w/index.php?search={}",
+    "@chat": "https://chatgpt.com/?model=auto&q={}",
+    # ...
+    "@hh": "https://hoogle.haskell.org/?hoogle={}",
+    # ...
+    "@gg": "https://github.com/gersonfaneto/{}",
+    "@gh": "https://github.com/search?q={}",
+    "@so": "https://stackoverflow.com/search?q={}",
+    # ...
+    "@rd": "https://docs.rs/{}",
+    "@rl": "https://lib.rs/{}",
+    "@rc": "https://crates.io/search?q={}",
+    # ...
+    "@np": "https://search.nixos.org/packages?query={}",
+    "@nw": "https://nixos.wiki/index.php?search={}",
+    "@no": "https://search.nixos.org/options?channel=unstable&query={}",
+    "@nh": "https://home-manager-options.extranix.com/?query={}",
 }
 c.url.start_pages = ["https://start.duckduckgo.com"]
 c.url.yank_ignored_parameters = [
