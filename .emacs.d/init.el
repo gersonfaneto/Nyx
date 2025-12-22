@@ -1,4 +1,3 @@
-
 ;; -*- lexical-binding: t; outline-regexp: ";; ---"; eval: (local-set-key (kbd "C-c i") #'consult-outline); -*-
 
 ;; A foolish attempt on a minimal EMACS configuration, by @gersonfaneto.
@@ -70,10 +69,6 @@
 ;; --- General Keybindings ---
 (global-set-key (kbd "C-c C-c r") 'restart-emacs)
 (global-set-key (kbd "C-c C-c k") 'kill-emacs)
-
-
-;; --- Lisp Keybindings
-(global-set-key (kbd "C-x C-j") 'eval-print-last-sexp)
 
 ;; --- Straight.el Configuration ---
 ;; Specify the branch for straight.el.
@@ -480,17 +475,10 @@
 (setq custom-safe-themes t)
 
 ;; Load default theme with default background.
-(progn
-  (defun minimal/load-theme ()
-    (load-theme
-     (intern
-      (format "%s-%s" minimal/default-theme minimal/default-background))))
-  (minimal/load-theme))
-
-;; Set the frame default background.
-(progn
-  (setq frame-background-mode minimal/default-background)
-  (mapc 'frame-set-background-mode (frame-list)))
+(defun minimal/load-theme ()
+  (load-theme
+   (intern
+    (format "%s-%s" minimal/default-theme minimal/default-background))))
 
 ;; --- UI :: Transparency ---
 ;; Change values of frame alpha to toggle it between solid and seetrough.
@@ -505,10 +493,6 @@
     (set-frame-parameter nil 'alpha '(90 . 50))
       (set-frame-parameter nil 'alpha '(100 . 100)))))
 
-;; FIXME: Doesn't work on the first run...
-(progn
-  (minimal/toggle-transparency))
-
 ;; Keybinding to toggle the transparency.
 (global-set-key (kbd "C-M-9") 'minimal/toggle-transparency)
 
@@ -517,7 +501,11 @@
 (defun minimal/setup-frame (frame)
   "Setup fonts, theme, and modeline for new frames."
   (with-selected-frame frame
+    (progn
+      (setq frame-background-mode minimal/default-background)
+      (mapc 'frame-set-background-mode (frame-list)))   ;; Set the frame default background.
     (minimal/load-theme)				;; Load the current theme
+    (minimal/toggle-transparency)			;; Set background transparency
     (set-frame-font minimal/default-font nil t)))	;; Set the default font
 
 ;; Apply frame setup when Emacs starts or when a new frame is created.
