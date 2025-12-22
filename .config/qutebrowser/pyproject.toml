@@ -1,13 +1,13 @@
 [project]
 name = "qb"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
+description = ""
+readme = ""
 requires-python = ">=3.12"
 dependencies = [
-    "pyqt6>=6.10.1",
+    "pyqt6>=6.10.0",
     "pyqt6-webengine>=6.10.0",
-    "qutebrowser>=3.6.3",
+    "qutebrowser>=3.6.1",
     "requests>=2.32.5",
 ]
 

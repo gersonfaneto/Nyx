@@ -1,8 +1,6 @@
 import os
 from dataclasses import dataclass
 
-from modules.utils import Utils
-
 
 @dataclass
 class ColorsBase16:
@@ -35,20 +33,20 @@ class ColorsBase16:
             if hex_codes[i]
         }
 
-        # Fallback to `base16-cappuccin-mocha` if Stylix theme cannot be found.
-        self.base00 = color_codes.get("base00", "#1e1e2e")
-        self.base01 = color_codes.get("base01", "#181825")
-        self.base02 = color_codes.get("base02", "#313244")
-        self.base03 = color_codes.get("base03", "#45475a")
-        self.base04 = color_codes.get("base04", "#585b70")
-        self.base05 = color_codes.get("base05", "#cdd6f4")
-        self.base06 = color_codes.get("base06", "#f5e0dc")
-        self.base07 = color_codes.get("base07", "#b4befe")
-        self.base08 = color_codes.get("base08", "#f38ba8")
-        self.base09 = color_codes.get("base09", "#fab387")
-        self.base0A = color_codes.get("base0A", "#f9e2af")
-        self.base0B = color_codes.get("base0B", "#a6e3a1")
-        self.base0C = color_codes.get("base0C", "#94e2d5")
-        self.base0D = color_codes.get("base0D", "#89b4fa")
-        self.base0E = color_codes.get("base0E", "#cba6f7")
-        self.base0F = color_codes.get("base0F", "#f2cdcd")
+        # Fallback to `base16-solarized-dark` if Stylix theme cannot be found.
+        self.base00 = color_codes.get("base00", "#002b36")
+        self.base01 = color_codes.get("base01", "#073642")
+        self.base02 = color_codes.get("base02", "#586e75")
+        self.base03 = color_codes.get("base03", "#657b83")
+        self.base04 = color_codes.get("base04", "#839496")
+        self.base05 = color_codes.get("base05", "#93a1a1")
+        self.base06 = color_codes.get("base06", "#eee8d5")
+        self.base07 = color_codes.get("base07", "#fdf6e3")
+        self.base08 = color_codes.get("base08", "#dc322f")
+        self.base09 = color_codes.get("base09", "#cb4b16")
+        self.base0A = color_codes.get("base0A", "#b58900")
+        self.base0B = color_codes.get("base0B", "#859900")
+        self.base0C = color_codes.get("base0C", "#2aa198")
+        self.base0D = color_codes.get("base0D", "#268bd2")
+        self.base0E = color_codes.get("base0E", "#6c71c4")
+        self.base0F = color_codes.get("base0F", "#d33682")
