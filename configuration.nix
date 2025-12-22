@@ -319,7 +319,6 @@
       xsel
       xss-lock
       yt-dlp
-      zathura
       zoxide
     ])
     ++ (with pkgs; [
@@ -433,15 +432,15 @@
       nerd-fonts.terminess-ttf
       nerd-fonts.victor-mono
     ];
-    fontconfig = {
-      enable = true;
-      defaultFonts = {
-        emoji = ["Noto Emoji"];
-        serif = ["Aporetic Serif"];
-        sansSerif = ["Aporetic Sans"];
-        monospace = ["Apoertic Sans Mono"];
-      };
-    };
+    # fontconfig = {
+    #   enable = true;
+    #   defaultFonts = {
+    #     emoji = ["Noto Emoji"];
+    #     serif = ["Aporetic Serif"];
+    #     sansSerif = ["Aporetic Sans"];
+    #     monospace = ["Apoertic Sans Mono"];
+    #   };
+    # };
   };
 
   system.stateVersion = "24.11"; # DON'T CHANGE THIS!

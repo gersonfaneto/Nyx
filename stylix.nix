@@ -6,18 +6,36 @@
   ...
 }: let
   colors = config.lib.stylix.colors.withHashtag;
+  scheme = "${pkgs.base16-schemes}/share/themes/solarized-dark.yaml";
 in {
   imports = [inputs.stylix.homeModules.stylix];
 
-  stylix = {
-    enable = true;
-    enableReleaseChecks = false;
-    autoEnable = true;
+  stylix.enable = true;
+  stylix.autoEnable = true;
+  stylix.enableReleaseChecks = false;
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-dark.yaml";
+  stylix.base16Scheme = scheme;
 
-    targets = {
-      gtk.enable = true;
+  stylix.targets.qt.enable = true;
+
+  stylix.targets.gtk.enable = true;
+
+  stylix.fonts = {
+    serif = {
+      package = pkgs.aporetic;
+      name = "Aporetic Serif";
+    };
+    sansSerif = {
+      package = pkgs.aporetic;
+      name = "Aporetic Sans";
+    };
+    monospace = {
+      package = pkgs.aporetic;
+      name = "Aporetic Sans Mono";
+    };
+    emoji = {
+      package = pkgs.noto-fonts-color-emoji;
+      name = "Noto Color Emoji";
     };
   };
 
