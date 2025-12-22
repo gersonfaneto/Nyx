@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     apple-fonts = {
       url = "github:Lyndeno/apple-fonts.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,11 +58,10 @@
 
     nixosConfigurations = {
       Nyx = inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
         specialArgs = {
-          inherit inputs;
           inherit fonts;
           inherit overlays;
+          inherit inputs;
         };
 
         modules = [
@@ -69,6 +73,9 @@
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "bak";
             home-manager.users.gerson = ./home.nix;
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+            };
           }
         ];
       };
@@ -76,11 +83,13 @@
 
     homeConfigurations = {
       gerson = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
         modules = [
           ./home.nix
         ];
-        extraSpecialArgs = {};
+        extraSpecialArgs = {
+          inherit pkgs;
+          inherit inputs;
+        };
       };
     };
   };

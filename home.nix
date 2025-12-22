@@ -9,6 +9,10 @@
     source = config.lib.file.mkOutOfStoreSymlink "${NYX_PATH}/${path}";
   };
 in {
+  imports = [
+    ./stylix.nix
+  ];
+
   home.username = "gerson";
   home.homeDirectory = "/home/gerson";
 
