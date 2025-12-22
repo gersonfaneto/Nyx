@@ -16,9 +16,13 @@ in {
 
   stylix.base16Scheme = scheme;
 
+  stylix.polarity = "dark";
+
   stylix.targets.qt.enable = true;
 
   stylix.targets.gtk.enable = true;
+
+  stylix.targets.dunst.enable = true;
 
   stylix.fonts = {
     serif = {

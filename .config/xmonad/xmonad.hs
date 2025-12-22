@@ -96,7 +96,7 @@ myStartupHook = do
     spawn "xset s 600 &"
     spawn "xss-lock -l -- xsecurelock &"
     spawn "killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc &"
-    spawn "xsetroot -cursor_name left_ptr &"
+    -- spawn "xsetroot -cursor_name left_ptr &"
     io $ writeFile "/home/gerson/.cache/xmonad-submap" ""
 
 setSubmap :: String -> X ()

@@ -236,19 +236,22 @@ c.confirm_quit = ["never"]
 
 # CONTENT SETTINGS
 
-c.content.autoplay = True
+c.content.autoplay = False
 
+c.content.blocking.enabled = True
+c.content.blocking.method = "both"
 c.content.blocking.adblock.lists = [
     "https://easylist.to/easylist/easylist.txt",
     "https://easylist.to/easylist/easyprivacy.txt",
+    "https://easylist.to/easylist/fanboy-social.txt",
+    "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
+    "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
 ]
-c.content.blocking.enabled = True
+c.content.blocking.whitelist = []
 c.content.blocking.hosts.block_subdomains = True
 c.content.blocking.hosts.lists = [
     "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
 ]
-c.content.blocking.method = "auto"
-c.content.blocking.whitelist = []
 
 c.content.cache.appcache = True
 c.content.cache.maximum_pages = 0

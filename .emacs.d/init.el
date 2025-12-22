@@ -201,9 +201,6 @@
 
 ;; --- Navigation Enhancements ---
 (use-package projectile
-  :bind
-  ("C-c f" . projectile-find-file)
-  ("C-c d" . projectile-find-dir)
   :commands
   (projectile-find-file))
 
