@@ -1,3 +1,4 @@
+
 ;; -*- lexical-binding: t; outline-regexp: ";; ---"; eval: (local-set-key (kbd "C-c i") #'consult-outline); -*-
 
 ;; A foolish attempt on a minimal EMACS configuration, by @gersonfaneto.
@@ -216,8 +217,6 @@
   (:map dired-mode-map
 	("?" . dirvish-dispatch)
 	("-" . dired-up-directory))
-  :bind
-  ("M--" . dired-jump)
   :init
   (dirvish-override-dired-mode))
 
