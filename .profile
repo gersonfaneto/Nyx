@@ -140,7 +140,7 @@ fi
 export FZF_CTRL_R_OPTS=--no-preview
 export FZF_PREVIEW_DISABLE_UB=true
 
-has background && (background dark &) 2> /dev/null
+# has background && (background dark &) 2> /dev/null
 
 if [ ! -e "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/greeted" ]; then
   touch "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/greeted"

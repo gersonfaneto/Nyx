@@ -389,7 +389,7 @@ c.fonts.completion.category = "bold default_size default_family"
 c.fonts.completion.entry = "default_size default_family"
 c.fonts.contextmenu = None
 c.fonts.debug_console = "default_size default_family"
-c.fonts.default_family = ["SF Mono"]
+c.fonts.default_family = ["Recursive"]
 c.fonts.default_size = "10pt"
 
 c.fonts.downloads = "default_size default_family"
@@ -644,7 +644,7 @@ c.tabs.padding = {"top": 5, "bottom": 5, "left": 5, "right": 5}
 c.tabs.pinned.frozen = True
 c.tabs.pinned.shrink = True
 
-c.tabs.position = "top"
+c.tabs.position = "bottom"
 c.tabs.select_on_remove = "next"
 c.tabs.show = "always"
 c.tabs.show_switching_delay = 800
@@ -667,11 +667,7 @@ c.url.default_page = "https://start.duckduckgo.com/"
 c.url.incdec_segments = ["path", "query"]
 c.url.open_base_url = False
 c.url.searchengines = {
-    # Google Search shall not query AI results by default.
-    "DEFAULT": "https://google.com/search?q={}+-ai",
-    "gg": "https://google.com/search?q={}",
-    # DuckDuckGo search queries.
-    "ddg": "https://duckduckgo.com/search?q={}",
+    'DEFAULT': 'https://duckduckgo.com/?q={}',
     # NixOS search queries.
     # NOTE: We're using a blank URL as a redirector for all Nix-related calls.
     "nix": "https://nix.default-redirector/{}",

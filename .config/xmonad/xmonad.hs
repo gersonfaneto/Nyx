@@ -91,7 +91,7 @@ myStartupHook :: X ()
 myStartupHook = do
     spawn "setxkbmap -layout br -variant thinkpad &"
     spawn "wallpaper --default &"
-    spawn "background dark &"
+    -- spawn "background dark &"
     spawn "battery -L 20 -n &"
     spawn "xset s 600 &"
     spawn "xss-lock -l -- xsecurelock &"
