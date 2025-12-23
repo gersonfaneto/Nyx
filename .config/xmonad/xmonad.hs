@@ -1,6 +1,7 @@
 import           XMonad
 import           XMonad.Actions.CycleWS
 import           XMonad.Actions.Submap
+
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.InsertPosition
@@ -9,12 +10,15 @@ import           XMonad.Hooks.ManageHelpers   (doCenterFloat, doRectFloat,
                                                isDialog)
 import           XMonad.Hooks.StatusBar
 import           XMonad.Hooks.StatusBar.PP
+
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.Renamed
 import           XMonad.Layout.ResizableTile
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.Spiral
+
 import qualified XMonad.StackSet              as StackSet
+
 import           XMonad.Util.EZConfig         (additionalKeysP)
 import           XMonad.Util.Loggers
 import           XMonad.Util.SpawnOnce
