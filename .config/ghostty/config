@@ -7,7 +7,7 @@ cursor-style-blink = false
 
 shell-integration-features = no-cursor
 
-font-family = "Recursive Mono Casual Static"
+font-family = Aporetic Serif Mono
 font-size = 10
 
 window-padding-x = 8

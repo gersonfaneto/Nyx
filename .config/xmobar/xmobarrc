@@ -1,6 +1,6 @@
 Config {
    -- Appearance
-     font            = "Recursive 10"
+     font            = "Aporetic Serif 10"
    , bgColor         = "#002B36"
    , fgColor         = "#FDF6E3"
    , position        = BottomSize C 100 35 │ 

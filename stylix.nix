@@ -24,16 +24,16 @@ in {
 
   stylix.fonts = {
     serif = {
-      package = pkgs.recursive;
-      name = "Recursive Sans Linear Static";
+      package = pkgs.aporetic;
+      name = "Aporetic Serif";
     };
     sansSerif = {
-      package = pkgs.recursive;
-      name = "Recursive Sans Casual Static";
+      package = pkgs.aporetic;
+      name = "Aporetic Sans";
     };
     monospace = {
-      package = pkgs.recursive;
-      name = "Recursive Mono Casual Static";
+      package = pkgs.aporetic;
+      name = "Aporetic Serif Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;

@@ -400,15 +400,15 @@
       noto-fonts-color-emoji
 
       # General
-      recursive
+      aporetic
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = ["Noto Emoji"];
-        serif = ["Recursive Sans Linear Static"];
-        sansSerif = ["Recursive Sans Casual Static"];
-        monospace = ["Recursive Mono Casual Static"];
+        serif = ["Aporetic Serif"];
+        sansSerif = ["Aporetic Sans"];
+        monospace = ["Aporetic Serif Mono"];
       };
     };
   };

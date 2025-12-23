@@ -17,7 +17,7 @@ transparent_background_colors = true
 size = 10
 
 [font.normal]
-family = 'Recursive'
+family = 'Aporetic Serif Mono'
 
 [scrolling]
 history = 0
