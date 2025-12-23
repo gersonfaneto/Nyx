@@ -22,8 +22,6 @@ in {
 
   stylix.targets.gtk.enable = true;
 
-  stylix.targets.dunst.enable = true;
-
   stylix.fonts = {
     serif = {
       package = pkgs.recursive;

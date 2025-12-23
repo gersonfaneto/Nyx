@@ -602,7 +602,7 @@ c.session.lazy_restore = False
 
 c.statusbar.padding = {"top": 1, "bottom": 1, "left": 0, "right": 0}
 c.statusbar.position = "bottom"
-c.statusbar.show = "always"
+c.statusbar.show = "in-mode"
 c.statusbar.widgets = [
     "keypress",
     "search_match",
@@ -646,7 +646,7 @@ c.tabs.pinned.shrink = True
 
 c.tabs.position = "bottom"
 c.tabs.select_on_remove = "next"
-c.tabs.show = "always"
+c.tabs.show = "multiple"
 c.tabs.show_switching_delay = 800
 c.tabs.tabs_are_windows = False
 

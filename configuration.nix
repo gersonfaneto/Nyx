@@ -239,8 +239,6 @@
       aseprite
       bat
       beets
-      bitwarden-cli
-      bitwarden-cli
       bluetui
       bottom
       brightnessctl
@@ -294,6 +292,7 @@
       qalculate-gtk
       qutebrowser
       qutebrowser
+      rbw
       ripgrep
       rofi
       rsync
@@ -347,6 +346,8 @@
       luajitPackages.luacheck
 
       # C
+      bear
+      clang-tools
       gcc
       gnumake
       cmake
