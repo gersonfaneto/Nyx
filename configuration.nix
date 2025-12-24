@@ -85,22 +85,10 @@
     enable = true;
     group = "users";
     user = "gerson";
-    dataDir = "/home/gerson/Syncthing";
+    dataDir = "/home/gerson/.local/share/Syncthing";
     configDir = "/home/gerson/.config/syncthing";
     overrideDevices = false;
-    overrideFolders = true;
-    settings = {
-      folders = {
-        "Alexandria" = {
-          path = "/home/gerson/Alexandria";
-          devices = [];
-        };
-        "Music" = {
-          path = "/home/gerson/Music";
-          devices = [];
-        };
-      };
-    };
+    overrideFolders = false;
   };
 
   hardware.bluetooth = {
