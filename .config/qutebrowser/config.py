@@ -667,28 +667,29 @@ c.url.default_page = "https://start.duckduckgo.com/"
 c.url.incdec_segments = ["path", "query"]
 c.url.open_base_url = False
 c.url.searchengines = {
-    # ...
+    # ---
     "DEFAULT": "https://duckduckgo.com/?q={}+-ai",
-    # ...
+    # ---
     "@bc": "https://bandcamp.com/search?q={}",
+    "@ym": "https://music.youtube.com/search?q={}",
     "@yt": "https://www.youtube.com/results?search_query={}",
-    # ...
+    # ---
     "@cd": "https://dictionary.cambridge.org/dictionary/english/{}",
     "@ud": "https://www.urbandictionary.com/define.php?term={}",
-    # ...
+    # ---
     "@wiki": "https://en.wikipedia.org/w/index.php?search={}",
     "@chat": "https://chatgpt.com/?model=auto&q={}",
-    # ...
+    # ---
     "@hh": "https://hoogle.haskell.org/?hoogle={}",
-    # ...
+    # ---
     "@gg": "https://github.com/gersonfaneto/{}",
     "@gh": "https://github.com/search?q={}",
     "@so": "https://stackoverflow.com/search?q={}",
-    # ...
+    # ---
     "@rd": "https://docs.rs/{}",
     "@rl": "https://lib.rs/{}",
     "@rc": "https://crates.io/search?q={}",
-    # ...
+    # ---
     "@np": "https://search.nixos.org/packages?query={}",
     "@nw": "https://nixos.wiki/index.php?search={}",
     "@no": "https://search.nixos.org/options?channel=unstable&query={}",
