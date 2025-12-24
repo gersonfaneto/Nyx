@@ -282,6 +282,7 @@
       man-pages-posix
       mpv
       ncmpcpp
+      nsxiv
       pandoc
       playerctl
       poppler-utils
