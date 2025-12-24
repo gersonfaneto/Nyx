@@ -1,1 +1,67 @@
-https://www.youtube.com/ YouTube
+https://www.jstor.org/	JSTOR	research papers
+https://ntrs.nasa.gov/	NASA NTRS	research aerospace
+https://en.z-library.sk/	Z-Library	books library
+https://sci-hub.st/	Sci-Hub	research papers
+https://arxiv.org/	arXiv	research preprints
+https://www.gutenberg.org/	Project Gutenberg	books public-domain
+
+https://www.netacad.com/courses/javascript-essentials-2	JavaScript Essentials 2	netacad programming
+https://www.netacad.com/career-paths/cybersecurity	Junior Cybersecurity Analyst	netacad security
+https://www.netacad.com/career-paths/network-technician	Network Technician	netacad networking
+https://www.netacad.com/courses/ethical-hacker	Ethical Hacker	netacad security
+https://www.netacad.com/courses/introduction-data-science	Intro to Data Science	netacad data
+https://www.netacad.com/courses/data-analytics-essentials	Data Analytics Essentials	netacad data
+https://www.netacad.com/courses/english-for-it1	English for IT 1	netacad language
+https://www.netacad.com/courses/english-for-it2	English for IT 2	netacad language
+https://www.netacad.com/courses/c-plus-plus-essentials-1	C++ Essentials 1	netacad cpp
+https://www.netacad.com/courses/c-plus-plus-essentials-2	C++ Essentials 2	netacad cpp
+https://www.netacad.com/courses/c-plus-plus-advanced	C++ Advanced	netacad cpp
+https://www.netacad.com/courses/html-essentials	HTML Essentials	netacad web
+https://www.netacad.com/courses/css-essentials	CSS Essentials	netacad web
+https://www.netacad.com/courses/linux-essentials	Linux Essentials	netacad linux
+https://www.netacad.com/courses/linux-unhatched	Linux Unhatched	netacad linux
+https://www.netacad.com/courses/linux-1	Linux 1	netacad linux
+https://www.netacad.com/courses/linux-2	Linux 2	netacad linux
+
+https://www.coursera.org/specializations/algorithms	Algorithms	coursera algorithms
+https://www.coursera.org/learn/mathematical-thinking	Mathematical Thinking	coursera math
+https://www.coursera.org/learn/introduction-to-calculus	Calculus	coursera math
+https://www.coursera.org/learn/introduction-to-advanced-calculus	Advanced Calculus	coursera math
+https://www.coursera.org/learn/introduction-to-linear-algebra	Linear Algebra	coursera math
+https://www.coursera.org/specializations/mathematics-engineers	Mathematics for Engineers	coursera math
+
+https://www.coursera.org/specializations/oss-development-linux-git	OSS Dev Linux Git	coursera linux
+https://www.coursera.org/professional-certificates/ibm-technical-support	IBM IT Support	coursera it
+https://www.coursera.org/professional-certificates/ibm-full-stack-cloud-developer	IBM Full Stack	coursera web
+https://www.coursera.org/professional-certificates/ibm-full-stack-javascript-developer	IBM Full Stack JS	coursera web
+https://www.coursera.org/professional-certificates/ibm-data-analyst	IBM Data Analyst	coursera data
+https://www.coursera.org/professional-certificates/ibm-data-science	IBM Data Science	coursera data
+https://www.coursera.org/professional-certificates/ibm-data-engineer	IBM Data Engineer	coursera data
+https://www.coursera.org/professional-certificates/ibm-cybersecurity-analyst	IBM Cybersecurity	coursera security
+https://www.coursera.org/professional-certificates/devops-and-software-engineering	IBM DevOps	coursera devops
+
+https://www.coursera.org/learn/comparch	Computer Architecture	coursera hardware
+https://www.coursera.org/specializations/cortex-m-architecture-and-software-development	ARM Cortex-M	coursera embedded
+https://www.coursera.org/specializations/fpga-design	FPGA Design	coursera fpga
+https://www.coursera.org/learn/build-a-computer	Nand to Tetris	coursera hardware
+
+https://pwn.college/	PWN College	security exploitation
+https://fullstackopen.com/en/	Full Stack Open	web fullstack
+
+https://adventofcode.com/	Advent of Code	programming puzzles
+https://judge.beecrowd.com/en	beecrowd	programming contests
+https://codeforces.com/	Codeforces	programming contests
+https://leetcode.com/	LeetCode	programming interviews
+
+https://make.mad-scientist.net/papers/advanced-auto-dependency-generation/	GNU Make Auto Dependencies	build-systems
+https://popovicu.com/posts/writing-an-operating-system-kernel-from-scratch/	Write an OS Kernel	osdev
+https://zackoverflow.dev/writing/how-to-actually-write-c	How to Write C	c programming
+https://mislavzanic.com/blog/enable-lsp-xmonad	LSP + XMonad	linux
+https://karthinks.com/software/latex-input-for-impatient-scholars/	LaTeX Input	latex writing
+https://itsfoss.gitlab.io/post/how-do-i-get-my-fingerprint-sensor-to-work-with-sddm-login-in-nixos-plasma-6/	Fingerprint + SDDM	linux hardware
+https://mrcat.au/blog/how_to_devices/	Emulator Devices	emulation
+https://mrcat.au/blog/how_to_riscv/	RISC-V Emulator	riscv emulation
+http://danmidwood.com/content/2014/11/21/animated-paredit.html	Animated Paredit	lisp editing
+https://docs.windswept.digital/nixos/gtk-and-qt	GTK & QT Theming	nixos theming
+
+http://127.0.0.1:8384/#	Syncthing	local sync
