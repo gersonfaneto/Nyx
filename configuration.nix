@@ -297,6 +297,7 @@
       rofi
       rsync
       scc
+      sct
       slop
       tmux
       trash-cli

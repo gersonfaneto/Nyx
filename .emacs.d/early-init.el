@@ -121,3 +121,9 @@
 (when (file-exists-p minimal/custom-file)
   (setq custom-file minimal/custom-file)	;; Set Emacs's custom-file variable
   (load-file custom-file))			;; Load the custom file
+
+;; Load custom lisp
+(mapc
+ (lambda (string)
+   (add-to-list 'load-path (locate-user-emacs-file string)))
+ '("minimal-lisp" "minimal-modules"))
