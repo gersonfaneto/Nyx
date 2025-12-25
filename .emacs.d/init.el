@@ -113,19 +113,31 @@
     (server-start)))
 
 ;; --- Themes and Appearance ---
-(use-package solarized-theme
+;; Load doom-themes and configure them.
+(use-package doom-themes
+  :custom
+  (doom-themes-enable-bold t)          ;; Enable bold font in themes
+  (doom-themes-enable-italic t)       ;; Enable italic font in themes
   :config
   (progn
-    (defun minimal/toggle-solarized-background ()
-      "Switch between dark/light modes of the Solarized color theme."
+    (defun minimal/toggle-background ()
+      "Switch between dark/light modes of the current color theme."
       (interactive)
       (setq frame-background-mode
             (if (eq frame-background-mode 'dark) 'light 'dark))
       (load-theme
-       (intern
-        (format "solarized-%s" frame-background-mode)))
+       (intern (if (eq frame-background-mode 'dark)
+		   (format "%s" minimal/default-theme)
+		 (format "%s-%s" minimal/default-theme frame-background-mode))))
     (mapc 'frame-set-background-mode (frame-list)))
-  (global-set-key (kbd "C-M-0") 'minimal/toggle-solarized-background)))
+  (global-set-key (kbd "C-M-0") 'minimal/toggle-background)))
+
+;; Configure doom-modeline for the status bar.
+;; (use-package doom-modeline
+;;   :init
+;;   (doom-modeline-mode 1)               ;; Enable doom-modeline
+;;   :custom
+;;   (doom-modeline-icon (display-graphic-p))) ;; Show icons if Emacs is running graphically
 
 ;; Install all-the-icons if in graphical mode.
 (use-package all-the-icons
@@ -450,7 +462,10 @@
 (defun minimal/load-theme ()
   (load-theme
    (intern
-    (format "%s-%s" minimal/default-theme minimal/default-background))))
+    (if (eq minimal/default-background "dark")
+	(format "%s-%s" minimal/default-theme minimal/default-background)
+      (format "%s" minimal/default-theme)))))
+
 
 ;; --- UI :: Transparency ---
 ;; Change values of frame alpha to toggle it between solid and seetrough.
