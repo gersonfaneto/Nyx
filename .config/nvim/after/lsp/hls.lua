@@ -1,6 +1,6 @@
 ---@type vim.lsp.Config
 return {
-  cmd = { 'haskell-language-server-wrapper', '--lsp' },
+  cmd = { "haskell-language-server-wrapper", "--lsp", "+RTS", "-M8G", "-RTS" },
   filetypes = { 'haskell', 'lhaskell' },
   root_markers = {
     'hie.yaml',
@@ -12,7 +12,9 @@ return {
   settings = {
     haskell = {
       cabalFormattingProvider = 'cabalfmt',
-      formattingProvider = 'fourmolu',
+      -- formattingProvider = 'ormolu',
+      -- formattingProvider = 'fourmolu',
+      formattingProvider = 'stylish-haskell',
       plugin = {
         rename = {
           config = {

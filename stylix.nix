@@ -6,7 +6,7 @@
   ...
 }: let
   colors = config.lib.stylix.colors.withHashtag;
-  scheme = "${pkgs.base16-schemes}/share/themes/solarized-dark.yaml";
+  scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
 in {
   imports = [inputs.stylix.homeModules.stylix];
 

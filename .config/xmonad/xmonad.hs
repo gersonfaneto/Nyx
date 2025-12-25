@@ -33,16 +33,16 @@ import           Text.Regex.Posix             ((=~))
 
 q ~? x = fmap (=~ x) q
 
-cBackground = "#002B36"
-cForeground = "#657B83"
-cBlack      = "#32344A"
-cBlack'     = "#444B6A"
-cRed        = "#DC322F"
-cGreen      = "#859900"
-cYellow     = "#B58900"
-cBlue       = "#268BD2"
-cMagenta    = "#D33682"
-cCyan       = "#2AA198"
+cBackground = "#1D2021"
+cForeground = "#FBF1C7"
+cBlack      = "#3C3836"
+cBlack'     = "#504945"
+cRed        = "#FB4934"
+cGreen      = "#B8BB26"
+cYellow     = "#FABD2F"
+cBlue       = "#83A598"
+cMagenta    = "#D3869B"
+cCyan       = "#8EC07C"
 
 mSpacing = spacingWithEdge 3
 

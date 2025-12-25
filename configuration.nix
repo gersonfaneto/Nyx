@@ -349,6 +349,7 @@
       ghcid
       stack
       cabal-install
+      ormolu
       fourmolu
       stylish-haskell
       haskell-language-server
