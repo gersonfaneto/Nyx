@@ -1,8 +1,9 @@
 /*
 
-!.gitignore
-
 !init.el
 !early-init.el
 
-!minimal-*/
+!prot-emacs-modules/
+!prot-lisp/
+
+!prot-emacs.org
