@@ -14,8 +14,8 @@ COLOR_YELLOW='\033[0;33m'
 COLOR_BLUE='\033[0;34m'
 COLOR_CYAN='\033[0;36m'
 
-WALLPAPERS_DIR="$HOME/.local/share/wallpapers/current/"
-WALLPAPERS_DEFAULT="$WALLPAPERS_DIR/abstract.png"
+WALLPAPERS_DIR="$HOME/.local/share/wallpapers/"
+WALLPAPERS_DEFAULT="$WALLPAPERS_DIR/nixos.png"
 
 IMAGE_PICKER_CONFIG="$HOME/.config/rofi/styles/style-04.rasi"
 

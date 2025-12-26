@@ -174,6 +174,7 @@ mKeys =
     , ("M-w", workspaceSubmap)
     , ("M-<F1>", spawn "wallpaper --select")
     , ("M-S-<F1>", spawn "wallpaper --default")
+    , ("M-C-<F1>", spawn "wallpaper --random")
     , ("M-<F2>", spawn "background alt")
     , ("M-q", kill)
     , ("M-C-l", nextWS)
