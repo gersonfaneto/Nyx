@@ -1,16 +1,16 @@
-;;; Theme setup and related
+  ;;; Theme setup and related
 
-;;;; Load the desired theme module
-;; These all reference my packages: `modus-themes', `ef-themes',
-;; `doric-themes', `doom-themes' and `standard-themes'.
-(when prot-emacs-load-theme-family
-  (require
-   (pcase prot-emacs-load-theme-family
-     ('modus 'prot-emacs-modus-themes)
-     ('ef 'prot-emacs-ef-themes)
-     ('doric 'prot-emacs-doric-themes)
-     ('doom 'prot-emacs-doom-themes)
-     ('standard 'prot-emacs-standard-themes))))
+  ;;;; Load the desired theme module
+  ;; These all reference my packages: `modus-themes', `ef-themes',
+  ;; `doric-themes', `doom-themes' and `standard-themes'.
+  (when prot-emacs-load-theme-family
+    (require
+     (pcase prot-emacs-load-theme-family
+       ('modus 'prot-emacs-modus-themes)
+       ('ef 'prot-emacs-ef-themes)
+       ('doric 'prot-emacs-doric-themes)
+       ('doom 'prot-emacs-doom-themes)
+       ('standard 'prot-emacs-standard-themes))))
 
 ;;;; Pulsar
 ;; Read the pulsar manual: <https://protesilaos.com/emacs/pulsar>.

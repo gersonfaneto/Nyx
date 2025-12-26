@@ -1813,17 +1813,9 @@ Note that the ~prot-emacs-comment~ is there for my testing purposes
   (defadvice load-theme (before clear-previous-themes activate)
     "Clear existing theme settings instead of layering them."
     (mapc #'disable-theme custom-enabled-themes))
-
-  ;; Load the `gruvbox-material' themes from the local storage.
-  (add-to-list 'custom-theme-load-path
-               (expand-file-name "themes" user-emacs-directory))
-
-  ;; Override some options from `doom-gruvbox-material'.
-  (setq doom-gruvbox-material-palette "original")
-  (setq doom-gruvbox-material-background "hard")
-
+  
   ;; Finally, load the dark theme by default.
-  (load-theme 'doom-gruvbox-material))
+  (load-theme 'doom-gruvbox))
 
 
 (provide 'prot-emacs-doom-themes)

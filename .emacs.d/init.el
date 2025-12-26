@@ -257,34 +257,34 @@ given feature is available."
      (t
       (car hooks)))))
 
-(defmacro prot-emacs-keybind (keymap &rest definitions)
-  "Expand key binding DEFINITIONS for the given KEYMAP.
-DEFINITIONS is a sequence of string and command pairs."
-  (declare (indent 1))
-  (unless (zerop (% (length definitions) 2))
-    (error "Uneven number of key+command pairs"))
-  (let ((keys (seq-filter #'stringp definitions))
-        ;; We do accept nil as a definition: it unsets the given key.
-        (commands (seq-remove #'stringp definitions)))
-    `(when-let* (((keymapp ,keymap))
-                 (map ,keymap))
-       ,@(mapcar
-          (lambda (pair)
-            (let* ((key (car pair))
-                   (command (cdr pair)))
-              (unless (and (null key) (null command))
-                `(define-key map (kbd ,key) ,command))))
-          (cl-mapcar #'cons keys commands)))))
+  (defmacro prot-emacs-keybind (keymap &rest definitions)
+    "Expand key binding DEFINITIONS for the given KEYMAP.
+  DEFINITIONS is a sequence of string and command pairs."
+    (declare (indent 1))
+    (unless (zerop (% (length definitions) 2))
+      (error "Uneven number of key+command pairs"))
+    (let ((keys (seq-filter #'stringp definitions))
+          ;; We do accept nil as a definition: it unsets the given key.
+          (commands (seq-remove #'stringp definitions)))
+      `(when-let* (((keymapp ,keymap))
+                   (map ,keymap))
+         ,@(mapcar
+            (lambda (pair)
+              (let* ((key (car pair))
+                     (command (cdr pair)))
+                (unless (and (null key) (null command))
+                  `(define-key map (kbd ,key) ,command))))
+            (cl-mapcar #'cons keys commands)))))
 
-;; Sample of `prot-emacs-keybind'
+  ;; Sample of `prot-emacs-keybind'
 
-;; (prot-emacs-keybind global-map
-;;   "C-z" nil
-;;   "C-x b" #'switch-to-buffer
-;;   "C-x C-c" nil
-;; ;; Notice the -map as I am binding keymap here, not a command:
-;;   "C-c b" beframe-prefix-map
-;;   "C-x k" #'kill-buffer)
+  ;; (prot-emacs-keybind global-map
+  ;;   "C-z" nil
+  ;;   "C-x b" #'switch-to-buffer
+  ;;   "C-x C-c" nil
+  ;; ;; Notice the -map as I am binding keymap here, not a command:
+  ;;   "C-c b" beframe-prefix-map
+  ;;   "C-x k" #'kill-buffer)
 
 (defmacro prot-emacs-autoload (functions file)
   "Declare autoloads for FUNCTIONS for FILE."
