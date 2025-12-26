@@ -87,6 +87,7 @@ mManageHook =
     composeAll
         [ className =? "wiremix" --> mFloat
         , className =? "Qalculate-gtk" --> mFloat
+        , className =? "PrismLauncher" --> doFloat
         , isDialog --> doFloat
         ]
         <+> insertPosition Below Newer
@@ -117,6 +118,7 @@ openSubmap =
         Map.fromList
             [ ((0, xK_e), spawn mEditor)
             , ((0, xK_b), spawn mBrowser)
+            , ((0, xK_m), spawn "prismlauncher")
             , ((0, xK_q), spawn mCalc)
             , ((0, xK_f), spawn mFiles)
             , ((0, xK_z), spawn "boomer")
