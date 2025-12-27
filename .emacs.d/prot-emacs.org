@@ -1790,8 +1790,65 @@ Note that the ~prot-emacs-comment~ is there for my testing purposes
 
 **** The =prot-emacs-doric-themes.el= module
 :PROPERTIES:
-:CUSTOM_ID: h:950127eb-6bac-4587-baa0-14ea73f3bee1
+:CUSTOM_ID: h:334ecb7f-91e0-40db-bd47-418ea0e580e9
 :END:
+
+This is one of the components of the =prot-emacs-theme.el= module
+([[#h:3f1a33e4-762e-4cf3-a0ae-4c2954d9cbb8][The =prot-emacs-theme.el= section to load a theme (~prot-emacs-load-theme-family~)]]).
+It sets up one of the theme-related packages available for my setup.
+
+The ~doric-themes~ are my most minimalist themes. They use few colours
+and will appear mostly monochromatic in many contexts. Styles involve
+the careful use of typography, such as italics and bold italics.
+
+If you want maximalist themes in terms of colour, check my ~ef-themes~
+package ([[#h:2b2a27a1-6d2e-4b59-bf60-94682e173f2f][The =prot-emacs-ef-themes.el= module]]). For something
+in-between, which I would consider the best "default theme" for a text
+editor, opt for my ~modus-themes~ ([[#h:36af519a-67e1-42b6-a38a-2052638108f9][The =prot-emacs-modus-themes.el= module]]).
+
++ Package name (GNU ELPA): ~doric-themes~
++ Sample pictures: <https://protesilaos.com/emacs/doric-themes-pictures>
++ Git repository: <https://github.com/protesilaos/doric-themes>
++ Backronym: Doric Only Really Intensifies Conservatively ... themes.
+
+
+#+begin_src emacs-lisp :tangle "prot-emacs-modules/prot-emacs-doric-themes.el"
+;;; The Doric themes
+
+(prot-emacs-configure
+  (prot-emacs-install doric-themes)
+
+  (prot-emacs-keybind global-map
+    "<f5>" #'doric-themes-rotate
+    "C-<f5>" #'doric-themes-select)
+
+  (doric-themes-load-random
+   (if (prot-emacs-gnome-prefers-dark-p)
+       'dark
+     'light)))
+
+;; For testing purposes
+(prot-emacs-comment
+  (:eval nil)
+
+  (add-to-list 'load-path "~/Git/Projects/doric-themes/")
+
+  (require 'doric-themes)
+
+  (prot-emacs-keybind global-map
+    "<f5>" #'doric-themes-rotate
+    "C-<f5>" #'doric-themes-select)
+
+  (doric-themes-load-random
+   (if (prot-emacs-gnome-prefers-dark-p)
+       'dark
+     'light)))
+
+(provide 'prot-emacs-doric-themes)
+#+end_src
+
+
+
 **** The =prot-emacs-doom-themes.el= module
 :PROPERTIES:
 :CUSTOM_ID: h:2b32a919-7eb3-4e7e-81f5-d5038ad8d4fe
@@ -1813,10 +1870,13 @@ Note that the ~prot-emacs-comment~ is there for my testing purposes
   (defadvice load-theme (before clear-previous-themes activate)
     "Clear existing theme settings instead of layering them."
     (mapc #'disable-theme custom-enabled-themes))
+
+  ;; Load the custom themes from the local storage.
+  (add-to-list 'custom-theme-load-path
+               (expand-file-name "themes" user-emacs-directory))
   
   ;; Finally, load the dark theme by default.
   (load-theme 'doom-gruvbox))
-
 
 (provide 'prot-emacs-doom-themes)
 #+end_src
