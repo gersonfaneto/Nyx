@@ -13,24 +13,6 @@ usage() {
   exit
 }
 
-update_wallpapers() {
-  (
-    cd "$HOME/.local/share/wallpapers"
-    [ -e "current" ] && unlink "current" 2> /dev/null
-    if [ -z "$1" ]; then
-      case "$DEFAULT_BG" in
-        dark) ln -s "dark" "current" 2> /dev/null ;;
-        light) ln -s "light" "current" 2> /dev/null ;;
-      esac
-    else
-      case "$1" in
-        dark) ln -sf "dark" "current" ;;
-        light) ln -sf "light" "current" ;;
-      esac
-    fi
-  )
-}
-
 update_fish() {
   (
     cd "$CONFIG_HOME/fish/themes" || return
@@ -217,7 +199,6 @@ main() {
   update_ghostty "$bg" &
   update_alacritty "$bg" &
   update_highlight "$bg" &
-  update_wallpapers "$bg" &
 
   wait
 }
