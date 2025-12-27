@@ -19,6 +19,6 @@
                (expand-file-name "themes" user-emacs-directory))
   
   ;; Finally, load the dark theme by default.
-  (load-theme 'compline))
+  (load-theme 'doom-gruvbox))
 
 (provide 'prot-emacs-doom-themes)
