@@ -12,9 +12,9 @@ list_row='1'
 
 # CMDs (add your apps here)
 term_cmd='alacritty'
-file_cmd='alacritty -e nvim /home/gerson'
-text_cmd='emacs'
-web_cmd='firefox'
+file_cmd='nautilus'
+text_cmd='alacritty -e nvim'
+web_cmd='qutebrowser'
 music_cmd='alacritty -e ncmpcpp'
 setting_cmd='xfce4-settings-manager'
 

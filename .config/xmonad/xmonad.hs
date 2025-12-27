@@ -59,7 +59,7 @@ mTerminal' :: String
 mTerminal' = "ghostty"
 
 mEditor :: String
-mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
+mEditor = "alacritty -e nvim"
 
 mBrowser :: String
 mBrowser = "qutebrowser"

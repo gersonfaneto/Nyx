@@ -238,7 +238,6 @@
       dmidecode
       dragon-drop
       dunst
-      emacs
       fastfetch
       fd
       feh
