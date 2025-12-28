@@ -268,7 +268,7 @@
       man-pages
       man-pages-posix
       mpv
-      ncmpcpp
+      rmpc
       nsxiv
       pandoc
       playerctl
