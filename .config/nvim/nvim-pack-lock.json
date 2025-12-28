@@ -37,6 +37,11 @@
       "src": "https://github.com/theprimeagen/harpoon",
       "version": "'harpoon2'"
     },
+    "haskell-tools.nvim": {
+      "rev": "5fb8eda3c4430cb1d473d3e2138b070bdca1c224",
+      "src": "https://github.com/mrcjkb/haskell-tools.nvim",
+      "version": "6.0.0 - 7.0.0"
+    },
     "img-clip.nvim": {
       "rev": "93fcf50924108262caec66b900077987dfcb7c7f",
       "src": "https://github.com/HakonHarnes/img-clip.nvim"
