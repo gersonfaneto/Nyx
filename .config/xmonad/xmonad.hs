@@ -92,13 +92,13 @@ mManageHook =
         , className =? "PrismLauncher" --> doFloat
         , isDialog --> doFloat
         ]
-        <+> insertPosition Below Newer
+        <+> insertPosition Above Newer
 
 myStartupHook :: X ()
 myStartupHook = do
     spawn "setxkbmap -layout br -variant thinkpad &"
+    spawn "setxkbmap -option ctrl:nocaps &"
     spawn "wallpaper --default &"
-    -- spawn "background dark &"
     spawn "battery -L 20 -n &"
     spawn "xset s 600 &"
     spawn "xss-lock -l -- xsecurelock &"

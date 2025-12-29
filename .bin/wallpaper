@@ -2,10 +2,8 @@
 
 # Sets the image as a wallpaper for desktop
 
-# set -x # WARN: Only used for debugging...
-set -e
-set -u
-set -o pipefail
+set -x # WARN: Only used for debugging...
+set -euo pipefail
 
 COLOR_RESET='\033[0m'
 COLOR_RED='\033[0;31m'
