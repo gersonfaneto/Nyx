@@ -278,7 +278,6 @@
       pulseaudio
       qalculate-gtk
       qutebrowser
-      qutebrowser
       rbw
       ripgrep
       rofi

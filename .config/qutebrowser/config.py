@@ -1,5 +1,5 @@
 from modules.colors import ColorsBase16
-from modules.interceptors import redirect_nix_shortcuts, redirect_to_https
+from modules.interceptors import redirect_empty_search_to_base, redirect_to_https
 from modules.utils import Utils
 from qutebrowser.api import interceptor
 from qutebrowser.config.config import ConfigContainer  # type: ignore
@@ -1085,4 +1085,4 @@ config.bind("xt", "config-cycle tabs.show always switching")
 # REQUEST INTERCEPTORS
 
 interceptor.register(redirect_to_https)
-interceptor.register(redirect_nix_shortcuts)
+interceptor.register(redirect_empty_search_to_base)

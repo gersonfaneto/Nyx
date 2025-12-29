@@ -21,26 +21,25 @@ def redirect_to_https(req: interceptor.Request):
     req.redirect(url)
 
 
-def redirect_nix_shortcuts(req: interceptor.Request):
+def redirect_empty_search_to_base(req: interceptor.Request):
     """
-    Redirect `nix:<shortcut>` addresses to their according sites.
+    Redirect search engine URLs with empty queries to their base URL.
     """
     url = req.request_url
-    hostname = url.host(QUrl.ComponentFormattingOption.PrettyDecoded)
-    path = url.path(QUrl.ComponentFormattingOption.PrettyDecoded)
-    # Bypass any requests that's not of scheme `nix:<anything>`
-    if hostname != "nix.default-redirector":
-        return
+    url_str = url.toString(QUrl.ComponentFormattingOption.PrettyDecoded)
 
-    shortcuts = {
-        "/search": "https://search.nixos.org/packages?channel=unstable",
-        "/hm-opts": "https://home-manager-options.extranix.com/",
-        "/wiki": "https://wiki.nixos.org/",
-    }
+    # Define the search engine patterns to match with empty queries
+    # Format: (url_with_empty_query, base_url)
+    search_patterns = [
+        ("https://music.youtube.com/search?q=", "https://music.youtube.com/"),
+        ("https://www.youtube.com/results?search_query=", "https://www.youtube.com/"),
+        ("https://chatgpt.com/?model=auto&q=", "https://chatgpt.com/"),
+        ("https://github.com/search?q=", "https://github.com/"),
+    ]  # fmt: skip
 
-    # If path not found: redirect to default NixOS intro page for now.
-    redirect_url = shortcuts.get(path, "https://nixos.org/")
-    url.setUrl(redirect_url)
-
-    # Try redirecting.
-    req.redirect(url)
+    # Check if URL exactly matches any pattern (empty query
+    for pattern, base_url in search_patterns:
+        if url_str == pattern:
+            url.setUrl(base_url)
+            req.redirect(url)
+            return

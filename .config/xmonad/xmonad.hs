@@ -44,8 +44,6 @@ cBlue       = "#83A598"
 cMagenta    = "#D3869B"
 cCyan       = "#8EC07C"
 
-mSpacing = spacingWithEdge 3
-
 mWorkspaces :: [String]
 mWorkspaces = map show [1 .. 10]
 
@@ -80,6 +78,7 @@ mLayoutHook =
                 ||| renamed [Replace "Spiral"] (mSpacing (spiral (6 / 7)))
   where
     tall = ResizableTall 1 (3 / 100) (11 / 20) []
+    mSpacing = spacingWithEdge 8
 
 mFloat :: ManageHook
 mFloat = doRectFloat (StackSet.RationalRect 0.15 0.15 0.7 0.7)
@@ -189,8 +188,10 @@ mKeys =
     , ("M-k", windows StackSet.focusUp)
     , ("M-,", sendMessage NextLayout)
     , ("M-S-<Space>", withFocused toggleFloat)
+    , ("M-z", incWindowSpacing 8)
+    , ("M-x", decWindowSpacing 8)
     , ("M-a", toggleWindowSpacingEnabled >> toggleScreenSpacingEnabled)
-    , ("M-S-a", setWindowSpacing (Border 3 3 3 3) >> setScreenSpacing (Border 3 3 3 3))
+    , ("M-S-a", setWindowSpacing (Border 8 8 8 8) >> setScreenSpacing (Border 8 8 8 8))
     , ("<XF86AudioRaiseVolume>", spawn "volume up")
     , ("<XF86AudioLowerVolume>", spawn "volume down")
     , ("<XF86AudioMute>", spawn "volume mute")
@@ -252,7 +253,7 @@ myConfig =
         }
         `additionalKeysP` mKeys
 
-mXmobar = statusBarProp "xmobar ~/.config/xmobar/xmobarrc" (pure myXmobarPP)
+mXmobar = statusBarProp "xmobar ~/.config/xmonad/xmobarrc" (pure myXmobarPP)
 
 main :: IO ()
 main = xmonad . ewmhFullscreen . ewmh . withEasySB mXmobar defToggleStrutsKey $ myConfig
