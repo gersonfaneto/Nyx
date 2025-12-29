@@ -282,7 +282,6 @@
       qutebrowser
       rbw
       ripgrep
-      rmpc
       rofi
       rsync
       scc
