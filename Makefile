@@ -2,12 +2,8 @@
 help:
 	@echo 'Usage: make [build|update|prune|format]'
 
-.PHONY: prelude
-prelude:
-	git add -A
-
 .PHONY: build
-build: prelude
+build:
 	sudo nixos-rebuild switch --flake .
 
 

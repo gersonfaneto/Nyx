@@ -25,7 +25,6 @@ in {
     ".config/feh/" = mkSymlink ".config/feh/";
     ".config/fish/" = mkSymlink ".config/fish/";
     ".config/ghostty/" = mkSymlink ".config/ghostty/";
-    ".config/kew/" = mkSymlink ".config/kew/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/nvim/" = mkSymlink ".config/nvim/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";

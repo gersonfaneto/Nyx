@@ -257,7 +257,6 @@
       imagemagick
       ispell
       jq
-      kew
       killall
       less
       libnotify
