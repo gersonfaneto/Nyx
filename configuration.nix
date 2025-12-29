@@ -180,6 +180,8 @@
     enable = true;
   };
 
+  programs.dbus.enable = true;
+
   programs.gnupg = {
     agent = {
       enable = true;
@@ -355,6 +357,7 @@
       python312
       python312Packages.uv
       python312Packages.pip
+      python312Packages.pyqt6 # This is for `qutebrowser'
 
       # Bash
       shfmt
