@@ -14,8 +14,8 @@ COLOR_YELLOW='\033[0;33m'
 COLOR_BLUE='\033[0;34m'
 COLOR_CYAN='\033[0;36m'
 
-WALLPAPERS_DIR="$HOME/.local/share/wallpapers/"
-WALLPAPERS_DEFAULT="$WALLPAPERS_DIR/nixos.png"
+WALLPAPERS_DIRECTORY="$HOME/.local/share/wallpapers/"
+WALLPAPERS_DEFAULT="$WALLPAPERS_DIRECTORY/nixos.png"
 
 IMAGE_PICKER_CONFIG="$HOME/.config/rofi/styles/style-04.rasi"
 
@@ -40,7 +40,7 @@ usage() {
   echo -e "${COLOR_CYAN}Arguments:${COLOR_RESET}"
   echo "  IMAGE            Sets the specified image (PNG/JPG/JPEG) as the wallpaper."
   echo "  --select         Uses ROFI as a interactive selector."
-  echo "  --random         Picks a random wallpaper from WALLPAPERS_DIR."
+  echo "  --random         Picks a random wallpaper from WALLPAPERS_DIRECTORY."
   echo "  --default        Sets WALLPAPERS_DEFAULT as the wallpaper."
 }
 
@@ -57,13 +57,13 @@ main() {
 
   if [[ $1 == "--random" ]]; then
     # Random selection
-    files=("$WALLPAPERS_DIR"/*.png)
+    files=("$WALLPAPERS_DIRECTORY"/*.png)
     if [[ ${#files[@]} -gt 0 ]]; then
       wallpaper="${files[RANDOM % ${#files[@]}]}"
     fi
   elif [[ $1 == "--select" ]]; then
     # Interactive selection
-    files=$(find "$WALLPAPERS_DIR" -type f -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg")
+    files=$(find "$WALLPAPERS_DIRECTORY" -type f -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg")
     if [[ -z $files ]]; then
       wallpaper="$WALLPAPERS_DEFAULT"
     else
@@ -78,15 +78,19 @@ main() {
         -theme "$IMAGE_PICKER_CONFIG" \
         -markup-rows)
       if [[ -n $selected ]]; then
-        wallpaper="$WALLPAPERS_DIR/$selected"
+        wallpaper="$WALLPAPERS_DIRECTORY/$selected"
       else
         wallpaper="$WALLPAPERS_DEFAULT"
       fi
     fi
   elif [[ $1 == "--default" ]]; then
-    wallpaper="$WALLPAPERS_DEFAULT"
+    if [[ -f "$WALLPAPERS_DIRECTORY/current.png" ]]; then
+      wallpaper="$WALLPAPERS_DIRECTORY/current.png"
+    else
+      wallpaper="$WALLPAPERS_DEFAULT"
+    fi
   elif [[ $1 != /* ]]; then
-    wallpaper="$WALLPAPERS_DIR/$1"
+    wallpaper="$WALLPAPERS_DIRECTORY/$1"
   else
     wallpaper="$1"
   fi
@@ -98,6 +102,8 @@ main() {
   fi
 
   feh --bg-fill "$wallpaper" &
+
+  ln -s -f "$wallpaper" "$WALLPAPERS_DIRECTORY/current.png" &
 }
 
 main "$@"
