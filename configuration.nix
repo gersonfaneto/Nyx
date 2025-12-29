@@ -238,6 +238,7 @@
       dmidecode
       dragon-drop
       dunst
+      emacs30-gtk3
       fastfetch
       fd
       feh
@@ -268,7 +269,6 @@
       man-pages
       man-pages-posix
       mpv
-      rmpc
       nsxiv
       pandoc
       playerctl
@@ -282,6 +282,7 @@
       qutebrowser
       rbw
       ripgrep
+      rmpc
       rofi
       rsync
       scc
