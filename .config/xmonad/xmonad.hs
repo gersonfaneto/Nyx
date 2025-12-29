@@ -57,8 +57,10 @@ mTerminal' :: String
 mTerminal' = "ghostty"
 
 mEditor :: String
--- mEditor = "alacritty -e nvim"
 mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
+
+mSystem :: String
+mSystem = "alacritty --class btm --command btm"
 
 mBrowser :: String
 mBrowser = "qutebrowser"
@@ -85,7 +87,7 @@ mFloat = doRectFloat (StackSet.RationalRect 0.15 0.15 0.7 0.7)
 
 mManageHook =
     composeAll
-        [ className =? "wiremix" --> mFloat
+        [ className ~? "wiremix|btm|ncmpcpp" --> mFloat
         , className =? "Qalculate-gtk" --> mFloat
         , className =? "PrismLauncher" --> doFloat
         , isDialog --> doFloat
@@ -117,6 +119,7 @@ openSubmap =
     namedSubmap "Open" $
         Map.fromList
             [ ((0, xK_e), spawn mEditor)
+            , ((0, xK_s), spawn mSystem)
             , ((0, xK_b), spawn mBrowser)
             , ((0, xK_m), spawn "prismlauncher")
             , ((0, xK_q), spawn mCalc)
