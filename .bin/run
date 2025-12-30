@@ -1,16 +1,18 @@
 #!/usr/bin/env sh
 
+UFLAGS=${UFLAGS-""}
+
 CFLAGS=${CFLAGS-"-Wall -Wextra -Wpedantic -Werror"}
 
 build() {
   case "$1" in
     *.c)
       # shellcheck disable=SC2086
-      gcc -o "$2" "$1" $CFLAGS
+      gcc -o "$2" "$1" $CFLAGS $UFLAGS
       ;;
     *.cpp | *.cc | *.cxx)
       # shellcheck disable=SC2086
-      g++ -o "$2" "$1" $CFLAGS
+      g++ -o "$2" "$1" $CFLAGS $UFLAGS
       ;;
     *)
       echo >&2 "run: error: unsupported file type"
@@ -25,7 +27,7 @@ run_executable() {
 
 main() {
   # shellcheck disable=SC2015
-  src=$(realpath "$1" 2>/dev/null || readlink -f "$1")
+  src=$(realpath "$1" 2> /dev/null || readlink -f "$1")
   executable=$(echo "$src" | sed -E 's/\.(c|cpp|cc|cxx)$/.run/')
   if [ "$src" = "$executable" ]; then
     echo >&2 "run: error: file name cannot be the same as the run file name"

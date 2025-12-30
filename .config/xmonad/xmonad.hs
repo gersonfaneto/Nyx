@@ -92,7 +92,7 @@ mManageHook =
         , className =? "PrismLauncher" --> doFloat
         , isDialog --> doFloat
         ]
-        <+> insertPosition Above Newer
+        <+> insertPosition Below Newer
 
 myStartupHook :: X ()
 myStartupHook = do
