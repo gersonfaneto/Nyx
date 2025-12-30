@@ -180,8 +180,6 @@
     enable = true;
   };
 
-  programs.dbus.enable = true;
-
   programs.gnupg = {
     agent = {
       enable = true;

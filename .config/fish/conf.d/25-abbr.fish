@@ -15,6 +15,11 @@ __command_abbr cp    'cp -i'
 __command_abbr mv    'mv -i'
 __command_abbr mkdir 'mkdir -p'
 
+__command_abbr .- 'cd -'
+__command_abbr .2 'cd ../..'
+__command_abbr .3 'cd ../../..'
+__command_abbr .4 'cd ../../../..'
+
 __command_abbr df   'df -h'
 __command_abbr du   'du -hs'
 __command_abbr free 'free -h'
