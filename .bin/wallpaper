@@ -13,7 +13,7 @@ COLOR_BLUE='\033[0;34m'
 COLOR_CYAN='\033[0;36m'
 
 WALLPAPERS_DIRECTORY="$HOME/.local/share/wallpapers/"
-WALLPAPERS_DEFAULT="$WALLPAPERS_DIRECTORY/nixos.png"
+WALLPAPERS_DEFAULT="$WALLPAPERS_DIRECTORY/wall.png"
 
 IMAGE_PICKER_CONFIG="$HOME/.config/rofi/styles/style-04.rasi"
 
@@ -82,8 +82,8 @@ main() {
       fi
     fi
   elif [[ $1 == "--default" ]]; then
-    if [[ -f "$WALLPAPERS_DIRECTORY/current.png" ]]; then
-      wallpaper="$WALLPAPERS_DIRECTORY/current.png"
+    if [[ -f "$WALLPAPERS_DIRECTORY/default.png" ]]; then
+      wallpaper="$WALLPAPERS_DIRECTORY/default.png"
     else
       wallpaper="$WALLPAPERS_DEFAULT"
     fi
@@ -101,7 +101,7 @@ main() {
 
   feh --bg-fill "$wallpaper" &
 
-  ln -s -f "$wallpaper" "$WALLPAPERS_DIRECTORY/current.png" &
+  ln -s -f "$wallpaper" "$WALLPAPERS_DIRECTORY/default.png" &
 }
 
 main "$@"
