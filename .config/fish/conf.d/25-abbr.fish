@@ -2,7 +2,6 @@ if not status is-interactive
     exit
 end
 
-abbr --position command --add please sudo
 abbr --position command --add btw 'clear -x && fastfetch'
 
 abbr --position command --add cp 'cp -i'
@@ -47,14 +46,14 @@ abbr --position command --add der 'direnv reload'
 
 abbr --position command --add tree 'tree -N -L 4 -C --gitignore --dirsfirst'
 
-abbr --position command --add eg 'emacsclient --create-frame --alternate-editor \'emacs\''
-abbr --position command --add et 'emacsclient --tty --alternate-editor \'emacs --no-window-system\''
-
-abbr --position command --add tpon 'sudo echo 0 | sudo tee /sys/class/input/event13/device/inhibited'
-abbr --position command --add tpoff 'sudo echo 1 | sudo tee /sys/class/input/event13/device/inhibited'
-
 abbr --position anywhere --add cut '| xclip -selection clipboard'
 abbr --position command --add yank 'xclip -selection clipboard -out'
+
+abbr --position anywhere --add lines '| wc --lines'
+abbr --position anywhere --add filter '| grep --ignore-case --regexp'
+
+abbr --position anywhere --add or '||'
+abbr --position anywhere --add and '&&'
 
 function __command_abbr_v_fn --description 'Abbreviation function for `v`'
     if command -q nvim

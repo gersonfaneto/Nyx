@@ -175,6 +175,8 @@
   cr = clone --recursive
   cn = clone --filter=blob:none
 
+  up = "!sh -c 'git fa && git pl || git pr'"
+
   rr = rebase
   ri = rebase --interactive
   rc = rebase --continue
@@ -200,7 +202,7 @@
 
   gr = "!r() { git rev-list --all | xargs git grep $@ | fzf; }; r"
 
-  ln  = "!echo $(git config remote.origin.url | sed -Ee 's!(git@|git://|ssh://)!https://!' -e 's!:([^/])!/\\1!' | sed -e 's/.git$//')"
+  ln = "!echo $(git config remote.origin.url | sed -Ee 's!(git@|git://|ssh://)!https://!' -e 's!:([^/])!/\\1!' | sed -e 's/.git$//')"
   op = "!$(command -v open || command -v xdg-open) $(git ln)"
 
 ; vim:ft=gitconfig:

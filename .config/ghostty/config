@@ -16,7 +16,7 @@ window-padding-balance = true
 
 window-decoration = none
 
-background-opacity = 0.90
+background-opacity = 1.0
 
 scrollback-limit = 0
 
