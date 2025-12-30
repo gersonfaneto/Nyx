@@ -35,6 +35,7 @@ in {
     ".config/zathura/" = mkSymlink ".config/zathura/";
     ".config/xmonad/" = mkSymlink ".config/xmonad/";
     ".bin/" = mkSymlink ".bin/";
+    ".emacs.d/" = mkSymlink ".emacs.d/";
     ".highlight/" = mkSymlink ".highlight/";
     ".local/share/fonts/" = mkSymlink ".local/share/fonts/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
