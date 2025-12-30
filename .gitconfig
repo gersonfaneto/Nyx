@@ -190,7 +190,8 @@
 
   rs = restore --staged
 
-  rank = shortlog --summary --numbered --email
+  rk = shortlog --summary --numbered --email
+  rd = shortlog --summary --numbered --email --since 'midnight'
 
   lg = log --name-status --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n'
   la = log --name-status --pretty=format:'%C(magenta)%h %C(default) %an  %ar%C(blue)  %D%n%s%n' @{u}..
