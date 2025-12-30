@@ -102,7 +102,7 @@ myStartupHook = do
     spawn "battery -L 20 -n &"
     spawn "xset s 600 &"
     spawn "xss-lock -l -- xsecurelock &"
-    spawn "killall -q dunst; dunst -config $HOME/.config/dunst/dunstrc &"
+    spawn "pkill dunst; dunst -config $HOME/.config/dunst/dunstrc &"
     spawn "xsetroot -cursor_name left_ptr &"
     io $ writeFile "/home/gerson/.cache/xmonad-submap" ""
 

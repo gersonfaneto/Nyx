@@ -24,7 +24,7 @@ history = 0
 
 [window]
 dynamic_padding = true
-opacity = 1
+opacity = 0.90
 decorations = "None"
 
 [window.dimensions]

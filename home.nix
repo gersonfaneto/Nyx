@@ -65,6 +65,9 @@ in {
     shadowOffsets = [(-5) (-5)];
     shadowExclude = [
       "! name~=''"
+      "name = 'xmobar'"
+      "_GTK_FRAME_EXTENTS@:c"
+      "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
     ];
 
     inactiveOpacity = 1.0;
@@ -86,7 +89,7 @@ in {
     };
 
     settings = {
-      corner-radius = 12;
+      # corner-radius = 12;
 
       shadow-radius = 12;
       xinerama-shadow-crop = true;

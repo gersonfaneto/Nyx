@@ -70,17 +70,5 @@
         ];
       };
     };
-
-    homeConfigurations = {
-      gerson = inputs.home-manager.lib.homeManagerConfiguration {
-        modules = [
-          ./home.nix
-        ];
-        extraSpecialArgs = {
-          inherit pkgs;
-          inherit inputs;
-        };
-      };
-    };
   };
 }

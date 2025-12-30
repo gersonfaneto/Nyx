@@ -103,7 +103,47 @@
     };
   };
 
+  powerManagement.enable = true;
+  services.thermald.enable = true;
+  services.power-profiles-daemon.enable = true;
+
+  services.logind.lidSwitch = "suspend";
+  services.logind.lidSwitchExternalPower = "lock";
+  services.logind.lidSwitchDocked = "ignore";
+
+  services.tlp = {
+    enable = false;
+    settings = {
+      CPU_DRIVER_OPMODE_ON_BAT = "active"; # passive caps 400mhz
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
+      PLATFORM_PROFILE_ON_BAT = "balanced";
+      PLATFORM_PROFILE_ON_AC = "performance";
+      RUNTIME_PM_ON_AC = "auto";
+      RUNTIME_PM_ON_BAT = "auto";
+      WIFI_PWR_ON_BAT = "off";
+      WIFI_PWR_ON_AC = "off";
+      NMI_WATCHDOG = "1";
+    };
+  };
+
   services.gnome.gnome-keyring.enable = true;
+
+  systemd = {
+    user.services.polkit-gnome-authentication-agent-1 = {
+      description = "polkit-gnome-authentication-agent-1";
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
+  };
 
   services.fprintd = {
     enable = true;
@@ -180,10 +220,10 @@
     enable = true;
   };
 
-  programs.gnupg = {
-    agent = {
-      enable = true;
-    };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryPackage = pkgs.pinentry-curses;
   };
 
   programs.neovim = {
@@ -238,10 +278,14 @@
       dmidecode
       dragon-drop
       dunst
-      emacs30-gtk3
+      emacs-gtk
+      hunspell
+      hunspellDicts.en_US
+      hunspellDicts.pt_BR
       fastfetch
       fd
       feh
+      polkit_gnome
       ffmpeg-full
       file
       firefox
