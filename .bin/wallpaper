@@ -13,7 +13,7 @@ COLOR_BLUE='\033[0;34m'
 COLOR_CYAN='\033[0;36m'
 
 WALLPAPERS_DIRECTORY="$HOME/.local/share/wallpapers/"
-WALLPAPERS_DEFAULT="$WALLPAPERS_DIRECTORY/wall.png"
+WALLPAPERS_DEFAULT="$WALLPAPERS_DIRECTORY/leaves-n.jpeg"
 
 IMAGE_PICKER_CONFIG="$HOME/.config/rofi/styles/style-04.rasi"
 
@@ -55,7 +55,7 @@ main() {
 
   if [[ $1 == "--random" ]]; then
     # Random selection
-    files=("$WALLPAPERS_DIRECTORY"/*.png)
+    files=("$WALLPAPERS_DIRECTORY"/*.jpeg)
     if [[ ${#files[@]} -gt 0 ]]; then
       wallpaper="${files[RANDOM % ${#files[@]}]}"
     fi
@@ -82,11 +82,7 @@ main() {
       fi
     fi
   elif [[ $1 == "--default" ]]; then
-    if [[ -f "$WALLPAPERS_DIRECTORY/default.png" ]]; then
-      wallpaper="$WALLPAPERS_DIRECTORY/default.png"
-    else
-      wallpaper="$WALLPAPERS_DEFAULT"
-    fi
+    wallpaper="$WALLPAPERS_DEFAULT"
   elif [[ $1 != /* ]]; then
     wallpaper="$WALLPAPERS_DIRECTORY/$1"
   else
@@ -100,8 +96,6 @@ main() {
   fi
 
   feh --bg-fill "$wallpaper" &
-
-  ln -s -f "$wallpaper" "$WALLPAPERS_DIRECTORY/default.png" &
 }
 
 main "$@"
