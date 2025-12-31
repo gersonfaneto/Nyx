@@ -279,13 +279,9 @@
       dragon-drop
       dunst
       emacs-gtk
-      hunspell
-      hunspellDicts.en_US
-      hunspellDicts.pt_BR
       fastfetch
       fd
       feh
-      polkit_gnome
       ffmpeg-full
       file
       firefox
@@ -297,6 +293,9 @@
       gifsicle
       git
       highlight
+      hunspell
+      hunspellDicts.en_US
+      hunspellDicts.pt_BR
       hyperfine
       imagemagick
       ispell
@@ -315,6 +314,7 @@
       nsxiv
       pandoc
       playerctl
+      polkit_gnome
       poppler-utils
       presenterm
       prismlauncher
