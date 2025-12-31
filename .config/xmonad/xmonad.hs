@@ -96,14 +96,13 @@ mManageHook =
 
 myStartupHook :: X ()
 myStartupHook = do
-    spawn "setxkbmap -layout br -variant thinkpad &"
-    spawn "setxkbmap -option ctrl:nocaps &"
+    spawn "pkill dunst; dunst -config $HOME/.config/dunst/dunstrc &"
     spawn "wallpaper --default &"
     spawn "battery -L 20 -n &"
     spawn "xset s 600 &"
     spawn "xss-lock -l -- xsecurelock &"
-    spawn "pkill dunst; dunst -config $HOME/.config/dunst/dunstrc &"
     spawn "xsetroot -cursor_name left_ptr &"
+    spawn "setxkbmap -option ctrl:nocaps -layout br -variant thinkpad &"
     io $ writeFile "/home/gerson/.cache/xmonad-submap" ""
 
 setSubmap :: String -> X ()

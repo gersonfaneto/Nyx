@@ -52,6 +52,8 @@ abbr --position command --add yank 'xclip -selection clipboard -out'
 abbr --position anywhere --add lines '| wc --lines'
 abbr --position anywhere --add filter '| grep --ignore-case --regexp'
 
+abbr --position anywhere --add pager '| less'
+
 abbr --position anywhere --add or '||'
 abbr --position anywhere --add and '&&'
 

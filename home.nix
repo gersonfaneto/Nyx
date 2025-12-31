@@ -17,6 +17,7 @@ in {
   home.homeDirectory = "/home/gerson";
 
   home.file = {
+    ".bin/" = mkSymlink ".bin/";
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
@@ -25,7 +26,6 @@ in {
     ".config/feh/" = mkSymlink ".config/feh/";
     ".config/fish/" = mkSymlink ".config/fish/";
     ".config/ghostty/" = mkSymlink ".config/ghostty/";
-    ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/nvim/" = mkSymlink ".config/nvim/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
     ".config/qutebrowser/" = mkSymlink ".config/qutebrowser/";
@@ -34,7 +34,7 @@ in {
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
     ".config/xmonad/" = mkSymlink ".config/xmonad/";
-    ".bin/" = mkSymlink ".bin/";
+    ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".emacs.d/" = mkSymlink ".emacs.d/";
     ".highlight/" = mkSymlink ".highlight/";
     ".local/share/fonts/" = mkSymlink ".local/share/fonts/";
@@ -46,16 +46,10 @@ in {
   };
 
   home.packages = with pkgs; [
-    mpd
-    mpc
-    ncmpcpp
+    kew
     zathura
     nautilus
   ];
-
-  services.mpd.enable = true;
-  services.mpd.musicDirectory = "~/Music";
-  services.mpd-mpris.enable = true;
 
   services.picom = {
     enable = true;
