@@ -138,6 +138,17 @@ update_highlight() {
   )
 }
 
+update_emacs() {
+  if [ -z "$1" ]; then
+    emacsclient --eval "(progn \
+                         (setq frame-background-mode '$1) \
+                         (setq gruvbox-material-style '$1)
+                         (load-theme minimal/default-theme))"
+  else
+    emacsclient --eval '(minimal/toggle-background)' 2> /dev/null
+  fi
+}
+
 main() {
   lockfile="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/background.lock"
 
@@ -199,6 +210,7 @@ main() {
   update_ghostty "$bg" &
   update_alacritty "$bg" &
   update_highlight "$bg" &
+  update_emacs "$bg" &
 
   wait
 }
