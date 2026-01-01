@@ -106,7 +106,7 @@
   (straight-use-package-by-default t)) ;; Ensure all packages are managed by straight.el
 
 ;; --- Server Mode ---
-;; Start Emacs server if not already running, for emacsclient.
+;; Start Emacs server if not already running, for emacsclient.ee
 (use-package server
   :config
   (unless (server-running-p)
@@ -123,11 +123,18 @@
   (unless (find-font (font-spec :name "all-the-icons"))
     (all-the-icons-install-fonts t))) ;; Install icons if not found
 
+;; Configure doom-modeline for the status bar.
+(use-package doom-modeline
+  :init
+  (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-icon (display-graphic-p)))
+
 ;; Use custom colors
 (require 'minimal-modules-colors)
 
 ;; Use custom modeline
-(require 'minimal-modules-modeline)
+;; (require 'minimal-modules-modeline)
 
 ;; --- UI Enhancements ---
 ;; Enable which-key to show keybindings.
