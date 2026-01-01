@@ -51,6 +51,11 @@ in {
     nautilus
   ];
 
+  services.kdeconnect = {
+    enable = true;
+    indicator = true;
+  };
+
   services.picom = {
     enable = true;
     backend = "glx";

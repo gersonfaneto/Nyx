@@ -82,17 +82,18 @@ mLayoutHook =
     tall = ResizableTall 1 (3 / 100) (11 / 20) []
     mSpacing = spacingWithEdge 8
 
-mFloat :: ManageHook
-mFloat = doRectFloat (StackSet.RationalRect 0.15 0.15 0.7 0.7)
-
 mManageHook =
     composeAll
         [ className ~? "wiremix|btm|ncmpcpp" --> mFloat
         , className =? "Qalculate-gtk" --> mFloat
         , className =? "PrismLauncher" --> doFloat
+        , className =? "kdeconnect.app" --> doFloat
         , isDialog --> doFloat
         ]
         <+> insertPosition Below Newer
+        where
+            mFloat :: ManageHook
+            mFloat = doRectFloat (StackSet.RationalRect 0.15 0.15 0.7 0.7)
 
 myStartupHook :: X ()
 myStartupHook = do
@@ -121,6 +122,7 @@ openSubmap =
             , ((0, xK_s), spawn mSystem)
             , ((0, xK_b), spawn mBrowser)
             , ((0, xK_m), spawn "prismlauncher")
+            , ((0, xK_k), spawn "kdeconnect-app")
             , ((0, xK_q), spawn mCalc)
             , ((0, xK_f), spawn mFiles)
             , ((0, xK_z), spawn "boomer")

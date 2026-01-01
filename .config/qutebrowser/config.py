@@ -668,7 +668,8 @@ c.url.incdec_segments = ["path", "query"]
 c.url.open_base_url = False
 c.url.searchengines = {
     # ---
-    "DEFAULT": "https://duckduckgo.com/?q={}+-ai",
+    "DEFAULT": "https://duckduckgo.com/?q={}",
+    "@dna": "https://duckduckgo.com/?q={}+-ai",
     # ---
     "@bc": "https://bandcamp.com/search?q={}",
     "@ym": "https://music.youtube.com/search?q={}",
