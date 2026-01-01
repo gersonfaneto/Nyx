@@ -62,6 +62,9 @@ mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
 mSystem :: String
 mSystem = "alacritty --class btm --command btm"
 
+mSound :: String
+mSound = "alacritty --class wiremix --command wiremix"
+
 mBrowser :: String
 mBrowser = "qutebrowser"
 
@@ -122,6 +125,7 @@ openSubmap =
             , ((0, xK_s), spawn mSystem)
             , ((0, xK_b), spawn mBrowser)
             , ((0, xK_m), spawn "prismlauncher")
+            , ((0, xK_w), spawn mSound)
             , ((0, xK_k), spawn "kdeconnect-app")
             , ((0, xK_q), spawn mCalc)
             , ((0, xK_f), spawn mFiles)
