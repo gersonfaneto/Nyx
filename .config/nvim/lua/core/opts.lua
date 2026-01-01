@@ -11,7 +11,6 @@ vim.opt.helpheight = 10
 vim.opt.showmode = false
 vim.opt.mousemoveevent = true
 vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.ruler = true
 vim.opt.pumheight = 16
 vim.opt.scrolloff = 2
@@ -50,11 +49,8 @@ do
 end
 
 -- Folding
-vim.opt.foldnestmax = 3
-vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldtext = ''
-vim.opt.foldcolumn = '0'
 vim.opt.foldmethod = 'indent'
 vim.opt.foldopen:remove('block') -- make `{`/`}` skip over folds
 
@@ -73,7 +69,7 @@ vim.opt.nrformats:append('blank')
 do
   vim.opt.spellsuggest = 'best,9'
   vim.opt.spellcapcheck = ''
-  vim.opt.spelllang = 'en,pt'
+  vim.opt.spelllang = 'en,cjk'
   vim.opt.spelloptions = 'camel'
 
   require('utils.load').on_events(
