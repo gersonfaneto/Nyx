@@ -262,20 +262,13 @@
       acpi
       alacritty
       alsa-utils
-      ani-cli
-      arandr
-      aseprite
       bat
       beets
       bluetui
       bottom
       brightnessctl
-      cava
       chafa
-      detach
       diff-so-fancy
-      dig
-      dmidecode
       dragon-drop
       dunst
       emacs-gtk
@@ -292,19 +285,12 @@
       ghostty
       gifsicle
       git
-      highlight
-      hunspell
-      hunspellDicts.en_US
-      hunspellDicts.pt_BR
       hyperfine
       imagemagick
-      ispell
       jq
-      killall
       less
       libnotify
       libqalculate
-      libtool
       localsend
       lsof
       maim
@@ -322,13 +308,11 @@
       pulseaudio
       qalculate-gtk
       qutebrowser
-      rbw
       ripgrep
       rofi
       rsync
       scc
       sct
-      slop
       tmux
       trash-cli
       tree

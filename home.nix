@@ -36,7 +36,6 @@ in {
     ".config/xmonad/" = mkSymlink ".config/xmonad/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".emacs.d/" = mkSymlink ".emacs.d/";
-    ".highlight/" = mkSymlink ".highlight/";
     ".local/share/fonts/" = mkSymlink ".local/share/fonts/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
     ".gitconfig" = mkSymlink ".gitconfig";
