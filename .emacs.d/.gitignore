@@ -2,5 +2,10 @@
 
 !.gitignore
 
+!README.org
+
+!prot-*/
+!minimal-*/
+
 !init.el
 !early-init.el
