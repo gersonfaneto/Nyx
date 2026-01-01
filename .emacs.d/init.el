@@ -123,12 +123,33 @@
   (unless (find-font (font-spec :name "all-the-icons"))
     (all-the-icons-install-fonts t))) ;; Install icons if not found
 
-;; Configure doom-modeline for the status bar.
-(use-package doom-modeline
+(use-package nano-modeline
   :init
-  (doom-modeline-mode 1)
-  :custom
-  (doom-modeline-icon (display-graphic-p)))
+  (setq nano-modeline-position 'nano-modeline-footer)
+  :config
+  (progn
+    (defun minimal/nano-modeline-update (&rest _)
+      "Update nano-modeline active face."
+      (custom-set-faces
+       `(nano-modeline-active
+        ((t (:foreground ,(face-foreground 'default)
+                         :background ,(face-background 'header-line nil t)
+                         :box (:line-width 1 :color ,(face-background 'default))))))))
+    (add-hook 'enable-theme-functions #'minimal/nano-modeline-update))
+  :hook
+  ((prog-mode-hook . nano-modeline-prog-mode)
+   (text-mode-hook . nano-modeline-text-mode)
+   (org-mode-hook . nano-modeline-org-mode)
+   (pdf-view-mode-hook . nano-modeline-pdf-mode)
+   (mu4e-headers-mode-hook . nano-modeline-mu4e-headers-mode)
+   (mu4e-view-mode-hook  . nano-modeline-mu4e-message-mode)
+   (elfeed-show-mode-hook . nano-modeline-elfeed-entry-mode)
+   (elfeed-search-mode-hook . nano-modeline-elfeed-search-mode)
+   (term-mode-hook . nano-modeline-term-mode)
+   (xwidget-webkit-mode-hook . nano-modeline-xwidget-mode)
+   (messages-buffer-mode-hook . nano-modeline-message-mode)
+   (org-capture-mode-hook . nano-modeline-org-capture-mode)
+   (org-agenda-mode-hook . nano-modeline-org-agenda-mode)))
 
 ;; Use custom colors
 (require 'minimal-modules-colors)
