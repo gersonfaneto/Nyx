@@ -1,5 +1,1 @@
-themes/current
-themes/dark
-themes/light
-
-*.local
+config.local

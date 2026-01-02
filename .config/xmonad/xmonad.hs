@@ -135,33 +135,17 @@ openSubmap =
 rofiSubmap =
     namedSubmap "Rofi" $
         Map.fromList
-            [ ((0, xK_r), spawn "rofi-run")
-            , ((0, xK_a), spawn "rofi-apps")
-            , ((0, xK_m), spawn "rofi-music")
-            , ((0, xK_s), spawn "rofi-audio")
-            , ((0, xK_p), spawn "rofi-capture")
+            [ ((0, xK_r), spawn "$HOME/.config/rofi/scripts/launcher")
+            , ((0, xK_p), spawn "$HOME/.config/rofi/scripts/capture")
             ]
 
 systemSubmap =
     namedSubmap "System" $
         Map.fromList
-            [ ((0, xK_c), spawn "caffeine")
-            , ((0, xK_s), spawn "silence")
+            [ ((0, xK_c), spawn "$HOME/.config/xmonad/scripts/caffeine")
+            , ((0, xK_s), spawn "$HOME/.config/xmonad/scripts/silence")
             , ((0, xK_d), spawn "dunstctl close-all")
             , ((0, xK_x), spawn "xmonad --recompile && xmonad --restart")
-            ]
-
-mediaSubmap =
-    namedSubmap "Media" $
-        Map.fromList
-            [ ((0, xK_k), spawn "volume up")
-            , ((0, xK_j), spawn "volume down")
-            , ((0, xK_m), spawn "volume mute")
-            , ((0, xK_v), spawn "volume mute")
-            , ((0, xK_p), spawn "playerctl play-pause")
-            , ((0, xK_h), spawn "playerctl previous")
-            , ((0, xK_l), spawn "playerctl next")
-            , ((0, xK_w), spawn "alacritty --class 'wiremix' --command 'wiremix'")
             ]
 
 workspaceSubmap =
@@ -174,13 +158,12 @@ workspaceSubmap =
             ]
 
 mKeys =
-    [ ("M-<Escape>", spawn "rofi-system")
+    [ ("M-<Escape>", spawn "$HOME/.config/rofi/scripts/system")
     , ("M-<Return>", spawn mTerminal)
     , ("M-S-<Return>", spawn mTerminal')
     , ("M-o", openSubmap)
     , ("M-r", rofiSubmap)
     , ("M-s", systemSubmap)
-    , ("M-m", mediaSubmap)
     , ("M-w", workspaceSubmap)
     , ("M-q", kill)
     , ("M-C-l", nextWS)
@@ -196,22 +179,22 @@ mKeys =
     , ("M-x", decWindowSpacing 8)
     , ("M-a", toggleWindowSpacingEnabled >> toggleScreenSpacingEnabled)
     , ("M-S-a", setWindowSpacing (Border 8 8 8 8) >> setScreenSpacing (Border 8 8 8 8))
-    , ("<XF86AudioRaiseVolume>", spawn "volume up")
-    , ("<XF86AudioLowerVolume>", spawn "volume down")
-    , ("<XF86AudioMute>", spawn "volume mute")
-    , ("M-<XF86AudioMute>", spawn "volume mute")
-    , ("M-M1-k", spawn "volume up")
-    , ("M-M1-j", spawn "volume down")
-    , ("M-M1-m", spawn "volume mute")
-    , ("M-M1-v", spawn "volume mute")
+    , ("<XF86AudioRaiseVolume>", spawn "$HOME/.config/xmonad/scripts/volume up")
+    , ("<XF86AudioLowerVolume>", spawn "$HOME/.config/xmonad/scripts/volume down")
+    , ("<XF86AudioMute>", spawn "$HOME/.config/xmonad/scripts/volume mute")
+    , ("M-<XF86AudioMute>", spawn "$HOME/.config/xmonad/scripts/volume mute")
+    , ("M-M1-k", spawn "$HOME/.config/xmonad/scripts/volume up")
+    , ("M-M1-j", spawn "$HOME/.config/xmonad/scripts/volume down")
+    , ("M-M1-m", spawn "$HOME/.config/xmonad/scripts/volume mute")
+    , ("M-M1-v", spawn "$HOME/.config/xmonad/scripts/volume mute")
     , ("<XF86AudioPrev>", spawn "playerctl previous")
     , ("<XF86AudioNext>", spawn "playerctl next")
     , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     , ("M-M1-h", spawn "playerctl previous")
     , ("M-M1-l", spawn "playerctl next")
     , ("M-M1-p", spawn "playerctl play-pause")
-    , ("<XF86MonBrightnessDown>", spawn "brightness down")
-    , ("<XF86MonBrightnessUp>", spawn "brightness up")
+    , ("<XF86MonBrightnessDown>", spawn "$HOME/.config/xmonad/scripts/brightness down")
+    , ("<XF86MonBrightnessUp>", spawn "$HOME/.config/xmonad/scripts/brightness up")
     ]
     ++
     [ (mask ++ "M-" ++ [key], windows $ action tag)
