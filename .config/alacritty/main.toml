@@ -17,7 +17,7 @@ transparent_background_colors = true
 size = 14
 
 [font.normal]
-family = 'Terminess Nerd Font Mono'
+family = 'Aporetic Serif Mono'
 
 [scrolling]
 history = 0
