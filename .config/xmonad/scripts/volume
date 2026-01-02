@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# set -x # WARN: Only used for debugging...
+set -euo pipefail
+
+NOTIFICATION_ID=1001
+
+main() {
+  while [ $# -gt 0 ]; do
+    ACTION=$1
+
+    case "$ACTION" in
+      up)
+        pactl set-sink-volume @DEFAULT_SINK@ +5%
+        ;;
+      down)
+        pactl set-sink-volume @DEFAULT_SINK@ -5%
+        ;;
+      mute)
+        pactl set-sink-mute @DEFAULT_SINK@ toggle
+        ;;
+      *)
+        echo "Invalid action: $ACTION"
+        exit 1
+        ;;
+    esac
+
+    VOLUME=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '[0-9]+(?=%)' | head -1)
+    MUTED=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -oP 'Mute:\s+\K.*')
+
+    if [ "$MUTED" = "yes" ]; then
+      SUMMARY="Volume Muted"
+      BODY=""
+    else
+      SUMMARY="Volume: $VOLUME%"
+      BODY=""
+    fi
+
+    notify-send -u NORMAL -a 'Volume' "$SUMMARY" "$BODY" -r "$NOTIFICATION_ID"
+    # notify-send -u NORMAL -a 'Volume' "$SUMMARY" "$BODY" -r "$NOTIFICATION_ID" -h "int:value:$VOLUME"
+
+    exit 0
+  done
+
+  if [ $# -ne 1 ]; then
+    echo "Usage: $(basename "$0") <up|down|mute>"
+    exit 1
+  fi
+}
+
+main "$@"
+
+# vim:sw=2:ts=2:et:

@@ -8,7 +8,7 @@ end
 # Set gutter to space to hide gutter:
 # https://github.com/junegunn/fzf/blob/master/CHANGELOG.md#hiding-the-gutter-column
 set -Ux FZF_DEFAULT_OPTS "--reverse \
-    --preview='fzf-file-previewer {}' \
+    --preview='previewer {}' \
     --preview-window=right,55%,border-none,nocycle \
     --info=inline-right \
     --no-separator \
@@ -126,9 +126,9 @@ set -Ux FZF_DEFAULT_COMMAND $FZF_CTRL_T_COMMAND
 # Setup 3rd-party fzf.fish plugin
 # https://github.com/PatrickF1/fzf.fish
 # Use custom previewer script if available
-if type -q fzf-file-previewer
-    set -Ux fzf_preview_dir_cmd fzf-file-previewer
-    set -Ux fzf_preview_file_cmd fzf-file-previewer
+if type -q previewer
+    set -Ux fzf_preview_dir_cmd previewer
+    set -Ux fzf_preview_file_cmd previewer
 end
 
 # Include hidden files

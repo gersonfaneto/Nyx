@@ -412,6 +412,8 @@
   fonts = {
     packages = with pkgs; [
       # Symbols
+      font-awesome
+      material-icons
       nerd-fonts.symbols-only
 
       # Emojis

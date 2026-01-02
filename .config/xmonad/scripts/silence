@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+notify="notify-send -u low Silence!"
+
+case $(dunstctl is-paused) in
+true)
+    dunstctl set-paused false
+    $notify "Notifications are now enabled"
+    ;;
+false)
+    $notify "Notifications are now disabled"
+    # the delay is here because pausing notifications immediately hides
+    # the ones present on your desktop; we also run dunstctl close so
+    # that the notification doesn't reappear on unpause
+    (sleep 3 && dunstctl close && dunstctl set-paused true) &
+    ;;
+esac
+
+# vim:ft=sh:sw=2:ts=2:et:

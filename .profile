@@ -29,7 +29,7 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/rg/ripgreprc"
 export BAT_THEME=ansi
 
 export FZF_DEFAULT_OPTS="--reverse \
-  --preview='fzf-file-previewer {}' \
+  --preview='previewer {}' \
   --preview-window=right,55%,border-none,nocycle \
   --info=inline-right \
   --no-separator \

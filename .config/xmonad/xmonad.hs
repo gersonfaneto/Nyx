@@ -101,7 +101,7 @@ mManageHook =
 myStartupHook :: X ()
 myStartupHook = do
     spawn "pkill dunst; dunst -config $HOME/.config/dunst/dunstrc &"
-    spawn "wallpaper --default &"
+    spawn "feh --bg-fill $HOME/.local/share/wallpapers/1920x1080.jpg &"
     spawn "battery -L 20 -n &"
     spawn "xset s 600 &"
     spawn "xss-lock -l -- xsecurelock &"
@@ -182,10 +182,6 @@ mKeys =
     , ("M-s", systemSubmap)
     , ("M-m", mediaSubmap)
     , ("M-w", workspaceSubmap)
-    , ("M-<F1>", spawn "wallpaper --select")
-    , ("M-S-<F1>", spawn "wallpaper --default")
-    , ("M-C-<F1>", spawn "wallpaper --random")
-    , ("M-<F2>", spawn "background alt")
     , ("M-q", kill)
     , ("M-C-l", nextWS)
     , ("M-C-h", prevWS)
