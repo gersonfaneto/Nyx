@@ -40,7 +40,11 @@ return {
   cmd = { 'tinymist' },
   filetypes = { 'typst' },
   root_markers = { '.git' },
-  settings = { formatterMode = 'typstyle' },
+  settings = {
+    exportPdf = 'onSave',
+    formatterMode = 'typstyle',
+    semanticTokens = 'disable',
+  },
   on_attach = function(client, bufnr)
     for _, command in ipairs({
       'tinymist.exportSvg',
@@ -66,5 +70,21 @@ return {
         { nargs = 0, desc = cmd_desc }
       )
     end
+
+    vim.keymap.set('n', '<leader>tp', function()
+      client:exec_cmd({
+        title = 'pin',
+        command = 'tinymist.pinMain',
+        arguments = { vim.api.nvim_buf_get_name(0) },
+      }, { bufnr = bufnr })
+    end, { desc = '[T]inymist [P]in', noremap = true })
+
+    vim.keymap.set('n', '<leader>tu', function()
+      client:exec_cmd({
+        title = 'unpin',
+        command = 'tinymist.pinMain',
+        arguments = { vim.v.null },
+      }, { bufnr = bufnr })
+    end, { desc = '[T]inymist [U]npin', noremap = true })
   end,
 }
