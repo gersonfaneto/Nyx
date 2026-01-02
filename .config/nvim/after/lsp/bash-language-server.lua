@@ -1,6 +1,6 @@
 ---@type lsp.config
 return {
-  filetypes = { 'sh' },
+  filetypes = { 'sh', 'bash' },
   cmd = {
     'bash-language-server',
     'start',

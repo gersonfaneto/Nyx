@@ -390,6 +390,7 @@
       bash-language-server
 
       # Node
+      bun
       nodejs_22
 
       # HTML + CSS + JSON
@@ -418,6 +419,9 @@
 
       # General
       aporetic
+
+      # Terminal
+      nerd-fonts.terminess-ttf
     ];
     fontconfig = {
       enable = true;
