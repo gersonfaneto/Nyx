@@ -138,4 +138,3 @@ vim.keymap.set('v', '<leader>y', function()
   vim.fn.setreg('+', normalized)
   vim.notify('Copied normalized text to clipboard')
 end, { desc = 'Copy and normalize' })
-
