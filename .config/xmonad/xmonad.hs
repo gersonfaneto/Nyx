@@ -1,3 +1,5 @@
+-- import           Flow
+
 import           XMonad
 import           XMonad.Actions.CycleWS
 import           XMonad.Actions.Submap
