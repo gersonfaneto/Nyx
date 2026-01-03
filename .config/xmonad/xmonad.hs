@@ -155,6 +155,7 @@ workspaceSubmap =
 mKeys =
     [ ("M-<Escape>", spawn "$HOME/.config/rofi/scripts/system")
     , ("M-<Space>", spawn "$HOME/.config/rofi/scripts/launcher")
+    , ("M-<Print>", spawn "$HOME/.config/rofi/scripts/capture")
     , ("M-<Return>", spawn mTerminal)
     , ("M-S-<Return>", spawn mTerminal')
     , ("M-o", openSubmap)
