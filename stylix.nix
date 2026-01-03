@@ -1,14 +1,15 @@
-{
-  lib,
-  pkgs,
-  config,
-  inputs,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, inputs
+, ...
+}:
+let
   colors = config.lib.stylix.colors.withHashtag;
   scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-in {
-  imports = [inputs.stylix.homeModules.stylix];
+in
+{
+  imports = [ inputs.stylix.homeModules.stylix ];
 
   stylix.enable = true;
   stylix.autoEnable = true;
@@ -57,10 +58,11 @@ in {
   # Declare all 16 base16 colors as session variables to be used by applications
   # not controlled by Home Manager.
   home.sessionVariables = builtins.listToAttrs (
-    builtins.genList (x: {
-      name = "STYLIX_BASE_0${lib.toHexString x}";
-      value = colors."base0${lib.toHexString x}";
-    })
-    15
+    builtins.genList
+      (x: {
+        name = "STYLIX_BASE_0${lib.toHexString x}";
+        value = colors."base0${lib.toHexString x}";
+      })
+      15
   );
 }

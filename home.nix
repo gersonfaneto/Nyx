@@ -1,14 +1,15 @@
-{
-  pkgs,
-  config,
-  ...
-}: let
+{ pkgs
+, config
+, ...
+}:
+let
   NYX_PATH = "/home/gerson/Developer/Personal/Nyx";
 
   mkSymlink = path: {
     source = config.lib.file.mkOutOfStoreSymlink "${NYX_PATH}/${path}";
   };
-in {
+in
+{
   imports = [
     ./stylix.nix
   ];
@@ -33,6 +34,7 @@ in {
     ".config/rofi/" = mkSymlink ".config/rofi/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
+    ".config/xmobar/" = mkSymlink ".config/xmobar/";
     ".config/xmonad/" = mkSymlink ".config/xmonad/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".emacs.d/" = mkSymlink ".emacs.d/";
@@ -60,7 +62,7 @@ in {
     shadow = true;
 
     shadowOpacity = 0.75;
-    shadowOffsets = [(-5) (-5)];
+    shadowOffsets = [ (-5) (-5) ];
     shadowExclude = [
       "! name~=''"
       "name = 'xmobar'"
@@ -73,7 +75,7 @@ in {
 
     fade = true;
     fadeDelta = 4;
-    fadeSteps = [0.33 0.03];
+    fadeSteps = [ 0.33 0.03 ];
 
     vSync = false;
 

@@ -1,8 +1,4 @@
-{
-  pkgs,
-  overlays,
-  ...
-}: {
+{ pkgs, overlays, ... }: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -23,7 +19,7 @@
     experimental-features = nix-command flakes
   '';
 
-  nix.settings.trusted-users = ["gerson"];
+  nix.settings.trusted-users = [ "gerson" ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -52,10 +48,8 @@
       enableConfiguredRecompile = true;
       extraPackages = haskellPackages: [
         haskellPackages.flow
-        haskellPackages.xmonad
-        haskellPackages.xmonad-extras
-        haskellPackages.xmonad-contrib
       ];
+      config = ./.config/xmonad/src/Main.hs;
     };
   };
 
@@ -114,9 +108,9 @@
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = ["graphical-session.target"];
-      wants = ["graphical-session.target"];
-      after = ["graphical-session.target"];
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -176,7 +170,7 @@
       "docker"
       "networkmanager"
     ];
-    packages = with pkgs; [gnupg];
+    packages = with pkgs; [ gnupg ];
   };
 
   nixpkgs = {
@@ -316,14 +310,23 @@
       xss-lock
       yt-dlp
       zoxide
+      # ...
+      ghc
+      ghcid
+      cabal2nix
+      cabal-install
+      nix-prefetch-git
+      haskellPackages.fourmolu
+      haskellPackages.cabal-gild
+      haskellPackages.haskell-language-server
     ])
     ++ (with pkgs; [
-      (callPackage ./packages/boomer.nix {})
+      (callPackage ./packages/boomer.nix { })
     ])
     ++ (with pkgs; [
       # Nyx
       nixd
-      alejandra
+      nixpkgs-fmt
 
       # Markdown
       marksman
@@ -381,10 +384,10 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        emoji = ["Noto Emoji"];
-        serif = ["Aporetic Serif"];
-        sansSerif = ["Aporetic Sans"];
-        monospace = ["Aporetic Serif Mono"];
+        emoji = [ "Noto Emoji" ];
+        serif = [ "Aporetic Serif" ];
+        sansSerif = [ "Aporetic Sans" ];
+        monospace = [ "Aporetic Serif Mono" ];
       };
     };
   };

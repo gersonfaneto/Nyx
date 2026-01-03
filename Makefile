@@ -19,4 +19,4 @@ prune:
 
 .PHONY: format
 format:
-	find -type f -name '*.nix' -exec nix fmt --quiet {} \;
+	find . -type f -name '*.nix' ! \( -path '*\.emacs\.d*' -o -name 'hardware*.nix' \)  | paste -sd ' ' | xargs nix fmt

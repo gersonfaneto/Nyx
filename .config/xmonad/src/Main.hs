@@ -1,4 +1,4 @@
--- import           Flow
+import           Flow
 
 import           XMonad
 import           XMonad.Actions.CycleWS
@@ -236,7 +236,7 @@ myConfig =
         }
         `additionalKeysP` mKeys
 
-mXmobar = statusBarProp "xmobar ~/.config/xmonad/xmobarrc" (pure myXmobarPP)
+mXmobar = statusBarProp "xmobar ~/.config/xmobar/xmobarrc" (pure myXmobarPP)
 
 main :: IO ()
 main = xmonad . ewmhFullscreen . ewmh . withEasySB mXmobar defToggleStrutsKey $ myConfig

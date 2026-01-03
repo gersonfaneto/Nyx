@@ -20,55 +20,58 @@
     };
   };
 
-  outputs = inputs @ {nixpkgs, ...}: let
-    system = "x86_64-linux";
+  outputs = inputs @ { nixpkgs, ... }:
+    let
+      system = "x86_64-linux";
 
-    pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = nixpkgs.legacyPackages.${system};
 
-    overlays = {
-      neovim = inputs.neovim-nightly-overlay.packages.${pkgs.system};
-    };
+      overlays = {
+        neovim = inputs.neovim-nightly-overlay.packages.${pkgs.system};
+      };
 
-    forAllSystems = nixpkgs.lib.genAttrs [
-      "aarch64-linux"
-      "x86_64-linux"
-      "x86_64-darwin"
-      "aarch64-darwin"
-    ];
-  in {
-    formatter = forAllSystems (
-      system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-        pkgs.alejandra
-    );
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "aarch64-linux"
+        "x86_64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+    in
+    {
+      formatter = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        pkgs.nixpkgs-fmt
+      );
 
-    packages = forAllSystems (system: {
-      default = nixpkgs.legacyPackages.${system}.hello;
-    });
+      packages = forAllSystems (system: {
+        default = nixpkgs.legacyPackages.${system}.hello;
+      });
 
-    nixosConfigurations = {
-      Nyx = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          inherit overlays;
+      nixosConfigurations = {
+        Nyx = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+            inherit overlays;
+          };
+
+          modules = [
+            ./configuration.nix
+
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "bak";
+              home-manager.users.gerson = ./home.nix;
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+              };
+            }
+          ];
         };
-
-        modules = [
-          ./configuration.nix
-
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "bak";
-            home-manager.users.gerson = ./home.nix;
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-            };
-          }
-        ];
       };
     };
-  };
 }

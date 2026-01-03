@@ -1,0 +1,21 @@
+cabal-version: 3.0
+name: xmonad-nyx
+version: 0.1.0
+
+common base
+  -- ghc-options: -Wall
+  default-language: GHC2021
+
+executable xmonad
+  import: base
+  hs-source-dirs: src
+  build-depends:
+    base,
+    containers,
+    flow,
+    regex-posix,
+    xmonad,
+    xmonad-contrib,
+    xmonad-extras,
+
+  main-is: Main.hs
