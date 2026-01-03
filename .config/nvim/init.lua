@@ -36,10 +36,10 @@ vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 vim.keymap.set("v", ".", ":normal .<cr>", { desc = "Repeat last command" })
 
 -- Move between panes or create new panes
-vim.keymap.set("n", "<M-h>", "<Plug>WinMoveLeft", { desc = "Move to left window", remap = true, silent = true })
-vim.keymap.set("n", "<M-j>", "<Plug>WinMoveDown", { desc = "Move to window below", remap = true, silent = true })
-vim.keymap.set("n", "<M-k>", "<Plug>WinMoveUp", { desc = "Move to window above", remap = true, silent = true })
-vim.keymap.set("n", "<M-l>", "<Plug>WinMoveRight", { desc = "Move to right window", remap = true, silent = true })
+vim.keymap.set("n", "<C-h>", "<Plug>WinMoveLeft", { desc = "Move to left window", remap = true, silent = true })
+vim.keymap.set("n", "<C-j>", "<Plug>WinMoveDown", { desc = "Move to window below", remap = true, silent = true })
+vim.keymap.set("n", "<C-k>", "<Plug>WinMoveUp", { desc = "Move to window above", remap = true, silent = true })
+vim.keymap.set("n", "<C-l>", "<Plug>WinMoveRight", { desc = "Move to right window", remap = true, silent = true })
 
 -- Quickfix navigation using vim-unimpaired style
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz", { desc = "Previous quickfix item" })
