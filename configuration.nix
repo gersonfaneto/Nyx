@@ -372,10 +372,10 @@
       # Emojis
       noto-fonts-color-emoji
 
-      # General
+      # Readable
       aporetic
 
-      # Terminal
+      # Retro
       curie
       scientifica
       nerd-fonts.terminess-ttf
