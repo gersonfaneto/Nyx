@@ -123,6 +123,12 @@
   (unless (find-font (font-spec :name "all-the-icons"))
     (all-the-icons-install-fonts t))) ;; Install icons if not found
 
+;; Use custom colors
+(require 'minimal-modules-colors)
+
+;; Use custom modeline
+;; (require 'minimal-modules-modeline)
+
 (use-package nano-modeline
   :init
   (setq nano-modeline-position 'nano-modeline-footer)
@@ -130,6 +136,7 @@
   (progn
     (defun minimal/nano-modeline-update (&rest _)
       "Update nano-modeline active face."
+      (interactive)
       (custom-set-faces
        `(nano-modeline-active
         ((t (:foreground ,(face-foreground 'default)
@@ -150,12 +157,6 @@
    (messages-buffer-mode-hook . nano-modeline-message-mode)
    (org-capture-mode-hook . nano-modeline-org-capture-mode)
    (org-agenda-mode-hook . nano-modeline-org-agenda-mode)))
-
-;; Use custom colors
-(require 'minimal-modules-colors)
-
-;; Use custom modeline
-;; (require 'minimal-modules-modeline)
 
 ;; --- UI Enhancements ---
 ;; Enable which-key to show keybindings.
