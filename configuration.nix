@@ -50,6 +50,12 @@
       enable = true;
       enableContribAndExtras = true;
       enableConfiguredRecompile = true;
+      extraPackages = haskellPackages: [
+        haskellPackages.flow
+        haskellPackages.xmonad
+        haskellPackages.xmonad-extras
+        haskellPackages.xmonad-contrib
+      ];
     };
   };
 
@@ -303,21 +309,13 @@
       xcolor
       xdo
       xdotool
+      xmobar
       xorg.xrandr
       xsecurelock
       xsel
       xss-lock
       yt-dlp
       zoxide
-    ])
-    ++ (with pkgs; [
-      xmobar
-      (haskellPackages.ghcWithPackages (self:
-        with self; [
-          xmonad
-          xmonad-extras
-          xmonad-contrib
-        ]))
     ])
     ++ (with pkgs; [
       (callPackage ./packages/boomer.nix {})
@@ -337,23 +335,9 @@
       luajitPackages.luacheck
 
       # C
-      bear
-      clang-tools
       gcc
-      gnumake
       cmake
-      gdb
-      strace
-      valgrind
-
-      # Haskell
-      ghcid
-      stack
-      cabal-install
-      ormolu
-      fourmolu
-      stylish-haskell
-      haskell-language-server
+      gnumake
 
       # Python
       python312
@@ -364,13 +348,6 @@
       # Bash
       shfmt
       bash-language-server
-
-      # Node
-      bun
-      nodejs_22
-
-      # HTML + CSS + JSON
-      vscode-langservers-extracted
 
       # LaTeX
       texlive.combined.scheme-full
@@ -399,6 +376,8 @@
       aporetic
 
       # Terminal
+      curie
+      scientifica
       nerd-fonts.terminess-ttf
     ];
     fontconfig = {

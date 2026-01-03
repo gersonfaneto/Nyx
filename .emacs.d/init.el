@@ -8,7 +8,7 @@
   (set-face-attribute 'default (selected-frame) :height
                       (cond ((> n 0) (+ (face-attribute 'default :height) 5))
                             ((< n 0) (- (face-attribute 'default :height) 5))
-                            (t 100)))) ;; Reset to a standard size (adjust 100 if needed)
+                            (t (* minimal/default-font-size 10))))) ;; Reset to the standard size
 
 ;; Define keybindings for font scaling.
 (global-set-key (kbd "C-0") '(lambda nil (interactive) (minimal/scale-font  0))) ;; Reset font size
@@ -466,7 +466,7 @@
       (mapc 'frame-set-background-mode (frame-list)))   ;; Set the frame default background.
     (minimal/load-theme)				;; Load the current theme.
     (minimal/toggle-transparency)			;; Set the window opacity.
-    (set-frame-font minimal/default-font nil t)))	;; Set the default font.
+    (set-frame-font (format "%s %s" minimal/default-font-family minimal/default-font-size) nil t)))	;; Set the default font.
 
 ;; Apply frame setup when Emacs starts or when a new frame is created.
 (if (daemonp)
