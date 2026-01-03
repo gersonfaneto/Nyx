@@ -134,13 +134,6 @@ openSubmap =
             , ((0, xK_z), spawn "boomer")
             ]
 
-rofiSubmap =
-    namedSubmap "Rofi" $
-        Map.fromList
-            [ ((0, xK_r), spawn "$HOME/.config/rofi/scripts/launcher")
-            , ((0, xK_p), spawn "$HOME/.config/rofi/scripts/capture")
-            ]
-
 systemSubmap =
     namedSubmap "System" $
         Map.fromList
@@ -161,10 +154,10 @@ workspaceSubmap =
 
 mKeys =
     [ ("M-<Escape>", spawn "$HOME/.config/rofi/scripts/system")
+    , ("M-<Space>", spawn "$HOME/.config/rofi/scripts/launcher")
     , ("M-<Return>", spawn mTerminal)
     , ("M-S-<Return>", spawn mTerminal')
     , ("M-o", openSubmap)
-    , ("M-r", rofiSubmap)
     , ("M-s", systemSubmap)
     , ("M-w", workspaceSubmap)
     , ("M-q", kill)
