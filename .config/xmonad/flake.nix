@@ -1,5 +1,5 @@
 {
-  description = "XMonad Configuration";
+  description = "...";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
