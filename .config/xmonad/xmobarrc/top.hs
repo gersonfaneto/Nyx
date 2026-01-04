@@ -1,5 +1,5 @@
 Config
-  { font = "Terminess Regular 12",
+  { font = "Aporetic Serif 12",
     bgColor = "#0b0806",
     fgColor = "#a19782",
     alpha = 255,

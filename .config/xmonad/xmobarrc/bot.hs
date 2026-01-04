@@ -1,5 +1,5 @@
 Config
-  { font = "Terminess 12",
+  { font = "Aporetic Serif 12",
     bgColor = "#0b0806",
     fgColor = "#a19782",
     alpha = 255,
@@ -20,29 +20,24 @@ Config
       [ Run
           DynNetwork
           [ "-t",
-            "<fn=1>\61813</fn> <rx> / <fn=1>\61813</fn> <tx> kbps"
+            "<fn=1>\61813</fn> <rx> / <fn=1>\61814</fn> <tx> kbps"
           ]
           10,
         Run Date "%d.%m.%y / %A / %H:%M" "date" 10,
-        Run DateZone "<fc=#8f8b8a>🌐%H</fc>" "" "UTC" "utcdate" 10,
-        Run DateZone "<fc=#8f8b8a>🗼%H</fc>" "" "Asia/Tokyo" "asiadate" 10,
-        Run DateZone "<fc=#8f8b8a>🗽%H</fc>" "" "America/New_York" "usdate" 10,
         Run MultiCpu ["-t", "<fn=1>\62652</fn> <total>%"] 20,
         Run Memory ["-t", "<fn=1>\61381</fn>  <usedratio>%"] 20,
-        Run ComX "$HOME/.config/xmonad/scripts/xmobar/player" [] "" "player" 20,
-        Run ComX "$HOME/.config/xmonad/scripts/xmobar/dunststatus" [] "" "dunst" 20,
-        Run ComX "$HOME/.config/xmonad/scripts/xmobar/wgcf" [] "" "wgcf" 20,
-        Run ComX "$HOME/.config/xmonad/scripts/xmobar/tailscalestatus" [] "" "tailscale" 20
+        Run ComX "/home/gerson/.config/xmonad/scripts/xmobar/player" [] "" "player" 20,
+        Run ComX "/home/gerson/.config/xmonad/scripts/xmobar/dunststatus" [] "" "dunst" 20
         -- , Run ComX "warpstatus" [] "" "warp" 10
       ],
     sepChar = "%",
     alignSep = "}{",
     template =
       " \
-      \%memory%  |  %multicpu%  |  %dynnetwork%\
+      \ %memory%  |  %multicpu%  |  %dynnetwork%\
       \}\
       \%player%\
       \{\
-      \%wgcf%%tailscale%%dunst%    |  %date% · %utcdate% %asiadate% %usdate%\
+      \%dunst%  |  %date% \
       \ "
   }
