@@ -35,7 +35,7 @@ scratchpads :: [NamedScratchpad]
 scratchpads =
   [ NS
       "console"
-      (spawnTerminalWith "NSPConsole" "$XMONAD_CONFIG_DIR/scripts/nsp-console.sh")
+      (spawnTerminalWith "NSPConsole" "$HOME/.config/xmonad/scripts/nsp-console.sh")
       (className =? "NSPConsole")
       doFullCenterFloat,
     NS

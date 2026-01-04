@@ -24,7 +24,7 @@ selectLayoutByName conf =
 -- GridSelect
 gridChooselayoutTheme :: GSConfig String
 gridChooselayoutTheme =
-  gridSelectTheme {gs_cellwidth = 500, gs_font = "xft:monospace:size=12"}
+  gridSelectTheme {gs_cellwidth = 500, gs_font = "xft:Terminess:size=12"}
 
 selectLayoutGrid :: X ()
 selectLayoutGrid =

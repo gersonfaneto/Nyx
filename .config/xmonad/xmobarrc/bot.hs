@@ -1,8 +1,5 @@
 Config
-  { font = "monospace Regular 12",
-    additionalFonts =
-      [ "monospace Bold 14"
-      ],
+  { font = "Terminess 12",
     bgColor = "#0b0806",
     fgColor = "#a19782",
     alpha = 255,
@@ -32,10 +29,10 @@ Config
         Run DateZone "<fc=#8f8b8a>🗽%H</fc>" "" "America/New_York" "usdate" 10,
         Run MultiCpu ["-t", "<fn=1>\62652</fn> <total>%"] 20,
         Run Memory ["-t", "<fn=1>\61381</fn>  <usedratio>%"] 20,
-        Run ComX "player" [] "" "player" 20,
-        Run ComX "dunststatus" [] "" "dunst" 20,
-        Run ComX "wgcf" [] "" "wgcf" 20,
-        Run ComX "tailscalestatus" [] "" "tailscale" 20
+        Run ComX "$HOME/.config/xmonad/scripts/xmobar/player" [] "" "player" 20,
+        Run ComX "$HOME/.config/xmonad/scripts/xmobar/dunststatus" [] "" "dunst" 20,
+        Run ComX "$HOME/.config/xmonad/scripts/xmobar/wgcf" [] "" "wgcf" 20,
+        Run ComX "$HOME/.config/xmonad/scripts/xmobar/tailscalestatus" [] "" "tailscale" 20
         -- , Run ComX "warpstatus" [] "" "warp" 10
       ],
     sepChar = "%",

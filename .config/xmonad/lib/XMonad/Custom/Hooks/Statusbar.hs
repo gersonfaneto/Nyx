@@ -13,7 +13,7 @@ import XMonad.Util.ClickableWorkspaces
 barCommand :: Int -> String -> String
 barCommand = printf command
   where
-    command = "xmobar -x %d $XMONAD_CONFIG_DIR/xmobarrc/%s.hs"
+    command = "xmobar -x %d $HOME/.config/xmonad/xmobarrc/%s.hs"
 
 xmobarTop :: Int -> StatusBarConfig
 xmobarTop screen = statusBarPropTo "_XMONAD_LOG_1" (barCommand screen "top") topBarPP'
@@ -23,7 +23,8 @@ xmobarBot screen = statusBarPropTo "_XMONAD_LOG_2" (barCommand screen "bot") (pu
 
 barSpawner :: ScreenId -> X StatusBarConfig
 -- barSpawner _ = mempty
-barSpawner 0 = pure $ xmobarTop 0 <> xmobarBot 0 <> traySB -- two bars and tray on the main screen
+-- barSpawner 0 = pure $ xmobarTop 0 <> xmobarBot 0 <> traySB -- two bars and tray on the main screen
+barSpawner 0 = pure $ xmobarTop 0 <> xmobarBot 0 -- two bars on the main screen
 barSpawner _ = pure $ xmobarTop 1 -- only top bar on the rest of the screens
 
 traySB :: StatusBarConfig

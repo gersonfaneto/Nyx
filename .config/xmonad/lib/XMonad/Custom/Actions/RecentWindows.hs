@@ -308,7 +308,7 @@ showRecentWindows numWindows shortenLength displayTime = do
     -- Use zipWithM for strictness and efficiency
     windowNames <- zipWithM formatWindow [1 ..] windows
     flashText
-      def {st_font = "xft:chordmonospace:size=12"}
+      def {st_font = "xft:Terminess:size=12"}
       (ceiling (displayTime * 100) % 100)
       (intercalate " | " windowNames)
   where

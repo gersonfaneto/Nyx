@@ -39,4 +39,4 @@ formatLayout current layout
 
 -- | Displays a notification with custom font settings
 flashKeyboardChange :: String -> X ()
-flashKeyboardChange = flashText def {st_font = "xft:monospace:size=30"} 0.5 . wrap "  " "  "
+flashKeyboardChange = flashText def {st_font = "xft:Terminess:size=30"} 0.5 . wrap "  " "  "

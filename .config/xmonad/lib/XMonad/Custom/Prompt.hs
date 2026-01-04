@@ -89,4 +89,4 @@ aListCompFunc :: XPConfig -> [(String, a)] -> String -> IO [String]
 aListCompFunc c xs s = pure $! [x | (x, _) <- xs, searchPredicate c s x]
 
 helpPromptConfig :: ShowTextConfig
-helpPromptConfig = def {st_font = "xft:monospace:size=12"}
+helpPromptConfig = def {st_font = "xft:Terminess:size=12"}

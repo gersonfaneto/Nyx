@@ -164,7 +164,7 @@ showRecentWorkspaces numWorkspaces displayTime = do
         !timeRatio = ceiling (displayTime * 100) % 100
 
     flashText
-      def {st_font = "xft:monospace:size=12"}
+      def {st_font = "xft:Terminess:size=12"}
       timeRatio
       (intercalate " | " wsDisplay)
   where

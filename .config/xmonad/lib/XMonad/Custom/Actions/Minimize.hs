@@ -21,7 +21,7 @@ getWinTitle w =
 
 gridMaximizeTheme :: GSConfig Window
 gridMaximizeTheme =
-  gridSelectTheme {gs_cellwidth = 400, gs_font = "xft:monospace:size=10"}
+  gridSelectTheme {gs_cellwidth = 400, gs_font = "xft:Terminess:size=10"}
 
 selectMaximizeWindowGrid :: X ()
 selectMaximizeWindowGrid = withMinimized $ \minimizedWindows ->

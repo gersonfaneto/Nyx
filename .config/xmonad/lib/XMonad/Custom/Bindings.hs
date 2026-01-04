@@ -205,7 +205,7 @@ keysSystem =
   [ ("<Print>", screenshot Fullscreen),
     ("S-<Print>", screenshot Select),
     ("C-S-<Print>", screenshot SelectCopyToClipboard),
-    ("M-t S-l", spawn "$XMONAD_CONFIG_DIR/scripts/caffeine"),
+    ("M-t S-l", spawn "$HOME/.config/xmonad/scripts/caffeine"),
     ("M-t t", spawn "darkman toggle"),
     ("M-t n", spawn "dunstctl set-paused toggle")
   ]
@@ -273,7 +273,7 @@ keysLayout c =
     ("M-S-f", withFocused $ sendMessage . maximizeRestore),
     ("M-t g", toggleGaps),
     ("M-t s", toggleStatusBar),
-    ("M-t c", spawn "$XMONAD_CONFIG_DIR/scripts/toggle-compositor.sh"),
+    ("M-t c", spawn "$HOME/.config/xmonad/scripts/toggle-compositor.sh"),
     ("M-t z", toggleZen >> flash' "<~ ZEN ~>")
   ]
 
@@ -341,8 +341,8 @@ keysWindows =
     ++ zipKeys' "M-" arrowKeys directions screenGo True
     ++ zipKeys' "M-S-" arrowKeys directions windowToScreen True
     ++ zipKeys' "M-C-" arrowKeys directions screenSwap True
-    ++ zipKeys' "C-<Space> " vimKeys directions screenSwap True
-    ++ zipKeys' "C-<Space> S-" vimKeys directions windowToScreen True
+    ++ zipKeys' "M1-<Space> " vimKeys directions screenSwap True
+    ++ zipKeys' "M1-<Space> S-" vimKeys directions windowToScreen True
   where
     directions = [D, U, L, R]
     arrowKeys = ["<D>", "<U>", "<L>", "<R>"]

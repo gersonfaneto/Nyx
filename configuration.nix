@@ -232,6 +232,7 @@
   environment.systemPackages =
     (with pkgs; [
       acpi
+      xkb-switch
       alacritty
       alsa-utils
       autorandr
