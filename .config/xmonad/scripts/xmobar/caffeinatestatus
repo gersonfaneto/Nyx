@@ -1,7 +1,5 @@
 #!/bin/sh
 
 if pgrep -x "caffeinate" >/dev/null; then
-    killall -INT caffeinate
-else
-    caffeinate
+  echo "<fn=2>󰅶</fn>"
 fi

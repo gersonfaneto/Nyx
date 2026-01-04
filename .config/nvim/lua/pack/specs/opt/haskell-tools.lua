@@ -8,7 +8,7 @@ return {
         hls = {
           settings = {
             haskell = {
-              formattingProvider = 'stylish-haskell',
+              formattingProvider = 'fourmolu',
             },
           },
         },

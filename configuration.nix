@@ -44,12 +44,8 @@
   services.xserver.windowManager = {
     xmonad = {
       enable = true;
-      enableContribAndExtras = true;
-      enableConfiguredRecompile = true;
-      extraPackages = haskellPackages: [
-        haskellPackages.flow
-      ];
-      config = ./.config/xmonad/src/Main.hs;
+      # enableContribAndExtras = true;
+      # enableConfiguredRecompile = true;
     };
   };
 
@@ -238,6 +234,7 @@
       acpi
       alacritty
       alsa-utils
+      autorandr
       bat
       beets
       bluetui
@@ -289,6 +286,9 @@
       rsync
       scc
       sct
+      skippy-xd
+      sxhkd
+      tailscale
       tmux
       trash-cli
       tree
@@ -297,13 +297,17 @@
       vim
       vlc
       w3m
+      wgcf
       wget
       wiremix
       xclip
       xcolor
       xdo
       xdotool
+      xkb-switch
+      xkbmon
       xmobar
+      xmonadctl
       xorg.xrandr
       xsecurelock
       xsel

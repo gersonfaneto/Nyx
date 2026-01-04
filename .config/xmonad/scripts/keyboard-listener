@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+current_layout=""
+previous_layout=""
+
+xkbmon -u | while read -s -r layout; do
+  if [[ $layout != "$previous_layout" ]]; then
+    current_layout="$layout"
+    xmonadctl -a XMONAD_SHOW_KEYBOARD_CHANGE "$current_layout"
+    previous_layout="$layout"
+  fi
+done

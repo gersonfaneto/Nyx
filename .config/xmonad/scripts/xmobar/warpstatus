@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if pgrep -x ".*warp-svc.*" >/dev/null; then
+  echo "<action='warp'><fn=3></fn></action>"
+fi
