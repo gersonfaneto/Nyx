@@ -6,6 +6,28 @@ common base
   -- ghc-options: -Wall
   default-language: GHC2021
 
+library xmonad-lib
+  import: base
+  hs-source-dirs: lib
+  build-depends:
+    X11,
+    base,
+    containers,
+    flow,
+    xmonad,
+    xmonad-contrib,
+    xmonad-extras,
+
+  exposed-modules:
+    XMonad.Custom.Hooks.Layout
+    XMonad.Custom.Hooks.Log
+    XMonad.Custom.Hooks.XMobar
+    XMonad.Custom.Manage.ManageHelpers
+    XMonad.Custom.Misc
+    XMonad.Custom.Scratchpads
+    XMonad.Custom.Theme
+    XMonad.Custom.Utils.Loggers
+
 executable xmonad
   import: base
   hs-source-dirs: src
@@ -17,5 +39,6 @@ executable xmonad
     xmonad,
     xmonad-contrib,
     xmonad-extras,
+    xmonad-lib,
 
   main-is: Main.hs

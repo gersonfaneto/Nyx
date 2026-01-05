@@ -1,6 +1,6 @@
 Config {
    -- Appearance
-     font            = "Aporetic Serif 10"
+     font            = "IBM Plex Mono 10"
    , bgColor         = "#1D2021"
    , fgColor         = "#FBF1C7"
    , position        = BottomSize C 100 35 │ 

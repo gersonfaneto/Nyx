@@ -17,6 +17,11 @@ prune:
 	sudo nix-collect-garbage --delete-old
 
 
+.PHONY: check
+check:
+	nix flake check
+
+
 .PHONY: format
 format:
 	find . -type f -name '*.nix' ! \( -path '*\.emacs\.d*' -o -name 'hardware*.nix' \)  | paste -sd ' ' | xargs nix fmt

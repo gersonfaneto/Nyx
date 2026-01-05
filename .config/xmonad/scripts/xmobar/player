@@ -1,0 +1,20 @@
+#!/bin/sh
+
+player_status=$(playerctl --player playerctld status)
+
+case "$player_status" in
+Playing | Paused)
+  artist=$(playerctl metadata artist)
+  title=$(playerctl metadata title)
+  output="$artist - $title"
+  # Trim to 97 chars and add ... if longer
+  if [ ${#output} -gt 100 ]; then
+    echo "${output:0:97}..."
+  else
+    echo "$output"
+  fi
+  ;;
+*)
+  echo ""
+  ;;
+esac

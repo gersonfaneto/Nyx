@@ -33,6 +33,8 @@ import           System.IO                    (writeFile)
 
 import           Text.Regex.Posix             ((=~))
 
+import XMonad.Custom.Hooks.XMobar qualified as C
+
 q ~? x = fmap (=~ x) q
 
 cBackground = "#1D2021"
@@ -204,24 +206,6 @@ toggleFloat w =
                then StackSet.sink w s
                else StackSet.float w (StackSet.RationalRect 0.15 0.15 0.7 0.7) s)
 
-myXmobarPP :: PP
-myXmobarPP =
-    def
-        { ppSep = xmobarColor cBlack' "" " │ "
-        , ppTitleSanitize = xmobarStrip
-        , ppCurrent = xmobarColor cCyan ""
-        , ppHidden = xmobarColor cForeground ""
-        , ppHiddenNoWindows = xmobarColor cBlack' ""
-        , ppUrgent = xmobarColor cRed cYellow
-        , ppOrder = \[ws, l, _, wins] -> [ws, l, wins]
-        , ppExtras = [logTitles formatFocused formatUnfocused]
-        }
-  where
-    formatFocused = wrap (xmobarColor cCyan "" "[") (xmobarColor cCyan "" "]") . xmobarColor cForeground "" . ppWindow
-    formatUnfocused = wrap (xmobarColor cBlack' "" "[") (xmobarColor cBlack' "" "]") . xmobarColor cBlack' "" . ppWindow
-    ppWindow :: String -> String
-    ppWindow = xmobarRaw . (\w -> if null w then "untitled" else w) . shorten 30
-
 myConfig =
     def
         { modMask = mModMask
@@ -233,10 +217,9 @@ myConfig =
         , startupHook = myStartupHook
         , layoutHook = mLayoutHook
         , manageHook = mManageHook <+> manageDocks
-        }
+        } 
         `additionalKeysP` mKeys
-
-mXmobar = statusBarProp "xmobar ~/.config/xmobar/xmobarrc" (pure myXmobarPP)
+        |> dynamicSBs C.barSpawner
 
 main :: IO ()
-main = xmonad . ewmhFullscreen . ewmh . withEasySB mXmobar defToggleStrutsKey $ myConfig
+main = xmonad . ewmhFullscreen . ewmh $ myConfig

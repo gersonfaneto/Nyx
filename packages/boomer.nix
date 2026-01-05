@@ -6,7 +6,6 @@
 , libX11
 , libXrandr
 , libGL
-,
 }:
 let
   x11-nim = fetchgit {

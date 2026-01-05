@@ -44,12 +44,8 @@
   services.xserver.windowManager = {
     xmonad = {
       enable = true;
-      enableContribAndExtras = true;
-      enableConfiguredRecompile = true;
-      extraPackages = haskellPackages: [
-        haskellPackages.flow
-      ];
-      config = ./.config/xmonad/src/Main.hs;
+      # enableContribAndExtras = true;
+      # enableConfiguredRecompile = true;
     };
   };
 
@@ -121,33 +117,33 @@
     };
   };
 
-  services.fprintd = {
-    enable = true;
-    tod = {
-      enable = true;
-      driver = pkgs.libfprint-2-tod1-goodix;
-    };
-  };
+  # services.fprintd = {
+  #   enable = true;
+  #   tod = {
+  #     enable = true;
+  #     driver = pkgs.libfprint-2-tod1-goodix;
+  #   };
+  # };
 
-  security.pam.services = {
-    ly = {
-      text = ''
-        auth       substack     login
-        account    include      login
-        password   substack     login
-        session    include      login
-      '';
-      enableGnomeKeyring = true;
-    };
-    login = {
-      fprintAuth = true;
-      enableGnomeKeyring = true;
-    };
-    xsecurelock = {
-      fprintAuth = true;
-      enableGnomeKeyring = true;
-    };
-  };
+  # security.pam.services = {
+  #   ly = {
+  #     text = ''
+  #       auth       substack     login
+  #       account    include      login
+  #       password   substack     login
+  #       session    include      login
+  #     '';
+  #     enableGnomeKeyring = true;
+  #   };
+  #   login = {
+  #     fprintAuth = true;
+  #     enableGnomeKeyring = true;
+  #   };
+  #   xsecurelock = {
+  #     fprintAuth = true;
+  #     enableGnomeKeyring = true;
+  #   };
+  # };
 
   xdg = {
     portal = {
@@ -255,7 +251,7 @@
       file
       firefox
       fish
-      fprintd
+      # fprintd
       fzf
       gh
       ghostty
@@ -373,21 +369,17 @@
       # Emojis
       noto-fonts-color-emoji
 
-      # Readable
-      aporetic
-
-      # Retro
-      curie
-      scientifica
-      nerd-fonts.terminess-ttf
+      # General
+      ibm-plex
+      nerd-fonts.blex-mono
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "Aporetic Serif" ];
-        sansSerif = [ "Aporetic Sans" ];
-        monospace = [ "Aporetic Serif Mono" ];
+        serif = [ "IBM Plex Serif" ];
+        sansSerif = [ "IBM Plex Sans" ];
+        monospace = [ "IBM Plex Mono" ];
       };
     };
   };
