@@ -14,11 +14,13 @@ library xmonad-lib
     base,
     containers,
     flow,
+    regex-posix,
     xmonad,
     xmonad-contrib,
     xmonad-extras,
 
   exposed-modules:
+    XMonad.Custom.Config
     XMonad.Custom.Hooks.Layout
     XMonad.Custom.Hooks.Log
     XMonad.Custom.Hooks.XMobar
@@ -33,12 +35,7 @@ executable xmonad
   hs-source-dirs: src
   build-depends:
     base,
-    containers,
-    flow,
-    regex-posix,
     xmonad,
-    xmonad-contrib,
-    xmonad-extras,
     xmonad-lib,
 
   main-is: Main.hs
