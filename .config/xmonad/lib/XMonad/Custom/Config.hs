@@ -138,8 +138,8 @@ openSubmap =
 systemSubmap =
     namedSubmap "System" $
         M.fromList
-            [ ((0, xK_c), spawn "$HOME/.config/xmonad/scripts/caffeine")
-            , ((0, xK_s), spawn "$HOME/.config/xmonad/scripts/silence")
+            [ ((0, xK_c), spawn "caffeine")
+            , ((0, xK_s), spawn "silence")
             , ((0, xK_d), spawn "dunstctl close-all")
             , ((0, xK_x), spawn "xmonad --recompile && xmonad --restart")
             ]
@@ -154,9 +154,9 @@ workspaceSubmap =
             ]
 
 mKeys =
-    [ ("M-<Escape>", spawn "$HOME/.config/rofi/scripts/system")
-    , ("M-<Space>", spawn "$HOME/.config/rofi/scripts/launcher")
-    , ("M-<Print>", spawn "$HOME/.config/rofi/scripts/capture")
+    [ ("M-<Escape>", spawn "system")
+    , ("M-<Space>", spawn "launcher")
+    , ("M-<Print>", spawn "capture")
     , ("M-<Return>", spawn mTerminal)
     , ("M-S-<Return>", spawn mTerminal')
     , ("M-o", openSubmap)
@@ -177,22 +177,22 @@ mKeys =
     , ("M-x", decWindowSpacing 8)
     , ("M-a", toggleWindowSpacingEnabled >> toggleScreenSpacingEnabled)
     , ("M-S-a", setWindowSpacing (Border 8 8 8 8) >> setScreenSpacing (Border 8 8 8 8))
-    , ("<XF86AudioRaiseVolume>", spawn "$HOME/.config/xmonad/scripts/volume up")
-    , ("<XF86AudioLowerVolume>", spawn "$HOME/.config/xmonad/scripts/volume down")
-    , ("<XF86AudioMute>", spawn "$HOME/.config/xmonad/scripts/volume mute")
-    , ("M-<XF86AudioMute>", spawn "$HOME/.config/xmonad/scripts/volume mute")
-    , ("M-M1-k", spawn "$HOME/.config/xmonad/scripts/volume up")
-    , ("M-M1-j", spawn "$HOME/.config/xmonad/scripts/volume down")
-    , ("M-M1-m", spawn "$HOME/.config/xmonad/scripts/volume mute")
-    , ("M-M1-v", spawn "$HOME/.config/xmonad/scripts/volume mute")
+    , ("<XF86AudioRaiseVolume>", spawn "volume up")
+    , ("<XF86AudioLowerVolume>", spawn "volume down")
+    , ("<XF86AudioMute>", spawn "volume mute")
+    , ("M-<XF86AudioMute>", spawn "volume mute")
+    , ("M-M1-k", spawn "volume up")
+    , ("M-M1-j", spawn "volume down")
+    , ("M-M1-m", spawn "volume mute")
+    , ("M-M1-v", spawn "volume mute")
     , ("<XF86AudioPrev>", spawn "playerctl previous")
     , ("<XF86AudioNext>", spawn "playerctl next")
     , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     , ("M-M1-h", spawn "playerctl previous")
     , ("M-M1-l", spawn "playerctl next")
     , ("M-M1-p", spawn "playerctl play-pause")
-    , ("<XF86MonBrightnessDown>", spawn "$HOME/.config/xmonad/scripts/brightness down")
-    , ("<XF86MonBrightnessUp>", spawn "$HOME/.config/xmonad/scripts/brightness up")
+    , ("<XF86MonBrightnessDown>", spawn "brightness down")
+    , ("<XF86MonBrightnessUp>", spawn "brightness up")
     ]
         ++ [ (mask ++ "M-" ++ [key], windows $ action tag)
            | (tag, key) <- zip mWorkspaces "1234567890"

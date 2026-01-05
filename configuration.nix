@@ -212,21 +212,19 @@
   };
 
   environment.variables = rec {
+    XDG_BIN_HOME = "$HOME/.local/bin";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
-    XDG_BIN_HOME = "$HOME/.local/bin";
 
-    PATH = [
-      "${XDG_BIN_HOME}"
-    ];
+    PATH = [ "${XDG_BIN_HOME}" ];
 
     TERM = "alacritty";
 
-    XSECURELOCK_BLANK_TIMEOUT = 5;
     XSECURELOCK_AUTH_TIMEOUT = 5;
     XSECURELOCK_BLANK_DPMS_STATE = "suspend";
+    XSECURELOCK_BLANK_TIMEOUT = 5;
   };
 
   environment.systemPackages =

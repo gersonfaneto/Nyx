@@ -18,10 +18,10 @@ Config
     commands =
       [ Run Memory ["-t", "<fn=1> </fn> <usedratio>%"] 20,
         Run MultiCpu ["-t", "<fn=1>󰘚 </fn> <total>%"] 20,
-        Run ComX "/home/gerson/.config/xmonad/scripts/xmobar/player" [] "" "player" 20,
-        Run ComX "/home/gerson/.config/xmonad/scripts/xmobar/dunststatus" [] "" "dunst" 20,
+        Run ComX "player" [] "" "player" 20,
+        Run ComX "dunststatus" [] "" "dunst" 20,
         Run Volume "default" "Master" [ "-t", "<fn=1><status></fn><volume>%", "--", "--on", "󰕾 ", "--off", "󰖁 ", "--onc", "#a19782", "--offc", "#a19782" ] 10,
-        Run Battery [ "-t", "<fn=3><acstatus></fn> <left>%", "--", "-i", "", "-O", "  ", "-o", "", "-a", "notify-send -u critical 'Battery running out!!!'", "-A", "5" ] 10
+        Run Battery [ "-t", "<fn=3><acstatus></fn> <left>%", "--", "-i", "", "-O", "", "-o", "" ] 10
       ],
     sepChar = "%",
     alignSep = "}{",
