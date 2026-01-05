@@ -1,15 +1,12 @@
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE ImportQualifiedPost #-}
-
 module XMonad.Custom.Hooks.Layout (
-  layoutHook,
-  layoutNames,
-  layoutMap,
-  defaultLayout,
-  CustomTransformers (..),
-  toggleZen,
-  toggleStatusBar,
-  toggleGaps,
+    layoutHook,
+    layoutNames,
+    layoutMap,
+    defaultLayout,
+    CustomTransformers (..),
+    toggleZen,
+    toggleStatusBar,
+    toggleGaps,
 ) where
 
 import Data.Map qualified as M
@@ -67,10 +64,10 @@ qhdWidth = 2560 -- QHD resolution (2560x1440)
 fullHDWidth = 1920 -- Full HD resolution (1920x1080)
 
 data CustomTransformers = GAPS
-  deriving (Read, Show, Eq, Typeable)
+    deriving (Read, Show, Eq, Typeable)
 
 instance Transformer CustomTransformers Window where
-  transform GAPS x k = k (avoidStruts $ applySpacing x) (const x)
+    transform GAPS x k = k (avoidStruts $ applySpacing x) (const x)
 
 applySpacing :: l a -> ModifiedLayout Spacing l a
 applySpacing = spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5) True
@@ -93,56 +90,56 @@ centerMainFluid = CenterMainFluid 1 (3 / 100) (70 / 100)
 tabLayout = setName "Tabbed" $ tabbed shrinkText tabTheme
 
 hacking =
-  setName "Hacking"
-    . limitWindows 3
-    . magnify 1.3 (NoMaster 3) True
-    $ rTall 1 (3 % 100) (13 % 25)
+    setName "Hacking"
+        . limitWindows 3
+        . magnify 1.3 (NoMaster 3) True
+        $ rTall 1 (3 % 100) (13 % 25)
 
 -- threecolmid = setName "ThreeColMid" $ ThreeColMid 1 (3 / 100) (1 / 2)
 -- threecol = setName "ThreeCol" $ ThreeCol 1 (3 / 100) (1 / 2)
 threeColMid =
-  setName "ThreeColMid"
-    . magnify 1.2 (NoMaster 4) True
-    $ ThreeColMid 1 (3 % 100) (11 % 30)
+    setName "ThreeColMid"
+        . magnify 1.2 (NoMaster 4) True
+        $ ThreeColMid 1 (3 % 100) (11 % 30)
 
 flex =
-  setName "Flex" $
-    ifWider smallMonResWidth wideLayout standardLayout
+    setName "Flex" $
+        ifWider smallMonResWidth wideLayout standardLayout
   where
     smallMonResWidth = fullHDWidth
     wideLayout =
-      ThreeColMid 1 (1 / 20) (1 / 2)
-        ||| emptyBSP
+        ThreeColMid 1 (1 / 20) (1 / 2)
+            ||| emptyBSP
     standardLayout =
-      rTall 1 (1 / 20) (2 / 3)
-        ||| rTall 1 (1 / 20) (1 / 2)
+        rTall 1 (1 / 20) (2 / 3)
+            ||| rTall 1 (1 / 20) (1 / 2)
 
 tallGrid =
-  setName "Tall Grid" (IfMax 4 rTall grid)
+    setName "Tall Grid" (IfMax 4 rTall grid)
   where
     rTall = limitSelect 1 2 $ ResizableTall 1 (1 / 20) (1 / 2) []
     grid = G.GridRatio (4 / 3)
 
 (|||!) (joined, layouts) newLayout =
-  (joined ||| newLayout, layouts <> [Layout newLayout])
+    (joined ||| newLayout, layouts <> [Layout newLayout])
 
 layoutsStart layout = (layout, [Layout layout])
 
 layoutsInfo =
-  layoutsStart flex
-    |||! bsp
-    |||! hacking
-    |||! tall
-    |||! twoPane
-    |||! threeColMid
-    |||! circleLayout
-    |||! onebig
-    |||! monocle
-    |||! grid
-    |||! tallGrid
-    |||! roledex
-    |||! centerMainFluid
-    |||! tabLayout
+    layoutsStart flex
+        |||! bsp
+        |||! hacking
+        |||! tall
+        |||! twoPane
+        |||! threeColMid
+        |||! circleLayout
+        |||! onebig
+        |||! monocle
+        |||! grid
+        |||! tallGrid
+        |||! roledex
+        |||! centerMainFluid
+        |||! tabLayout
 
 layouts = fst layoutsInfo
 layoutNames = description <$> snd layoutsInfo
@@ -150,47 +147,46 @@ layoutMap = M.fromList $ zip layoutNames layoutNames
 defaultLayout = head layoutNames
 
 applyCentering layouts =
-  ifWider
-    ultraWideWidth
-    (centeredIfSingle 0.75 1 layouts) -- For ultrawide monitors (75% width)
-    ( ifWider
-        qhdWidth
-        (centeredIfSingle 1 1 layouts) -- For QHD monitors
+    ifWider
+        ultraWideWidth
+        (centeredIfSingle 0.75 1 layouts) -- For ultrawide monitors (75% width)
         ( ifWider
-            fullHDWidth
-            (centeredIfSingle 1 1 layouts) -- For Full HD+ monitors
-            layouts -- For smaller monitors (no centering)
+            qhdWidth
+            (centeredIfSingle 1 1 layouts) -- For QHD monitors
+            ( ifWider
+                fullHDWidth
+                (centeredIfSingle 1 1 layouts) -- For Full HD+ monitors
+                layouts -- For smaller monitors (no centering)
+            )
         )
-    )
 
 layoutHook =
-  maximize
-    .> minimize
-    .> subLayout [] (Simplest ||| Accordion)
-    .> addTabs shrinkText tabTheme
-    .> windowNavigation
-    .> hiddenWindows
-    .> applySpacing
-    .> avoidStruts
-    .> mkToggle (single NBFULL)
-    .> mkToggle (single GAPS)
-    .> mkToggle (single REFLECTX)
-    .> mkToggle (single REFLECTY)
-    .> lessBorders OnlyLayoutFloat
-    .> magnifierczOff' 1.3
-    .> boringWindows
-    .> smartBorders
-    .> fullscreenFloat
-    <| applyCentering layouts
+    maximize
+        .> minimize
+        .> subLayout [] (Simplest ||| Accordion)
+        .> addTabs shrinkText tabTheme
+        .> windowNavigation
+        .> hiddenWindows
+        .> applySpacing
+        .> avoidStruts
+        .> mkToggle (single NBFULL)
+        .> mkToggle (single GAPS)
+        .> mkToggle (single REFLECTX)
+        .> mkToggle (single REFLECTY)
+        .> lessBorders OnlyLayoutFloat
+        .> magnifierczOff' 1.3
+        .> boringWindows
+        .> smartBorders
+        .> fullscreenFloat
+        <| applyCentering layouts
 
 toggleGaps = sendMessage $ Toggle GAPS
 toggleStatusBar = sendMessage ToggleStruts
 toggleZen =
-  sendMessage (Toggle NOBORDERS)
-    >> sendMessage ToggleStruts
-    >> toggleScreenSpacingEnabled
-    >> toggleWindowSpacingEnabled
+    sendMessage (Toggle NOBORDERS)
+        >> sendMessage ToggleStruts
+        >> toggleScreenSpacingEnabled
+        >> toggleWindowSpacingEnabled
 
 instance Read (Layout Window) where
-  readsPrec _ = readsLayout (Layout layoutHook)
-
+    readsPrec _ = readsLayout (Layout layoutHook)

@@ -25,13 +25,5 @@ Config
       ],
     sepChar = "%",
     alignSep = "}{",
-    template =
-      " \
-      \ %memory%  %multicpu%  \
-      \}\
-      \%player%\
-      \{\
-      \%dunst%  %default:Master%  %battery% \
-      \ "
-      -- \%dunst%  %default:Master%  %date%\
+    template = " %memory%  %multicpu% } %player% { %dunst%  %default:Master%  %battery% "
   }

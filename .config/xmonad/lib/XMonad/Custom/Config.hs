@@ -1,56 +1,51 @@
 module XMonad.Custom.Config (
-  mConfig
+    mConfig,
 ) where
 
-import           Flow
+import Flow
 
-import           XMonad
-import           XMonad.Actions.CycleWS
-import           XMonad.Actions.Submap
+import XMonad
+import XMonad.Actions.CycleWS
+import XMonad.Actions.Submap
 
-import           XMonad.Hooks.DynamicLog
-import           XMonad.Hooks.EwmhDesktops
-import           XMonad.Hooks.InsertPosition
-import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.ManageHelpers   (doCenterFloat, doRectFloat,
-                                               isDialog)
-import           XMonad.Hooks.StatusBar
-import           XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.InsertPosition
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers (
+    doCenterFloat,
+    doRectFloat,
+    isDialog,
+ )
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
 
-import           XMonad.Layout.NoBorders
-import           XMonad.Layout.Renamed
-import           XMonad.Layout.ResizableTile
-import           XMonad.Layout.Spacing
-import           XMonad.Layout.Spiral
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
 
-import qualified XMonad.StackSet              as StackSet
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Renamed
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Spacing
+import XMonad.Layout.Spiral
 
-import           XMonad.Util.EZConfig         (additionalKeysP)
-import           XMonad.Util.Loggers
-import           XMonad.Util.SpawnOnce
-import           XMonad.Util.WindowProperties
+import XMonad.StackSet qualified as S
 
-import qualified Data.Map                     as Map
-import qualified Data.Maybe                   as Maybe
+import XMonad.Util.EZConfig (additionalKeysP)
+import XMonad.Util.Loggers
+import XMonad.Util.SpawnOnce
+import XMonad.Util.WindowProperties
 
-import           System.IO                    (writeFile)
+import Data.Map qualified as M
 
-import           Text.Regex.Posix             ((=~))
+import System.IO (writeFile)
 
-import qualified XMonad.Custom.Hooks.XMobar   as C
+import Text.Regex.Posix ((=~))
+
+import XMonad.Custom.Hooks.XMobar qualified as C
+import XMonad.Custom.Theme qualified as C
 
 q ~? x = fmap (=~ x) q
-
-cBackground = "#1D2021"
-cForeground = "#FBF1C7"
-cBlack      = "#3C3836"
-cBlack'     = "#504945"
-cRed        = "#FB4934"
-cGreen      = "#B8BB26"
-cYellow     = "#FABD2F"
-cBlue       = "#83A598"
-cMagenta    = "#D3869B"
-cCyan       = "#8EC07C"
 
 mWorkspaces :: [String]
 mWorkspaces = map show [1 .. 10]
@@ -102,9 +97,9 @@ mManageHook =
         , isDialog --> doFloat
         ]
         <+> insertPosition Below Newer
-        where
-            mFloat :: ManageHook
-            mFloat = doRectFloat (StackSet.RationalRect 0.15 0.15 0.7 0.7)
+  where
+    mFloat :: ManageHook
+    mFloat = doRectFloat (S.RationalRect 0.15 0.15 0.7 0.7)
 
 myStartupHook :: X ()
 myStartupHook = do
@@ -120,7 +115,7 @@ myStartupHook = do
 setSubmap :: String -> X ()
 setSubmap name = io $ writeFile "/home/gerson/.cache/xmonad-submap" name
 
-namedSubmap :: String -> Map.Map (KeyMask, KeySym) (X ()) -> X ()
+namedSubmap :: String -> M.Map (KeyMask, KeySym) (X ()) -> X ()
 namedSubmap name mp = do
     setSubmap name
     submap mp
@@ -128,7 +123,7 @@ namedSubmap name mp = do
 
 openSubmap =
     namedSubmap "Open" $
-        Map.fromList
+        M.fromList
             [ ((0, xK_e), spawn mEditor)
             , ((0, xK_s), spawn mSystem)
             , ((0, xK_b), spawn mBrowser)
@@ -142,7 +137,7 @@ openSubmap =
 
 systemSubmap =
     namedSubmap "System" $
-        Map.fromList
+        M.fromList
             [ ((0, xK_c), spawn "$HOME/.config/xmonad/scripts/caffeine")
             , ((0, xK_s), spawn "$HOME/.config/xmonad/scripts/silence")
             , ((0, xK_d), spawn "dunstctl close-all")
@@ -151,7 +146,7 @@ systemSubmap =
 
 workspaceSubmap =
     namedSubmap "Workspace" $
-        Map.fromList
+        M.fromList
             [ ((0, xK_t), sendMessage $ JumpToLayout "Tall")
             , ((0, xK_w), sendMessage $ JumpToLayout "Wide")
             , ((0, xK_f), sendMessage $ JumpToLayout "Full")
@@ -173,8 +168,9 @@ mKeys =
     , ("M-S-l", shiftToNext >> nextWS)
     , ("M-S-h", shiftToPrev >> prevWS)
     , ("M-<Tab>", toggleWS)
-    , ("M-j", windows StackSet.focusDown)
-    , ("M-k", windows StackSet.focusUp)
+    , ("M-j", windows S.focusDown)
+    , ("M-k", windows S.focusUp)
+    , ("M-f", sequence_ [withFocused $ windows . S.sink, sendMessage $ Toggle NBFULL])
     , ("M-,", sendMessage NextLayout)
     , ("M-S-<Space>", withFocused toggleFloat)
     , ("M-z", incWindowSpacing 8)
@@ -198,17 +194,18 @@ mKeys =
     , ("<XF86MonBrightnessDown>", spawn "$HOME/.config/xmonad/scripts/brightness down")
     , ("<XF86MonBrightnessUp>", spawn "$HOME/.config/xmonad/scripts/brightness up")
     ]
-    ++
-    [ (mask ++ "M-" ++ [key], windows $ action tag)
-    | (tag, key) <- zip mWorkspaces "1234567890"
-    , (action, mask) <- [(StackSet.greedyView, ""), (StackSet.shift, "S-")]
-    ]
+        ++ [ (mask ++ "M-" ++ [key], windows $ action tag)
+           | (tag, key) <- zip mWorkspaces "1234567890"
+           , (action, mask) <- [(S.greedyView, ""), (S.shift, "S-")]
+           ]
 
 toggleFloat w =
     windows
-        (\s -> if Map.member w (StackSet.floating s)
-               then StackSet.sink w s
-               else StackSet.float w (StackSet.RationalRect 0.15 0.15 0.7 0.7) s)
+        ( \s ->
+            if M.member w (S.floating s)
+                then S.sink w s
+                else S.float w (S.RationalRect 0.15 0.15 0.7 0.7) s
+        )
 
 mConfig =
     def
@@ -216,8 +213,8 @@ mConfig =
         , terminal = mTerminal
         , workspaces = mWorkspaces
         , borderWidth = 2
-        , normalBorderColor = cBlack
-        , focusedBorderColor = cMagenta
+        , normalBorderColor = C.colorF
+        , focusedBorderColor = C.colorN
         , startupHook = myStartupHook
         , layoutHook = mLayoutHook
         , manageHook = mManageHook <+> manageDocks

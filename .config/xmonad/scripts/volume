@@ -37,7 +37,6 @@ main() {
     fi
 
     notify-send -u NORMAL -a 'Volume' "$SUMMARY" "$BODY" -r "$NOTIFICATION_ID"
-    # notify-send -u NORMAL -a 'Volume' "$SUMMARY" "$BODY" -r "$NOTIFICATION_ID" -h "int:value:$VOLUME"
 
     exit 0
   done

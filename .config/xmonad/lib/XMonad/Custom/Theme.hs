@@ -7,7 +7,7 @@ import Graphics.X11.Xlib.Types
 import XMonad.Layout.Decoration
 
 font :: String
-font = "xft:monospace:style=Regular:size=14:antialias=true"
+font = "xft:IBM Plex Mono:style=Regular:size=10:antialias=true"
 
 black1, black2 :: String
 (black1, black2) = ("#0b0806", "#2f2b2a")
@@ -54,16 +54,16 @@ border = 2
 
 tabTheme :: Theme
 tabTheme =
-  def
-    { activeColor = black1,
-      inactiveColor = black2,
-      urgentColor = red1,
-      activeBorderColor = white1,
-      inactiveBorderColor = white2,
-      urgentBorderColor = red2,
-      activeTextColor = white1,
-      inactiveTextColor = white2,
-      urgentTextColor = red2,
-      fontName = font,
-      decoHeight = height
-    }
+    def
+        { activeColor = black1
+        , inactiveColor = black2
+        , urgentColor = red1
+        , activeBorderColor = white1
+        , inactiveBorderColor = white2
+        , urgentBorderColor = red2
+        , activeTextColor = white1
+        , inactiveTextColor = white2
+        , urgentTextColor = red2
+        , fontName = font
+        , decoHeight = height
+        }
