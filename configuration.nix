@@ -44,8 +44,8 @@
   services.xserver.windowManager = {
     xmonad = {
       enable = true;
-      # enableContribAndExtras = true;
-      # enableConfiguredRecompile = true;
+      enableContribAndExtras = true;
+      enableConfiguredRecompile = true;
     };
   };
 

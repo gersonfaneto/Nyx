@@ -17,7 +17,8 @@ function __ff_open_files_or_dir --description 'Use xdg to open files' -a path
 
     if type -q xdg-open
         for other in $others
-            detach xdg-open $other 2>/dev/null
+            xdg-open $other 2>/dev/null &
+            disown 2>/dev/null
         end
     else if set -q others
         echo 'xdg-open not found, omit opening files: ' $others 1>&2

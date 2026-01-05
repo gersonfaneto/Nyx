@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-warnings-deprecations #-}
+
 module XMonad.Custom.Config (
     mConfig,
 ) where
@@ -43,7 +45,9 @@ import System.IO (writeFile)
 import Text.Regex.Posix ((=~))
 
 import XMonad.Custom.Hooks.XMobar qualified as C
+import XMonad.Custom.Scratchpads
 import XMonad.Custom.Theme qualified as C
+import XMonad.Util.WorkspaceCompare
 
 q ~? x = fmap (=~ x) q
 
@@ -153,6 +157,15 @@ workspaceSubmap =
             , ((0, xK_s), sendMessage $ JumpToLayout "Spiral")
             ]
 
+getSortByIndexNonSP :: X ([WindowSpace] -> [WindowSpace])
+getSortByIndexNonSP = (. namedScratchpadFilterOutWorkspace) <$> getSortByIndex
+
+nextNonEmptyWS, prevNonEmptyWS :: X ()
+nextNonEmptyWS =
+    findWorkspace getSortByIndexNonSP Next HiddenNonEmptyWS 1 >>= windows <. S.view
+prevNonEmptyWS =
+    findWorkspace getSortByIndexNonSP Prev HiddenNonEmptyWS 1 >>= windows <. S.view
+
 mKeys =
     [ ("M-<Escape>", spawn "system")
     , ("M-<Space>", spawn "launcher")
@@ -171,7 +184,8 @@ mKeys =
     , ("M-j", windows S.focusDown)
     , ("M-k", windows S.focusUp)
     , ("M-f", sequence_ [withFocused $ windows . S.sink, sendMessage $ Toggle NBFULL])
-    , ("M-,", sendMessage NextLayout)
+    , ("M-,", prevNonEmptyWS)
+    , ("M-.", nextNonEmptyWS)
     , ("M-S-<Space>", withFocused toggleFloat)
     , ("M-z", incWindowSpacing 8)
     , ("M-x", decWindowSpacing 8)
@@ -213,8 +227,8 @@ mConfig =
         , terminal = mTerminal
         , workspaces = mWorkspaces
         , borderWidth = 2
-        , normalBorderColor = C.colorF
-        , focusedBorderColor = C.colorN
+        , normalBorderColor = C.colorN
+        , focusedBorderColor = C.colorF
         , startupHook = myStartupHook
         , layoutHook = mLayoutHook
         , manageHook = mManageHook <+> manageDocks
