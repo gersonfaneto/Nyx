@@ -21,15 +21,11 @@
     };
   };
 
-  outputs = inputs @ { nixpkgs, ... }:
+  outputs = inputs @ { nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
 
       pkgs = nixpkgs.legacyPackages.${system};
-
-      overlays = {
-        neovim = inputs.neovim-nightly-overlay.packages.${pkgs.system};
-      };
 
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
@@ -53,10 +49,7 @@
 
       nixosConfigurations = {
         Nyx = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit overlays;
-          };
+          specialArgs = { inherit inputs; };
 
           modules = [
             ./configuration.nix
@@ -67,9 +60,7 @@
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "bak";
               home-manager.users.gerson = ./home.nix;
-              home-manager.extraSpecialArgs = {
-                inherit inputs;
-              };
+              home-manager.extraSpecialArgs = { inherit inputs; };
             }
           ];
         };

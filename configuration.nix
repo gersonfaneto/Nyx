@@ -1,6 +1,10 @@
-{ pkgs, overlays, ... }: {
+{ pkgs, inputs, ... }: {
   imports = [
     ./hardware-configuration.nix
+  ];
+
+  nixpkgs.overlays = [
+    (import ./overlays/dmenu-flexipatch)
   ];
 
   documentation = {
@@ -117,34 +121,6 @@
     };
   };
 
-  # services.fprintd = {
-  #   enable = true;
-  #   tod = {
-  #     enable = true;
-  #     driver = pkgs.libfprint-2-tod1-goodix;
-  #   };
-  # };
-
-  # security.pam.services = {
-  #   ly = {
-  #     text = ''
-  #       auth       substack     login
-  #       account    include      login
-  #       password   substack     login
-  #       session    include      login
-  #     '';
-  #     enableGnomeKeyring = true;
-  #   };
-  #   login = {
-  #     fprintAuth = true;
-  #     enableGnomeKeyring = true;
-  #   };
-  #   xsecurelock = {
-  #     fprintAuth = true;
-  #     enableGnomeKeyring = true;
-  #   };
-  # };
-
   xdg = {
     portal = {
       enable = true;
@@ -200,7 +176,7 @@
 
   programs.neovim = {
     enable = true;
-    package = overlays.neovim.default;
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
   };
 
   virtualisation.docker = {
@@ -239,6 +215,7 @@
       brightnessctl
       chafa
       diff-so-fancy
+      dmenu
       dragon-drop
       dunst
       emacs-gtk
@@ -249,7 +226,6 @@
       file
       firefox
       fish
-      # fprintd
       fzf
       gh
       ghostty

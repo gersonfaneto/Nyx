@@ -1,7 +1,4 @@
-{ pkgs
-, config
-, ...
-}:
+{ pkgs, config, ... }:
 let
   NYX_PATH = "/home/gerson/Developer/Personal/Nyx";
 
@@ -46,8 +43,8 @@ in
 
   home.packages = with pkgs; [
     kew
-    zathura
     nautilus
+    zathura
   ];
 
   services.kdeconnect = {
