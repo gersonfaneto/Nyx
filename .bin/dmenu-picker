@@ -12,16 +12,20 @@ main() {
   if [ $# -gt 0 ]; then
     # options passed as arguments
     printf "%s\n" "$@" |
-      dmenu -i -l 10 -p "$prompt" \
-        -nb '#000000' -nf '#FFFFFF' \
-        -sb '#FFFFFF' -sf '#000000' \
-        -fn 'Recursive Sans Casual Static:regular:pixelsize=14'
+      dmenu -c -i -l 10 -p "$prompt" \
+        -nb '#0B0806' -nf '#A19782' \
+        -sb '#A19782' -sf '#0B0806' \
+        -nhb '#0B0806' -nhf '#A19782' \
+        -shb '#A19782' -shf '#0B0806' \
+        -fn 'IBM Plex Mono:regular:pixelsize=10'
   else
     # no arguments → read from stdin
-    dmenu -i -l 10 -p "$prompt" \
-      -nb '#000000' -nf '#FFFFFF' \
-      -sb '#FFFFFF' -sf '#000000' \
-      -fn 'Recursive Sans Casual Static:regular:pixelsize=14'
+    dmenu -c -i -l 10 -p "$prompt" \
+      -nb '#0B0806' -nf '#A19782' \
+      -sb '#A19782' -sf '#0B0806' \
+      -nhb '#0B0806' -nhf '#A19782' \
+      -shb '#A19782' -shf '#0B0806' \
+      -fn 'IBM Plex Mono:regular:pixelsize=10'
   fi
 }
 

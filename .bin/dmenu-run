@@ -3,7 +3,7 @@
 set -ex
 
 entries=$(dmenu_path)
-chosen=$(dmenu-picker ' ' "${entries[@]}")
+chosen=$(dmenu-picker 'RUN ::' "${entries[@]}")
 
 if [ -n "$chosen" ]; then
 	exec "$chosen"

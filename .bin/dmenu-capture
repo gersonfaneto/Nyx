@@ -45,7 +45,7 @@ capture_selection() {
 }
 
 capture_main() {
-  capture_mode=$(dmenu-picker "Capture" "Color" "Monitor" "Window" "Region")
+  capture_mode=$(dmenu-picker "CAPTURE ::" "Color" "Monitor" "Window" "Region")
 
   case "$capture_mode" in
     [cC]olor) colorpicker ;;

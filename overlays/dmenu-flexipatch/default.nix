@@ -20,15 +20,18 @@ final: prev: {
         nativeBuildInputs = with prev; [ pkg-config ];
 
         postPatch = ''
-          # Copy the default patches configuration
+          # Copy the default configuration
           cp patches.def.h patches.h
 
-          # Enable custom patch
+          # Enable custom patches
           sed -i 's/#define XYW_PATCH 0/#define XYW_PATCH 1/' patches.h
           sed -i 's/#define CENTER_PATCH 0/#define CENTER_PATCH 1/' patches.h
           sed -i 's/#define CTRL_V_TO_PASTE_PATCH 0/#define CTRL_V_TO_PASTE_PATCH 1/' patches.h
           sed -i 's/#define FUZZYMATCH_PATCH 0/#define FUZZYMATCH_PATCH 1/' patches.h
           sed -i 's/#define HIGHLIGHT_PATCH 0/#define HIGHLIGHT_PATCH 1/' patches.h
+          sed -i 's/#define BORDER_PATCH 0/#define BORDER_PATCH 1/' patches.h
+          sed -i 's/#define BORDER_PATCH 0/#define BORDER_PATCH 1/' patches.h
+          sed -i 's/#define VERTFULL_PATCH 0/#define VERTFULL_PATCH 1/' patches.h
         '';
 
         makeFlags = [ "PREFIX=$(out)" ];
