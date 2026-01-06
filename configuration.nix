@@ -3,10 +3,6 @@
     ./hardware-configuration.nix
   ];
 
-  nixpkgs.overlays = [
-    (import ./overlays/dmenu-flexipatch)
-  ];
-
   documentation = {
     dev = {
       enable = true;
@@ -215,7 +211,6 @@
       brightnessctl
       chafa
       diff-so-fancy
-      dmenu
       dragon-drop
       dunst
       emacs-gtk

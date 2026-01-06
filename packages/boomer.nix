@@ -1,12 +1,4 @@
-{ lib
-, stdenv
-, fetchgit
-, makeWrapper
-, nim-1_0
-, libX11
-, libXrandr
-, libGL
-}:
+{ lib, stdenv, fetchgit, makeWrapper, nim-1_0, libX11, libXrandr, libGL }:
 let
   x11-nim = fetchgit {
     url = "https://github.com/nim-lang/x11";

@@ -1,9 +1,4 @@
-{ lib
-, pkgs
-, config
-, inputs
-, ...
-}:
+{ lib, pkgs, config, inputs, ... }:
 let
   colors = config.lib.stylix.colors.withHashtag;
   scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
