@@ -120,6 +120,10 @@
       "rev": "771437c3e3672dba9233156e1c2e2fc1888a5fff",
       "src": "https://github.com/stevearc/quicker.nvim"
     },
+    "render-markdown.nvim": {
+      "rev": "da6a7b25471ab23824f3429225973186eb0b62d2",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
     "treesj": {
       "rev": "186084dee5e9c8eec40f6e39481c723dd567cb05",
       "src": "https://github.com/Wansmer/treesj"
