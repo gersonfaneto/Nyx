@@ -51,7 +51,7 @@ timeout = 10
 [urgency_critical]
 background = "#0B0806"
 foreground = "#A19782"
-frame_color = "#5A1F1A"
+frame_color = "#FB4961"
 timeout = 0
 
 # vim:ft=toml:
