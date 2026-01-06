@@ -11,6 +11,7 @@ import Data.List (
 import Data.Map qualified as Map
 import Data.Maybe (fromMaybe)
 import Data.Typeable (Typeable)
+import Flow
 import System.IO
 import XMonad hiding (logHook)
 import XMonad.Actions.CopyWindow
@@ -27,6 +28,7 @@ import XMonad.Hooks.RefocusLast
 import XMonad.Hooks.ShowWName
 import XMonad.Hooks.StatusBar.PP
 import XMonad.StackSet qualified as W
+import XMonad.Util.ClickableWorkspaces (clickablePP)
 import XMonad.Util.ExtensibleState qualified as XS
 import XMonad.Util.Loggers
 import XMonad.Util.Loggers.NamedScratchpad
@@ -90,9 +92,11 @@ topBarPP' = do
                 xmobarColor yellow2 "" . boldFont . wrap "*" "=" $ ws
             | otherwise =
                 xmobarColor white2 "" . boldFont . wrap "=" "=" $ ws
+
     let copiesHidden ws
             | ws `elem` c = xmobarColor yellow1 "" . wrap "*" "-" $ ws
             | otherwise = xmobarColor white1 "" . wrap "-" "-" $ ws
+
     let copiesUrgent ws
             | ws `elem` c = xmobarColor yellow2 "" . wrap "*" "!" $ ws
             | otherwise = xmobarColor white2 "" . wrap "!" "!" $ ws

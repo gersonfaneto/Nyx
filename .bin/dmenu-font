@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# set -x # WARN: Only used for debugging...
+set -euo pipefail
+
+NOTIFICATION_ID=1010
+
+FONTS=$(setfont -l | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g")
+
+main() {
+  FONT=$(dmenu-picker 'Fonts' "${FONTS[@]}")
+
+  if setfont "$FONT"; then    
+    notify-send -r "$NOTIFICATION_ID" -a 'Fonts' 'Fonts' "Switching to $FONT"
+  else
+    notify-send -r "$NOTIFICATION_ID" -a 'Fonts' 'Fonts' "O.o"
+  fi
+}
+
+main "$@"
+
+# vim:sw=2:ts=2:et:ft=bash:

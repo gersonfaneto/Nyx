@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -ex
+
+SCRIPT_DIR="$(dirname "$0")"
+declare -A MENU_MAP
+options=()
+
+# List of scripts to exclude
+exclude_scripts=("dmenu-toolbox" "dmenu-picker" "dmenu-run")
+
+# All scripts starting with dmenu-
+for script in "$SCRIPT_DIR"/dmenu-*; do
+  script_basename=$(basename "$script")
+
+  # Check if the script is in the exclude list
+  is_excluded=false
+  for excluded in "${exclude_scripts[@]}"; do
+    if [[ "$script_basename" == "$excluded" ]]; then
+      is_excluded=true
+      break
+    fi
+  done
+
+  # If not excluded, add it to the menu
+  if [[ "$is_excluded" == false ]]; then
+    name=$(basename "$script" | sed 's/dmenu-//; s/-/ /g' | sed 's/\b\(.\)/\u\1/g')
+    MENU_MAP["$name"]="$script"
+    options+=("$name")
+  fi
+done
+
+choice=$(dmenu-picker "󰦭 " "${options[@]}")
+
+[[ -n $choice ]] || exit 0
+
+exec "${MENU_MAP[$choice]}"

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -ex
+
+entries=$(dmenu_path)
+chosen=$(dmenu-picker ' ' "${entries[@]}")
+
+if [ -n "$chosen" ]; then
+	exec "$chosen"
+fi
+
+# vim:sw=2:ts=2:et:

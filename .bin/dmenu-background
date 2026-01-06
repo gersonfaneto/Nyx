@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# set -x # WARN: Only used for debugging...
+set -euo pipefail
+
+BACKGROUND_STATE="${XDG_CACHE_HOME:-$HOME/.cache}/background"
+BACKGROUND_DEFAULT='dark'
+
+NOTIFICATION_ID=1011
+
+main() {
+  local BG=""
+
+  if [[ -f "$BACKGROUND_STATE" ]]; then
+    BG=$(cat "$BACKGROUND_STATE")
+  else
+    BG="$BACKGROUND_DEFAULT"
+  fi
+
+  if [[ "$BG" = 'dark' ]]; then
+    notify-send -r "$NOTIFICATION_ID" -a 'Background' 'Background' 'Here comes the sun... '
+    echo 'light' >"$BACKGROUND_STATE"
+    setbg light
+  elif [[ "$BG" = 'light' ]]; then
+    notify-send -r "$NOTIFICATION_ID" -a 'Background' 'Background' 'Exit light!'
+    echo 'dark' >"$BACKGROUND_STATE"
+    setbg dark
+  else
+    notify-send 'Background' 'O.o'
+    exit 1
+  fi
+
+  exit 0
+}
+
+main "$@"
+
+# vim:sw=2:ts=2:et:
