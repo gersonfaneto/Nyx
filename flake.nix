@@ -65,5 +65,7 @@
           ];
         };
       };
+
+      templates = import ./templates;
     };
 }
