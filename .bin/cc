@@ -1,0 +1,54 @@
+#!/usr/bin/env sh
+
+UFLAGS=${UFLAGS-""}
+
+CFLAGS=${CFLAGS-"-Wall -Wextra -Wpedantic -Werror"}
+
+build() {
+  case "$1" in
+    *.c)
+      # shellcheck disable=SC2086
+      gcc -o "$2" "$1" $CFLAGS $UFLAGS
+      ;;
+    *.cpp | *.cc | *.cxx)
+      # shellcheck disable=SC2086
+      g++ -o "$2" "$1" $CFLAGS $UFLAGS
+      ;;
+    *)
+      echo >&2 "O.o"
+      return 1
+      ;;
+  esac
+}
+
+run_executable() {
+  "$1"
+}
+
+main() {
+  # shellcheck disable=SC2015
+  src=$(realpath "$1" 2>/dev/null  || readlink -f "$1")
+  executable=$(echo "$src" | sed -E 's/\.(c|cpp|cc|cxx)$/.run/')
+  if [ "$src" = "$executable" ]; then
+    echo >&2 "run: error: file name cannot be the same as the run file name"
+    return 1
+  fi
+
+  if [ ! -f "$src" ]; then
+    echo >&2 "run: error: source file does not exist"
+    return 1
+  fi
+
+  build "$src" "$executable"
+  if [ ! -f "$executable" ]; then
+    echo >&2 "run: error: build failed"
+    return 1
+  fi
+
+  run_executable "$executable"
+  rm -f "$executable"
+}
+
+main "$1"
+
+# vim:ft=sh:ts=2:sw=2:et:

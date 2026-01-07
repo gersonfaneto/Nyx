@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+
+# Order Sixty Six - Countdown Timer Script
+# Executes systemctl suspend or shutdown -h now based on flags.
+
+# --- Configuration ---
+DEFAULT_DURATION=300 # Default countdown duration in seconds
+SUSPEND_CMD="systemctl suspend"
+SHUTDOWN_CMD="shutdown -h now"
+
+# --- Variables ---
+DURATION_STR=""
+DURATION_SEC=0
+ACTION=""
+
+# --- Functions ---
+usage() {
+  echo "Usage: $(basename $0) [-s | -h] [-t <time_string>]"
+  echo "  -s : Suspend the system after countdown."
+  echo "  -h : Halt (shutdown) the system after countdown."
+  echo "  -t : Set the countdown duration (e.g., 30s, 10m, 3h). Default: ${DEFAULT_DURATION}s."
+}
+
+show_progress() {
+  local current_time=$1
+  local total_time=$2
+  local elapsed_time=$((total_time - current_time))
+  local bar_length=50
+  local progress=$((elapsed_time * bar_length / total_time))
+  local percentage=$((elapsed_time * 100 / total_time))
+  local filled_bar=$(printf "%*s" "$progress" "" | tr " " "#")
+  local empty_bar=$(printf "%*s" "$((bar_length - progress))" "" | tr " " "-")
+
+  # Use '\r' to return cursor to the beginning of the line for dynamic update
+  printf "\r[%s%s] %d%% complete" "$filled_bar" "$empty_bar" "$percentage"
+}
+
+convert_to_seconds() {
+  local time_str=$1
+  local unit=${time_str: -1}
+  local value=${time_str%?}
+
+  if ! [[ "$value" =~ ^[0-9]+$ ]]; then
+    echo "Error: Invalid numeric value in time string '$time_str'."
+    exit 1
+  fi
+
+  case "$unit" in
+    s | S)
+      DURATION_SEC=$value
+      ;;
+    m | M)
+      DURATION_SEC=$((value * 60))
+      ;;
+    h | H)
+      DURATION_SEC=$((value * 3600))
+      ;;
+    *)
+      echo "Error: Invalid unit '$unit' in time string '$time_str'. Use 's', 'm', or 'h'."
+      exit 1
+      ;;
+  esac
+}
+
+# --- Argument Parsing ---
+while getopts ":sht:" opt; do
+  case $opt in
+    s)
+      ACTION="suspend"
+      ;;
+    h)
+      ACTION="shutdown"
+      ;;
+    t)
+      DURATION_STR=$OPTARG
+      convert_to_seconds "$DURATION_STR"
+      ;;
+    \?)
+      usage
+      exit 0
+      ;;
+  esac
+done
+
+if [ -z "$DURATION_STR" ]; then
+  DURATION_SEC=$DEFAULT_DURATION
+fi
+
+# Validate duration
+if ! [[ "$DURATION_SEC" =~ ^[0-9]+$ ]] || [ "$DURATION_SEC" -le 0 ]; then
+  echo "Error: Duration must be a positive integer."
+  usage
+  exit 1
+fi
+
+# Validate action
+if [ -z "$ACTION" ]; then
+  echo "Error: Please specify an action (-s for suspend or -h for shutdown)."
+  usage
+  exit 1
+fi
+
+# Determine the command to execute
+COMMAND_TO_EXECUTE=""
+if [ "$ACTION" == "suspend" ]; then
+  COMMAND_TO_EXECUTE=$SUSPEND_CMD
+elif [ "$ACTION" == "shutdown" ]; then
+  COMMAND_TO_EXECUTE=$SHUTDOWN_CMD
+fi
+
+# --- Countdown Timer ---
+echo "Starting countdown for $DURATION_SEC seconds. Action: $ACTION."
+
+for ((i = $DURATION_SEC; i >= 0; i--)); do
+  show_progress $i $DURATION_SEC
+  sleep 1
+done
+
+echo "" # Newline after progress bar
+
+# --- Execute Action ---
+echo "Countdown finished. Executing: $COMMAND_TO_EXECUTE"
+$COMMAND_TO_EXECUTE

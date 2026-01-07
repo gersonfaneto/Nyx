@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# set -x # WARN: Only for debugging...
+set -euo pipefail
+
+PORT='8000'
+
+main() {
+  if [ $# -eq 1 ]; then
+    PORT="$1"
+  fi
+
+  if hash python3 2>/dev/null; then
+    exec python3 -m http.server "$PORT"
+  fi
+
+  if hash ruby 2>/dev/null; then
+    exec ruby -run -e httpd . -p "$PORT"
+    return 0
+  fi
+
+  if hash php 2>/dev/null; then
+    exec php -S "localhost:$PORT"
+  fi
+
+  echo 'O.o' 1>&2
+  return 1
+}
+
+main "$@"
