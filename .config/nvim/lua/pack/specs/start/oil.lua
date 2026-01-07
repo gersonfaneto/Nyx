@@ -5,7 +5,7 @@ return {
     deps = {
       {
         src = 'https://github.com/kyazdani42/nvim-web-devicons',
-        data = { optional = true },
+        -- data = { optional = true },
       },
       {
         -- Ensure that img-clip is loaded before oil to prevent its `vim.paste`
