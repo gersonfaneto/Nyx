@@ -132,15 +132,16 @@
   "Shared colors state file.")
 
 (defun minimal/read-background-from-state ()
-  "Read background from state file.
-Return 'dark or 'light. Fallback to 'dark."
+  "Return 'dark or 'light from colors.json, fallback to 'dark."
   (condition-case _
       (when (file-readable-p minimal/state-colors-file)
-  (with-temp-buffer
-    (insert-file-contents minimal/state-colors-file)
-    (goto-char (point-min))
-    (when (re-search-forward "\"bg\"[[:space:]]*:[[:space:]]*\"\\(dark\\|light\\)\"" nil t)
-      (intern (match-string 1)))))
+        (with-temp-buffer
+          (insert-file-contents minimal/state-colors-file)
+          (goto-char (point-min))
+          (when (re-search-forward
+                 "\"bg\"[[:space:]]*:[[:space:]]*\"\\(dark\\|light\\)\""
+                 nil t)
+            (intern (match-string 1)))))
     (error nil)))
 
 ;; Decide background *before* frames are created

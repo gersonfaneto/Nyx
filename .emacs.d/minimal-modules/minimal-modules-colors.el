@@ -1,11 +1,14 @@
 (setq custom-safe-themes t)
 
+(defvar minimal/script-background nil
+  "Non-nil when background change originates from external script.")
+
 (defadvice load-theme (before clear-previous-themes activate)
   "Clear existing theme settings instead of layering them."
   (mapc #'disable-theme custom-enabled-themes))
 
 (defun minimal/load-theme ()
-  "Load the default theme using stored background."
+  "Load the default theme respecting current background."
   (interactive)
   (setq gruvbox-material-style frame-background-mode
         gruvbox-material-contrast minimal/default-contrast)
@@ -19,15 +22,27 @@
     (with-temp-file minimal/state-colors-file
       (insert (format "{ \"bg\": \"%s\" }\n" bg)))))
 
-(defun minimal/toggle-background ()
-  "Switch between dark/light modes of the current color theme."
-  (interactive)
-  (setq frame-background-mode
-        (if (eq frame-background-mode 'dark) 'light 'dark))
-  (setq gruvbox-material-style frame-background-mode)
+(defun minimal/apply-background (bg)
+  "Apply BG ('dark or 'light) internally without side effects."
+  (setq frame-background-mode bg
+        gruvbox-material-style bg)
   (mapc #'frame-set-background-mode (frame-list))
-  (minimal/write-background-to-state frame-background-mode)
   (load-theme minimal/default-theme t))
+
+(defun minimal/toggle-background ()
+  "Toggle dark/light background and propagate the change."
+  (interactive)
+  (let ((next (if (eq frame-background-mode 'dark) 'light 'dark)))
+    (minimal/apply-background next)
+    (minimal/write-background-to-state next)
+    (when (executable-find "background")
+      (start-process "background" nil "background"
+                     (symbol-name next)))))
+
+(defun minimal/set-background-from-script (bg)
+  "Set background from external script without recursion."
+  (let ((minimal/script-background t))
+    (minimal/apply-background bg)))
 
 (global-set-key (kbd "C-M-0") 'minimal/toggle-background)
 
