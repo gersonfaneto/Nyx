@@ -27,8 +27,8 @@ vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 
 vim.keymap.set("n", "<leader>m", "<Plug>Zoom", { desc = "Toggle zoom", remap = true })
 
-vim.keymap.set("n", "\\t", "<cmd>set ts=4 sts=4 sw=4 noet<cr>", { desc = "Set tabs" })
-vim.keymap.set("n", "\\s", "<cmd>set ts=4 sts=4 sw=4 et<cr>", { desc = "Set spaces" })
+vim.keymap.set("n", "get", "<cmd>set ts=4 sts=4 sw=4 noet<cr>", { desc = "Editor :: Use TABS" })
+vim.keymap.set("n", "ges", "<cmd>set ts=4 sts=4 sw=4 et<cr>", { desc = "Editor :: Use SPACES" })
 
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
