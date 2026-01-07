@@ -4,9 +4,7 @@ end
 
 vim.o.grepprg = 'rg --vimgrep --smart-case --hidden'
 vim.o.grepformat = '%f:%l:%c:%m,%f:%l:%m'
-vim.keymap.set(
-  'n',
-  '\\',
-  [[:silent grep! '' | cwindow<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>]],
-  { desc = 'Grep' }
-)
+
+-- stylua: ignore start
+vim.keymap.set('n', '\\', ":silent grep! '' | cwindow | cfirst" .. string.rep('<Left>', 20), { desc = 'Grep' })
+-- stylua: ignore end
