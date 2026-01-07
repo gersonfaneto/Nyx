@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 has() {
-  command -v "$1" > /dev/null 2>&1
+  command -v "$1" >/dev/null  2>&1
 }
 
 export PYENV_ROOT="$HOME/.pyenv"
@@ -150,7 +150,7 @@ if [ ! -e "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/greeted" ]; then
   fi
 
   if [ -n "$fetch" ]; then
-    if script -q /dev/null -c exit > /dev/null 2>&1; then
+    if script -q /dev/null -c exit >/dev/null  2>&1; then
       script -q /dev/null -c "$fetch"
     else
       script -q /dev/null "$fetch"

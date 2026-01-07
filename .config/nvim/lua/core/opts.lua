@@ -1,16 +1,25 @@
+local helpers = require('utils.helpers')
+
 vim.g.has_ui = #vim.api.nvim_list_uis() > 0
 vim.g.has_nf = vim.env.TERM ~= 'linux' and vim.env.NVIM_NF ~= nil
 
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 0
+vim.opt.expandtab = true
 vim.opt.exrc = true
+vim.opt.secure = true
 vim.opt.confirm = true
-vim.opt.timeout = false
-vim.opt.colorcolumn = '80'
+vim.opt.timeout = true
+vim.opt.timeoutlen = 300
+vim.opt.colorcolumn = '100'
 vim.opt.cursorlineopt = 'number'
 vim.opt.cursorline = true
 vim.opt.helpheight = 10
 vim.opt.showmode = false
 vim.opt.mousemoveevent = true
 vim.opt.number = true
+vim.opt.whichwrap = 'b,h,l,s,<,>,[,],~'
 vim.opt.relativenumber = true
 vim.opt.ruler = true
 vim.opt.pumheight = 16
@@ -24,14 +33,54 @@ vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.wrap = false
 vim.opt.linebreak = true
+vim.opt.textwidth = 100
+vim.opt.autoindent = true
+vim.opt.smartindent = true
 vim.opt.breakindent = true
+vim.opt.breakindentopt = 'list:-1'
+vim.opt.showbreak = '↳  ' -- DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
 vim.opt.smoothscroll = true
+vim.opt.jumpoptions = 'stack'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.completeopt = 'menuone'
+vim.opt.hidden = true
+vim.opt.tildeop = true
+vim.opt.infercase = true
+vim.opt.showmatch = true
+vim.opt.visualbell = false
+vim.opt.errorbells = false
+vim.opt.title = true
+vim.opt.complete = helpers.append(vim.o.complete, { 'kspell' })
+vim.opt.completeopt = 'menu,menuone,noselect,fuzzy,preinsert'
 vim.opt.virtualedit = 'block'
 vim.opt.selection = 'old'
 vim.opt.tabclose = 'uselast'
+
+-- show a navigable menu for tab completion
+vim.o.wildmode = 'noselect,full'
+vim.o.wildignore = vim.o.wildignore
+  .. table.concat({
+    '*.o',
+    '*.out',
+    '*.obj',
+    '.git',
+    '*.rbc',
+    '*.rbo',
+    '*.class',
+    '.svn',
+    '*.gem',
+    '*.pyc',
+    '*.swp',
+    '*~',
+  }, ',')
+
+vim.o.tagcase = 'followscs'
+vim.o.tags = helpers.prepend(vim.o.tags, { './.git/tags;' })
+
+-- Pattern for a start of numbered list (used in `gw`). This reads as
+-- "Start of list item is: at least one special character (digit, -, +, *)
+-- possibly followed by punctuation (. or `)`) followed by at least one space".
+vim.o.formatlistpat = [[^\s*[0-9\-\+\*]\+[\.\)]*\s\+]]
 
 -- Defer shada reading
 do
@@ -52,10 +101,13 @@ do
 end
 
 -- Folding
-vim.opt.foldlevelstart = 99
+vim.opt.foldcolumn = '0'
+vim.opt.foldlevel = 99
+vim.opt.foldnestmax = 20
+vim.opt.foldminlines = 0
 vim.opt.foldtext = ''
-vim.opt.foldmethod = 'indent'
-vim.opt.foldopen:remove('block') -- make `{`/`}` skip over folds
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.__.foldexpr(v:lnum)'
 
 -- Recognize numbered lists when formatting text and
 -- continue comments on new lines
@@ -70,10 +122,12 @@ vim.opt.nrformats:append('blank')
 
 -- Spell check
 do
-  vim.opt.spellsuggest = 'best,9'
+  vim.opt.spellsuggest = 'best,10'
   vim.opt.spellcapcheck = ''
-  vim.opt.spelllang = 'en,cjk'
+  vim.opt.spelllang = 'en,pt'
   vim.opt.spelloptions = 'camel'
+  vim.o.spellfile =
+    string.format('%s%s', vim.fn.stdpath('config'), '/spell/spell.add')
 
   require('utils.load').on_events(
     'UIEnter',
@@ -115,10 +169,15 @@ vim.opt.gcr = {
 -- Use histogram algorithm for diffing, generates more readable diffs in
 -- situations where two lines are swapped
 vim.opt.diffopt:append({
+  'vertical',
   'algorithm:histogram',
   'indent-heuristic',
+  'hiddenoff',
+  'foldcolumn:0',
   'linematch:60',
 })
+
+vim.opt.viewoptions = 'cursor,folds' -- save/restore just these (with `:{mk,load}view`)
 
 -- Use system clipboard
 vim.api.nvim_create_autocmd('UIEnter', {
@@ -287,28 +346,36 @@ end
 vim.opt.backup = true
 vim.opt.backupdir:remove('.')
 
-vim.opt.list = true
-vim.opt.listchars = {
-  tab = '  ',
-  trail = '·',
-}
-vim.opt.fillchars = {
-  fold = '·',
-  foldsep = ' ',
-  eob = ' ',
-}
+vim.o.list = true
+vim.o.listchars = table.concat({
+  'multispace:⋅ ',
+  'lead:⋅',
+  'tab:  ',
+  'nbsp:░',
+  'extends:»',
+  'precedes:«',
+  'trail:␣',
+}, ',')
 
-if vim.g.has_nf then
-  vim.opt.fillchars:append({
-    foldopen = '',
-    foldclose = '',
-  })
-else
-  vim.opt.fillchars:append({
-    foldopen = 'v',
-    foldclose = '>',
-  })
-end
+vim.o.fillchars = table.concat({
+  -- 'stl:⎼',
+  'diff:╱',
+  'msgsep:‾',
+  'eob: ', -- Hide end of buffer ~
+  'fold:─',
+  'foldopen:▾',
+  'foldsep: ',
+  'foldclose:▸',
+  'horiz:━',
+  'horizup:┻',
+  'horizdown:┳',
+  'vert:┃', -- HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
+  'vertleft:┫',
+  'vertright:┣',
+  'verthoriz:╋',
+}, ',')
+
+vim.opt.concealcursor = 'n'
 
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,

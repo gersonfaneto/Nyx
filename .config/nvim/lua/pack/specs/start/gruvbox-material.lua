@@ -11,9 +11,5 @@ return {
       vim.g.gruvbox_material_statusline_style = 'original'
       vim.g.gruvbox_material_cursor = 'auto'
     end,
-    postload = function()
-      vim.opt.background = 'dark'
-      vim.cmd('colorscheme gruvbox-material')
-    end,
   },
 }

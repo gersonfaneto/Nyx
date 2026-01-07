@@ -142,8 +142,9 @@ openSubmap =
 systemSubmap =
     namedSubmap "System" $
         M.fromList
-            [ ((0, xK_c), spawn "caffeine")
-            , ((0, xK_s), spawn "silence")
+            [ ((0, xK_s), spawn "silence")
+            , ((0, xK_c), spawn "caffeine")
+            , ((0, xK_b), spawn "background alt")
             , ((0, xK_d), spawn "dunstctl close-all")
             , ((0, xK_x), spawn "xmonad --recompile && xmonad --restart")
             ]

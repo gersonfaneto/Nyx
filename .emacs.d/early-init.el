@@ -124,6 +124,29 @@
   (setq custom-file minimal/custom-file)	;; Set Emacs's custom-file variable
   (load-file custom-file))			;; Load the custom file
 
+;; --- Theme management
+(defconst minimal/state-colors-file
+  (expand-file-name "nvim/colors.json"
+        (or (getenv "XDG_STATE_HOME")
+      "~/.local/state"))
+  "Shared colors state file.")
+
+(defun minimal/read-background-from-state ()
+  "Read background from state file.
+Return 'dark or 'light. Fallback to 'dark."
+  (condition-case _
+      (when (file-readable-p minimal/state-colors-file)
+  (with-temp-buffer
+    (insert-file-contents minimal/state-colors-file)
+    (goto-char (point-min))
+    (when (re-search-forward "\"bg\"[[:space:]]*:[[:space:]]*\"\\(dark\\|light\\)\"" nil t)
+      (intern (match-string 1)))))
+    (error nil)))
+
+;; Decide background *before* frames are created
+(setq frame-background-mode
+      (or (minimal/read-background-from-state) 'dark))
+
 ;; --- Custom Lisp Loading ---
 ;; Load custom libraries and modules
 (mapc

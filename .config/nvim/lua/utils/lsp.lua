@@ -241,22 +241,4 @@ function M.range_contains_cursor(range, cursor, strict)
     )
 end
 
-function M.get_lsp_bin(bin)
-  local root = vim.fs.root(0, 'node_modules/.bin')
-  local path = string.format('%s/.bin/%s', root, bin)
-
-  if vim.uv.fs_stat(path) ~= nil then
-    return path
-  end
-
-  root = vim.fs.root(0, '.git')
-  path = string.format('%s/node_modules/.bin/%s', root, bin)
-
-  if vim.uv.fs_stat(path) ~= nil then
-    return path
-  end
-
-  return bin
-end
-
 return M

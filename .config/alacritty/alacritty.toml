@@ -1,7 +1,7 @@
 [general]
 import = [
     'main.toml',
-    'colors.toml',
+    'theme.toml',
     # This is for local changes, not to be tracked...
     'local.toml',
 ]

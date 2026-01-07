@@ -589,3 +589,86 @@ do
     },
   })
 end
+
+do
+  local json = require('utils.json')
+
+  local colors_config_file =
+    vim.fs.joinpath(vim.fn.stdpath('state'), 'colors.json')
+
+  ---Restore dark/light background and colorscheme from json so that nvim
+  ---'remembers' the background and colorscheme when it is restarted.
+  local function restore_colorscheme()
+    local colors_config = vim.tbl_deep_extend(
+      'keep',
+      json.read(colors_config_file),
+      { bg = 'dark', colors_name = 'gruvbox-material' } -- WARN: This might break if the plugins isn't installed!
+    )
+
+    vim.go.bg = colors_config.bg
+
+    -- Colorschemes provided by plugins are not loaded before fully startup
+    if vim.v.vim_did_enter == 1 then
+      vim.cmd.colorscheme({
+        args = { colors_config.colors_name },
+        mods = { emsg_silent = true },
+      })
+    end
+  end
+
+  -- Nvim cannot reliably detect bg in some terminals, e.g. tmux, see:
+  -- https://github.com/neovim/neovim/issues/27725
+  -- Manually set bg early so that nvim will not try to detect and set bg by
+  -- itself in tmux
+  restore_colorscheme()
+
+  augroup('my.colorscheme_restore', {
+    'UIEnter',
+    {
+      nested = true, -- invoke Colorscheme event for winbar plugin to clear bg for nvim < 0.11
+      callback = restore_colorscheme,
+    },
+  }, {
+    'OptionSet',
+    {
+      nested = true,
+      pattern = 'termguicolors',
+      callback = restore_colorscheme,
+    },
+  }, {
+    'Colorscheme',
+    {
+      nested = true,
+      desc = 'Spawn background on colorscheme change.',
+      callback = function()
+        if vim.g.script_background then
+          return
+        end
+
+        vim.schedule(function()
+          local colors_config = json.read(colors_config_file)
+
+          if
+            colors_config.colors_name == vim.g.colors_name
+            and colors_config.bg == vim.go.bg
+          then
+            return
+          end
+
+          if colors_config.colors_name ~= vim.g.colors_name then
+            colors_config.colors_name = vim.g.colors_name
+          end
+
+          if colors_config.bg ~= vim.go.bg and vim.go.termguicolors then
+            colors_config.bg = vim.go.bg
+            if vim.fn.executable('background') == 1 then
+              vim.system({ 'background', vim.go.bg })
+            end
+          end
+
+          json.write(colors_config_file, colors_config)
+        end)
+      end,
+    },
+  })
+end

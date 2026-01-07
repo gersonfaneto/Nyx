@@ -1,0 +1,40 @@
+set notification-error-bg       "#F9F5D7"
+set notification-error-fg       "#C14A4A"
+set notification-warning-bg     "#F9F5D7"
+set notification-warning-fg     "#B47109"
+set notification-bg             "#F9F5D7"
+set notification-fg             "#6C782E"
+
+set completion-bg               "#F9F5D7"
+set completion-fg               "#654735"
+set completion-group-bg         "#F9F5D7"
+set completion-group-fg         "#928374"
+set completion-highlight-bg     "#45707A"
+set completion-highlight-fg     "#F9F5D7"
+
+set index-bg                    "#F9F5D7"
+set index-fg                    "#654735"
+set index-active-bg             "#45707A"
+set index-active-fg             "#F9F5D7"
+
+set inputbar-bg                 "#F9F5D7"
+set inputbar-fg                 "#654735"
+
+set statusbar-bg                "#F9F5D7"
+set statusbar-fg                "#654735"
+
+set highlight-color             "#B47109"
+set highlight-active-color      "#C14A4A"
+
+set default-bg                  "#F9F5D7"
+set default-fg                  "#4F3829"
+set render-loading              trUE
+set render-loading-bg           "#F9F5D7"
+set render-loading-fg           "#4F3829"
+
+set recolor-lightcolor          "#F9F5D7"
+set recolor-darkcolor           "#654735"
+set recolor                     true
+set recolor-keephue             true
+
+# vim:ft=zathurarc:
