@@ -137,6 +137,7 @@ return {
         { '<Leader><Tab>i', group = 'Insert' },
         { '<Leader><Tab>f', group = 'Formula' },
         { '<LocalLeader>l', group = 'TeX' },
+        { '<LocalLeader>e', group = 'Editor' },
       })
 
       require('utils.hl').persist(function()

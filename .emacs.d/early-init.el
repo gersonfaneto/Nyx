@@ -71,9 +71,9 @@
       indent-tabs-mode nil)
 
 ;; Enable relative line numbers if Emacs version is recent enough.
-;; (when (version<= "26.0.50" emacs-version)
-;;   (global-display-line-numbers-mode)
-;;   (setq display-line-numbers-type 'relative))
+(when (version<= "26.0.50" emacs-version)
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode))
 
 (add-hook 'prog-mode-hook
     #'(lambda () (toggle-truncate-lines 1)))

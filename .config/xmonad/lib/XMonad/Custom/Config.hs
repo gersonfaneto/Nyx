@@ -133,6 +133,7 @@ openSubmap =
             , ((0, xK_b), spawn mBrowser)
             , ((0, xK_m), spawn "prismlauncher")
             , ((0, xK_w), spawn mSound)
+            , ((0, xK_p), spawn "zathura")
             , ((0, xK_k), spawn "kdeconnect-app")
             , ((0, xK_q), spawn mCalc)
             , ((0, xK_f), spawn mFiles)
