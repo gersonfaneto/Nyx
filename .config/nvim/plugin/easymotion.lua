@@ -72,4 +72,3 @@ vim.keymap.set(
   easy_motion,
   { desc = 'Jump to 2 characters' }
 )
-

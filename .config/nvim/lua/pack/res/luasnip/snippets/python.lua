@@ -757,7 +757,7 @@ M.snippets = {
         stored = {
           name = i(nil, 'ClassName'),
         },
-      }
+      },
     }
   ),
   us.sn(
@@ -828,7 +828,7 @@ M.snippets = {
         stored = {
           expr = i(1),
         },
-      }
+      },
     }
   ),
   us.msn(

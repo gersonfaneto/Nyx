@@ -38,7 +38,7 @@ local function denols_handler(err, result, ctx, config)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
   for _, res in pairs(result) do
     local uri = res.uri or res.targetUri
-    if uri:match '^deno:' then
+    if uri:match('^deno:') then
       virtual_text_document(uri, client)
       res['uri'] = uri
       res['targetUri'] = uri
@@ -64,15 +64,25 @@ return {
     -- The project root is where the LSP can be started from
     local root_markers = { 'deno.lock' }
     -- Give the root markers equal priority by wrapping them in a table
-    root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers, { '.git' } }
+    root_markers = vim.fn.has('nvim-0.11.3') == 1
+        and { root_markers, { '.git' } }
       or vim.list_extend(root_markers, { '.git' })
     -- exclude non-deno projects (npm, yarn, pnpm, bun)
     local non_deno_path = vim.fs.root(
       bufnr,
-      { 'package.json', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' }
+      {
+        'package.json',
+        'package-lock.json',
+        'yarn.lock',
+        'pnpm-lock.yaml',
+        'bun.lockb',
+        'bun.lock',
+      }
     )
     local project_root = vim.fs.root(bufnr, root_markers)
-    if non_deno_path and (not project_root or #non_deno_path >= #project_root) then
+    if
+      non_deno_path and (not project_root or #non_deno_path >= #project_root)
+    then
       return
     end
     -- We fallback to the current working directory if no project root is found
@@ -104,7 +114,10 @@ return {
       }, { bufnr = bufnr }, function(err, _, ctx)
         if err then
           local uri = ctx.params.arguments[2]
-          vim.notify('cache command failed for' .. vim.uri_to_fname(uri), vim.log.levels.ERROR)
+          vim.notify(
+            'cache command failed for' .. vim.uri_to_fname(uri),
+            vim.log.levels.ERROR
+          )
         end
       end)
     end, {
