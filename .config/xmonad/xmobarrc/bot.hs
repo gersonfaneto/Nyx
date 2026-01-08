@@ -16,10 +16,10 @@ Config
     borderWidth = 1,
     iconRoot = ".",
     commands =
-      [ Run ComX "player" [] "" "player" 20,
-        Run ComX "dunststatus" [] "" "dunst" 20,
-        Run Volume "default" "Master" [ "-t", "<fn=1><status></fn><volume>%", "--", "--on", "󰕾 ", "--off", "󰖁 ", "--onc", "#a19782", "--offc", "#a19782" ] 10,
-        Run Battery [ "-t", "<fn=3><acstatus></fn> <left>%", "--", "-i", "", "-O", "", "-o", "" ] 10
+      [ Run ComX "player" [] "" "player" 20
+      , Run ComX "dunststatus" [] "" "dunst" 20
+      , Run Volume "default" "Master" [ "-t", "<fn=1><status></fn><volume>%", "--", "--on", "󰕾 ", "--off", "󰖁 ", "--onc", "#a19782", "--offc", "#a19782" ] 10
+      , Run Battery [ "-t", "<fn=3><acstatus></fn> <left>%", "--", "-i", "", "-O", "", "-o", "" ] 10
       ],
     sepChar = "%",
     alignSep = "}{",

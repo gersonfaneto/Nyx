@@ -1,5 +1,5 @@
 {
-  description = "Nyx";
+  description = " ~ ❄️ ~ ";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
@@ -21,7 +21,7 @@
     };
   };
 
-  outputs = inputs @ { nixpkgs, home-manager, ... }:
+  outputs = inputs @ { nixpkgs, ... }:
     let
       system = "x86_64-linux";
 
@@ -35,13 +35,9 @@
       ];
     in
     {
-      formatter = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        pkgs.nixpkgs-fmt
-      );
+      templates = import ./templates;
+
+      formatter = forAllSystems (system: pkgs.nixpkgs-fmt);
 
       packages = forAllSystems (system: {
         default = nixpkgs.legacyPackages.${system}.hello;
@@ -58,14 +54,12 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "bak";
+              home-manager.backupFileExtension = "hm";
               home-manager.users.gerson = ./home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
             }
           ];
         };
       };
-
-      templates = import ./templates;
     };
 }

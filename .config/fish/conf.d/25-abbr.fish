@@ -17,6 +17,8 @@ abbr --position command --add df 'df -h'
 abbr --position command --add du 'du -hs'
 abbr --position command --add free 'free -h'
 
+abbr --position command --add cal 'cal --three'
+
 abbr --position command --add g git
 
 abbr --position command --add cl clear

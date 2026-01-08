@@ -5,7 +5,7 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "1769b62d5c21803ff655c8deb9314e4a00f6fec5",
+      "rev": "6a4914ca987453464a7dfc7fc237a992adb567d0",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "cellular-automaton.nvim": {
@@ -17,11 +17,11 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "19d7020b700879759d7f834fc717dde086f673a7",
+      "rev": "a03d68e40eea835a1cdbd9f93049708dab3621e6",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "130beacf8a51f00aede9c31064c749136679a321",
+      "rev": "72acb69020c92d99cf388bfeb390481ccec50c04",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "goyo.vim": {
@@ -29,7 +29,7 @@
       "src": "https://github.com/junegunn/goyo.vim"
     },
     "gruvbox-material": {
-      "rev": "cc47341018320a2c82262958a1af889e5eeacd6e",
+      "rev": "e4359a2f80ef7275b080be180841c62ca8322757",
       "src": "https://github.com/sainnhe/gruvbox-material"
     },
     "harpoon": {
@@ -38,7 +38,7 @@
       "version": "'harpoon2'"
     },
     "haskell-tools.nvim": {
-      "rev": "5fb8eda3c4430cb1d473d3e2138b070bdca1c224",
+      "rev": "2bbe8a03145d8e798f4ca0c2694016714de2bdd0",
       "src": "https://github.com/mrcjkb/haskell-tools.nvim",
       "version": "6.0.0 - 7.0.0"
     },
@@ -51,7 +51,7 @@
       "src": "https://github.com/iamcco/markdown-preview.nvim"
     },
     "mini.nvim": {
-      "rev": "43ec25063430196d36f5fff5758c9101775f3d57",
+      "rev": "29b9e13f891f9c83f44ff5bf44d22daa1af1dc71",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "molten-nvim": {
@@ -63,7 +63,7 @@
       "src": "https://github.com/NvChad/nvim-colorizer.lua"
     },
     "nvim-dap": {
-      "rev": "818cd8787a77a97703eb1d9090543a374f79a9ac",
+      "rev": "cdfd55a133f63228c55f91378f12908cb2a78ded",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-dap-ui": {
@@ -75,7 +75,7 @@
       "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
-      "rev": "c6dd314086f7b471bf6c9110092a94ce1c06d220",
+      "rev": "2ba5ec184609a96b513bf4c53a20512d64e27f39",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -88,7 +88,7 @@
       "src": "https://github.com/shushtain/nvim-treesitter-incremental-selection"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "ecd03f5811eb5c66d2fa420b79121b866feecd82",
+      "rev": "28a3494c075ef0f353314f627546537e43c09592",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
@@ -97,7 +97,7 @@
       "src": "https://github.com/kyazdani42/nvim-web-devicons"
     },
     "oil.nvim": {
-      "rev": "963c8d2c5538c4a896a31f396b8a5a2683e254dc",
+      "rev": "81b8a91735ad5cd24a6b3137f14a89f19176364f",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "one-small-step-for-vimkind": {
@@ -105,7 +105,7 @@
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
     },
     "opencode.nvim": {
-      "rev": "dab6ef9bd3552d4186cd40373a15735cc0c84b20",
+      "rev": "7df1a858a6604addf280ecc4676a3c35c3672b1b",
       "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "otter.nvim": {
@@ -121,7 +121,7 @@
       "src": "https://github.com/stevearc/quicker.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "da6a7b25471ab23824f3429225973186eb0b62d2",
+      "rev": "73a6ebc842cf81926eb1d424820b800f6f6a1227",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "treesj": {
@@ -182,7 +182,7 @@
       "src": "https://github.com/vim-test/vim-test"
     },
     "vimtex": {
-      "rev": "f5c37462c690da9a0d05cd12a7b9595b10b56200",
+      "rev": "a50f40783c1cade2e8e2994a9f4a8e038a0a57bc",
       "src": "https://github.com/lervag/vimtex"
     },
     "which-key.nvim": {

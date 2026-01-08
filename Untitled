@@ -1,0 +1,25 @@
+#!/bin/bash
+
+QUIET=$1
+LOCKFILE=/var/lock/$USER.xautolock.lock
+
+function notify() {
+    dbus-send --type=method_call --dest='org.freedesktop.Notifications' /org/freedesktop/Notifications org.freedesktop.Notifications.Notify string:'caffeine' uint32:1 string:'[ICON]' string:"$1" string:"$2" array:string:'' dict:string:string:'',''
+}
+
+if lockscreen status; then
+    echo "Caffeine On"
+    [ -z "$QUIET" ] && notify 'Caffeine On' 'Screen will not sleep' 2> /dev/null
+    xset s off
+    xset -dpms
+    gsettings set org.gnome.desktop.notifications show-banners false
+    xautolock -exit
+    lockscreen stop
+else
+    echo "Caffeine Off"
+    [ -z "$QUIET" ] && notify 'Caffeine Off' 'Screen may take a nap' 2> /dev/null
+    xset s on
+    xset +dpms
+    gsettings set org.gnome.desktop.notifications show-banners true
+    lockscreen start
+fi

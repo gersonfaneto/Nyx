@@ -33,6 +33,7 @@ in
     ".config/zathura/" = mkSymlink ".config/zathura/";
     ".config/xmonad/" = mkSymlink ".config/xmonad/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
+    ".config/rofimoji.rc" = mkSymlink ".config/rofimoji.rc";
     ".emacs.d/" = mkSymlink ".emacs.d/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
     ".gitconfig" = mkSymlink ".gitconfig";
@@ -44,6 +45,7 @@ in
   home.packages = with pkgs; [
     kew
     zathura
+    rofimoji
     nautilus
   ];
 

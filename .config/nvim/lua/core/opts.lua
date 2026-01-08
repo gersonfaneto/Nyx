@@ -3,6 +3,9 @@ local helpers = require('utils.helpers')
 vim.g.has_ui = #vim.api.nvim_list_uis() > 0
 vim.g.has_nf = vim.env.TERM ~= 'linux' and vim.env.NVIM_NF ~= nil
 
+vim.env.DOTFILES = vim.env.DOTFILES and vim.fn.expand('$DOTFILES')
+  or vim.fn.expand('$HOME') .. '/Developer/Personal/Nyx'
+
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 0

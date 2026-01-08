@@ -3,13 +3,13 @@ return {
   src = 'https://github.com/nvim-mini/mini.nvim',
   data = {
     postload = function()
-      local surround = require('mini.surround')
+      local ms = require('mini.surround')
 
-      surround.setup({})
+      ms.setup({})
 
-      local operators = require('mini.operators')
+      local mo = require('mini.operators')
 
-      operators.setup({
+      mo.setup({
         evaluate = { prefix = 'go=' },
         replace = { prefix = 'gor' },
         sort = { prefix = 'gos' },

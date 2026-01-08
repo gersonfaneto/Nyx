@@ -52,7 +52,7 @@ import XMonad.Util.WorkspaceCompare
 q ~? x = fmap (=~ x) q
 
 mWorkspaces :: [String]
-mWorkspaces = map show [1 .. 10]
+mWorkspaces = map show [1 .. 5]
 
 mModMask :: KeyMask
 mModMask = mod4Mask
@@ -188,6 +188,7 @@ mKeys =
     , ("M-f", sequence_ [withFocused $ windows . S.sink, sendMessage $ Toggle NBFULL])
     , ("M-,", prevNonEmptyWS)
     , ("M-.", nextNonEmptyWS)
+    , ("M-S-,", spawn "rofimoji")
     , ("M-S-<Space>", withFocused toggleFloat)
     , ("M-z", incWindowSpacing 8)
     , ("M-x", decWindowSpacing 8)
