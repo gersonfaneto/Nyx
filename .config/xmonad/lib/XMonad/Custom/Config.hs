@@ -146,6 +146,7 @@ systemSubmap =
             [ ((0, xK_s), spawn "silence")
             , ((0, xK_c), spawn "caffeine")
             , ((0, xK_b), spawn "background alt")
+            , ((0, xK_o), spawn "transparency")
             , ((0, xK_d), spawn "dunstctl close-all")
             , ((0, xK_x), spawn "xmonad --recompile && xmonad --restart")
             ]

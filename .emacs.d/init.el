@@ -413,19 +413,7 @@
 
 ;; --- UI :: Transparency ---
 ;; Change values of frame alpha to toggle it between solid and seetrough.
-(defun minimal/toggle-transparency ()
-  (interactive)
-  (let ((alpha (frame-parameter nil 'alpha)))
-    (if (eq
-     (if (numberp alpha)
-	 alpha
-       (cdr alpha))
-     100)
-    (set-frame-parameter nil 'alpha '(90 . 50))
-      (set-frame-parameter nil 'alpha '(100 . 100)))))
-
-;; Keybinding to toggle the transparency.
-(global-set-key (kbd "C-M-9") 'minimal/toggle-transparency)
+(require 'minimal-modules-transparency)
 
 ;; --- Frame Setup ---
 ;; Function to set up fonts and theme for new frames.
@@ -434,7 +422,6 @@
   (with-selected-frame frame
     (frame-set-background-mode frame)	; Apply already-chosen background (do NOT override it)
     (minimal/load-theme)		; Load theme after background mode is correct
-    (minimal/toggle-transparency)	; Set the window opacity						.	
     (set-frame-font (format "%s %s" minimal/default-font-family minimal/default-font-size) nil t)))
 
 ;; Apply frame setup when Emacs starts or when a new frame is created.

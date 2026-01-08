@@ -43,6 +43,7 @@ in
   };
 
   home.packages = with pkgs; [
+    bc
     kew
     zathura
     rofimoji

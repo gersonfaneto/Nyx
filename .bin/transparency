@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+set -x # WANR: Only for debugging...
+set -euo pipefail
+
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+STATE_DIR="$STATE_HOME/nyx"
+STATE_FILE="$STATE_DIR/transparency"
+
+TRANSPARENT_OPACITY="0.85"
+OPAQUE_OPACITY="1.0"
+
+mkdir -p "$STATE_DIR"
+
+has() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+current_state() {
+  [ -f "$STATE_FILE" ] && cat "$STATE_FILE" || echo "off"
+}
+
+set_state() {
+  echo "$1" >"$STATE_FILE"
+}
+
+toggle_state() {
+  if [ "$(current_state)" = "on" ]; then
+    set_state "off"
+  else
+    set_state "on"
+  fi
+}
+
+opacity_for_state() {
+  if [ "$(current_state)" = "on" ]; then
+    echo "$TRANSPARENT_OPACITY"
+  else
+    echo "$OPAQUE_OPACITY"
+  fi
+}
+
+# ─────────────────────────────────────────────────────────────
+# Alacritty
+# ─────────────────────────────────────────────────────────────
+update_alacritty() {
+  local opacity
+  opacity="$(opacity_for_state)"
+
+  local dir="$CONFIG_HOME/alacritty"
+  local file="$dir/local.toml"
+
+  mkdir -p "$dir"
+
+  cat >"$file" <<EOF
+[window]
+opacity = $opacity
+EOF
+
+  # Touch main config to force reload
+  touch "$dir/alacritty.toml"
+}
+
+# ─────────────────────────────────────────────────────────────
+# Ghostty
+# ─────────────────────────────────────────────────────────────
+update_ghostty() {
+  local opacity
+  opacity="$(opacity_for_state)"
+
+  local dir="$CONFIG_HOME/ghostty"
+  local file="$dir/config.local"
+
+  mkdir -p "$dir"
+
+  cat >"$file" <<EOF
+background-opacity = $opacity
+EOF
+
+  if has ghostty; then
+    pgrep ghostty | while read -r pid; do
+      kill -USR2 "$pid"
+    done
+  fi
+}
+
+# ─────────────────────────────────────────────────────────────
+# Emacs
+# ─────────────────────────────────────────────────────────────
+update_emacs() {
+  has emacsclient || return 0
+
+  local opacity
+  opacity="$(opacity_for_state)"
+
+  # Convert 0.85 → 85
+  local alpha
+  alpha=$(printf "%.0f" "$(echo "$opacity * 100" | bc -l)")
+
+  emacsclient --eval "
+    (dolist (f (frame-list))
+      (set-frame-parameter f 'alpha-background $alpha))
+  " >/dev/null
+}
+
+# ─────────────────────────────────────────────────────────────
+# Main
+# ─────────────────────────────────────────────────────────────
+main() {
+  toggle_state
+
+  update_alacritty &
+  update_ghostty &
+  update_emacs &
+
+  wait
+}
+
+main config.local
