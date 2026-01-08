@@ -52,7 +52,7 @@ import XMonad.Util.WorkspaceCompare
 q ~? x = fmap (=~ x) q
 
 mWorkspaces :: [String]
-mWorkspaces = map show [1 .. 5]
+mWorkspaces = map show [1 .. 10]
 
 mModMask :: KeyMask
 mModMask = mod4Mask
