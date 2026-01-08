@@ -188,7 +188,7 @@ mKeys =
     , ("M-f", sequence_ [withFocused $ windows . S.sink, sendMessage $ Toggle NBFULL])
     , ("M-,", prevNonEmptyWS)
     , ("M-.", nextNonEmptyWS)
-    , ("M-S-,", spawn "rofimoji")
+    , ("M-;", spawn "rofimoji")
     , ("M-S-<Space>", withFocused toggleFloat)
     , ("M-z", incWindowSpacing 8)
     , ("M-x", decWindowSpacing 8)
