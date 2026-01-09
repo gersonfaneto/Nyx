@@ -49,7 +49,7 @@ abbr --position command --add der 'direnv reload'
 abbr --position command --add tree 'tree -N -L 4 -C --gitignore --dirsfirst'
 
 abbr --position anywhere --add cut '| xclip -selection clipboard'
-abbr --position command --add yank 'xclip -selection clipboard -out'
+abbr --position command --add yank 'xclip -selection clipboard -out |'
 
 abbr --position anywhere --add lines '| wc --lines'
 abbr --position anywhere --add filter '| grep --ignore-case --regexp'
