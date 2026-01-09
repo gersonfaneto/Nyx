@@ -3,9 +3,17 @@
 # set -x # WARN: Only for debugging...
 set -euo pipefail
 
+usage()  {
+  printf "Usage: %s [OPTIONS] PORT\n" "$(basename "$0")"
+  printf "Options:\n"
+  printf "  -k, --kill         Send a kill signal to PID on PORT\n"
+  printf "  -c, --check        Checks the PID running on PORT\n"
+  printf "  -h, --help         Show this help message\n"
+}
+
 main() {
-  if [[ ! $# -gt 1 ]]; then
-    echo 'O.o'
+  if [[ $# -eq 0 ]]; then
+    usage
     return 1
   fi
 
