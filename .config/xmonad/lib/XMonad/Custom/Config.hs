@@ -42,14 +42,11 @@ import Data.Map qualified as M
 
 import System.IO (writeFile)
 
-import Text.Regex.Posix ((=~))
-
 import XMonad.Custom.Hooks.XMobar qualified as C
+import XMonad.Custom.Manage.ManageHook qualified as C
 import XMonad.Custom.Scratchpads
 import XMonad.Custom.Theme qualified as C
 import XMonad.Util.WorkspaceCompare
-
-q ~? x = fmap (=~ x) q
 
 mWorkspaces :: [String]
 mWorkspaces = map show [1 .. 10]
@@ -68,6 +65,9 @@ mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
 
 mSystem :: String
 mSystem = "alacritty --class btm --command btm"
+
+mMusic :: String
+mMusic = "alacritty --class kew --command kew"
 
 mSound :: String
 mSound = "alacritty --class wiremix --command wiremix"
@@ -92,19 +92,6 @@ mLayoutHook =
     tall = ResizableTall 1 (3 / 100) (11 / 20) []
     mSpacing = spacingWithEdge 8
 
-mManageHook =
-    composeAll
-        [ className ~? "wiremix|btm|ncmpcpp" --> mFloat
-        , className =? "Qalculate-gtk" --> mFloat
-        , className =? "PrismLauncher" --> doFloat
-        , className =? "kdeconnect.app" --> doFloat
-        , isDialog --> doFloat
-        ]
-        <+> insertPosition Below Newer
-  where
-    mFloat :: ManageHook
-    mFloat = doRectFloat (S.RationalRect 0.15 0.15 0.7 0.7)
-
 myStartupHook :: X ()
 myStartupHook = do
     spawn "pkill dunst; dunst -config $HOME/.config/dunst/dunstrc &"
@@ -125,19 +112,29 @@ namedSubmap name mp = do
     submap mp
     setSubmap ""
 
+gameSubmap =
+    namedSubmap "Game" $
+        M.fromList
+            [ ((0, xK_m), spawn "prismlauncher")
+            ]
+
+toolSubmap =
+    namedSubmap "Tool" $
+        M.fromList
+            [ ((0, xK_z), spawn "boomer")
+            , ((0, xK_m), spawn mSystem)
+            , ((0, xK_s), spawn mSound)
+            ]
+
 openSubmap =
     namedSubmap "Open" $
         M.fromList
             [ ((0, xK_e), spawn mEditor)
-            , ((0, xK_s), spawn mSystem)
             , ((0, xK_b), spawn mBrowser)
-            , ((0, xK_m), spawn "prismlauncher")
-            , ((0, xK_w), spawn mSound)
-            , ((0, xK_p), spawn "zathura")
-            , ((0, xK_k), spawn "kdeconnect-app")
-            , ((0, xK_q), spawn mCalc)
+            , ((0, xK_m), spawn mMusic)
+            , ((0, xK_c), spawn mCalc)
             , ((0, xK_f), spawn mFiles)
-            , ((0, xK_z), spawn "boomer")
+            , ((0, xK_p), spawn "zathura")
             ]
 
 systemSubmap =
@@ -175,6 +172,8 @@ mKeys =
     , ("M-<Print>", spawn "capture")
     , ("M-<Return>", spawn mTerminal)
     , ("M-S-<Return>", spawn mTerminal')
+    , ("M-g", gameSubmap)
+    , ("M-t", toolSubmap)
     , ("M-o", openSubmap)
     , ("M-s", systemSubmap)
     , ("M-w", workspaceSubmap)
@@ -235,10 +234,11 @@ mConfig =
         , focusedBorderColor = C.colorF
         , startupHook = myStartupHook
         , layoutHook = mLayoutHook
-        , manageHook = mManageHook <+> manageDocks
+        , manageHook = C.manageHook
         }
         `additionalKeysP` mKeys
         |> dynamicSBs C.barSpawner
+        |> docks
         |> ewmh
         |> ewmhFullscreen
         |> (return :: a -> IO a)

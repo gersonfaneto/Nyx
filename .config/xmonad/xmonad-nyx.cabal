@@ -25,6 +25,7 @@ library xmonad-lib
     XMonad.Custom.Hooks.Log
     XMonad.Custom.Hooks.XMobar
     XMonad.Custom.Manage.ManageHelpers
+    XMonad.Custom.Manage.ManageHook
     XMonad.Custom.Misc
     XMonad.Custom.Scratchpads
     XMonad.Custom.Theme
