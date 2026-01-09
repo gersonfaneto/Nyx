@@ -12,10 +12,6 @@
       "rev": "1606e9d5d04ff254023c3f3c62842d065708d6d3",
       "src": "https://github.com/Eandrju/cellular-automaton.nvim"
     },
-    "codediff.nvim": {
-      "rev": "e6d0efcf20197b266deeb8e4b6a2bbe7f0e8c6ec",
-      "src": "https://github.com/esmuellert/codediff.nvim"
-    },
     "diffview.nvim": {
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
       "src": "https://github.com/sindrets/diffview.nvim"
