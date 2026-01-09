@@ -12,6 +12,14 @@
       "rev": "1606e9d5d04ff254023c3f3c62842d065708d6d3",
       "src": "https://github.com/Eandrju/cellular-automaton.nvim"
     },
+    "codediff.nvim": {
+      "rev": "e6d0efcf20197b266deeb8e4b6a2bbe7f0e8c6ec",
+      "src": "https://github.com/esmuellert/codediff.nvim"
+    },
+    "diffview.nvim": {
+      "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
+      "src": "https://github.com/sindrets/diffview.nvim"
+    },
     "fugitive-gitlab.vim": {
       "rev": "3584cf7e607ba7822f991d407a8d780e05aae287",
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
@@ -57,6 +65,10 @@
     "molten-nvim": {
       "rev": "4fd7be6a12b5efda5179db642f13bad60893acca",
       "src": "https://github.com/benlubas/molten-nvim"
+    },
+    "nui.nvim": {
+      "rev": "de740991c12411b663994b2860f1a4fd0937c130",
+      "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim-colorizer.lua": {
       "rev": "81e676d3203c9eb6e4c0ccf1eba1679296ef923f",
