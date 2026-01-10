@@ -1,6 +1,7 @@
-module XMobar.Custom.Layout.Base (
-  baseConfig,
-) where
+module XMobar.Custom.Layout.Base
+  ( baseConfig,
+  )
+where
 
 import Xmobar
 

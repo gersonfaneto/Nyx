@@ -47,6 +47,8 @@
                   final.cabal-install
                   final.haskellPackages.fourmolu
                   final.haskellPackages.haskell-language-server
+
+                  final.yaml-language-server
                 ];
               };
             })
