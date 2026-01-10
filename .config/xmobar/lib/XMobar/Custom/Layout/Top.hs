@@ -1,10 +1,11 @@
 module XMobar.Custom.Layout.Top
-  ( topConfig,
+  ( topConfig
   )
 where
 
-import XMobar.Custom.Layout.Base
 import Xmobar
+
+import XMobar.Custom.Layout.Base
 
 topConfig :: Config
 topConfig =

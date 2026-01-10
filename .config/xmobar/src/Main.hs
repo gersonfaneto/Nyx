@@ -1,9 +1,10 @@
 {-# LANGUAGE LambdaCase #-}
 
 import System.Environment (getArgs)
+import Xmobar
+
 import XMobar.Custom.Layout.Bottom
 import XMobar.Custom.Layout.Top
-import Xmobar
 
 main :: IO ()
 main =

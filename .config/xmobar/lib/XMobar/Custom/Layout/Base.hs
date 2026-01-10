@@ -1,5 +1,5 @@
 module XMobar.Custom.Layout.Base
-  ( baseConfig,
+  ( baseConfig
   )
 where
 

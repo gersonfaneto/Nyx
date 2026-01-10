@@ -1,10 +1,11 @@
 module XMobar.Custom.Layout.Bottom
-  ( botConfig,
+  ( botConfig
   )
 where
 
-import XMobar.Custom.Layout.Base
 import Xmobar
+
+import XMobar.Custom.Layout.Base
 
 botConfig :: Config
 botConfig =
