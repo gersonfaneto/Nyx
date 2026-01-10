@@ -16,6 +16,9 @@ library xmobar-lib
     xmobar,
 
   exposed-modules:
+    XMobar.Custom.Layout.Base
+    XMobar.Custom.Layout.Bottom
+    XMobar.Custom.Layout.Top
 
 executable xmobar
   import: base

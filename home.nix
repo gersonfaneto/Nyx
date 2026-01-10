@@ -31,6 +31,7 @@ in
     ".config/rofi/" = mkSymlink ".config/rofi/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
     ".config/zathura/" = mkSymlink ".config/zathura/";
+    ".config/xmobar/" = mkSymlink ".config/xmobar/";
     ".config/xmonad/" = mkSymlink ".config/xmonad/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/rofimoji.rc" = mkSymlink ".config/rofimoji.rc";
