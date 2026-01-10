@@ -1,11 +1,10 @@
-module XMonad.Custom.Manage.ManageHook (
-  manageHook,
-) where
+module XMonad.Custom.Manage.ManageHook
+  ( manageHook
+  )
+where
 
 import XMonad hiding (manageHook)
 import XMonad.Actions.SpawnOn
-import XMonad.Custom.Manage.ManageHelpers
-import XMonad.Custom.Scratchpads
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
@@ -15,6 +14,9 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.StackSet as W
 import XMonad.Util.NamedScratchpad
+
+import XMonad.Custom.Manage.ManageHelpers
+import XMonad.Custom.Scratchpads
 
 composeActions :: [MaybeManageHook]
 composeActions =
@@ -40,12 +42,12 @@ composeActions =
   , isRole =? "browser" -?> ewmhDesktopsManageHook
   , transience
   ]
- where
-  tileNormal = insertPosition Above Newer
-  tileBelow = insertPosition Below Newer
-  tileBelowNoFocus = insertPosition Below Older
-  doFullCenterFloat = centerFloat 0.8 0.8
-  noBorder = hasBorder False
+  where
+    tileNormal = insertPosition Above Newer
+    tileBelow = insertPosition Below Newer
+    tileBelowNoFocus = insertPosition Below Older
+    doFullCenterFloat = centerFloat 0.8 0.8
+    noBorder = hasBorder False
 
 manageHook :: ManageHook
 manageHook =

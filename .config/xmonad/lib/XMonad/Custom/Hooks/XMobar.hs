@@ -1,14 +1,16 @@
-module XMonad.Custom.Hooks.XMobar (
-    barSpawner,
-) where
+module XMonad.Custom.Hooks.XMobar
+  ( barSpawner
+  )
+where
 
 import Control.Monad
 import Data.Maybe
 import Text.Printf
 import XMonad
-import XMonad.Custom.Hooks.Log
 import XMonad.Hooks.StatusBar
 import XMonad.Util.ClickableWorkspaces
+
+import XMonad.Custom.Hooks.Log
 
 barCommand :: Int -> String -> String
 barCommand = printf command
