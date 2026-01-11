@@ -389,7 +389,7 @@ c.fonts.completion.category = "bold default_size default_family"
 c.fonts.completion.entry = "default_size default_family"
 c.fonts.contextmenu = None
 c.fonts.debug_console = "default_size default_family"
-c.fonts.default_family = ["IBM Plex Mono"]
+c.fonts.default_family = ["Aporetic Sans Mono"]
 c.fonts.default_size = "10pt"
 
 c.fonts.downloads = "default_size default_family"

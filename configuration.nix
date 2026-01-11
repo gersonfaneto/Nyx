@@ -228,6 +228,7 @@
       git
       hyperfine
       imagemagick
+      ispell
       jq
       less
       libnotify
@@ -338,17 +339,20 @@
       # Emojis
       noto-fonts-color-emoji
 
-      # General
+      # Retro
       ibm-plex
       nerd-fonts.blex-mono
+
+      # Readable
+      aporetic-bin
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "IBM Plex Serif" ];
-        sansSerif = [ "IBM Plex Sans" ];
-        monospace = [ "IBM Plex Mono" ];
+        serif = [ "Aporetic Serif" ];
+        sansSerif = [ "Aporetic Sans" ];
+        monospace = [ "Aporetic Sans Mono" ];
       };
     };
   };

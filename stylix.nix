@@ -21,15 +21,15 @@ in
   stylix.fonts = {
     serif = {
       package = pkgs.ibm-plex;
-      name = "IBM Plex Serif";
+      name = "Aporetic Serif";
     };
     sansSerif = {
       package = pkgs.ibm-plex;
-      name = "IBM Plex Sans";
+      name = "Aporetic Sans";
     };
     monospace = {
       package = pkgs.ibm-plex;
-      name = "IBM Plex Mono";
+      name = "Aporetic Sans Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;

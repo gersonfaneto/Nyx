@@ -1,0 +1,43 @@
+#+TITLE: EMACS :: Minimal
+#+AUTHOR: Gerson Ferreira
+#+EMAIL: gersonfaneto.dev@gmail.com
+#+LANGUAGE: en
+#+OPTIONS: ':t toc:nil num:t author:t email:t
+#+STARTUP: content indent
+#+PROPERTY: header-args :results none
+
+Before we go on, a word of advice: everything in here is susceptible
+to changes and most likely will break from time to time...
+
+... /Reader discretion is advised!/
+
++ Website: <https://gersonfaneto.dev>
++ Repositories:
+  - GitHub: <https://github.com/gersonfaneto>
+  - GitLab: <https://gitlab.com/gersonfaneto>
+
+#+TOC: headlines 8 insert TOC here, with eight headline levels
+
+* The Anatomy of Minimal EMACS
+
+In here is described the general layout and purpose of each piece in this configuration...
+
+* Prelude (=early-init.el=)
+
+The first file that is loaded upon startup...
+
+* Postlude (=init.el=)
+
+This is where things really start to change...
+
+* Interlude I (=minimal-modules=)
+
+...
+
+* Interlude II (=minimal-lisp=)
+
+...
+
+* Interlude III (=minimal-themes=)
+
+...

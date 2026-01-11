@@ -17,7 +17,7 @@ transparent_background_colors = true
 size = 10
 
 [font.normal]
-family = 'BlexMono Nerd Font Mono'
+family = 'Aporetic Sans Mono'
 
 [scrolling]
 history = 0

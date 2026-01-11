@@ -8,7 +8,7 @@ import Xmobar
 baseConfig :: Config
 baseConfig =
   defaultConfig
-    { font = "IBM Plex Mono 10"
+    { font = "Aporetic Sans Mono 10"
     , bgColor = "#0B0806"
     , fgColor = "#A19782"
     , alpha = 255
