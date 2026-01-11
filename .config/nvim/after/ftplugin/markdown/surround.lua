@@ -1,8 +1,6 @@
 vim.b.minisurround_config = {
   custom_surroundings = {
-    -- Markdown link
-    -- `ysL` + [type/paste link] + <CR> - add link
-    -- `dsL` - delete link
+    -- L for link
     L = {
       input = { '%[().-()%]%(.-%)' },
       output = function()
@@ -32,8 +30,8 @@ vim.b.minisurround_config = {
 }
 
 -- stylua: ignore start
-vim.keymap.set('v', '<C-k>', 'ysL', { buffer = 0, desc = 'Add link', remap = true })
-vim.keymap.set('v', '<C-b>', 'ysB', { buffer = 0, desc = 'Add bold', remap = true })
-vim.keymap.set('v', '<C-i>', 'ysI', { buffer = 0, desc = 'Add italic', remap = true })
-vim.keymap.set('v', '<C-e>', 'ysE', { buffer = 0, desc = 'Add code', remap = true })
+vim.keymap.set('v', '<C-l>', 'saL', { buffer = 0, desc = 'Add link', remap = true })
+vim.keymap.set('v', '<C-b>', 'saB', { buffer = 0, desc = 'Add bold', remap = true })
+vim.keymap.set('v', '<C-i>', 'saI', { buffer = 0, desc = 'Add italic', remap = true })
+vim.keymap.set('v', '<C-e>', 'saE', { buffer = 0, desc = 'Add code', remap = true })
 -- stylua: ignore end
