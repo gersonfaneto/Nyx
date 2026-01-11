@@ -603,7 +603,7 @@ do
     local colors_config = vim.tbl_deep_extend(
       'keep',
       json.read(colors_config_file),
-      { bg = 'dark', colors_name = 'gruvbox-material' } -- WARN: This might break if the plugins isn't installed!
+      { bg = 'dark', colors_name = 'nano' }
     )
 
     vim.go.bg = colors_config.bg
@@ -640,9 +640,9 @@ do
     'Colorscheme',
     {
       nested = true,
-      desc = 'Spawn background on colorscheme change.',
+      desc = 'Spawn setbg/setcolors on colorscheme change.',
       callback = function()
-        if vim.g.script_background then
+        if vim.g.script_set_bg or vim.g.script_set_colors then
           return
         end
 
@@ -658,12 +658,15 @@ do
 
           if colors_config.colors_name ~= vim.g.colors_name then
             colors_config.colors_name = vim.g.colors_name
+            if vim.fn.executable('setcolor') == 1 then
+              vim.system({ 'setcolor', vim.g.colors_name })
+            end
           end
 
           if colors_config.bg ~= vim.go.bg and vim.go.termguicolors then
             colors_config.bg = vim.go.bg
-            if vim.fn.executable('background') == 1 then
-              vim.system({ 'background', vim.go.bg })
+            if vim.fn.executable('setbg') == 1 then
+              vim.system({ 'setbg', vim.go.bg })
             end
           end
 
