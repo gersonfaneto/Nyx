@@ -9,7 +9,7 @@
 Before we go on, a word of advice: everything in here is susceptible
 to changes and most likely will break from time to time...
 
-... /Reader discretion is advised!/
+... _/Reader discretion is advised!/_
 
 + Website: <https://gersonfaneto.dev>
 + Repositories:
