@@ -188,6 +188,7 @@
   wa = worktree add
   wr = worktree remove
 
+  rt = restore
   rs = restore --staged
 
   rk = shortlog --summary --numbered --email
