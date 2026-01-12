@@ -26,6 +26,7 @@ in
     ".config/ghostty/" = mkSymlink ".config/ghostty/";
     ".config/nvim/" = mkSymlink ".config/nvim/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
+    ".config/presenterm/" = mkSymlink ".config/presenterm/";
     ".config/qutebrowser/" = mkSymlink ".config/qutebrowser/";
     ".config/ranger/" = mkSymlink ".config/ranger/"; 
     ".config/rg/" = mkSymlink ".config/rg/";

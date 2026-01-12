@@ -1,0 +1,11 @@
+defaults:
+  terminal_font_size: 24
+  theme: terminal-dark
+
+options:
+  implicit_slide_ends: true
+  incremental_lists: true
+  end_slide_shorthand: true
+
+speaker_notes:
+  always_publish: true
