@@ -348,6 +348,9 @@
       ibm-plex
       nerd-fonts.blex-mono
 
+      # Rounded
+      nerd-fonts.space-mono
+
       # Readable
       aporetic-bin
     ];
@@ -355,9 +358,9 @@
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "Aporetic Serif" ];
-        sansSerif = [ "Aporetic Sans" ];
-        monospace = [ "Aporetic Sans Mono" ];
+        serif = [ "SpaceMono Nerd Font Mono" ];
+        sansSerif = [ "SpaceMono Nerd Font Mono" ];
+        monospace = [ "SpaceMono Nerd Font Mono" ];
       };
     };
   };

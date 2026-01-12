@@ -1,5 +1,5 @@
 Config
-    { font = "Aporetic Sans Mono 10"
+    { font = "SpaceMono Nerd Font Mono 10"
     , bgColor = "#0B0806"
     , fgColor = "#A19782"
     , alpha = 255

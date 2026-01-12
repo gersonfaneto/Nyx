@@ -17,7 +17,7 @@ transparent_background_colors = true
 size = 10
 
 [font.normal]
-family = 'Aporetic Sans Mono'
+family = 'SpaceMono Nerd Font Mono'
 
 [scrolling]
 history = 0
