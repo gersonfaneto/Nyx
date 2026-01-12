@@ -27,7 +27,7 @@ composeActions =
   , className =? "btm" -?> doFullCenterFloat
   , className =? "Qalculate-gtk" -?> doFullCenterFloat
   , className =? "PrismLauncher" -?> doFullCenterFloat <> doShift "5"
-  , className ~? "*Minecraft*" -?> doFullCenterFloat <> doShift "5"
+  , className ~? "^Minecraft*" -?> doFullCenterFloat <> doShift "5"
   , className =? "Dragon-drop" -?> doCenterFloat
   , className =? "mpv" -?> tileNormal
   , className =? "Pinentry" -?> doCenterFloat

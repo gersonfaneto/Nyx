@@ -603,7 +603,7 @@ do
     local colors_config = vim.tbl_deep_extend(
       'keep',
       json.read(colors_config_file),
-      { bg = 'dark', colors_name = 'nano' }
+      { bg = 'dark', colors_name = 'gruvbox-material' }
     )
 
     vim.go.bg = colors_config.bg
