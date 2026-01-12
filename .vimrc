@@ -916,7 +916,7 @@ inoremap <C-w>    <C-g>u<C-w>
 nnoremap <silent> &     :&&<CR>
 xnoremap <silent> *     y/\V<C-R>=escape(@",'/')<CR><CR>
 xnoremap <silent> #     y?\V<C-R>=escape(@",'/')<CR><CR>
-nnoremap <silent> <C-l> :nohlsearch\|diffupdate<CR><C-l>
+nnoremap <silent> <C-c> :nohlsearch\|diffupdate<CR><C-l>
 " }}}2
 
 " Window keymaps {{{2
@@ -1358,6 +1358,38 @@ endif
 " }}}2
 
 " FZF {{{2
+function! FindFzfVim() abort
+  " 1. Check runtimepath first
+  for dir in split(&runtimepath, ',')
+    if filereadable(dir . '/plugin/fzf.vim')
+      return fnamemodify(dir, ':p')
+    endif
+  endfor
+
+  " 2. Search Nix store directly
+  let l:paths = systemlist(
+        \ 'ls -d /nix/store/*-fzf-*/share/vim-plugins/fzf 2>/dev/null'
+        \ )
+
+  for p in l:paths
+    if filereadable(p . '/plugin/fzf.vim')
+      return fnamemodify(p, ':p')
+    endif
+  endfor
+
+  return ''
+endfunction
+
+command! FzfVimWhere echo FindFzfVim()
+
+let s:fzf_vim = FindFzfVim()
+
+if empty(s:fzf_vim)
+  echoerr 'fzf.vim not found'
+else
+  execute 'set runtimepath+=' . s:fzf_vim
+endif
+
 let g:fzf_layout = {
       \ 'window': {
         \ 'width': 0.8,

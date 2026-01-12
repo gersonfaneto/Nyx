@@ -299,6 +299,9 @@
       # Markdown
       marksman
 
+      # Vim
+      vim-language-server
+
       # Lua
       lua
       stylua

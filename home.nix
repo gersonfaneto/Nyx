@@ -43,7 +43,6 @@ in
     ".dir_colors" = mkSymlink ".dir_colors";
     ".gitconfig" = mkSymlink ".gitconfig";
     ".profile" = mkSymlink ".profile";
-    ".ripgreprc" = mkSymlink ".ripgreprc";
     ".vimrc" = mkSymlink ".vimrc";
   };
 
