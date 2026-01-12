@@ -1,5 +1,3 @@
-local helpers = require('utils.helpers')
-
 vim.g.has_ui = #vim.api.nvim_list_uis() > 0
 vim.g.has_nf = vim.env.TERM ~= 'linux' and vim.env.NVIM_NF ~= nil
 
@@ -53,37 +51,11 @@ vim.opt.showmatch = true
 vim.opt.visualbell = false
 vim.opt.errorbells = false
 vim.opt.title = true
-vim.opt.complete = helpers.append(vim.o.complete, { 'kspell' })
+vim.opt.complete:append('kspell')
 vim.opt.completeopt = 'menu,menuone,noselect,fuzzy,preinsert'
 vim.opt.virtualedit = 'block'
 vim.opt.selection = 'old'
 vim.opt.tabclose = 'uselast'
-
--- show a navigable menu for tab completion
-vim.o.wildmode = 'noselect,full'
-vim.o.wildignore = vim.o.wildignore
-  .. table.concat({
-    '*.o',
-    '*.out',
-    '*.obj',
-    '.git',
-    '*.rbc',
-    '*.rbo',
-    '*.class',
-    '.svn',
-    '*.gem',
-    '*.pyc',
-    '*.swp',
-    '*~',
-  }, ',')
-
-vim.o.tagcase = 'followscs'
-vim.o.tags = helpers.prepend(vim.o.tags, { './.git/tags;' })
-
--- Pattern for a start of numbered list (used in `gw`). This reads as
--- "Start of list item is: at least one special character (digit, -, +, *)
--- possibly followed by punctuation (. or `)`) followed by at least one space".
-vim.o.formatlistpat = [[^\s*[0-9\-\+\*]\+[\.\)]*\s\+]]
 
 -- Defer shada reading
 do
@@ -377,8 +349,6 @@ vim.o.fillchars = table.concat({
   'vertright:┣',
   'verthoriz:╋',
 }, ',')
-
-vim.opt.concealcursor = 'n'
 
 vim.api.nvim_create_autocmd('UIEnter', {
   once = true,

@@ -5,7 +5,9 @@ return {
     postload = function()
       local ms = require('mini.surround')
 
-      ms.setup({})
+      ms.setup({
+        search_method = 'cover_or_next',
+      })
 
       local mo = require('mini.operators')
 
