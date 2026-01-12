@@ -411,10 +411,6 @@
   :custom
   (ready-player-my-media-collection-location "~/Music/"))
 
-;; --- UI :: Transparency ---
-;; Change values of frame alpha to toggle it between solid and seetrough.
-(require 'minimal-modules-transparency)
-
 ;; --- Frame Setup ---
 ;; Function to set up fonts and theme for new frames.
 (defun minimal/setup-frame (frame)
