@@ -27,20 +27,24 @@ in
     ".config/nvim/" = mkSymlink ".config/nvim/";
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
     ".config/qutebrowser/" = mkSymlink ".config/qutebrowser/";
+    ".config/ranger/" = mkSymlink ".config/ranger/"; 
     ".config/rg/" = mkSymlink ".config/rg/";
     ".config/rofi/" = mkSymlink ".config/rofi/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
-    ".config/zathura/" = mkSymlink ".config/zathura/";
     ".config/xmobar/" = mkSymlink ".config/xmobar/";
     ".config/xmonad/" = mkSymlink ".config/xmonad/";
+    ".config/zathura/" = mkSymlink ".config/zathura/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/rofimoji.rc" = mkSymlink ".config/rofimoji.rc";
     ".emacs.d/" = mkSymlink ".emacs.d/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
-    ".gitconfig" = mkSymlink ".gitconfig";
-    ".bashrc" = mkSymlink ".bashrc";
-    ".profile" = mkSymlink ".profile";
     ".bash_profile" = mkSymlink ".bash_profile";
+    ".bashrc" = mkSymlink ".bashrc";
+    ".dir_colors" = mkSymlink ".dir_colors";
+    ".gitconfig" = mkSymlink ".gitconfig";
+    ".profile" = mkSymlink ".profile";
+    ".ripgreprc" = mkSymlink ".ripgreprc";
+    ".vimrc" = mkSymlink ".vimrc";
   };
 
   home.packages = with pkgs; [

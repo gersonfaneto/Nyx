@@ -238,6 +238,7 @@
       maim
       man-pages
       man-pages-posix
+      mermaid-cli
       mpv
       nsxiv
       pandoc
@@ -250,6 +251,7 @@
       pulseaudio
       qalculate-gtk
       qutebrowser
+      ranger
       ripgrep
       rofi
       rsync
