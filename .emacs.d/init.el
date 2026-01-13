@@ -18,8 +18,8 @@
 ;; --- Window Management Keybindings ---
 (global-set-key (kbd "M-0") 'delete-window) ;; Delete the current window
 (global-set-key (kbd "M-1") 'delete-other-windows) ;; Delete all windows except the current one
-(global-set-key (kbd "M-2") (lambda () (interactive) (split-window-below) (other-window 1))) ;; Split window below and switch to the new window
-(global-set-key (kbd "M-3") (lambda () (interactive) (split-window-right) (other-window 1))) ;; Split window to the right and switch to the new window
+(global-set-key (kbd "M-2") '(lambda nil (interactive) (split-window-below) (other-window 1))) ;; Split window below and switch to the new window
+(global-set-key (kbd "M-3") '(lambda nil (interactive) (split-window-right) (other-window 1))) ;; Split window to the right and switch to the new window
 (global-set-key (kbd "M-o") 'other-window) ;; Cycle to the next window
 
 ;; --- Editing and Navigation Keybindings ---

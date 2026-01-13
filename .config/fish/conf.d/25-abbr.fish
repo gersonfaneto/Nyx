@@ -72,3 +72,6 @@ function __command_abbr_v_fn --description 'Abbreviation function for `v`'
 end
 
 abbr --position command --add v --function __command_abbr_v_fn
+
+abbr --position command --add eg 'emacsclient --create-frame --alternate-editor \'emacs\''
+abbr --position command --add et 'emacsclient --tty --alternate-editor \'emacs --no-window-system\''

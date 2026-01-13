@@ -95,6 +95,22 @@ vim.keymap.set("n", "<leader>6", "<Plug>HiInterestingWord6", { desc = "Highlight
 
 -- open current buffer in a new tab
 vim.keymap.set("n", "gTT", "<cmd>tab sb<cr>", { desc = "Open current buffer in a new tab" })
+
+-- Jump to start and end of line using the home row keys
+vim.keymap.set('', 'H', '^')
+vim.keymap.set('', 'L', '$')
+
+-- <CR><CR> toggles between buffers
+vim.keymap.set('n', '<CR><CR>', '<C-^>')
+
+-- "very magic" (less escaping needed) regexes by default
+vim.keymap.set('n', '?', '?\\v')
+vim.keymap.set('n', '/', '/\\v')
+vim.keymap.set('c', '%s/', '%sm/')
+
+-- let the left and right arrows be useful: they can switch buffers
+vim.keymap.set('n', '<left>', ':bp<cr>')
+vim.keymap.set('n', '<right>', ':bn<cr>')
 -- stylua: ignore end
 
 vim.keymap.set('v', '<leader>y', function()
