@@ -112,6 +112,34 @@
   (unless (server-running-p)
     (server-start)))
 
+;; --- Better Navigation ---
+(use-package evil
+  :init
+  (evil-mode 1)
+  :custom
+  (evil-want-integration nil)
+  (evil-want-C-u-scroll t)
+  (evil-want-keybinding nil)
+  (evil-split-window-below t)
+  (evil-vsplit-window-right t)
+  :config
+  (evil-define-key 'normal org-mode-map
+    (kbd "t")   'org-todo
+    (kbd "M-k") 'org-prev-superior
+    (kbd "M-j") 'org-next-superior
+    (kbd "M-K") 'org-sr-fail
+    (kbd "M-J") 'org-sr-pass
+    (kbd "M-h") 'org-promote-subtree
+    (kbd "M-l") 'org-demote-subtree))
+
+(use-package evil-collection :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-surround :after evil
+  :config
+  (global-evil-surround-mode 1))
+
 ;; --- Themes and Appearance ---
 ;; Install all-the-icons if in graphical mode.
 (use-package all-the-icons
@@ -411,6 +439,12 @@
   :custom
   (ready-player-my-media-collection-location "~/Music/"))
 
+;; --- Extras ---
+(defun minimal/insert-jitsi-link ()
+  (interactive)
+  "Insert a Jitsi link."
+  (insert (concat "https://meet.jit.si/" (format-time-string "%Y%m%dT%H%M%S"))))
+
 ;; --- Frame Setup ---
 ;; Function to set up fonts and theme for new frames.
 (defun minimal/setup-frame (frame)
@@ -419,6 +453,10 @@
     (frame-set-background-mode frame)	; Apply already-chosen background (do NOT override it)
     (minimal/load-theme)		; Load theme after background mode is correct
     (set-frame-font (format "%s %s" minimal/default-font-family minimal/default-font-size) nil t)))
+
+;; Load local customizations if the file exists.
+(if (file-exists-p minimal/local-file)
+    (load-file minimal/local-file))
 
 ;; Apply frame setup when Emacs starts or when a new frame is created.
 (if (daemonp)

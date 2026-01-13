@@ -107,10 +107,6 @@
       minimal/default-contrast      'hard
       minimal/default-background    'dark)
 
-;; Load local customizations if the file exists.
-(if (file-exists-p minimal/local-file)
-    (load-file minimal/local-file))
-
 ;; --- Custom File Loading ---
 ;; Path to the custom file.
 (setq minimal/custom-file "~/.emacs.d/custom.el")
