@@ -52,7 +52,7 @@ export BAT_THEME=ansi
 # Set gutter to space to hide gutter:
 # https://github.com/junegunn/fzf/blob/master/CHANGELOG.md#hiding-the-gutter-column
 export FZF_DEFAULT_OPTS="--reverse \
-    --preview='fzf-file-previewer {}' \
+    --preview='previewer {}' \
     --preview-window=right,55%,border-none,nocycle \
     --info=inline-right \
     --no-separator \
