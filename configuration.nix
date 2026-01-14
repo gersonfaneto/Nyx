@@ -218,6 +218,7 @@
       fd
       feh
       ffmpeg-full
+      cached-nix-shell
       file
       firefox
       fish
