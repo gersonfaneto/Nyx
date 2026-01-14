@@ -1,5 +1,5 @@
 [global]
-font = SpaceMono Nerd Font Mono 10  # Font family and size
+font = Maple Mono NF CN 10  # Font family and size
 format = "<b>%s</b>\n%b" # Formatting of the notification text
 alignment = center       # Text alignment
 allow_markup = yes       # Allow html-like styling...

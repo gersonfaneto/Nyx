@@ -7,7 +7,7 @@ import Graphics.X11.Xlib.Types
 import XMonad.Layout.Decoration
 
 font :: String
-font = "xft:SpaceMono Nerd Font Mono:style=Regular:size=10:antialias=true"
+font = "xft:Maple Mono NF CN:style=Regular:size=10:antialias=true"
 
 black1, black2 :: String
 (black1, black2) = ("#0b0806", "#2f2b2a")

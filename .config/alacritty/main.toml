@@ -17,7 +17,7 @@ transparent_background_colors = true
 size = 10
 
 [font.normal]
-family = 'SpaceMono Nerd Font Mono'
+family = 'Maple Mono NF CN'
 
 [scrolling]
 history = 0

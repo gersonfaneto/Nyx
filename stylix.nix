@@ -21,15 +21,15 @@ in
   stylix.fonts = {
     serif = {
       package = pkgs.ibm-plex;
-      name = "SpaceMono Nerd Font Mono";
+      name = "Maple Mono NF CN";
     };
     sansSerif = {
       package = pkgs.ibm-plex;
-      name = "SpaceMono Nerd Font Mono";
+      name = "Maple Mono NF CN";
     };
     monospace = {
       package = pkgs.ibm-plex;
-      name = "SpaceMono Nerd Font Mono";
+      name = "Maple Mono NF CN";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;

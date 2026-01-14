@@ -209,6 +209,7 @@
       bluetui
       bottom
       brightnessctl
+      cached-nix-shell
       chafa
       diff-so-fancy
       dragon-drop
@@ -218,7 +219,6 @@
       fd
       feh
       ffmpeg-full
-      cached-nix-shell
       file
       firefox
       fish
@@ -234,6 +234,7 @@
       less
       libnotify
       libqalculate
+      libtool
       localsend
       lsof
       maim
@@ -350,6 +351,10 @@
       nerd-fonts.blex-mono
 
       # Rounded
+      maple-mono.truetype
+      maple-mono.variable
+      maple-mono.NF
+      maple-mono.NF-CN
       nerd-fonts.space-mono
 
       # Readable
@@ -359,9 +364,9 @@
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "SpaceMono Nerd Font Mono" ];
-        sansSerif = [ "SpaceMono Nerd Font Mono" ];
-        monospace = [ "SpaceMono Nerd Font Mono" ];
+        serif = [ "Maple Mono NF CN" ];
+        sansSerif = [ "Maple Mono NF CN" ];
+        monospace = [ "Maple Mono NF CN" ];
       };
     };
   };

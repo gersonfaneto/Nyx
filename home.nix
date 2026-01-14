@@ -28,7 +28,7 @@ in
     ".config/pandoc/" = mkSymlink ".config/pandoc/";
     ".config/presenterm/" = mkSymlink ".config/presenterm/";
     ".config/qutebrowser/" = mkSymlink ".config/qutebrowser/";
-    ".config/ranger/" = mkSymlink ".config/ranger/"; 
+    ".config/ranger/" = mkSymlink ".config/ranger/";
     ".config/rg/" = mkSymlink ".config/rg/";
     ".config/rofi/" = mkSymlink ".config/rofi/";
     ".config/tmux/" = mkSymlink ".config/tmux/";
