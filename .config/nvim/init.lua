@@ -22,12 +22,9 @@ load.on_events('DiagnosticChanged', 'core.diagnostic')
 load.on_events('FileType', 'core.lsp')
 
 -- stylua: ignore start
-vim.keymap.set("n", "Q", "<nop>", { desc = "Disable Ex mode" })
-vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
+vim.keymap.set("n", "<Leader>m", "<Plug>Zoom", { desc = "Toggle zoom", remap = true })
 
-vim.keymap.set("n", "<leader>m", "<Plug>Zoom", { desc = "Toggle zoom", remap = true })
-
-vim.keymap.set('n', '<localleader>eb', function()
+vim.keymap.set('n', '<Leader>eb', function()
   local current = vim.api.nvim_get_option_value('background', {})
   local next = current == 'dark' and 'light' or 'dark'
   vim.api.nvim_set_option_value('background', next, {})
@@ -39,10 +36,10 @@ vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 vim.keymap.set("v", ".", ":normal .<cr>", { desc = "Repeat last command" })
 
 -- Move between panes or create new panes
-vim.keymap.set("n", "<C-h>", "<Plug>WinMoveLeft", { desc = "Move to left window", remap = true, silent = true })
-vim.keymap.set("n", "<C-j>", "<Plug>WinMoveDown", { desc = "Move to window below", remap = true, silent = true })
-vim.keymap.set("n", "<C-k>", "<Plug>WinMoveUp", { desc = "Move to window above", remap = true, silent = true })
-vim.keymap.set("n", "<C-l>", "<Plug>WinMoveRight", { desc = "Move to right window", remap = true, silent = true })
+vim.keymap.set("n", "<M-h>", "<Plug>WinMoveLeft", { desc = "Move to left window", remap = true, silent = true })
+vim.keymap.set("n", "<M-j>", "<Plug>WinMoveDown", { desc = "Move to window below", remap = true, silent = true })
+vim.keymap.set("n", "<M-k>", "<Plug>WinMoveUp", { desc = "Move to window above", remap = true, silent = true })
+vim.keymap.set("n", "<M-l>", "<Plug>WinMoveRight", { desc = "Move to right window", remap = true, silent = true })
 
 -- Quickfix navigation using vim-unimpaired style
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz", { desc = "Previous quickfix item" })
@@ -62,13 +59,6 @@ vim.keymap.set("v", "$'", "<esc>`>a'<esc>`<i'<esc>", { desc = "Wrap in single qu
 vim.keymap.set("v", '$"', '<esc>`>a"<esc>`<i"<esc>', { desc = "Wrap in double quotes" })
 vim.keymap.set("v", "$\\", "<esc>`>o*/<esc>`<O/*<esc>", { desc = "Wrap in C-style comment" })
 vim.keymap.set("v", "$<", "<esc>`>a><esc>`<i<<esc>", { desc = "Wrap in angle brackets" })
-
--- toggle cursorline
-vim.keymap.set("n", "<leader>i", "<cmd>set cursorline!<cr>", { desc = "Toggle cursor line" })
-
--- scroll the viewport faster
-vim.keymap.set("n", "<C-e>", "3<c-e>", { desc = "Scroll down faster" })
-vim.keymap.set("n", "<C-y>", "3<c-y>", { desc = "Scroll up faster" })
 
 -- moving up and down work as you would expect
 vim.keymap.set("n", "j", 'v:count == 0 ? "gj" : "j"', { expr = true, desc = "Move down (wrap friendly)" })
@@ -93,9 +83,6 @@ vim.keymap.set("n", "<leader>4", "<Plug>HiInterestingWord4", { desc = "Highlight
 vim.keymap.set("n", "<leader>5", "<Plug>HiInterestingWord5", { desc = "Highlight interesting word 5", remap = true })
 vim.keymap.set("n", "<leader>6", "<Plug>HiInterestingWord6", { desc = "Highlight interesting word 6", remap = true })
 
--- open current buffer in a new tab
-vim.keymap.set("n", "gTT", "<cmd>tab sb<cr>", { desc = "Open current buffer in a new tab" })
-
 -- Jump to start and end of line using the home row keys
 vim.keymap.set('', 'H', '^')
 vim.keymap.set('', 'L', '$')
@@ -109,8 +96,8 @@ vim.keymap.set('n', '/', '/\\v')
 vim.keymap.set('c', '%s/', '%sm/')
 
 -- let the left and right arrows be useful: they can switch buffers
-vim.keymap.set('n', '<left>', ':bp<cr>')
-vim.keymap.set('n', '<right>', ':bn<cr>')
+vim.keymap.set('n', '<Left>', ':bp<cr>')
+vim.keymap.set('n', '<Right>', ':bn<cr>')
 -- stylua: ignore end
 
 vim.keymap.set('v', '<leader>y', function()

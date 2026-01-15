@@ -113,8 +113,8 @@
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
     },
     "opencode.nvim": {
-      "rev": "a8e53d5fb68d836c6618e852d8f73c4ae5585390",
-      "src": "https://github.com/sudo-tee/opencode.nvim"
+      "rev": "990c062d4036877a047cb3f5372e2f261a889f0a",
+      "src": "https://github.com/NickvanDyke/opencode.nvim"
     },
     "otter.nvim": {
       "rev": "b36e1a40617e35779d2097fc9b9fd701acd4f5e8",
@@ -127,6 +127,10 @@
     "quicker.nvim": {
       "rev": "fc041830fa7cf093786b0d5990d99cf3c7b0c129",
       "src": "https://github.com/stevearc/quicker.nvim"
+    },
+    "snacks.nvim": {
+      "rev": "fe7cfe9800a182274d0f868a74b7263b8c0c020b",
+      "src": "https://github.com/folke/snacks.nvim"
     },
     "treesj": {
       "rev": "186084dee5e9c8eec40f6e39481c723dd567cb05",

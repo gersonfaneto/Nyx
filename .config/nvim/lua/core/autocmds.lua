@@ -665,8 +665,8 @@ do
 
           if colors_config.bg ~= vim.go.bg and vim.go.termguicolors then
             colors_config.bg = vim.go.bg
-            if vim.fn.executable('setbg') == 1 then
-              vim.system({ 'setbg', vim.go.bg })
+            if vim.fn.executable('background') == 1 then
+              vim.system({ 'background', vim.go.bg })
             end
           end
 

@@ -12,7 +12,6 @@ vim.opt.exrc = true
 vim.opt.secure = true
 vim.opt.confirm = true
 vim.opt.timeout = true
-vim.opt.timeoutlen = 300
 vim.opt.colorcolumn = '100'
 vim.opt.cursorlineopt = 'number'
 vim.opt.cursorline = true
