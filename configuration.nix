@@ -294,7 +294,8 @@
       (callPackage ./packages/boomer.nix { })
     ])
     ++ (with pkgs; [
-      # Nyx
+      # Nix
+      nil
       nixd
       nixpkgs-fmt
 
