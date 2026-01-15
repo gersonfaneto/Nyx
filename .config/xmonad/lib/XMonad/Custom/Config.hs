@@ -47,10 +47,10 @@ mModMask :: KeyMask
 mModMask = mod4Mask
 
 mTerminal :: String
-mTerminal = "alacritty"
+mTerminal = "ghostty"
 
 mTerminal' :: String
-mTerminal' = "ghostty"
+mTerminal' = "alacritty"
 
 mEditor :: String
 mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
