@@ -7,7 +7,7 @@ return {
       snacks.setup({
         input = { enabled = true },
         picker = { enabled = true },
-        explorer = { enabled = true },
+        explorer = { enabled = true, replace_netrw = false },
         terminal = { enabled = true },
       })
 
