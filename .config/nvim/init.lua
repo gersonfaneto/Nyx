@@ -90,7 +90,7 @@ vim.keymap.set('', 'H', '^')
 vim.keymap.set('', 'L', '$')
 
 -- <CR><CR> toggles between buffers
-vim.keymap.set('n', '<CR><CR>', '<C-^>')
+-- vim.keymap.set('n', '<CR><CR>', '<C-^>')
 
 -- "very magic" (less escaping needed) regexes by default
 vim.keymap.set('n', '?', '?\\v')
