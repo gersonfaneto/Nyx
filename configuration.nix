@@ -351,11 +351,10 @@
       nerd-fonts.blex-mono
 
       # Rounded
-      maple-mono.truetype
-      maple-mono.variable
       maple-mono.NF
       maple-mono.NF-CN
-      nerd-fonts.space-mono
+      maple-mono.truetype
+      maple-mono.variable
 
       # Readable
       aporetic-bin

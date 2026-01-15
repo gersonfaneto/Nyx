@@ -1,6 +1,7 @@
 ---@type pack.spec
 return {
   src = 'https://github.com/altermo/ultimate-autopair.nvim',
+  version = 'v0.6',
   data = {
     events = { 'InsertEnter', 'CmdlineEnter' },
     postload = function()
