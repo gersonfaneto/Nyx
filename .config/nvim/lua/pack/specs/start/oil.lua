@@ -457,7 +457,8 @@ return {
           vim.system(
             {
               'ls',
-              oil_config.view_options.show_hidden and '-lhA' or '-lh',
+              oil_config.view_options.show_hidden and '-lhAXN' or '-lhXN',
+              '--group-directories-first',
               path,
             },
             { text = true },
