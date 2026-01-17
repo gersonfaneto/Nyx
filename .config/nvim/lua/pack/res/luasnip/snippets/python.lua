@@ -9,6 +9,7 @@ local i = ls.insert_node
 local c = ls.choice_node
 local d = ls.dynamic_node
 local r = ls.restore_node
+local f = ls.function_node
 
 M.snippets = {
   us.msns({
@@ -660,7 +661,37 @@ M.snippets = {
     },
     un.fmtad(
       [[
-        def <name>(<args>)<ret>:
+        <def> <name>(<args>)<ret>:
+        <body>
+      ]],
+      {
+        ---@param args string[][]
+        def = f(function(args)
+          for _, line in ipairs(args[1] or {}) do
+            if line:match('%f[%w]await%f[%W]') then
+              return 'async def'
+            end
+          end
+          return 'def'
+        end, 4),
+        name = i(1, 'func'),
+        args = i(2),
+        ret = i(3),
+        body = un.body(4, 1, 'pass'),
+      }
+    )
+  ),
+  us.msn(
+    {
+      { trig = 'afn' },
+      { trig = 'afun' },
+      { trig = 'afunc' },
+      { trig = 'adef' },
+      common = { desc = 'Async function definition' },
+    },
+    un.fmtad(
+      [[
+        async def <name>(<args>)<ret>:
         <body>
       ]],
       {
@@ -673,16 +704,43 @@ M.snippets = {
   ),
   us.mssn(
     {
+      { trig = 'amn' },
+      { trig = 'amain' },
+      common = { desc = 'Async main function' },
+    },
+    un.fmtad(
+      [[
+        async def amain(<args>)<ret>:
+        <body>
+      ]],
+      {
+        args = i(1),
+        ret = i(2),
+        body = un.body(3, 1, 'pass'),
+      }
+    )
+  ),
+  us.mssn(
+    {
       { trig = 'mn' },
       { trig = 'main' },
       common = { desc = 'main function' },
     },
     un.fmtad(
       [[
-        def main(<args>)<ret>:
+        <def> main(<args>)<ret>:
         <body>
       ]],
       {
+        ---@param args string[][]
+        def = f(function(args)
+          for _, line in ipairs(args[1] or {}) do
+            if line:match('%f[%w]await%f[%W]') then
+              return 'async def'
+            end
+          end
+          return 'def'
+        end, 3),
         args = i(1),
         ret = i(2),
         body = un.body(3, 1, 'pass'),
@@ -698,6 +756,24 @@ M.snippets = {
     un.fmtad(
       [[
         def <name>(self<args>):
+        <body>
+      ]],
+      {
+        name = i(1, 'method_name'),
+        args = i(2),
+        body = un.body(3, 1, 'pass'),
+      }
+    )
+  ),
+  us.msn(
+    {
+      { trig = 'ame' },
+      { trig = 'ameth' },
+      common = { desc = 'Async method definition' },
+    },
+    un.fmtad(
+      [[
+        async def <name>(self<args>):
         <body>
       ]],
       {
