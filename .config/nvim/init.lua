@@ -10,7 +10,7 @@ package.path = package.path:gsub('%./%?%.lua;?', '')
 -- https://github.com/neovim/neovim/commit/2257ade3dc2daab5ee12d27807c0b3bcf103cd29
 vim.loader.enable()
 
-vim.g.nix_lsp = vim.g.nix_lsp or 'nixd'
+vim.g.nix_lsp = vim.g.nix_lsp or 'nil'
 
 require('core.opts')
 require('core.keymaps')

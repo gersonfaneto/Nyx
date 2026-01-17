@@ -3,6 +3,14 @@
     ./hardware-configuration.nix
   ];
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      qutebrowser = prev.qutebrowser.override {
+        enableWideVine = true;
+      };
+    })
+  ];
+
   documentation = {
     dev = {
       enable = true;
@@ -167,7 +175,7 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
-    # pinentryPackage = pkgs.pinentry-curses;
+    pinentryPackage = pkgs.pinentry-gnome3;
   };
 
   programs.neovim = {
@@ -244,6 +252,7 @@
       mpv
       nsxiv
       pandoc
+      pinentry-gnome3
       playerctl
       polkit_gnome
       poppler-utils
@@ -254,6 +263,7 @@
       qalculate-gtk
       qutebrowser
       ranger
+      rbw
       ripgrep
       rofi
       rsync

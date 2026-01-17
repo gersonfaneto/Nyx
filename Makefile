@@ -1,6 +1,12 @@
 .PHONY: help
 help:
-	@echo 'Usage: make [build|update|prune|format]'
+	@echo 'Usage: make [install|build|update|prune|format]'
+
+
+.PHONY: install
+install:
+	sudo nixos-install --root /mnt --flake .#Nyx
+
 
 .PHONY: build
 build:
