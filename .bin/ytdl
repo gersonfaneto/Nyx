@@ -39,8 +39,8 @@ usage() {
   echo "  $(basename "$0") -e"
   echo ""
   echo -e "${COLOR_CYAN}Environment Variables:${COLOR_RESET}"
-  echo "  BROWSER                The browser to use for cookies (default: firefox)."
-  echo "  EDITOR                 The editor to use for --edit-links (default: vim)."
+  echo "  BROWSER                The browser to use for cookies (default: qutebrowser)."
+  echo "  EDITOR                 The editor to use for --edit-links (default: neovim)."
 }
 
 main()  {
@@ -80,7 +80,7 @@ main()  {
     # Create a temporary file
     urls_file=$(mktemp)
     # Open the editor
-    "${EDITOR:-vim}" "$urls_file" # Use $EDITOR, fallback to vim
+    "${EDITOR:-nvim}" "$urls_file" # Use $EDITOR, fallback to vim
     # Check if the file has content after editing
     if [[ ! -s "$urls_file" ]]; then
       rm "$urls_file" # Clean up temporary file
@@ -103,7 +103,7 @@ main()  {
     --no-mtime
     --no-embed-chapters
     --no-embed-info-json
-    --cookies-from-browser "${BROWSER:-firefox}"
+    --cookies-from-browser "${BROWSER:-qutebrowser}"
     --output "%(playlist_title)s/%(playlist_index)s - %(title)s.%(ext)s"
   )
 

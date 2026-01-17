@@ -228,7 +228,6 @@
       feh
       ffmpeg-full
       file
-      firefox
       fish
       fzf
       gh
