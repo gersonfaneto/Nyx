@@ -1,3 +1,8 @@
+ROOT ?= /mnt
+
+HOST ?= Nyx
+
+
 .PHONY: help
 help:
 	@echo 'Usage: make [install|build|update|prune|format]'
@@ -5,7 +10,7 @@ help:
 
 .PHONY: install
 install:
-	sudo nixos-install --root /mnt --flake .#Nyx
+	sudo nixos-install --root $(ROOT) --flake .#$(HOST)
 
 
 .PHONY: build
