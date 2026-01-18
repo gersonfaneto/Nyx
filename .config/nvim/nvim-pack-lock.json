@@ -21,7 +21,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "b949bc096642821d82e658d688e700c2576b159e",
+      "rev": "abe5ecafebb4e24feb162384d5f492431036e791",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
