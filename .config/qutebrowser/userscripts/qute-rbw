@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# trapcmd() {
+#   rm -f "$tmpfile"
+# }
+# trap trapcmd exit INT SIGINT
+
+copy-cmd() {
+  if [[ -n "${WAYLAND_DISPLAY}" ]]; then
+    wl-copy
+  else
+    xclip
+  fi
+}
+
+## debug
+# export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-}"
+# export DISPLAY="${DISPLAY:-}"
+# export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+# echo "PID: $$" >>/tmp/qute-rbw-debug.log
+
+picker=${HOME}/.local/share/qutebrowser/userscripts/qute-rbw-picker
+
+# Temp file to capture the picker output
+tmpfile=$(mktemp)
+
+# TODO: make a dynamic terminal var
+#
+# term=""
+#
+# terms=(
+#   "kitty"
+#   "xterm"
+#   "alacritty"
+#   "foot"
+# )
+#
+# for t in "${terms[@]}"; do
+#   if command-exists "${t}"; then
+#     case "${t}" in
+#     kitty | alacritty) term="kitty --class qute-editor --execute" ;;
+#     foot) term="foot --app-id qute-editor" ;;
+#     xterm) term="xterm -bg black -fg white" ;;
+#     esac
+#   fi
+# done
+# eval "${term} $picker $tmpfile &"
+
+# Spawn kitty in background, save its PID
+alacritty --class rbw --command "$picker" "$tmpfile" &
+pid=$!
+
+# Wait for kitty (the picker session) to finish
+wait $pid || true
+kill -0 $pid 2>/dev/null && kill -9 $pid
+
+# Read password and TOTP from tmpfile
+mapfile -t lines <"$tmpfile"
+pass="${lines[0]}"
+totp="${lines[1]}"
+
+# Send text to qutebrowser
+echo "insert-text $pass" >>"$QUTE_FIFO"
+
+# Copy TOTP if present
+if [[ -n "${totp}" ]]; then
+  echo "${totp}" | copy-cmd &
+  disown
+fi
+
+rm -f "$tmpfile"
