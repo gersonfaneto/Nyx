@@ -181,7 +181,7 @@
   ri = rebase --interactive
   rc = rebase --continue
   ra = rebase --abort
-  rt = rebase --edit-todo
+  rp = rebase --edit-todo
 
   wt = worktree
   wl = worktree list
