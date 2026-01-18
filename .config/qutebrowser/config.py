@@ -1083,9 +1083,6 @@ config.bind("y", "prompt-accept yes", mode="yesno")
 # Bindings to hide tabs
 config.bind("xt", "config-cycle tabs.show always switching")
 
-# RBW Integration
-config.bind('<Ctrl-b>', 'spawn --userscript qute-rbw', mode='insert')
-
 # REQUEST INTERCEPTORS
 interceptor.register(redirect_to_https)
 interceptor.register(redirect_empty_search_to_base)
