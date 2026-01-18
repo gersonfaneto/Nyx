@@ -265,6 +265,7 @@
       rbw
       ripgrep
       rofi
+      rofi-rbw
       rsync
       scc
       sct

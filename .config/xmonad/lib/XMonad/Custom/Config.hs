@@ -5,40 +5,43 @@ module XMonad.Custom.Config
   )
 where
 
-import           Flow
-import           System.IO                           (writeFile)
-import           XMonad
-import           XMonad.Actions.CycleWS
-import           XMonad.Actions.Submap
-import           XMonad.Hooks.DynamicLog
-import           XMonad.Hooks.EwmhDesktops
-import           XMonad.Hooks.InsertPosition
-import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.ManageHelpers          (doCenterFloat,
-                                                      doRectFloat, isDialog)
-import           XMonad.Hooks.StatusBar
-import           XMonad.Hooks.StatusBar.PP
-import           XMonad.Layout.MultiToggle
-import           XMonad.Layout.MultiToggle.Instances
-import           XMonad.Layout.NoBorders
-import           XMonad.Layout.Renamed
-import           XMonad.Layout.ResizableTile
-import           XMonad.Layout.Spacing
-import           XMonad.Layout.Spiral
-import           XMonad.Util.EZConfig                (additionalKeysP)
-import           XMonad.Util.Loggers
-import           XMonad.Util.SpawnOnce
-import           XMonad.Util.WindowProperties
-import           XMonad.Util.WorkspaceCompare
+import Flow
+import System.IO (writeFile)
+import XMonad
+import XMonad.Actions.CycleWS
+import XMonad.Actions.Submap
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.InsertPosition
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
+  ( doCenterFloat
+  , doRectFloat
+  , isDialog
+  )
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Renamed
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Spacing
+import XMonad.Layout.Spiral
+import XMonad.Util.EZConfig (additionalKeysP)
+import XMonad.Util.Loggers
+import XMonad.Util.SpawnOnce
+import XMonad.Util.WindowProperties
+import XMonad.Util.WorkspaceCompare
 
-import qualified Data.Map                            as M
-import qualified XMonad.StackSet                     as S
+import Data.Map qualified as M
+import XMonad.StackSet qualified as S
 
-import           XMonad.Custom.Scratchpads
+import XMonad.Custom.Scratchpads
 
-import qualified XMonad.Custom.Hooks.XMobar          as C
-import qualified XMonad.Custom.Manage.ManageHook     as C
-import qualified XMonad.Custom.Theme                 as C
+import XMonad.Custom.Hooks.XMobar qualified as C
+import XMonad.Custom.Manage.ManageHook qualified as C
+import XMonad.Custom.Theme qualified as C
 
 mWorkspaces :: [String]
 mWorkspaces = map show [1 .. 10]
@@ -162,6 +165,7 @@ mKeys =
   [ ("M-<Escape>", spawn "system")
   , ("M-<Space>", spawn "launcher")
   , ("M-<Print>", spawn "capture")
+  , ("M-p", spawn "rofi-rbw")
   , ("M-<Return>", spawn mTerminal)
   , ("M-S-<Return>", spawn mTerminal')
   , ("M-g", gameSubmap)
