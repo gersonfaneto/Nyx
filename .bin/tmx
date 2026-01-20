@@ -128,4 +128,3 @@ elif [[ -n "$query" ]]; then
     fi
   fi
 fi
-
