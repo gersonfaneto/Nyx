@@ -1,7 +1,7 @@
 {
   "plugins": {
     "LuaSnip": {
-      "rev": "3732756842a2f7e0e76a7b0487e9692072857277",
+      "rev": "dae4f5aaa3574bd0c2b9dd20fb9542a02c10471c",
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
@@ -21,7 +21,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "abe5ecafebb4e24feb162384d5f492431036e791",
+      "rev": "696f8c071723f845b904af2f99a798650210355e",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -55,7 +55,7 @@
       "src": "https://github.com/iamcco/markdown-preview.nvim"
     },
     "mini.nvim": {
-      "rev": "4f53281c51ad9384ef790178b9643740fa763979",
+      "rev": "c163117900c17d4abf30bc09452a261c8536060c",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "molten-nvim": {
@@ -75,7 +75,7 @@
       "src": "https://github.com/NvChad/nvim-colorizer.lua"
     },
     "nvim-dap": {
-      "rev": "cdfd55a133f63228c55f91378f12908cb2a78ded",
+      "rev": "085386b9359ddf8d76ad89b98973b8e332dc5ba3",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-dap-ui": {
@@ -87,7 +87,7 @@
       "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
-      "rev": "d19def46c112c26c17adeef88dd1253cc6d623a1",
+      "rev": "ec034813775d7e2974c7551c8c34499a828963f8",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -100,7 +100,7 @@
       "src": "https://github.com/shushtain/nvim-treesitter-incremental-selection"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "baa6b4ec28c8be5e4a96f9b1b6ae9db85ec422f8",
+      "rev": "4d55f63252e04c5212daed958e4e940915ff16ce",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
@@ -121,7 +121,7 @@
       "src": "https://github.com/NickvanDyke/opencode.nvim"
     },
     "otter.nvim": {
-      "rev": "b36e1a40617e35779d2097fc9b9fd701acd4f5e8",
+      "rev": "8b48e2fb403257604d9e9dcf66fec2c993387eab",
       "src": "https://github.com/jmbuhr/otter.nvim"
     },
     "plenary.nvim": {
@@ -191,7 +191,7 @@
       "src": "https://github.com/dhruvasagar/vim-table-mode"
     },
     "vim-test": {
-      "rev": "aaaff58ab897211b9c9bd9967c1340a6fd15d42d",
+      "rev": "8f682546ccb2c44da78719ee318121b0da30d4f3",
       "src": "https://github.com/vim-test/vim-test"
     },
     "vimtex": {
