@@ -212,6 +212,7 @@
       acpi
       alacritty
       alsa-utils
+      ani-cli
       bat
       beets
       bluetui
