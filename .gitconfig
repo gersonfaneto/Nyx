@@ -131,7 +131,7 @@
   ci = commit
   cm = commit --message
   ce = commit --amend
-  cf = commit --amend --no-edit
+  cj = commit --amend --no-edit
 
   br = branch
   ba = branch --all
