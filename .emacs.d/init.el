@@ -112,34 +112,6 @@
   (unless (server-running-p)
     (server-start)))
 
-;; --- Better Navigation ---
-(use-package evil
-  :init
-  (evil-mode 1)
-  :custom
-  (evil-want-integration nil)
-  (evil-want-C-u-scroll t)
-  (evil-want-keybinding nil)
-  (evil-split-window-below t)
-  (evil-vsplit-window-right t)
-  :config
-  (evil-define-key 'normal org-mode-map
-    (kbd "t")   'org-todo
-    (kbd "M-k") 'org-prev-superior
-    (kbd "M-j") 'org-next-superior
-    (kbd "M-K") 'org-sr-fail
-    (kbd "M-J") 'org-sr-pass
-    (kbd "M-h") 'org-promote-subtree
-    (kbd "M-l") 'org-demote-subtree))
-
-(use-package evil-collection :after evil
-  :config
-  (evil-collection-init))
-
-(use-package evil-surround :after evil
-  :config
-  (global-evil-surround-mode 1))
-
 ;; --- Themes and Appearance ---
 ;; Install all-the-icons if in graphical mode.
 (use-package all-the-icons
