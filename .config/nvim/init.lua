@@ -147,3 +147,44 @@ vim.keymap.set('v', '<leader>y', function()
   vim.fn.setreg('+', normalized)
   vim.notify('Copied normalized text to clipboard')
 end, { desc = 'Copy and normalize' })
+
+vim.api.nvim_create_user_command('R', function(opts)
+  -- Expand % and # BEFORE opening new buffer
+  local current = vim.fn.expand('%:p')
+  local alt = vim.fn.expand('#:p')
+  local cmd =
+    opts.args:gsub('%%:p', current):gsub('%%', current):gsub('#', alt)
+  vim.cmd('new')
+  vim.bo.buftype = 'nofile'
+  vim.bo.bufhidden = 'hide'
+  vim.bo.swapfile = false
+  vim.b.no_auto_close = true
+  vim.fn.termopen(cmd, {
+    on_stdout = function()
+      vim.schedule(function()
+        vim.cmd([[ stopinsert ]])
+        vim.api.nvim_feedkeys('G', 't', false)
+      end)
+    end,
+  })
+  -- stylua: ignore start
+  vim.api.nvim_buf_set_keymap( 0, 'n', 'q', ':q!<CR>', { noremap = true, silent = true })
+  -- stylua: ignore end
+end, { nargs = '+', complete = 'shellcmdline' })
+
+vim.keymap.set('n', '<leader>if', '<cmd>source %<cr>')
+vim.keymap.set({ 'n', 'x' }, '<leader>ix', ':.lua<cr>')
+
+package.loaded['compile-mode'] = nil
+
+require('compile-mode').reset()
+
+local compile = require('compile-mode')
+
+-- stylua: ignore start
+vim.keymap.set('n', '<leader>Cc', compile.command, { desc = 'Run a command' })
+vim.keymap.set('n', '<leader>Cr', compile.recompile, { desc = 'Re-run last command' })
+vim.keymap.set('n', '<leader>Cb', compile.scroll_to_bottom, { desc = 'Scroll compilation buffer to bottom' })
+vim.keymap.set('n', '<leader>Ct', compile.toggle_window, { desc = 'Toggle compilation buffer' })
+vim.keymap.set('n', '<leader>CR', compile.reset, { desc = 'Reset' })
+-- stylua: ignore end
