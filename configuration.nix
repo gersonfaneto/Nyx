@@ -333,6 +333,10 @@
       python312Packages.pip
       python312Packages.pyqt6 # This is for `qutebrowser'
 
+      # Javascript
+      bun
+      nodejs
+
       # Bash
       shfmt
       bash-language-server
