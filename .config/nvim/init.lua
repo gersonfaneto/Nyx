@@ -186,7 +186,3 @@ vim.keymap.set('n', '<leader>Cb', compile.scroll_to_bottom, { desc = 'Scroll com
 vim.keymap.set('n', '<leader>Ct', compile.toggle_window, { desc = 'Toggle compilation buffer' })
 vim.keymap.set('n', '<leader>CR', compile.reset, { desc = 'Reset' })
 -- stylua: ignore end
-
-vim.api.nvim_create_autocmd('BufEnter', {
-  command = [[set formatoptions-=cro]],
-})
