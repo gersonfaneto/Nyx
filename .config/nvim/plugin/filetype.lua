@@ -5,8 +5,10 @@ vim.filetype.add({
     env = 'dotenv',
   },
   filename = {
-    ['.envrc'] = 'bash',
-    ['.env'] = 'dotenv',
+    ['.env'] = 'sh',
+    ['.envrc'] = 'sh',
+    ['*.env'] = 'sh',
+    ['*.envrc'] = 'sh',
     ['.eslintrc.json'] = 'jsonc',
     ['.luarc.json'] = 'jsonc',
   },

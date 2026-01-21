@@ -4,6 +4,7 @@ return setmetatable({
   buf = nil, ---@module 'utils.buf'
   cmd = nil, ---@module 'utils.cmd'
   dap = nil, ---@module 'utils.dap'
+  file = nil, ---@module 'utils.file'
   fs = nil, ---@module 'utils.fs'
   git = nil, ---@module 'utils.git'
   hl = nil, ---@module 'utils.hl'
