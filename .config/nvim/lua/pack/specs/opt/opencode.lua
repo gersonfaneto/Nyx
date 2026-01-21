@@ -1,9 +1,56 @@
 ---@type pack.spec
 return {
-  src = 'https://github.com/NickvanDyke/opencode.nvim',
+  src = 'https://github.com/sudo-tee/opencode.nvim',
   data = {
     deps = {
-      src = 'https://github.com/folke/snacks.nvim',
+      'https://github.com/nvim-lua/plenary.nvim',
+      {
+        src = 'https://github.com/saghen/blink.cmp',
+        data = { optional = true },
+      },
+      {
+        src = 'https://github.com/ibhagwan/fzf-lua',
+        data = { optional = true },
+      },
+    },
+    cmds = {
+      'OpencodeSwapPosition',
+      'Opencode',
+      'OpencodeToggleFocus',
+      'OpencodeOpenInput',
+      'OpencodeOpenInputNewSession',
+      'OpencodeOpenOutput',
+      'OpencodeClose',
+      'OpencodeStop',
+      'OpencodeSelectSession',
+      'OpencodeTogglePane',
+      'OpencodeConfigureProvider',
+      'OpencodeRun',
+      'OpencodeRunNewSession',
+      'OpencodeDiff',
+      'OpencodeDiffNext',
+      'OpencodeDiffPrev',
+      'OpencodeDiffClose',
+      'OpencodeRevertAllLastPrompt',
+      'OpencodeRevertThisLastPrompt',
+      'OpencodeRevertAllSession',
+      'OpencodeRevertThisSession',
+      'OpencodeRevertAllToSnapshot',
+      'OpencodeRevertThisToSnapshot',
+      'OpencodeRestoreSnapshotFile',
+      'OpencodeRestoreSnapshotAll',
+      'OpencodeSetReviewBreakpoint',
+      'OpencodeInit',
+      'OpencodeHelp',
+      'OpencodeMCP',
+      'OpencodeConfigFile',
+      'OpencodeAgentPlan',
+      'OpencodeAgentBuild',
+      'OpencodeAgentSelect',
+    },
+    keys = {
+      lhs = '<Leader>@',
+      opts = { desc = 'Toggle opencode' },
     },
     postload = function()
       if vim.fn.executable('opencode') == 0 then
@@ -14,23 +61,90 @@ return {
         return
       end
 
-      local opencode = require('opencode')
+      -- Default configuration with all available options
+      require('opencode').setup({
+        default_global_keymaps = false,
+        ui = {
+          icons = { preset = vim.g.has_nf and 'nerdfonts' or 'text' },
+          input = { text = { wrap = true } },
+        },
+        context = {
+          cursor_data = {
+            enabled = true,
+          },
+        },
+        keymap = {
+          output_window = {
+            -- Avoid closing the window accidentally
+            -- Vim/nvim does not have the convention to use `<Esc>` to close
+            -- current window
+            ['<esc>'] = false,
+          },
+          input_window = {
+            ['<cr>'] = {
+              'submit_input_prompt',
+              mode = 'n',
+            },
+            ['<m-cr>'] = {
+              'submit_input_prompt',
+              mode = { 'i', 'n' },
+            },
+            -- Must use lower-case '<tab>' to disable default keymaps
+            -- https://github.com/sudo-tee/opencode.nvim/issues/61
+            ['<tab>'] = false,
+            ['<esc>'] = false,
+          },
+        },
+      })
 
-      vim.g.opencode_opts = {}
-
-      vim.o.autoread = true
+      local opencode_api = require('opencode.api')
 
       -- stylua: ignore start
-      vim.keymap.set({ 'n', 'x' }, '<Leader>ca', function() opencode.ask('@this: ', { submit = true }) end, { desc = 'Ask opencode' })
-      vim.keymap.set({ 'n', 'x' }, '<Leader>cx', function() opencode.select() end, { desc = 'Execute opencode action…' })
-      vim.keymap.set({ 'n', 't' }, '<Leader>c.', function() opencode.toggle() end, { desc = 'Toggle opencode' })
-
-      vim.keymap.set({ 'n', 'x' }, '<Leader>cor', function() return opencode.operator('@this ') end, { expr = true, desc = 'Add range to opencode' })
-      vim.keymap.set({ 'n' }, '<Leader>col', function() return opencode.operator('@this ') .. '_' end, { expr = true, desc = 'Add line to opencode' })
-
-      vim.keymap.set({ 'n' }, '<S-C-u>', function() opencode.command('session.half.page.up') end, { desc = 'Opencode half page up' })
-      vim.keymap.set({ 'n' }, '<S-C-d>', function() opencode.command('session.half.page.down') end, { desc = 'Opencode half page down' })
+      vim.keymap.set('n', '<Leader>@', opencode_api.toggle_focus, { desc = 'Toggle opencode' })
+      vim.keymap.set('n', '[@', opencode_api.diff_prev, { desc = 'Navigate to opencode previous file diff' })
+      vim.keymap.set('n', ']@', opencode_api.diff_next, { desc = 'Navigate to opencode next file diff' })
       -- stylua: ignore end
+
+      local group = vim.api.nvim_create_augroup('my.opencode.settings', {})
+
+      vim.api.nvim_create_autocmd('FileType', {
+        desc = 'FileType settings for opencode buffers.',
+        pattern = 'opencode*',
+        group = group,
+        callback = function(args)
+          vim.b[args.buf].winbar_no_attach = true
+        end,
+      })
+
+      vim.api.nvim_create_autocmd('BufWinEnter', {
+        desc = 'Opencode window settings.',
+        group = group,
+        callback = function(args)
+          if not vim.startswith(vim.bo[args.buf].ft, 'opencode') then
+            return
+          end
+          for _, win in ipairs(vim.fn.win_findbuf(args.buf)) do
+            vim.wo[win][0].cc = ''
+          end
+        end,
+      })
+
+      local hl = require('utils.hl')
+
+      hl.persist(function()
+        -- See `lua/core/autocmds.lua` for `hl-NormalSpecial` definition
+        -- stylua: ignore start
+        hl.set(0, 'OpenCodeNormal',             { link = 'NormalSpecial' })
+        hl.set(0, 'OpenCodeBackground',         { link = 'NormalSpecial' })
+        hl.set(0, 'OpenCodeDiffAdd',            { link = 'DiffAdd' })
+        hl.set(0, 'OpencodeDiffDelete',         { link = 'DiffDelete' })
+        hl.set(0, 'OpencodeAgentBuild',         { link = 'Todo' })
+        hl.set(0, 'OpencodeInputLegend',        { link = 'SpecialKey' })
+        hl.set(0, 'OpenCodeSessionDescription', { bg = 'OpenCodeNormal',  fg = 'Comment' })
+        hl.set(0, 'OpenCodeHint',               { bg = 'OpenCodeNormal',  fg = 'Comment' })
+        hl.set(0, 'OpenCodeContextBar',         { bg = 'OpenCodeNormal',  fg = 'WinBar' })
+        -- stylua: ignore end
+      end)
     end,
   },
 }
