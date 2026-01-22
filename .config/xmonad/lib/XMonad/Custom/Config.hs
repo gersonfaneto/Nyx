@@ -49,26 +49,25 @@ mWorkspaces = map show [1 .. 10]
 mModMask :: KeyMask
 mModMask = mod4Mask
 
-mTerminal :: String
-mTerminal = "ghostty"
-
-mTerminal' :: String
+mTerminal, mTerminal' :: String
+mTerminal  = "ghostty"
 mTerminal' = "alacritty"
+
+mTSystem :: String
+mTSystem = mTerminal <> " --class btm --command btm"
+
+mTMusic :: String
+mTMusic = mTerminal <> " --class kew --command kew"
+
+mTSound :: String
+mTSound = mTerminal <> " --class wiremix --command wiremix"
+
+mBrowser, mBrowser' :: String
+mBrowser  = "firefox"
+mBrowser' = "qutebrowser"
 
 mEditor :: String
 mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
-
-mSystem :: String
-mSystem = "alacritty --class btm --command btm"
-
-mMusic :: String
-mMusic = "alacritty --class kew --command kew"
-
-mSound :: String
-mSound = "alacritty --class wiremix --command wiremix"
-
-mBrowser :: String
-mBrowser = "qutebrowser"
 
 mFiles :: String
 mFiles = "nautilus"
@@ -118,8 +117,8 @@ toolSubmap =
   namedSubmap "Tool" $
     M.fromList
       [ ((0, xK_z), spawn "boomer")
-      , ((0, xK_m), spawn mSystem)
-      , ((0, xK_s), spawn mSound)
+      , ((0, xK_m), spawn mTSystem)
+      , ((0, xK_s), spawn mTSound)
       ]
 
 openSubmap =
@@ -127,7 +126,9 @@ openSubmap =
     M.fromList
       [ ((0, xK_e), spawn mEditor)
       , ((0, xK_b), spawn mBrowser)
-      , ((0, xK_m), spawn mMusic)
+      , ((0, xK_b), spawn mBrowser)
+      , ((shiftMask, xK_b), spawn mBrowser')
+      , ((0, xK_m), spawn mTMusic)
       , ((0, xK_c), spawn mCalc)
       , ((0, xK_f), spawn mFiles)
       , ((0, xK_p), spawn "zathura")
