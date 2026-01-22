@@ -327,6 +327,12 @@
       cmake
       gnumake
 
+      # Clojure
+      boot
+      clojure
+      clojure-lsp
+      leiningen
+
       # Python
       python312
       python312Packages.uv
