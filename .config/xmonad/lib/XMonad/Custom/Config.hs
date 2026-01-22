@@ -28,7 +28,7 @@ import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
-import XMonad.Util.EZConfig (additionalKeysP)
+import XMonad.Util.EZConfig (additionalKeysP, mkKeymap)
 import XMonad.Util.Loggers
 import XMonad.Util.SpawnOnce
 import XMonad.Util.WindowProperties
@@ -50,20 +50,20 @@ mModMask :: KeyMask
 mModMask = mod4Mask
 
 mTerminal, mTerminal' :: String
-mTerminal  = "ghostty"
+mTerminal = "ghostty"
 mTerminal' = "alacritty"
 
 mTSystem :: String
-mTSystem = mTerminal <> " --class btm --command btm"
+mTSystem = mTerminal' <> " --class btm --command btm"
 
 mTMusic :: String
-mTMusic = mTerminal <> " --class kew --command kew"
+mTMusic = mTerminal' <> " --class kew --command kew"
 
 mTSound :: String
-mTSound = mTerminal <> " --class wiremix --command wiremix"
+mTSound = mTerminal' <> " --class wiremix --command wiremix"
 
 mBrowser, mBrowser' :: String
-mBrowser  = "firefox"
+mBrowser = "firefox"
 mBrowser' = "qutebrowser"
 
 mEditor :: String
@@ -101,57 +101,55 @@ myStartupHook = do
 setSubmap :: String -> X ()
 setSubmap name = io $ writeFile "/home/gerson/.cache/xmonad-submap" name
 
-namedSubmap :: String -> M.Map (KeyMask, KeySym) (X ()) -> X ()
-namedSubmap name mp = do
+submapP :: [(String, X ())] -> X ()
+submapP =
+  submap . mkKeymap def
+
+namedSubmapP :: String -> [(String, X ())] -> X ()
+namedSubmapP name ks = do
   setSubmap name
-  submap mp
+  submapP ks
   setSubmap ""
 
 gameSubmap =
-  namedSubmap "Game" $
-    M.fromList
-      [ ((0, xK_m), spawn "prismlauncher")
-      ]
+  namedSubmapP "Game" $
+    [ ("m", spawn "prismlauncher")
+    ]
 
 toolSubmap =
-  namedSubmap "Tool" $
-    M.fromList
-      [ ((0, xK_z), spawn "boomer")
-      , ((0, xK_m), spawn mTSystem)
-      , ((0, xK_s), spawn mTSound)
-      ]
+  namedSubmapP "Tool" $
+    [ ("z", spawn "boomer")
+    , ("m", spawn mTSystem)
+    , ("s", spawn mTSound)
+    ]
 
 openSubmap =
-  namedSubmap "Open" $
-    M.fromList
-      [ ((0, xK_e), spawn mEditor)
-      , ((0, xK_b), spawn mBrowser)
-      , ((0, xK_b), spawn mBrowser)
-      , ((shiftMask, xK_b), spawn mBrowser')
-      , ((0, xK_m), spawn mTMusic)
-      , ((0, xK_c), spawn mCalc)
-      , ((0, xK_f), spawn mFiles)
-      , ((0, xK_p), spawn "zathura")
-      ]
+  namedSubmapP "Open" $
+    [ ("e", spawn mEditor)
+    , ("b", spawn mBrowser)
+    , ("S-b", spawn mBrowser')
+    , ("m", spawn mTMusic)
+    , ("c", spawn mCalc)
+    , ("f", spawn mFiles)
+    , ("p", spawn "zathura")
+    ]
 
 systemSubmap =
-  namedSubmap "System" $
-    M.fromList
-      [ ((0, xK_s), spawn "silence")
-      , ((0, xK_c), spawn "caffeine")
-      , ((0, xK_b), spawn "background alt")
-      , ((0, xK_d), spawn "dunstctl close-all")
-      , ((0, xK_x), spawn "xmonad --recompile && xmonad --restart")
-      ]
+  namedSubmapP "System" $
+    [ ("s", spawn "silence")
+    , ("c", spawn "caffeine")
+    , ("b", spawn "background alt")
+    , ("d", spawn "dunstctl close-all")
+    , ("x", spawn "xmonad --recompile && xmonad --restart")
+    ]
 
 workspaceSubmap =
-  namedSubmap "Workspace" $
-    M.fromList
-      [ ((0, xK_t), sendMessage $ JumpToLayout "Tall")
-      , ((0, xK_w), sendMessage $ JumpToLayout "Wide")
-      , ((0, xK_f), sendMessage $ JumpToLayout "Full")
-      , ((0, xK_s), sendMessage $ JumpToLayout "Spiral")
-      ]
+  namedSubmapP "Workspace" $
+    [ ("t", sendMessage $ JumpToLayout "Tall")
+    , ("w", sendMessage $ JumpToLayout "Wide")
+    , ("f", sendMessage $ JumpToLayout "Full")
+    , ("s", sendMessage $ JumpToLayout "Spiral")
+    ]
 
 getSortByIndexNonSP :: X ([WindowSpace] -> [WindowSpace])
 getSortByIndexNonSP = (. namedScratchpadFilterOutWorkspace) <$> getSortByIndex

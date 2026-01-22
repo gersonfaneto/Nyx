@@ -170,8 +170,8 @@ vim.api.nvim_create_user_command('R', function(opts)
   -- stylua: ignore end
 end, { nargs = '+', complete = 'shellcmdline' })
 
-vim.keymap.set('n', '<leader>if', '<cmd>source %<cr>')
-vim.keymap.set({ 'n', 'x' }, '<leader>ix', ':.lua<cr>')
+vim.keymap.set('n', '<leader>xf', '<cmd>source %<cr>')
+vim.keymap.set({ 'n', 'x' }, '<leader>xe', ':.lua<cr>')
 
 package.loaded['compile-mode'] = nil
 
