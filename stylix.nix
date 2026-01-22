@@ -35,6 +35,12 @@ in
       package = pkgs.noto-fonts-color-emoji;
       name = "Noto Color Emoji";
     };
+    sizes = {
+      applications = 10; # Size for GUI applications
+      desktop = 10; # Size for desktop environment elements
+      popups = 10; # Size for notifications and menus
+      terminal = 10; # Size for terminal/text editors
+    };
   };
 
   stylix.cursor = {
