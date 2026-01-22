@@ -12,6 +12,15 @@
       "rev": "1606e9d5d04ff254023c3f3c62842d065708d6d3",
       "src": "https://github.com/Eandrju/cellular-automaton.nvim"
     },
+    "conjure": {
+      "rev": "403639610bcb9b6a5dfc494dc3179cc19773a471",
+      "src": "https://github.com/Olical/conjure"
+    },
+    "crates.nvim": {
+      "rev": "afcd1cc3eeceb5783676fc8464389b9216a29d05",
+      "src": "https://github.com/saecki/crates.nvim",
+      "version": "'stable'"
+    },
     "diffview.nvim": {
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
       "src": "https://github.com/sindrets/diffview.nvim"
@@ -23,6 +32,10 @@
     "fzf-lua": {
       "rev": "696f8c071723f845b904af2f99a798650210355e",
       "src": "https://github.com/ibhagwan/fzf-lua"
+    },
+    "ghcid": {
+      "rev": "b7dc5c4ee640b6c8137ecfd0a2b50df278015221",
+      "src": "https://github.com/ndmitchell/ghcid"
     },
     "gitsigns.nvim": {
       "rev": "42d6aed4e94e0f0bbced16bbdcc42f57673bd75e",
@@ -45,6 +58,10 @@
       "rev": "2bbe8a03145d8e798f4ca0c2694016714de2bdd0",
       "src": "https://github.com/mrcjkb/haskell-tools.nvim",
       "version": "6.0.0 - 7.0.0"
+    },
+    "haskell-vim": {
+      "rev": "f35d02204b4813d1dbe8b0e98cc39701a4b8e15e",
+      "src": "https://github.com/neovimhaskell/haskell-vim"
     },
     "img-clip.nvim": {
       "rev": "b6ddfb97b5600d99afe3452d707444afda658aca",
@@ -135,6 +152,11 @@
     "quicker.nvim": {
       "rev": "fc041830fa7cf093786b0d5990d99cf3c7b0c129",
       "src": "https://github.com/stevearc/quicker.nvim"
+    },
+    "rustaceanvim": {
+      "rev": "88575b98bb9937fb9983ddec5e532b67e75ce677",
+      "src": "https://github.com/mrcjkb/rustaceanvim",
+      "version": "6.0.0 - 7.0.0"
     },
     "snacks.nvim": {
       "rev": "fe7cfe9800a182274d0f868a74b7263b8c0c020b",
