@@ -24,6 +24,10 @@ return {
           vim.keymap.set('n', 'H', '<C-v>h:VBox<CR>', { buffer = true })
 
           vim.keymap.set('v', 'f', ':VBox<CR>', { buffer = true })
+
+          -- stylua: ignore start
+          vim.notify('[venn.nvim]: Diagraming mode is enabled!', vim.log.levels.INFO)
+          -- stylua: ignore end
         else
           vim.b['venn.enabled'] = nil
 
@@ -35,6 +39,10 @@ return {
           vim.keymap.del('n', 'H', { buffer = true })
 
           vim.keymap.del('v', 'f', { buffer = true })
+
+          -- stylua: ignore start
+          vim.notify('[venn.nvim]: Diagraming mode is disabled!', vim.log.levels.INFO)
+          -- stylua: ignore end
         end
       end)
     end,

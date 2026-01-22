@@ -18,8 +18,7 @@
     },
     "crates.nvim": {
       "rev": "afcd1cc3eeceb5783676fc8464389b9216a29d05",
-      "src": "https://github.com/saecki/crates.nvim",
-      "version": "'stable'"
+      "src": "https://github.com/saecki/crates.nvim"
     },
     "diffview.nvim": {
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
@@ -138,8 +137,8 @@
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
     },
     "opencode.nvim": {
-      "rev": "364c7336562329f6c901629710070ea6ae256e3b",
-      "src": "https://github.com/NickvanDyke/opencode.nvim"
+      "rev": "5e9142a1ac522c5de2640b3f8baa21746cd291f1",
+      "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "otter.nvim": {
       "rev": "8b48e2fb403257604d9e9dcf66fec2c993387eab",
@@ -155,8 +154,7 @@
     },
     "rustaceanvim": {
       "rev": "88575b98bb9937fb9983ddec5e532b67e75ce677",
-      "src": "https://github.com/mrcjkb/rustaceanvim",
-      "version": "6.0.0 - 7.0.0"
+      "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "snacks.nvim": {
       "rev": "fe7cfe9800a182274d0f868a74b7263b8c0c020b",

@@ -4,7 +4,22 @@ return {
   version = 'harpoon2',
   data = {
     deps = {
-      'https://github.com/nvim-lua/plenary.nvim',
+      { src = 'https://github.com/nvim-lua/plenary.nvim' },
+    },
+    keys = {
+      -- stylua: ignore start
+      { lhs = '<C-p>', opts = { desc = 'Harpoon :: Prepend with current' } },
+      { lhs = '<C-a>', opts = { desc = 'Harpoon :: Append with current' } },
+      { lhs = '<C-e>', opts = { desc = 'Harpoon :: Show list' } },
+      { lhs = '<C-h>', opts = { desc = 'Harpoon :: Visit file (1)' } },
+      { lhs = '<C-j>', opts = { desc = 'Harpoon :: Visit file (2)' } },
+      { lhs = '<C-k>', opts = { desc = 'Harpoon :: Visit file (3)' } },
+      { lhs = '<C-l>', opts = { desc = 'Harpoon :: Visit file (4)' } },
+      { lhs = '<Leader><C-h>', opts = { desc = 'Harpoon :: Replace file (1) with current' } },
+      { lhs = '<Leader><C-j>', opts = { desc = 'Harpoon :: Replace file (2) with current' } },
+      { lhs = '<Leader><C-k>', opts = { desc = 'Harpoon :: Replace file (3) with current' } },
+      { lhs = '<Leader><C-l>', opts = { desc = 'Harpoon :: Replace file (4) with current' } },
+      -- stylua: ignore end
     },
     postload = function()
       local harpoon = require('harpoon')
