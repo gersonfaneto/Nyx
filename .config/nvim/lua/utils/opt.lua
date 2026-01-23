@@ -1,11 +1,11 @@
----@class opt.indexer
+---@class minimal.opt.indexer
 ---@field name string
 local opt_indexer = {}
 opt_indexer.__index = opt_indexer
 
 ---Create a new opt_util_t instance
 ---@param name string
----@return opt.indexer
+---@return minimal.opt.indexer
 function opt_indexer:new(name)
   return setmetatable({
     name = name,

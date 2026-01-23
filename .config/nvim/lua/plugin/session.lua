@@ -38,7 +38,7 @@ local function has_valid_buf()
   return vim.iter(vim.api.nvim_list_bufs()):any(buf_valid)
 end
 
----@class session.opts
+---@class minimal.session.opts
 M.opts = {
   dir = vim.fs.joinpath(vim.fn.stdpath('data') --[[@as string]], 'session'),
   ---Given path, return project root, used to determine the name of the session
@@ -310,7 +310,7 @@ local function check_enabled(opts)
   return opts and opts.enabled and not vim.tbl_isempty(opts.events)
 end
 
----@param opts? session.opts
+---@param opts? minimal.session.opts
 function M.setup(opts)
   M.opts = vim.tbl_deep_extend('force', M.opts, opts or {})
   M.opts.dir = vim.fn.fnamemodify(M.opts.dir, ':p')
@@ -331,7 +331,7 @@ function M.setup(opts)
     end)
 
     vim.api.nvim_create_autocmd(M.opts.autosave.events, {
-      group = vim.api.nvim_create_augroup('my.session.auto_save', {}),
+      group = vim.api.nvim_create_augroup('minimal.session.auto_save', {}),
       desc = 'Automatically save session.',
       -- `BufDelete` event triggers just before the buffers is actually deleted from
       -- the buffer list, delay to ensure that the buffer is deleted before checking
@@ -345,7 +345,8 @@ function M.setup(opts)
   end
 
   if check_enabled(M.opts.autoload) then
-    local groupid = vim.api.nvim_create_augroup('my.session.auto_load', {})
+    local groupid =
+      vim.api.nvim_create_augroup('minimal.session.auto_load', {})
     vim.api.nvim_create_autocmd({ 'StdinReadPre', 'SessionLoadPost' }, {
       desc = 'Detect stdin or manual session loading to disable automatic session loading.',
       group = groupid,
@@ -376,7 +377,7 @@ function M.setup(opts)
 
   if check_enabled(M.opts.autoremove) then
     vim.api.nvim_create_autocmd(M.opts.autoremove.events, {
-      group = vim.api.nvim_create_augroup('my.session.auto_remove', {}),
+      group = vim.api.nvim_create_augroup('minimal.session.auto_remove', {}),
       desc = 'Automatically remove sessions.',
       callback = vim.schedule_wrap(function()
         if M.opts.autoremove.cond() then

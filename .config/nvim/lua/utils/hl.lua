@@ -27,7 +27,7 @@ end
 ---Highlight text in buffer, clear previous highlight if any exists
 ---@param buf integer
 ---@param hlgroup string
----@param range winbar.symbol.range?
+---@param range minimal.winbar.symbol.range?
 function M.range_single(buf, hlgroup, range)
   if not vim.api.nvim_buf_is_valid(buf) then
     return
@@ -368,7 +368,7 @@ function M.persist(cb)
   cb()
 
   local group = vim.api.nvim_create_augroup(
-    string.format('my.hl.persist.%d', vim.uv.hrtime()),
+    string.format('minimal.hl.persist.%d', vim.uv.hrtime()),
     {}
   )
   vim.api.nvim_create_autocmd('ColorScheme', {

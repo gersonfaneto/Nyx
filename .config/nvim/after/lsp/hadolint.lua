@@ -1,7 +1,7 @@
 -- Dockerfile linter, validate inline bash, written in Haskell
 -- https://github.com/hadolint/hadolint
 
----@type lsp.config
+---@type minimal.lsp.config
 return {
   filetypes = { 'dockerfile' },
   cmd = { 'efm-langserver' },

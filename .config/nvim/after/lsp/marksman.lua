@@ -1,4 +1,4 @@
----@type lsp.config
+---@type minimal.lsp.config
 return {
   filetypes = { 'markdown' },
   cmd = { 'marksman' },

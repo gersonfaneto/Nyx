@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/dhruvasagar/vim-table-mode',
   data = {
@@ -46,7 +46,10 @@ return {
       table_mode_toggle()
 
       vim.api.nvim_create_autocmd({ 'FileType', 'BufEnter' }, {
-        group = vim.api.nvim_create_augroup('my.vim-table-mode.toggle', {}),
+        group = vim.api.nvim_create_augroup(
+          'minimal.vim-table-mode.toggle',
+          {}
+        ),
         callback = function(args)
           table_mode_toggle(args.buf)
         end,
@@ -54,7 +57,7 @@ return {
 
       vim.api.nvim_create_autocmd('BufWritePre', {
         group = vim.api.nvim_create_augroup(
-          'my.vim-table-mode.format_on_save',
+          'minimal.vim-table-mode.format_on_save',
           {}
         ),
         callback = function(args)

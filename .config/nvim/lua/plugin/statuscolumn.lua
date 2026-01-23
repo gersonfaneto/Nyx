@@ -12,7 +12,7 @@ end
 ---@type table<integer, integer>
 local lnumw_cache = {}
 
----@class stc.shared_data
+---@class minimal.stc.shared_data
 ---@field win integer
 ---@field wp ffi.cdata* winpos_T C struct for window attributes
 ---@field display_tick? integer display tick
@@ -36,26 +36,26 @@ local lnumw_cache = {}
 ---@field foldopen? string fold open sign
 ---@field foldclose? string fold close sign
 ---@field foldsep? string fold separator sign
----@field extsigns? extmark.sign[] extmark signs, see `:h extmarks`
+---@field extsigns? minimal.extmark.sign[] extmark signs, see `:h extmarks`
 ---@field lnum? integer v:lnum
 ---@field relnum? integer v:relnum
 ---@field virtnum? integer v:virtnum
 
----@class extmark.sign
+---@class minimal.extmark.sign
 ---@field [1] integer extmark_id
 ---@field [2] integer row, 0-indexed
 ---@field [3] integer col, 0-indexed
----@field [4] extmark.spec details
+---@field [4] minimal.extmark.spec details
 
----@class extmark.spec: vim.api.keyset.set_extmark
+---@class minimal.extmark.spec: vim.api.keyset.set_extmark
 ---@field sign_name string? only set when sign is defined using legacy `sign_define()`
 ---@field ns_id integer
 
 ---Shared data in each window
----@type table<string, stc.shared_data>
+---@type table<string, minimal.stc.shared_data>
 local shared = {}
 
----@type table<string, fun(data: stc.shared_data, ...): string>
+---@type table<string, fun(data: minimal.stc.shared_data, ...): string>
 local builders = {}
 
 ffi.cdef([[
@@ -75,8 +75,8 @@ ffi.cdef([[
 ]])
 
 ---Returns the string representation of sign column to be shown
----@param data stc.shared_data
----@param filter fun(sign: extmark.sign, data: stc.shared_data): boolean
+---@param data minimal.stc.shared_data
+---@param filter fun(sign: minimal.extmark.sign, data: minimal.stc.shared_data): boolean
 ---@param virtual boolean whether to draw sign in virtual line
 ---@return string
 function builders.signcol(data, filter, virtual)
@@ -87,7 +87,7 @@ function builders.signcol(data, filter, virtual)
     goto signcol_ret_default
   end
   do
-    ---@type extmark.spec?
+    ---@type minimal.extmark.spec?
     local sign_details
     for _, sign in ipairs(data.extsigns) do
       local lnum = sign[2] + 1 -- 0-indexed to 1-indexed
@@ -119,7 +119,7 @@ function builders.signcol(data, filter, virtual)
   return make_hl(' ', data.culhl and 'CursorLineSign' or 'SignColumn')
 end
 
----@param data stc.shared_data
+---@param data minimal.stc.shared_data
 ---@return string
 function builders.lnum(data)
   local result = '' ---@type string|integer
@@ -152,7 +152,7 @@ function builders.lnum(data)
   )
 end
 
----@param data stc.shared_data
+---@param data minimal.stc.shared_data
 ---@return string
 function builders.foldcol(data)
   if not data.show_fdc then
@@ -168,15 +168,15 @@ function builders.foldcol(data)
 end
 
 ---Get a valid name of an extmark sign
----@param sign extmark.sign
+---@param sign minimal.extmark.sign
 ---@return string
 local function extsign_get_name(sign)
   local details = sign[4]
   return details.sign_name or details.sign_hl_group or '' --[[@as string]]
 end
 
----@param sign extmark.sign
----@param data stc.shared_data
+---@param sign minimal.extmark.sign
+---@param data minimal.stc.shared_data
 ---@return boolean
 local function gitsigns_filter(sign, data)
   local name = extsign_get_name(sign)
@@ -189,7 +189,7 @@ local function gitsigns_filter(sign, data)
   return true
 end
 
----@param sign extmark.sign
+---@param sign minimal.extmark.sign
 ---@return boolean
 local function nongitsigns_filter(sign)
   return not extsign_get_name(sign):find('^Git')
@@ -279,7 +279,7 @@ function _G._statuscolumn()
     .. (data.show_fdc and ' ' or '')
 end
 
-local augroup = vim.api.nvim_create_augroup('my.statuscolumn', {})
+local augroup = vim.api.nvim_create_augroup('minimal.statuscolumn', {})
 
 vim.api.nvim_create_autocmd('WinClosed', {
   group = augroup,

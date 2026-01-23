@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/lewis6991/gitsigns.nvim',
   data = {
@@ -78,7 +78,7 @@ return {
         pattern = 'GitSignsChanged',
         desc = 'Automatically refresh fugitive buffers on staging/unstaging hunks.',
         group = vim.api.nvim_create_augroup(
-          'my.gitsigns.fugitive_integration',
+          'minimal.gitsigns.fugitive_integration',
           {}
         ),
         callback = function(args)

@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/ibhagwan/fzf-lua',
   data = {
@@ -953,7 +953,7 @@ return {
             -- Schedule in case the fzf is making a new split
             -- (e.g. `actions.file_split`) after opening quickfix window which
             -- resizes the quickfix window unexpectedly due to an nvim bug, see
-            -- - `lua/core/autocmds.lua` augroup `my.fix_winfixheight_with_winbar`
+            -- - `lua/core/autocmds.lua` augroup `minimal.fix_winfixheight_with_winbar`
             -- -  https://github.com/neovim/neovim/issues/30955
             vim.schedule(function()
               local win = vim.api.nvim_get_current_win()

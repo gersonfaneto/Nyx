@@ -3,7 +3,7 @@
 --
 -- https://github.com/rcjsuen/dockerfile-language-server
 
----@type lsp.config
+---@type minimal.lsp.config
 return {
   filetypes = { 'dockerfile' },
   cmd = {

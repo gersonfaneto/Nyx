@@ -1,13 +1,13 @@
 local M = {}
 
 vim.api.nvim_create_autocmd({ 'BufWrite', 'FileChangedShellPost' }, {
-  group = vim.api.nvim_create_augroup('my.git.refresh_writetick', {}),
+  group = vim.api.nvim_create_augroup('minimal.git.refresh_writetick', {}),
   callback = function(args)
     vim.b[args.buf].git_writetick = vim.uv.hrtime()
   end,
 })
 
----@class git.diffstat
+---@class minimal.git.diffstat
 ---@field add? integer
 ---@field removed? integer
 ---@field changed? integer
@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd({ 'BufWrite', 'FileChangedShellPost' }, {
 ---Get the diff stats for the current buffer asynchronously
 ---@param buf integer? buffer handler, defaults to the current buffer
 ---@param args string[]? arguments passed to `git` command
----@return git.diffstat? # diff stats
+---@return minimal.git.diffstat? # diff stats
 function M.diffstat(buf, args)
   buf = vim._resolve_bufnr(buf or 0)
   if not vim.api.nvim_buf_is_valid(buf) then

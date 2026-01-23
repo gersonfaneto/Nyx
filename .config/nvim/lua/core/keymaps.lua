@@ -3,7 +3,7 @@ vim.g.maplocalleader = ','
 
 require('utils.load').on_events(
   'UIEnter',
-  'my.keymaps',
+  'minimal.keymaps',
   vim.schedule_wrap(function()
     local keymaps = {} ---@type table<string, table<string, true>>
     local buf_keymaps = {} ---@type table<integer, table<string, table<string, true>>>
@@ -545,7 +545,7 @@ require('utils.load').on_events(
 
 require('utils.load').on_events(
   'CmdlineEnter',
-  'my.keymaps.cmdline_abbrevs',
+  'minimal.keymaps.cmdline_abbrevs',
   function()
     local key = require('utils.key')
 

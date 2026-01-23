@@ -41,13 +41,13 @@ local function z_args_esc(args)
   )
 end
 
----@class z.cmd
+---@class minimal.z.cmd
 ---@field jump fun(trig?: string[]): string[]
 ---@field list fun(trig?: string[]): string[]
 ---@field add fun(dir: string): string[]
 
----@alias z.backend { cmd: z.cmd, exists: fun(): boolean }
----@type table<string, z.backend>
+---@alias minimal.z.backend { cmd: minimal.z.cmd, exists: fun(): boolean }
+---@type table<string, minimal.z.backend>
 local z_backends = {
   z = {
     exists = function()
@@ -85,7 +85,7 @@ local z_backends = {
   },
 }
 
----@type z.backend
+---@type minimal.z.backend
 local z = (function()
   for _, backend in pairs(z_backends) do
     if backend.exists() then
@@ -246,7 +246,7 @@ function M.setup()
   if z.exists() then
     vim.api.nvim_create_autocmd('DirChanged', {
       desc = 'Record nvim path in z.',
-      group = vim.api.nvim_create_augroup('my.z.record_dir', {}),
+      group = vim.api.nvim_create_augroup('minimal.z.record_dir', {}),
       callback = function(args)
         local dir = args.file
         vim.system(z.cmd.add(dir))

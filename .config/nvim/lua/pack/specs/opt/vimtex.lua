@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/lervag/vimtex',
   data = {
@@ -37,7 +37,7 @@ return {
 
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'tex',
-        group = vim.api.nvim_create_augroup('my.vimtex.settings', {}),
+        group = vim.api.nvim_create_augroup('minimal.vimtex.settings', {}),
         callback = function(args)
           -- Make surrounding delimiters large
           vim.keymap.set('n', 'css', vim.fn['vimtex#delim#add_modifiers'], {

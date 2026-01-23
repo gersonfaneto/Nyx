@@ -137,7 +137,7 @@ end
 local buf = vim.api.nvim_get_current_buf()
 vim.api.nvim_create_autocmd('TextChangedI', {
   group = vim.api.nvim_create_augroup(
-    string.format('my.ft.markdown.format_title.buf.%d', buf),
+    string.format('minimal.ft.markdown.format_title.buf.%d', buf),
     {}
   ),
   buffer = buf,

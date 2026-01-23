@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/HakonHarnes/img-clip.nvim',
   data = {
@@ -138,7 +138,7 @@ $INDENTcaption: [$LABEL$CURSOR],
 
       vim.api.nvim_create_autocmd('FileType', {
         desc = 'Buffer-local settings for img-clip.',
-        group = vim.api.nvim_create_augroup('my.img-clip', {}),
+        group = vim.api.nvim_create_augroup('minimal.img-clip', {}),
         pattern = vim.tbl_keys(filetypes),
         callback = function(args)
           setup_keymaps(args.buf)

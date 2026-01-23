@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/stevearc/oil.nvim',
   data = {
@@ -600,7 +600,7 @@ return {
         vim.keymap.set('n', '<CR>', preview_edit, { buffer = preview_buf })
         vim.api.nvim_create_autocmd('BufReadCmd', {
           desc = 'Edit corresponding file in oil preview buffers.',
-          group = vim.api.nvim_create_augroup('my.oil.preview_edit', {}),
+          group = vim.api.nvim_create_augroup('minimal.oil.preview_edit', {}),
           buffer = preview_buf,
           callback = vim.schedule_wrap(preview_edit),
         })
@@ -626,7 +626,8 @@ return {
         preview_set_lines(preview_win)
       end
 
-      local groupid_preview = vim.api.nvim_create_augroup('my.oil.preview', {})
+      local groupid_preview =
+        vim.api.nvim_create_augroup('minimal.oil.preview', {})
       vim.api.nvim_create_autocmd({ 'CursorMoved', 'WinScrolled' }, {
         desc = 'Update floating preview window when cursor moves or window scrolls.',
         group = groupid_preview,
@@ -954,7 +955,7 @@ return {
         { desc = "Edit current file's directory" }
       )
 
-      local groupid = vim.api.nvim_create_augroup('my.oil', {})
+      local groupid = vim.api.nvim_create_augroup('minimal.oil', {})
       vim.api.nvim_create_autocmd('BufEnter', {
         desc = 'Ensure that oil buffers are not listed.',
         group = groupid,

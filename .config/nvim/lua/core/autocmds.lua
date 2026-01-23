@@ -16,7 +16,7 @@ do
   vim.g.bigfile_max_size = vim.g.bigfile_max_size or 1048576
   vim.g.bigfile_max_lines = vim.g.bigfile_max_lines or 32768
 
-  augroup('my.bigfile', {
+  augroup('minimal.bigfile', {
     'BufReadPre',
     {
       desc = 'Detect big files.',
@@ -109,7 +109,7 @@ do
   })
 end
 
-augroup('my.yank_highlight', {
+augroup('minimal.yank_highlight', {
   'TextYankPost',
   {
     desc = 'Highlight the selection on yank.',
@@ -122,7 +122,7 @@ augroup('my.yank_highlight', {
   },
 })
 
-augroup('my.auto_save', {
+augroup('minimal.auto_save', {
   { 'BufLeave', 'WinLeave', 'FocusLost' },
   {
     nested = true,
@@ -148,7 +148,7 @@ augroup('my.auto_save', {
   },
 })
 
-augroup('my.win_close_jmp', {
+augroup('minimal.win_close_jmp', {
   'WinClosed',
   {
     nested = true,
@@ -157,7 +157,7 @@ augroup('my.win_close_jmp', {
   },
 })
 
-augroup('my.last_pos_jmp', {
+augroup('minimal.last_pos_jmp', {
   'BufReadPre',
   {
     desc = 'Last position jump.',
@@ -194,7 +194,7 @@ augroup('my.last_pos_jmp', {
 })
 
 do
-  augroup('my.auto_cwd', {
+  augroup('minimal.auto_cwd', {
     'BufEnter',
     {
       desc = 'Automatically change local current directory.',
@@ -246,7 +246,7 @@ do
   })
 end
 
-augroup('my.prompt_keymaps', {
+augroup('minimal.prompt_keymaps', {
   'BufEnter',
   {
     desc = 'Undo automatic <C-w> remap in prompt buffers.',
@@ -260,7 +260,7 @@ augroup('my.prompt_keymaps', {
 
 do
   local win_ratio = {}
-  augroup('my.keep_win_ratio', {
+  augroup('minimal.keep_win_ratio', {
     { 'VimResized', 'TabEnter' },
     {
       desc = 'Keep window ratio after resizing nvim.',
@@ -320,7 +320,7 @@ do
     )
   end
 
-  augroup('my.fix_winfixheight_with_winbar', {
+  augroup('minimal.fix_winfixheight_with_winbar', {
     { 'WinNew', 'WinClosed' },
     {
       desc = 'Save heights for windows with a fixed height.',
@@ -375,7 +375,7 @@ do
   })
 end
 
-augroup('my.fix_cmdline_iskeyword', {
+augroup('minimal.fix_cmdline_iskeyword', {
   'CmdLineEnter',
   {
     desc = 'Have consistent &iskeyword and &lisp in Ex command-line mode.',
@@ -413,7 +413,7 @@ augroup('my.fix_cmdline_iskeyword', {
 })
 
 -- Make `colorcolumn` follow `textwidth` automatically
-augroup('my.dynamic_cc', {
+augroup('minimal.dynamic_cc', {
   { 'BufNew', 'BufEnter' },
   {
     desc = 'Set `colorcolumn` to follow `textwidth` in new buffers.',
@@ -485,7 +485,7 @@ do
     )
   end)
 
-  augroup('my.special_buf_hl', {
+  augroup('minimal.special_buf_hl', {
     { 'BufEnter', 'BufNew', 'FileType', 'TermOpen' },
     {
       desc = 'Set background color for special buffers.',
@@ -542,7 +542,7 @@ do
       :totable()
   end
 
-  augroup('my.session_wipe_empty_bufs', {
+  augroup('minimal.session_wipe_empty_bufs', {
     'SessionLoadPost',
     {
       desc = 'Wipe empty buffers after loading session.',
@@ -623,7 +623,7 @@ do
   -- itself in tmux
   restore_colorscheme()
 
-  augroup('my.colorscheme_restore', {
+  augroup('minimal.colorscheme_restore', {
     'UIEnter',
     {
       nested = true, -- invoke Colorscheme event for winbar plugin to clear bg for nvim < 0.11

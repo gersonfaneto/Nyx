@@ -40,10 +40,10 @@ do
     pcall(vim.cmd.rshada)
   end
 
-  require('utils.load').on_events('BufReadPre', 'my.opt.shada', rshada)
+  require('utils.load').on_events('BufReadPre', 'minimal.opt.shada', rshada)
   require('utils.load').on_events(
     'UIEnter',
-    'my.opt.shada',
+    'minimal.opt.shada',
     vim.schedule_wrap(rshada)
   )
 end
@@ -74,7 +74,7 @@ do
 
   require('utils.load').on_events(
     'UIEnter',
-    'my.opt.spell',
+    'minimal.opt.spell',
     vim.schedule_wrap(function()
       ---Buffers where spellcheck is enabled
       ---@type table<integer, true>
@@ -354,7 +354,7 @@ vim.g.loaded_python3_provider = 0
 
 require('utils.load').on_events(
   { 'FileType', 'BufReadPre', 'BufWritePost' },
-  'my.load_runtime',
+  'minimal.load_runtime',
   function()
     vim.g.loaded_python3_provider = nil
     vim.g.loaded_remote_plugins = nil
@@ -365,7 +365,7 @@ require('utils.load').on_events(
 
 require('utils.load').on_cmds(
   'UpdateRemotePlugins',
-  'my.load_runtime',
+  'minimal.load_runtime',
   function()
     vim.g.loaded_python3_provider = nil
     vim.g.loaded_remote_plugins = nil

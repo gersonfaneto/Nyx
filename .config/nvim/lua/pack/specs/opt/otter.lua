@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/jmbuhr/otter.nvim',
   data = {
@@ -32,7 +32,7 @@ return {
 
       vim.api.nvim_create_autocmd('FileType', {
         desc = 'Activate otter for filetypes with injections.',
-        group = vim.api.nvim_create_augroup('my.otter.activate', {}),
+        group = vim.api.nvim_create_augroup('minimal.otter.activate', {}),
         pattern = { 'markdown', 'norg', 'org' },
         callback = function(args)
           local buf = args.buf

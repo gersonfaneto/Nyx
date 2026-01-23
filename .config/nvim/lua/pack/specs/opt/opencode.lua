@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/sudo-tee/opencode.nvim',
   data = {
@@ -106,7 +106,8 @@ return {
       vim.keymap.set('n', ']@', opencode_api.diff_next, { desc = 'Navigate to opencode next file diff' })
       -- stylua: ignore end
 
-      local group = vim.api.nvim_create_augroup('my.opencode.settings', {})
+      local group =
+        vim.api.nvim_create_augroup('minimal.opencode.settings', {})
 
       vim.api.nvim_create_autocmd('FileType', {
         desc = 'FileType settings for opencode buffers.',

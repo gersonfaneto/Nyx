@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/altermo/ultimate-autopair.nvim',
   version = 'v0.6',
@@ -46,7 +46,7 @@ return {
       vim.api.nvim_create_autocmd('CmdlineChanged', {
         desc = 'Record cmd compltype to determine whether to autopair.',
         group = vim.api.nvim_create_augroup(
-          'my.ultimate-autopair.record_cmdcompltype',
+          'minimal.ultimate-autopair.record_cmdcompltype',
           {}
         ),
         callback = function()

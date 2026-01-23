@@ -1,6 +1,6 @@
----@alias direction.nvim 'h'|'j'|'k'|'l'
----@alias direction.tmux 'L'|'D'|'U'|'R'
----@alias direction.tmux_borderpane 'left'|'bottom'|'top'|'right'
+---@alias minimal.direction.nvim 'h'|'j'|'k'|'l'
+---@alias minimal.direction.tmux 'L'|'D'|'U'|'R'
+---@alias minimal.direction.tmux_borderpane 'left'|'bottom'|'top'|'right'
 
 ---@return string tmux socket path
 local function tmux_get_socket()
@@ -70,7 +70,7 @@ local function tmux_is_zoomed()
   return tmux_get_pane_opt('window_zoomed_flag') == '1'
 end
 
----@type table<direction.nvim, direction.tmux_borderpane>
+---@type table<minimal.direction.nvim, minimal.direction.tmux_borderpane>
 local tmux_pane_position_map = {
   h = 'left',
   j = 'bottom',
@@ -78,20 +78,20 @@ local tmux_pane_position_map = {
   l = 'right',
 }
 
----@param direction direction.nvim
+---@param direction minimal.direction.nvim
 ---@return boolean
 local function tmux_at_border(direction)
   return tmux_get_pane_opt('pane_at_' .. tmux_pane_position_map[direction])
     == '1'
 end
 
----@param direction direction.nvim
+---@param direction minimal.direction.nvim
 ---@return boolean
 local function tmux_should_move(direction)
   return not tmux_is_zoomed() and not tmux_at_border(direction)
 end
 
----@type table<direction.nvim, direction.tmux>
+---@type table<minimal.direction.nvim, minimal.direction.tmux>
 local tmux_direction_map = {
   h = 'L',
   j = 'D',
@@ -99,7 +99,7 @@ local tmux_direction_map = {
   l = 'R',
 }
 
----@param direction direction.nvim
+---@param direction minimal.direction.nvim
 ---@param count integer? default to 1
 ---@return nil
 local function tmux_navigate(direction, count)
@@ -115,7 +115,7 @@ local function tmux_navigate(direction, count)
   end
 end
 
----@param direction direction.nvim
+---@param direction minimal.direction.nvim
 ---@return boolean
 local function nvim_at_border(direction)
   return vim.fn.winnr() == vim.fn.winnr(direction)
@@ -148,7 +148,7 @@ local function nvim_tabpage_has_only_win()
     :totable() <= 1
 end
 
----@param direction direction.nvim
+---@param direction minimal.direction.nvim
 ---@param count integer? default to 1
 ---@return nil
 local function nvim_navigate(direction, count)
@@ -158,7 +158,7 @@ local function nvim_navigate(direction, count)
   })
 end
 
----@param direction direction.nvim
+---@param direction minimal.direction.nvim
 ---@param count integer? default to 1
 ---@return nil
 local function navigate(direction, count)
@@ -173,7 +173,7 @@ local function navigate(direction, count)
   end
 end
 
----@param direction direction.nvim
+---@param direction minimal.direction.nvim
 ---@return function: rhs of a window navigation keymap
 local function navigate_wrap(direction)
   return function()
@@ -270,7 +270,7 @@ local function setup()
   -- in a vim/nvim session
   if tmux_get_pane_opt('@is_vim') == '' then
     tmux_set_pane_opt('@is_vim', 'yes')
-    local groupid = vim.api.nvim_create_augroup('my.tmux.set_isvim', {})
+    local groupid = vim.api.nvim_create_augroup('minimal.tmux.set_isvim', {})
     vim.api.nvim_create_autocmd('VimResume', {
       desc = 'Set @is_vim in tmux pane options after vim resumes.',
       group = groupid,

@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/L3MON4D3/LuaSnip',
   data = {
@@ -68,7 +68,7 @@ return {
       -- https://github.com/L3MON4D3/LuaSnip/issues/258#issuecomment-1011938524
       vim.api.nvim_create_autocmd('ModeChanged', {
         desc = 'Unlink current snippet on leaving insert/selection mode.',
-        group = vim.api.nvim_create_augroup('my.luasnip.unlink', {}),
+        group = vim.api.nvim_create_augroup('minimal.luasnip.unlink', {}),
         pattern = '[si]*:[^si]*',
         -- Blink.cmp will enter normal mode shortly on accepting snippet completion,
         -- see https://github.com/Saghen/blink.cmp/issues/2035
@@ -155,7 +155,7 @@ return {
 
       ---Convert a range into lsp format range
       ---@param range integer[][] 0-based range
-      ---@return lsp.range
+      ---@return minimal.lsp.range
       local function range_convert(range)
         local s = range[1]
         local e = range[2]

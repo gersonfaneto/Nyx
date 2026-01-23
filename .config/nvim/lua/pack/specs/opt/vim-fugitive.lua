@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/tpope/vim-fugitive',
   data = {
@@ -84,7 +84,7 @@ return {
       vim.keymap.set('n', '<Leader>g<Space>', ':Git<Space>',                                   { desc = 'Populate cmdline with ":Git"' })
       -- stylua: ignore end
 
-      local group = vim.api.nvim_create_augroup('my.fugitive', {})
+      local group = vim.api.nvim_create_augroup('minimal.fugitive', {})
 
       vim.api.nvim_create_autocmd('User', {
         pattern = 'FugitiveIndex',

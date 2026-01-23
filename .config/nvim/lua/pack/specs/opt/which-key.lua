@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/folke/which-key.nvim',
   data = {
@@ -162,7 +162,7 @@ return {
       vim.api.nvim_create_autocmd('ModeChanged', {
         desc = 'Redraw statusline shortly after mode change to ensure correct mode display after enting visual mode when which-key.nvim is enabled.',
         group = vim.api.nvim_create_augroup(
-          'my.which-key.redraw_statusline',
+          'minimal.which-key.redraw_statusline',
           {}
         ),
         callback = vim.schedule_wrap(function()

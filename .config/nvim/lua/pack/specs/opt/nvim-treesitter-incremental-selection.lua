@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/shushtain/nvim-treesitter-incremental-selection',
   data = {
@@ -45,7 +45,7 @@ return {
       vim.api.nvim_create_autocmd('ModeChanged', {
         desc = 'Clear treesitter selection range after exiting visual mode.',
         group = vim.api.nvim_create_augroup(
-          'my.nvim-treesitter-incremental-selection.clear_selection',
+          'minimal.nvim-treesitter-incremental-selection.clear_selection',
           {}
         ),
         pattern = '[vV\x16]:*',

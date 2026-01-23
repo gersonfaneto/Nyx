@@ -22,7 +22,7 @@ local function cc_resolve(cc)
 end
 
 ---Default options
----@class cc.opts
+---@class minimal.cc.opts
 local opts = {
   scope = function()
     return vim.fn.strdisplaywidth(vim.fn.getline('.'))
@@ -184,7 +184,7 @@ local function cc_update(winid)
 end
 
 ---Setup colorcolumn
----@param o cc.opts?
+---@param o minimal.cc.opts?
 local function setup(o)
   if vim.g.loaded_colorcolumn ~= nil then
     return
@@ -196,7 +196,7 @@ local function setup(o)
   end
 
   ---Create autocmds for concealing / showing colorcolumn
-  local id = vim.api.nvim_create_augroup('my.colorcolumn', {})
+  local id = vim.api.nvim_create_augroup('minimal.colorcolumn', {})
 
   ---Conceal colorcolumn in each window
   local function init_wins()

@@ -1,4 +1,4 @@
----@type pack.spec
+---@type minimal.pack.spec
 -- Python dependencies:
 -- - pynvim
 -- - ipykernel
@@ -102,7 +102,7 @@ return {
         vim.cmd.redraw()
       end
 
-      local groupid = vim.api.nvim_create_augroup('my.molten', {})
+      local groupid = vim.api.nvim_create_augroup('minimal.molten', {})
       vim.api.nvim_create_autocmd('BufEnter', {
         desc = 'Change the configuration when editing a python file.',
         pattern = '*.py',
@@ -146,7 +146,7 @@ return {
       })
 
       ---Send code cell to molten
-      ---@param cell molten.code_cell
+      ---@param cell minimal.molten.code_cell
       ---@return nil
       local function send(cell)
         local range = cell.range
@@ -154,27 +154,27 @@ return {
       end
 
       ---Code range, 0-based, end-exclusive
-      ---@class molten.code_range
+      ---@class minimal.molten.code_range
       ---@field from integer[] 0-based (row, col) array
       ---@field to integer[] 0-based (row, col) array
 
-      ---@class molten.code_cell
+      ---@class minimal.molten.code_cell
       ---@field lang string?
       ---@field text table<string>
-      ---@field range molten.code_range
+      ---@field range minimal.molten.code_range
 
       ---Check if two ranges are overlapped
-      ---@param r1 molten.code_range
-      ---@param r2 molten.code_range
+      ---@param r1 minimal.molten.code_range
+      ---@param r2 minimal.molten.code_range
       ---@return boolean
       local function is_overlapped(r1, r2)
         return r1.from[1] <= r2.to[1] and r2.from[1] <= r1.to[1]
       end
 
       ---Get the overlap between two (line) ranges
-      ---@param r1 molten.code_range
-      ---@param r2 molten.code_range
-      ---@return molten.code_range?
+      ---@param r1 minimal.molten.code_range
+      ---@param r2 minimal.molten.code_range
+      ---@return minimal.molten.code_range?
       local function get_overlap(r1, r2)
         if is_overlapped(r1, r2) then
           return {
@@ -187,10 +187,10 @@ return {
       ---Extract code cells that overlap the given range,
       ---removes cells with a language that's in the ignore list
       ---@param lang string
-      ---@param code_chunks table<string, molten.code_cell>
-      ---@param range molten.code_range
+      ---@param code_chunks table<string, minimal.molten.code_cell>
+      ---@param range minimal.molten.code_range
       ---@param partial boolean?
-      ---@return molten.code_cell[]
+      ---@return minimal.molten.code_cell[]
       local function extract_cells(lang, code_chunks, range, partial)
         if not code_chunks[lang] then
           return {}
@@ -260,7 +260,7 @@ return {
       ---
       ---Code are run in chunks (cells) , i.e. the whole chunk will be sent to
       ---REPL even when there are only partial overlap between the chunk and `range`
-      ---@param range molten.code_range a range, for with any overlapping code cells are run
+      ---@param range minimal.molten.code_range a range, for with any overlapping code cells are run
       ---@return nil
       local function run_cell(range)
         if not otk then
@@ -324,7 +324,7 @@ return {
         local buf = vim.api.nvim_get_current_buf()
         local pos = vim.api.nvim_win_get_cursor(0)
 
-        ---@type molten.code_cell
+        ---@type minimal.molten.code_cell
         local cell = {
           lang = lang,
           range = { from = { pos[1] - 1, 0 }, to = { pos[1], 0 } },
@@ -339,7 +339,7 @@ return {
       ---Code are run in lines, i.e. only code lines in `range` will be sent to REPL,
       ---if there is a partial overlap between `range` and a code chunk,
       ---only the lines inside `range` will be run
-      ---@param range molten.code_range
+      ---@param range minimal.molten.code_range
       ---@return nil
       local function run_range(range)
         if not otk then
@@ -446,7 +446,7 @@ return {
           vim.api.nvim_create_autocmd('WinScrolled', {
             desc = 'Close molten output win when src win is scrolled.',
             group = vim.api.nvim_create_augroup(
-              'my.molten.close_output_win.buf.' .. buf,
+              'minimal.molten.close_output_win.buf.' .. buf,
               {}
             ),
             buffer = buf,

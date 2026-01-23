@@ -1,4 +1,4 @@
---@type pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/sainnhe/gruvbox-material',
   data = {
