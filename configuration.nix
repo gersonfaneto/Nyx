@@ -213,6 +213,7 @@
       alacritty
       alsa-utils
       ani-cli
+      arandr
       bat
       beets
       bluetui
@@ -235,6 +236,7 @@
       gh
       ghostty
       gifsicle
+      gimp
       git
       hyperfine
       imagemagick
@@ -292,15 +294,6 @@
       xss-lock
       yt-dlp
       zoxide
-      # ...
-      ghc
-      ghcid
-      cabal2nix
-      cabal-install
-      nix-prefetch-git
-      haskellPackages.fourmolu
-      haskellPackages.cabal-gild
-      haskellPackages.haskell-language-server
     ])
     ++ (with pkgs; [
       (callPackage ./packages/boomer.nix { })
@@ -333,6 +326,16 @@
       clojure
       clojure-lsp
       leiningen
+
+      # Haskell
+      ghc
+      ghcid
+      cabal2nix
+      cabal-install
+      nix-prefetch-git
+      haskellPackages.fourmolu
+      haskellPackages.cabal-gild
+      haskellPackages.haskell-language-server
 
       # Python
       python312
@@ -370,8 +373,7 @@
       noto-fonts-color-emoji
 
       # Retro
-      ibm-plex
-      nerd-fonts.blex-mono
+      nerd-fonts.terminess-ttf
 
       # Rounded
       maple-mono.NF
