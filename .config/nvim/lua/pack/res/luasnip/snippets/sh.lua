@@ -415,14 +415,38 @@ M.snippets = {
   ),
   us.sn(
     {
+      trig = 'clean',
+      desc = 'cleanup function',
+    },
+    un.fmtad(
+      [[
+        <cleanup>() {
+        <body>
+        }
+      ]],
+      {
+        cleanup = i(1, 'cleanup'),
+        body = un.body(2, 1, 'kill $(jobs -p) 2>/dev/null; wait'),
+      }
+    )
+  ),
+  us.sn(
+    {
       trig = 'trap',
       desc = 'trap command',
     },
     un.fmtad('trap <cmd> <sig>', {
-      cmd = c(1, {
-        i(nil, 'cleanup'),
-        i(nil, [['kill $(jobs -p) 2>/dev/null; wait']]),
-      }),
+      cmd = d(1, function()
+        for _, line in
+          ipairs(vim.api.nvim_buf_get_lines(0, 0, vim.fn.line('.'), false))
+        do
+          local cleanup_func = line:match('(clean[%w_]*)%(%)')
+          if cleanup_func then
+            return sn(nil, i(1, cleanup_func))
+          end
+        end
+        return sn(nil, i(1, [['kill $(jobs -p) 2>/dev/null; wait']]))
+      end),
       sig = c(2, {
         i(nil, 'EXIT INT TERM HUP'), -- common signals that terminates a program by default, useful for most scripts
         i(nil, 'EXIT INT TERM'), -- handle `HUP` in another trap, used in a daemon script
