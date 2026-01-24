@@ -63,8 +63,8 @@ mTSound :: String
 mTSound = mTerminal' <> " --class wiremix --command wiremix"
 
 mBrowser, mBrowser' :: String
-mBrowser = "firefox"
-mBrowser' = "qutebrowser"
+mBrowser = "qutebrowser"
+mBrowser' = "firefox"
 
 mEditor :: String
 mEditor = "emacsclient --create-frame --alternate-editor 'emacs'"
