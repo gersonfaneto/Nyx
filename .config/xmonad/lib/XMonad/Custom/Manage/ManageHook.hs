@@ -3,12 +3,13 @@ module XMonad.Custom.Manage.ManageHook
   )
 where
 
+import Data.List
 import XMonad hiding (manageHook)
 import XMonad.Actions.SpawnOn
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageHelpers hiding ((~?))
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
@@ -17,6 +18,10 @@ import XMonad.Util.NamedScratchpad
 
 import XMonad.Custom.Manage.ManageHelpers
 import XMonad.Custom.Scratchpads
+
+-- helper function for doing a simple string match on window titles
+(~?) :: (Eq a, Functor f) => f [a] -> [a] -> f Bool
+q ~? x = fmap (x `isInfixOf`) q
 
 composeActions :: [MaybeManageHook]
 composeActions =
@@ -27,7 +32,7 @@ composeActions =
   , className =? "btm" -?> doFullCenterFloat
   , className =? "Qalculate-gtk" -?> doFullCenterFloat
   , className =? "PrismLauncher" -?> doFullCenterFloat <> doShift "5"
-  , className ~? "^Minecraft*" -?> doFullCenterFloat <> doShift "5"
+  , className ~? "Minecraft" -?> doFullCenterFloat <> doShift "5"
   , className =? "Dragon-drop" -?> doCenterFloat
   , className =? "mpv" -?> tileNormal
   , className =? "Pinentry" -?> doCenterFloat
