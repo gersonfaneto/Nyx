@@ -14,7 +14,6 @@ library xmonad-lib
     base,
     containers,
     flow,
-    regex-posix,
     xmonad,
     xmonad-contrib,
     xmonad-extras,

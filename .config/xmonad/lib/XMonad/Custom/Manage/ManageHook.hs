@@ -19,9 +19,8 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Custom.Manage.ManageHelpers
 import XMonad.Custom.Scratchpads
 
--- helper function for doing a simple string match on window titles
-(~?) :: (Eq a, Functor f) => f [a] -> [a] -> f Bool
-q ~? x = fmap (x `isInfixOf`) q
+(=^) :: (Eq a, Functor f) => f [a] -> [a] -> f Bool
+q =^ x = fmap (x `isPrefixOf`) q
 
 composeActions :: [MaybeManageHook]
 composeActions =
@@ -32,7 +31,7 @@ composeActions =
   , className =? "btm" -?> doFullCenterFloat
   , className =? "Qalculate-gtk" -?> doFullCenterFloat
   , className =? "PrismLauncher" -?> doFullCenterFloat <> doShift "5"
-  , className ~? "Minecraft" -?> doFullCenterFloat <> doShift "5"
+  , className =^ "Minecraft" -?> doFullCenterFloat <> doShift "5"
   , className =? "Dragon-drop" -?> doCenterFloat
   , className =? "mpv" -?> tileNormal
   , className =? "Pinentry" -?> doCenterFloat
