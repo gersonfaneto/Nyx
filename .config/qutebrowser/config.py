@@ -1,5 +1,5 @@
-from modules.colors import ColorsBase16
 from modules.interceptors import redirect_empty_search_to_base, redirect_to_https
+from modules.colors import ColorsBase16
 from modules.utils import Utils
 from qutebrowser.api import interceptor
 from qutebrowser.config.config import ConfigContainer  # type: ignore
@@ -550,7 +550,7 @@ c.keyhint.radius = 6
 c.logging.level.console = "info"
 c.logging.level.ram = "debug"
 c.messages.timeout = 3000
-c.new_instance_open_target = "tab"
+c.new_instance_open_target = "tab-bg"
 c.new_instance_open_target_window = "last-focused"
 c.prompt.filebrowser = True
 c.prompt.radius = 8
@@ -616,7 +616,7 @@ c.statusbar.widgets = [
 # TAB SETTINGS
 
 c.tabs.background = True
-c.tabs.close_mouse_button = "middle"
+c.tabs.close_mouse_button = "right"
 c.tabs.close_mouse_button_on_bar = "new-tab"
 
 c.tabs.favicons.scale = 1.0
