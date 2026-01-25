@@ -521,6 +521,9 @@ require('utils.load').on_events(
     })
 
     map('n', '<Leader>Pu', vim.pack.update, { desc = 'Update plugins' })
+    map('n', '<Leader>Pr', function()
+      vim.pack.update(nil, { target = 'lockfile' })
+    end, { desc = 'Restore plugins according to lockfile' })
     map('n', '<Leader>Pd', function()
       ---@type string[]
       local plug_src_list = vim
