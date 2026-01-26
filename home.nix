@@ -42,6 +42,7 @@ in
     ".bash_profile" = mkSymlink ".bash_profile";
     ".bashrc" = mkSymlink ".bashrc";
     ".dir_colors" = mkSymlink ".dir_colors";
+    ".ghci" = mkSymlink ".ghci";
     ".gitconfig" = mkSymlink ".gitconfig";
     ".profile" = mkSymlink ".profile";
     ".vimrc" = mkSymlink ".vimrc";
