@@ -372,17 +372,11 @@
       # Emojis
       noto-fonts-color-emoji
 
-      # Retro
-      nerd-fonts.terminess-ttf
-
-      # Rounded
+      # Text
       maple-mono.NF
       maple-mono.NF-CN
       maple-mono.truetype
       maple-mono.variable
-
-      # Readable
-      aporetic-bin
     ];
     fontconfig = {
       enable = true;

@@ -20,15 +20,15 @@ in
 
   stylix.fonts = {
     serif = {
-      package = pkgs.ibm-plex;
+      package = pkgs.maple-mono.NF-CN;
       name = "Maple Mono NF CN";
     };
     sansSerif = {
-      package = pkgs.ibm-plex;
+      package = pkgs.maple-mono.NF-CN;
       name = "Maple Mono NF CN";
     };
     monospace = {
-      package = pkgs.ibm-plex;
+      package = pkgs.maple-mono.NF-CN;
       name = "Maple Mono NF CN";
     };
     emoji = {
