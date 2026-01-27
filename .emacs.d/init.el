@@ -240,6 +240,12 @@
   ("C-c g s" . 'magit-status)
   ("C-c g l" . 'magit-log))
 
+(use-package git-link
+  :custom
+  (git-link-open-in-browser t)
+  :bind
+  ("C-c g o" . 'git-link-dispatch))
+
 ;; --- Environment ----
 ;; Direnv for managing environment variables in projects.
 (use-package direnv
