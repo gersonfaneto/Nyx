@@ -173,16 +173,5 @@ end, { nargs = '+', complete = 'shellcmdline' })
 vim.keymap.set('n', '<leader>xf', '<cmd>source %<cr>')
 vim.keymap.set({ 'n', 'x' }, '<leader>xe', ':.lua<cr>')
 
-package.loaded['compile-mode'] = nil
-
-require('compile-mode').reset()
-
-local compile = require('compile-mode')
-
--- stylua: ignore start
-vim.keymap.set('n', '<leader>Cc', compile.command, { desc = 'Run a command' })
-vim.keymap.set('n', '<leader>Cr', compile.recompile, { desc = 'Re-run last command' })
-vim.keymap.set('n', '<leader>Cb', compile.scroll_to_bottom, { desc = 'Scroll compilation buffer to bottom' })
-vim.keymap.set('n', '<leader>Ct', compile.toggle_window, { desc = 'Toggle compilation buffer' })
-vim.keymap.set('n', '<leader>CR', compile.reset, { desc = 'Reset' })
--- stylua: ignore end
+require('tools.compile-mode')
+require('tools.sql-runner')

@@ -1,4 +1,4 @@
-local P = {}
+local M = {}
 
 -- Private state
 local compile_buf = nil
@@ -10,7 +10,7 @@ local function scroll_to_bottom(win, buf)
   vim.api.nvim_win_set_cursor(win, { line_count, 0 })
 end
 
-function P.reset()
+function M.reset()
   compile_buf = nil
   compile_win = nil
   command_history = {}
@@ -130,12 +130,12 @@ local function prompt_for_command()
   end)
 end
 
-function P.command()
-  P.compile(false)
+function M.command()
+  M.compile(false)
 end
 
 -- Main compile function - run command in persistent terminal
-function P.compile(hist)
+function M.compile(hist)
   if #command_history == 0 then
     prompt_for_command()
     return
@@ -166,20 +166,20 @@ function P.compile(hist)
   end)
 end
 
-function P.get_history()
+function M.get_history()
   return vim.deepcopy(command_history)
 end
 
-function P.recompile()
+function M.recompile()
   if #command_history > 0 then
     send_command(command_history[1], false)
   else
-    P.compile() -- Prompt for command if no history
+    M.compile() -- Prompt for command if no history
   end
 end
 
 -- Close compile window but keep buffer
-function P.close_window()
+function M.close_window()
   local win = find_compile_window()
   if win then
     vim.api.nvim_win_close(win, false)
@@ -187,7 +187,7 @@ function P.close_window()
 end
 
 -- Toggle compile window visibility
-function P.toggle_window()
+function M.toggle_window()
   local win = find_compile_window()
   if win then
     -- Window is visible, close it
@@ -208,7 +208,7 @@ function P.toggle_window()
 end
 
 -- Scroll to bottom of compile buffer
-function P.scroll_to_bottom()
+function M.scroll_to_bottom()
   local buf = get_compile_buffer()
   if not buf then
     return
@@ -227,7 +227,7 @@ vim.api.nvim_create_user_command('C', function(opts)
   if cmd and cmd ~= '' then
     send_command(cmd, true)
   else
-    P.compile(false)
+    M.compile(false)
   end
 end, {
   nargs = '+', -- Accept any number of arguments
@@ -235,6 +235,12 @@ end, {
   desc = 'Run command in compile terminal',
 })
 
---print("I initialized compile-mode " .. vim.inspect(command_history))
+-- stylua: ignore start
+vim.keymap.set('n', '<leader>Cc', M.command, { desc = 'Run a command' })
+vim.keymap.set('n', '<leader>Cr', M.recompile, { desc = 'Re-run last command' })
+vim.keymap.set('n', '<leader>Cb', M.scroll_to_bottom, { desc = 'Scroll compilation buffer to bottom' })
+vim.keymap.set('n', '<leader>Ct', M.toggle_window, { desc = 'Toggle compilation buffer' })
+vim.keymap.set('n', '<leader>CR', M.reset, { desc = 'Reset' })
+-- stylua: ignore end
 
-return P
+return M
