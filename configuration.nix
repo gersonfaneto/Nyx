@@ -191,6 +191,16 @@
     ];
   };
 
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_18;
+    ensureDatabases = [ "monolith" ];
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type database  DBuser  auth-method
+      local all       all     trust
+    '';
+  };
+
   environment.variables = rec {
     XDG_BIN_HOME = "$HOME/.local/bin";
     XDG_CACHE_HOME = "$HOME/.cache";
@@ -273,6 +283,7 @@
       rsync
       scc
       sct
+      sqlite
       tmux
       trash-cli
       tree
