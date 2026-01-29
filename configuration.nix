@@ -339,14 +339,23 @@
       leiningen
 
       # Haskell
-      ghc
-      ghcid
-      cabal2nix
-      cabal-install
-      nix-prefetch-git
-      haskellPackages.fourmolu
-      haskellPackages.cabal-gild
-      haskellPackages.haskell-language-server
+      (haskellPackages.ghcWithHoogle (
+        hpkgs: with hpkgs; [
+          ghcid
+
+          stack
+          cabal-fmt
+          cabal-install
+
+          cabal2nix
+
+          hlint
+          fourmolu
+
+          hasktags
+          haskell-language-server
+        ]
+      ))
 
       # Python
       python312
@@ -372,6 +381,7 @@
       tinymist
 
       # General
+      niv
       efm-langserver
     ]);
 
