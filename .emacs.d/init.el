@@ -129,6 +129,9 @@
 ;; Use custom modeline
 ;; (require 'minimal-modules-modeline)
 
+;; Use custom welcome message
+(require 'minimal-modules-intro)
+
 (use-package nano-modeline
   :init
   (setq nano-modeline-position 'nano-modeline-footer)
