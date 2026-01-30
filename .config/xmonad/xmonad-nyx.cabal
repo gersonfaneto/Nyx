@@ -13,22 +13,54 @@ library xmonad-lib
     X11,
     base,
     containers,
+    deepseq,
     flow,
+    text,
+    transformers,
+    vector,
     xmonad,
     xmonad-contrib,
     xmonad-extras,
 
   exposed-modules:
+    XMonad.Custom.Actions.ApplicationChooser
+    XMonad.Custom.Actions.Calculator
+    XMonad.Custom.Actions.DoActions
+    XMonad.Custom.Actions.DoPrompt
+    XMonad.Custom.Actions.JumpWorkspaces
+    XMonad.Custom.Actions.Keyboard
+    XMonad.Custom.Actions.LayoutChooser
+    XMonad.Custom.Actions.Minimize
+    XMonad.Custom.Actions.RecentWindows
+    XMonad.Custom.Actions.RecentWorkspaces
+    XMonad.Custom.Actions.ScratchpadChooser
+    XMonad.Custom.Actions.Screen.Screencast
+    XMonad.Custom.Actions.Screen.Screenshot
+    XMonad.Custom.Actions.TmuxPrompt
+    XMonad.Custom.Bindings
     XMonad.Custom.Config
+    XMonad.Custom.Hooks.Event
+    XMonad.Custom.Hooks.KeyboardChangeEvent
     XMonad.Custom.Hooks.Layout
     XMonad.Custom.Hooks.Log
-    XMonad.Custom.Hooks.XMobar
+    XMonad.Custom.Hooks.Screens
+    XMonad.Custom.Hooks.Startup
+    XMonad.Custom.Hooks.Statusbar
     XMonad.Custom.Manage.ManageHelpers
     XMonad.Custom.Manage.ManageHook
     XMonad.Custom.Misc
+    XMonad.Custom.MouseBindings
+    XMonad.Custom.Navigation
+    XMonad.Custom.Prompt
     XMonad.Custom.Scratchpads
+    XMonad.Custom.Search
     XMonad.Custom.Theme
+    XMonad.Custom.Utils.Array
+    XMonad.Custom.Utils.ChordKeys
+    XMonad.Custom.Utils.Keyboard
     XMonad.Custom.Utils.Loggers
+    XMonad.Custom.Utils.Strings
+    XMonad.Custom.Workspaces
 
 executable xmonad
   import: base

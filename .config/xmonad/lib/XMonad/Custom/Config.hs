@@ -9,7 +9,11 @@ import Flow
 import System.IO (writeFile)
 import XMonad
 import XMonad.Actions.CycleWS
+import XMonad.Actions.DynamicProjects (dynamicProjects)
+import XMonad.Actions.MostRecentlyUsed
+import XMonad.Actions.Navigation2D (withNavigation2DConfig)
 import XMonad.Actions.Submap
+import XMonad.Core
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
@@ -19,8 +23,12 @@ import XMonad.Hooks.ManageHelpers
   , doRectFloat
   , isDialog
   )
+import XMonad.Hooks.Rescreen
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.UrgencyHook
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.IndependentScreens
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
@@ -28,20 +36,86 @@ import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
+import XMonad.Util.EZConfig
 import XMonad.Util.EZConfig (additionalKeysP, mkKeymap)
 import XMonad.Util.Loggers
+import XMonad.Util.Loggers.NamedScratchpad
 import XMonad.Util.SpawnOnce
 import XMonad.Util.WindowProperties
 import XMonad.Util.WorkspaceCompare
 
 import Data.Map qualified as M
 import XMonad.StackSet qualified as S
+import XMonad.Util.Hacks qualified as Hacks
 
 import XMonad.Custom.Scratchpads
 
-import XMonad.Custom.Hooks.XMobar qualified as C
+import XMonad.Custom.Actions.RecentWindows qualified as C
+import XMonad.Custom.Actions.RecentWorkspaces qualified as C
+import XMonad.Custom.Bindings qualified as C
+import XMonad.Custom.Hooks.Event qualified as C
+import XMonad.Custom.Hooks.Layout qualified as C
+import XMonad.Custom.Hooks.Log qualified as C
+import XMonad.Custom.Hooks.Screens qualified as C
+import XMonad.Custom.Hooks.Startup qualified as C
+import XMonad.Custom.Hooks.Statusbar qualified as C
 import XMonad.Custom.Manage.ManageHook qualified as C
+import XMonad.Custom.Misc qualified as C
+import XMonad.Custom.MouseBindings qualified as C
+import XMonad.Custom.Navigation qualified as C
+import XMonad.Custom.Scratchpads qualified as C
 import XMonad.Custom.Theme qualified as C
+import XMonad.Custom.Workspaces qualified as C
+
+mConfig =
+  def
+    { modMask = mModMask
+    , terminal = mTerminal
+    , workspaces = mWorkspaces
+    , borderWidth = 2
+    , normalBorderColor = C.colorN
+    , focusedBorderColor = C.colorF
+    , startupHook = C.startupHook
+    , layoutHook = mLayoutHook
+    , manageHook = C.manageHook
+    }
+    `additionalKeysP` mKeys
+    |> dynamicSBs C.barSpawner
+    |> docks
+    |> ewmh
+    |> ewmhFullscreen
+    |> (return :: a -> IO a)
+
+mConfig' =
+  def
+    { borderWidth = C.border
+    , workspaces = C.workspaces
+    , layoutHook = C.layoutHook
+    , terminal = C.term C.applications
+    , normalBorderColor = C.colorN
+    , focusedBorderColor = C.colorF
+    , modMask = C.modMask
+    , keys = C.myKeys
+    , logHook = C.logHook
+    , startupHook = C.startupHook
+    , mouseBindings = C.mouseBindings
+    , manageHook = C.manageHook
+    , handleEventHook = C.handleEventHook
+    , focusFollowsMouse = True
+    , clickJustFocuses = False
+    }
+    |> withNavigation2DConfig C.navigation
+    |> addRandrChangeHook C.myRandrChangeHook
+    |> dynamicProjects C.projects
+    |> dynamicSBs C.barSpawner
+    -- \|> configureMRU
+    |> C.configureRecentWindows
+    |> C.configureRecentWorkspaces
+    |> ewmh
+    |> ewmhFullscreen
+    |> docks
+    |> Hacks.javaHack
+    |> (return :: a -> IO a)
 
 mWorkspaces :: [String]
 mWorkspaces = map show [1 .. 10]
@@ -85,18 +159,6 @@ mLayoutHook =
   where
     tall = ResizableTall 1 (3 / 100) (11 / 20) []
     mSpacing = spacingWithEdge 8
-
-myStartupHook :: X ()
-myStartupHook = do
-  spawn "pkill dunst; dunst -config $HOME/.config/dunst/dunstrc &"
-  spawn "feh --bg-fill $HOME/.local/share/wallpapers/1920x1080.jpg &"
-  spawn "battery -L 20 -n &"
-  spawn "xrandr --output HDMI-1 --same-as eDP-1 &"
-  spawn "xset s 600 &"
-  spawn "xss-lock -l -- xsecurelock &"
-  spawn "xsetroot -cursor_name left_ptr &"
-  spawn "setxkbmap -option ctrl:nocaps -layout br -variant thinkpad &"
-  io $ writeFile "/home/gerson/.cache/xmonad-submap" ""
 
 setSubmap :: String -> X ()
 setSubmap name = io $ writeFile "/home/gerson/.cache/xmonad-submap" name
@@ -218,22 +280,3 @@ toggleFloat w =
           then S.sink w s
           else S.float w (S.RationalRect 0.15 0.15 0.7 0.7) s
     )
-
-mConfig =
-  def
-    { modMask = mModMask
-    , terminal = mTerminal
-    , workspaces = mWorkspaces
-    , borderWidth = 2
-    , normalBorderColor = C.colorN
-    , focusedBorderColor = C.colorF
-    , startupHook = myStartupHook
-    , layoutHook = mLayoutHook
-    , manageHook = C.manageHook
-    }
-    `additionalKeysP` mKeys
-    |> dynamicSBs C.barSpawner
-    |> docks
-    |> ewmh
-    |> ewmhFullscreen
-    |> (return :: a -> IO a)

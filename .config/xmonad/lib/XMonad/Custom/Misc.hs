@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -funbox-strict-fields #-}
+
 module XMonad.Custom.Misc
   ( Applications (..)
   , applications

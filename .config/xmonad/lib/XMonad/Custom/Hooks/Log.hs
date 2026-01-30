@@ -1,3 +1,6 @@
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE ImportQualifiedPost #-}
+
 module XMonad.Custom.Hooks.Log
   ( logHook
   , topBarPP'
@@ -11,7 +14,6 @@ import Data.List
   )
 import Data.Maybe (fromMaybe)
 import Data.Typeable (Typeable)
-import Flow
 import System.IO
 import XMonad hiding (logHook)
 import XMonad.Actions.CopyWindow
@@ -23,7 +25,6 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.RefocusLast
 import XMonad.Hooks.ShowWName
 import XMonad.Hooks.StatusBar.PP
-import XMonad.Util.ClickableWorkspaces (clickablePP)
 import XMonad.Util.Loggers
 import XMonad.Util.Loggers.NamedScratchpad
 import XMonad.Util.Minimize
@@ -79,8 +80,8 @@ topBarPP =
     , ppSep = " / "
     , ppWsSep = " "
     , ppTitle = boldFont . xmobarColor white1 "" . shorten 100
-    , ppTitleSanitize = xmobarStrip
-    , ppLayout = xmobarColor white1 "" . layoutNamePure
+    , -- ppTitleSanitize = xmobarStrip,
+      ppLayout = xmobarColor white1 "" . layoutNamePure
     , ppOrder = \(ws : l : t : ex) -> [ws, l] ++ ex ++ [t]
     , ppSort = (namedScratchpadFilterOutWorkspace .) <$> getSortByIndex
     , ppExtras = [windowsLogger]
@@ -95,11 +96,9 @@ topBarPP' = do
             xmobarColor yellow2 "" . boldFont . wrap "*" "=" $ ws
         | otherwise =
             xmobarColor white2 "" . boldFont . wrap "=" "=" $ ws
-
   let copiesHidden ws
         | ws `elem` c = xmobarColor yellow1 "" . wrap "*" "-" $ ws
         | otherwise = xmobarColor white1 "" . wrap "-" "-" $ ws
-
   let copiesUrgent ws
         | ws `elem` c = xmobarColor yellow2 "" . wrap "*" "!" $ ws
         | otherwise = xmobarColor white2 "" . wrap "!" "!" $ ws

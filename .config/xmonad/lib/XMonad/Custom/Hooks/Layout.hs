@@ -1,3 +1,6 @@
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE ImportQualifiedPost #-}
+
 module XMonad.Custom.Hooks.Layout
   ( layoutHook
   , layoutNames

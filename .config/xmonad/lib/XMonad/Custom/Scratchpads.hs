@@ -1,3 +1,5 @@
+{-# LANGUAGE ImportQualifiedPost #-}
+
 module XMonad.Custom.Scratchpads
   ( scratchpads
   , namedScratchpadFilterOutWorkspace
