@@ -345,6 +345,7 @@
 
           stack
           cabal-fmt
+          cabal-gild
           cabal-install
 
           cabal2nix
