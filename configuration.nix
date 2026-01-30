@@ -379,6 +379,7 @@
       # Typst
       typst
       tinymist
+      websocat
 
       # General
       niv
