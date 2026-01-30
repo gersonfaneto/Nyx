@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# set -x # WARN: Only used for debugging...
+set -euo pipefail
+
+STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/sct_state"
+
+DEFAULT_VALUE=6500
+WARM_VALUE=4500
+
+main() {
+if [ ! -f "$STATE_FILE" ]; then
+  echo $DEFAULT_VALUE >"$STATE_FILE"
+fi
+
+CURRENT_STATE=$(cat "$STATE_FILE")
+
+if [ "$CURRENT_STATE" -eq "$DEFAULT_VALUE" ]; then
+  sct $WARM_VALUE
+  echo $WARM_VALUE >"$STATE_FILE"
+else
+  sct $DEFAULT_VALUE
+  echo $DEFAULT_VALUE >"$STATE_FILE"
+fi
+
+}
+
+main ""
+
+# vim:sw=2:ts=2:et:
