@@ -142,9 +142,9 @@
       (interactive)
       (custom-set-faces
        `(nano-modeline-active
-        ((t (:foreground ,(face-foreground 'default)
-                         :background ,(face-background 'header-line nil t)
-                         :box (:line-width 1 :color ,(face-background 'default))))))))
+	 ((t (:foreground ,(face-foreground 'default)
+			  :background ,(face-background 'default nil t)
+			  :box (:line-width 1 :color ,(face-background 'default))))))))
     (add-hook 'enable-theme-functions #'minimal/nano-modeline-update))
   :hook
   ((prog-mode-hook . nano-modeline-prog-mode)
