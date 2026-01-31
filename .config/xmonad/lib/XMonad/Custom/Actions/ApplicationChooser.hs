@@ -84,11 +84,10 @@ mySoundUtils =
   , Application SoundUtils "Pavucontrol" "pavucontrol"
   ]
 myEditors =
-  [ Application Editors "vim" "nvimedit"
+  [ Application Editors "VIM" "vim"
   , Application Editors "VSCode" "code"
-  , Application Editors "windsurf" "windsurf"
   , Application Editors "Cursor" "cursor"
-  , Application Editors "Emacs" "emacseditor"
+  , Application Editors "EMACS" "emacs"
   , Application Editors "Zed" "zeditor"
   ]
 

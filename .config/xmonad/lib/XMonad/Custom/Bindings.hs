@@ -226,9 +226,6 @@ keysBase =
 keysSystem :: Keybindings
 keysSystem =
   [ ("M-<Print>", spawn "capture")
-  , ("M-t S-l", spawn "$XMONAD_CONFIG_DIR/scripts/caffeine")
-  , ("M-t t", spawn "darkman toggle")
-  , ("M-t n", spawn "dunstctl set-paused toggle")
   ]
 
 keysSpawnables :: Keybindings
@@ -240,18 +237,16 @@ keysSpawnables =
   , ("M-o e", spawn "$TERM --hold -e nvim")
   , ("M-o S-e", wrapKbdLayout $ selectEditorByNameAndSpawn promptTheme)
   , ("M-o f f", spawn $ C.term C.applications ++ " -e yazi")
-  , ("M-o S-e", spawn "doom +everywhere")
   , ("M-o c", namedScratchpadAction scratchpads "console")
   , ("M-o m", namedScratchpadAction scratchpads "music")
   , ("M-o t", namedScratchpadAction scratchpads "top")
   , ("M-o v", namedScratchpadAction scratchpads "volume")
   , ("M-o s", namedScratchpadAction scratchpads "soundEffects")
   , ("M-o d", namedScratchpadAction scratchpads "discord")
-  , -- , ("M-s b", namedScratchpadAction scratchpads "bluetooth")
-    ("M-o r", namedScratchpadAction scratchpads "reader")
+  , ("M-s b", namedScratchpadAction scratchpads "bluetooth")
+  , ("M-o r", namedScratchpadAction scratchpads "reader")
   , ("M-o n", namedScratchpadAction scratchpads "notes")
   , ("M-o S-n", namedScratchpadAction scratchpads "notes-nvim")
-  , ("M-o g", runOrRaise "gitbutler-tauri" (className =? "gitbutler-tauri"))
   ]
 
 keysDo :: Keybindings
@@ -290,7 +285,6 @@ keysLayout c =
   , ("M-S-f", withFocused $ sendMessage . maximizeRestore)
   , ("M-t g", toggleGaps)
   , ("M-t s", toggleStatusBar)
-  , ("M-t c", spawn "$XMONAD_CONFIG_DIR/scripts/toggle-compositor.sh")
   , ("M-t z", toggleZen >> flash' "<~ ZEN ~>")
   ]
 

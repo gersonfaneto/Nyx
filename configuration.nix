@@ -284,6 +284,7 @@
       rsync
       scc
       sct
+      skippy-xd
       sqlite
       tmux
       trash-cli

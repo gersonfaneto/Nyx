@@ -70,54 +70,22 @@ myEngines =
   , searchEngine "lazyvim" "https://www.lazyvim.org/search?q="
   , searchEngine "nixprtrack" "https://nixpkgs-tracker.ocfox.me/?pr="
   , searchEngine "nixissues" "https://github.com/NixOS/nixpkgs/issues?q="
-  , searchEngine
-      "nixPullRequests"
-      "https://github.com/NixOS/nixpkgs/pulls?q="
-  , searchEngine
-      "githubCode"
-      "https://github.com/search?type=code&q="
-  , searchEngine
-      "gitlab"
-      "https://gitlab.com/search"
-  , searchEngine
-      "sourcehut"
-      "https://sr.ht/projects?search="
-  , searchEngine
-      "sourceGraph"
-      "https://sourcegraph.com/search?q="
-  , searchEngine
-      "genius"
-      "https://genius.com/search?q="
-  , searchEngine
-      "mdn"
-      "https://developer.mozilla.org/en-US/search?q="
-  , searchEngine
-      "lastfm"
-      "https://www.last.fm/search?q="
-  , searchEngine
-      "npm"
-      "https://www.npmjs.com/search?q="
-  , searchEngine
-      "pypi"
-      "https://pypi.org/search/?q="
-  , searchEngine
-      "python"
-      "https://docs.python.org/3/search.html?q="
-  , searchEngine
-      "googleFonts"
-      "https://fonts.google.com/?query="
-  , searchEngine
-      "canIUse"
-      "https://caniuse.com/?search="
-  , searchEngine
-      "huggingFace"
-      "https://huggingface.co/search?q="
-  , searchEngine
-      "huggingFaceModels"
-      "https://huggingface.co/models"
-  , searchEngine
-      "devDocs"
-      "https://devdocs.io/#q="
+  , searchEngine "nixPullRequests" "https://github.com/NixOS/nixpkgs/pulls?q="
+  , searchEngine "githubCode" "https://github.com/search?type=code&q="
+  , searchEngine "gitlab" "https://gitlab.com/search"
+  , searchEngine "sourcehut" "https://sr.ht/projects?search="
+  , searchEngine "sourceGraph" "https://sourcegraph.com/search?q="
+  , searchEngine "genius" "https://genius.com/search?q="
+  , searchEngine "mdn" "https://developer.mozilla.org/en-US/search?q="
+  , searchEngine "lastfm" "https://www.last.fm/search?q="
+  , searchEngine "npm" "https://www.npmjs.com/search?q="
+  , searchEngine "pypi" "https://pypi.org/search/?q="
+  , searchEngine "python" "https://docs.python.org/3/search.html?q="
+  , searchEngine "googleFonts" "https://fonts.google.com/?query="
+  , searchEngine "canIUse" "https://caniuse.com/?search="
+  , searchEngine "huggingFace" "https://huggingface.co/search?q="
+  , searchEngine "huggingFaceModels" "https://huggingface.co/models"
+  , searchEngine "devDocs" "https://devdocs.io/#q="
   , searchEngine "flatHub" "https://flathub.org/apps/search?q="
   , searchEngine "hackerNews" "https://hn.algolia.com/"
   , searchEngine "ubuntuPackages" "https://packages.ubuntu.com/search?keywords="
@@ -137,9 +105,7 @@ myEngines =
   , searchEngine "dnsLookup" "https://dns.google/query?name={searchTerms}"
   , searchEngine "downDetector" "https://downdetector.com/status/"
   , searchEngine "pkgsGoDev" "https://pkg.go.dev/search?q="
-  , searchEngine
-      "google"
-      "https://www.google.com/search?q="
+  , searchEngine "google" "https://www.google.com/search?q="
   ]
 
 engineNames :: [String]
@@ -171,7 +137,7 @@ namesToEnginesMap = M.fromList namesToEngines
 data SearchEngineByName = SearchEngineByName
 
 instance XPrompt SearchEngineByName where
-  showXPrompt _ = "Search engine: "
+  showXPrompt _ = "Search Engine :: "
 
 selectAndSearchPrompt :: XPConfig -> X ()
 selectAndSearchPrompt conf = do
