@@ -14,6 +14,7 @@ import XMonad.Actions.MostRecentlyUsed
 import XMonad.Actions.Navigation2D (withNavigation2DConfig)
 import XMonad.Actions.Submap
 import XMonad.Core
+import XMonad.Custom.Scratchpads
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
@@ -45,11 +46,6 @@ import XMonad.Util.WindowProperties
 import XMonad.Util.WorkspaceCompare
 
 import Data.Map qualified as M
-import XMonad.StackSet qualified as S
-import XMonad.Util.Hacks qualified as Hacks
-
-import XMonad.Custom.Scratchpads
-
 import XMonad.Custom.Actions.RecentWindows qualified as C
 import XMonad.Custom.Actions.RecentWorkspaces qualified as C
 import XMonad.Custom.Bindings qualified as C
@@ -66,49 +62,31 @@ import XMonad.Custom.Navigation qualified as C
 import XMonad.Custom.Scratchpads qualified as C
 import XMonad.Custom.Theme qualified as C
 import XMonad.Custom.Workspaces qualified as C
+import XMonad.StackSet qualified as S
+import XMonad.Util.Hacks qualified as Hacks
 
 mConfig =
   def
-    { modMask = mModMask
-    , terminal = mTerminal
-    , workspaces = mWorkspaces
-    , borderWidth = 2
-    , normalBorderColor = C.colorN
-    , focusedBorderColor = C.colorF
-    , startupHook = C.startupHook
-    , layoutHook = mLayoutHook
-    , manageHook = C.manageHook
-    }
-    `additionalKeysP` mKeys
-    |> dynamicSBs C.barSpawner
-    |> docks
-    |> ewmh
-    |> ewmhFullscreen
-    |> (return :: a -> IO a)
-
-mConfig' =
-  def
-    { borderWidth = C.border
-    , workspaces = C.workspaces
-    , layoutHook = C.layoutHook
+    { modMask = C.modMask
     , terminal = C.term C.applications
+    , borderWidth = C.border
     , normalBorderColor = C.colorN
     , focusedBorderColor = C.colorF
-    , modMask = C.modMask
     , keys = C.myKeys
+    , workspaces = C.workspaces
     , logHook = C.logHook
-    , startupHook = C.startupHook
-    , mouseBindings = C.mouseBindings
     , manageHook = C.manageHook
+    , layoutHook = C.layoutHook
+    , startupHook = C.startupHook
     , handleEventHook = C.handleEventHook
-    , focusFollowsMouse = True
+    , mouseBindings = C.mouseBindings
     , clickJustFocuses = False
+    , focusFollowsMouse = True
     }
     |> withNavigation2DConfig C.navigation
     |> addRandrChangeHook C.myRandrChangeHook
     |> dynamicProjects C.projects
     |> dynamicSBs C.barSpawner
-    -- \|> configureMRU
     |> C.configureRecentWindows
     |> C.configureRecentWorkspaces
     |> ewmh
@@ -148,17 +126,6 @@ mFiles = "nautilus"
 
 mCalc :: String
 mCalc = "qalculate-gtk"
-
-mLayoutHook =
-  avoidStruts $
-    smartBorders $
-      renamed [Replace "Tall"] (mSpacing tall)
-        ||| renamed [Replace "Wide"] (mSpacing (Mirror tall))
-        ||| renamed [Replace "Full"] (mSpacing Full)
-        ||| renamed [Replace "Spiral"] (mSpacing (spiral (6 / 7)))
-  where
-    tall = ResizableTall 1 (3 / 100) (11 / 20) []
-    mSpacing = spacingWithEdge 8
 
 setSubmap :: String -> X ()
 setSubmap name = io $ writeFile "/home/gerson/.cache/xmonad-submap" name
@@ -246,7 +213,6 @@ mKeys =
   , ("M-,", prevNonEmptyWS)
   , ("M-.", nextNonEmptyWS)
   , ("M-;", spawn "rofimoji")
-  , ("M-S-<Space>", withFocused toggleFloat)
   , ("M-z", incWindowSpacing 8)
   , ("M-x", decWindowSpacing 8)
   , ("M-a", toggleWindowSpacingEnabled >> toggleScreenSpacingEnabled)
@@ -272,11 +238,3 @@ mKeys =
        | (tag, key) <- zip mWorkspaces "1234567890"
        , (action, mask) <- [(S.greedyView, ""), (S.shift, "S-")]
        ]
-
-toggleFloat w =
-  windows
-    ( \s ->
-        if M.member w (S.floating s)
-          then S.sink w s
-          else S.float w (S.RationalRect 0.15 0.15 0.7 0.7) s
-    )

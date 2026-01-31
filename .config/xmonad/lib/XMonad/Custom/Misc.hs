@@ -18,8 +18,7 @@ data Applications = Applications
   , reader :: !String
   , editor :: !String
   , appmenu :: !String
-  , -- , clipboardSelector :: !String
-    virtualMachinesManger :: !String
+  , virtualMachinesManger :: !String
   , screenZoomer :: !String
   }
   deriving (Eq, Show)
@@ -28,19 +27,16 @@ applications :: Applications
 applications =
   Applications
     { browser = "$BROWSER"
-    , mixer = "pulsemixer"
+    , mixer = "wiremix"
     , notify = "notify-send"
     , player = "spotify"
     , soundEffects = "easyeffects"
     , term = "$TERM"
     , termSmallFont = "$TERM -o font.size=8"
-    , -- top = "htop",
-      top = "btop"
+    , top = "btm"
     , reader = "zathura"
     , editor = "$EDITOR"
-    , appmenu = "rofi_drun"
-    , -- , clipboardSelector =
-      --     "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}'"
-      virtualMachinesManger = "virt-manager"
+    , appmenu = "launcher"
+    , virtualMachinesManger = "virt-manager"
     , screenZoomer = "boomer"
     }

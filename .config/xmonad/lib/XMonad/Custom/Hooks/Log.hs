@@ -20,6 +20,10 @@ import XMonad.Actions.CopyWindow
 import XMonad.Actions.Minimize
 import XMonad.Actions.SwapPromote
 import XMonad.Actions.UpdatePointer
+import XMonad.Custom.Hooks.Layout (layoutNames)
+import XMonad.Custom.Scratchpads
+import XMonad.Custom.Theme
+import XMonad.Custom.Utils.Loggers
 import XMonad.Hooks.CurrentWorkspaceOnTop
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.RefocusLast
@@ -36,11 +40,6 @@ import XMonad.Util.WorkspaceCompare
 import Data.Map qualified as Map
 import XMonad.StackSet qualified as W
 import XMonad.Util.ExtensibleState qualified as XS
-
-import XMonad.Custom.Hooks.Layout (layoutNames)
-import XMonad.Custom.Scratchpads
-import XMonad.Custom.Theme
-import XMonad.Custom.Utils.Loggers
 
 -- | State type for layout name cache
 newtype LayoutNameCache = LayoutNameCache {unLayoutNameCache :: Map.Map String String}
@@ -80,8 +79,7 @@ topBarPP =
     , ppSep = " / "
     , ppWsSep = " "
     , ppTitle = boldFont . xmobarColor white1 "" . shorten 100
-    , -- ppTitleSanitize = xmobarStrip,
-      ppLayout = xmobarColor white1 "" . layoutNamePure
+    , ppLayout = xmobarColor white1 "" . layoutNamePure
     , ppOrder = \(ws : l : t : ex) -> [ws, l] ++ ex ++ [t]
     , ppSort = (namedScratchpadFilterOutWorkspace .) <$> getSortByIndex
     , ppExtras = [windowsLogger]
