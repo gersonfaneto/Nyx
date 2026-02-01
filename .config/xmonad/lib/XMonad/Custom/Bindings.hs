@@ -40,24 +40,6 @@ import XMonad.Actions.UpdatePointer
 import XMonad.Actions.WindowGo
 import XMonad.Actions.WindowMenu
 import XMonad.Actions.WithAll
-import XMonad.Custom.Actions.ApplicationChooser
-import XMonad.Custom.Actions.Calculator
-import XMonad.Custom.Actions.DoActions
-import XMonad.Custom.Actions.DoPrompt
-import XMonad.Custom.Actions.JumpWorkspaces
-import XMonad.Custom.Actions.Keyboard
-import XMonad.Custom.Actions.LayoutChooser
-import XMonad.Custom.Actions.Minimize
-import XMonad.Custom.Actions.RecentWindows
-import XMonad.Custom.Actions.RecentWorkspaces
-import XMonad.Custom.Actions.ScratchpadChooser
-import XMonad.Custom.Actions.Screen.Screencast
-import XMonad.Custom.Actions.Screen.Screenshot
-import XMonad.Custom.Actions.TmuxPrompt
-import XMonad.Custom.Hooks.Layout
-import XMonad.Custom.Prompt
-import XMonad.Custom.Scratchpads
-import XMonad.Custom.Search
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.BinarySpacePartition
@@ -86,9 +68,29 @@ import XMonad.Util.WorkspaceCompare
 
 import Data.Map qualified as M
 import XMonad.Actions.FlexibleManipulate qualified as Flex
-import XMonad.Custom.Misc qualified as C
 import XMonad.Layout.Magnifier qualified as Mag
 import XMonad.StackSet qualified as S
+
+import XMonad.Custom.Actions.ApplicationChooser
+import XMonad.Custom.Actions.Calculator
+import XMonad.Custom.Actions.DoActions
+import XMonad.Custom.Actions.DoPrompt
+import XMonad.Custom.Actions.JumpWorkspaces
+import XMonad.Custom.Actions.Keyboard
+import XMonad.Custom.Actions.LayoutChooser
+import XMonad.Custom.Actions.Minimize
+import XMonad.Custom.Actions.RecentWindows
+import XMonad.Custom.Actions.RecentWorkspaces
+import XMonad.Custom.Actions.ScratchpadChooser
+import XMonad.Custom.Actions.Screen.Screencast
+import XMonad.Custom.Actions.Screen.Screenshot
+import XMonad.Custom.Actions.TmuxPrompt
+import XMonad.Custom.Hooks.Layout
+import XMonad.Custom.Prompt
+import XMonad.Custom.Scratchpads
+import XMonad.Custom.Search
+
+import XMonad.Custom.Misc qualified as C
 
 type Keybinding = (String, X ())
 
