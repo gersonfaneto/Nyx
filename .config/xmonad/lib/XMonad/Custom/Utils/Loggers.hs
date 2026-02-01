@@ -35,8 +35,8 @@ windowsLogger = do
       visibleCount = totalCount - hiddenCount
       isThereAnyWindow = totalCount > 0
 
-      formatCount = xmobarColor white2 "" . wrap "[" "]" . show
-      formatHidden = xmobarColor red2 "" . wrap "(" ")" . show
+      formatCount = xmobarColor white' "" . wrap "[" "]" . show
+      formatHidden = xmobarColor red' "" . wrap "(" ")" . show
 
   ( if isThereAnyWindow
       then

@@ -20,6 +20,10 @@ import XMonad.Actions.CopyWindow
 import XMonad.Actions.Minimize
 import XMonad.Actions.SwapPromote
 import XMonad.Actions.UpdatePointer
+import XMonad.Custom.Hooks.Layout (layoutNames)
+import XMonad.Custom.Scratchpads
+import XMonad.Custom.Theme
+import XMonad.Custom.Utils.Loggers
 import XMonad.Hooks.CurrentWorkspaceOnTop
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.RefocusLast
@@ -36,11 +40,6 @@ import XMonad.Util.WorkspaceCompare
 import Data.Map qualified as Map
 import XMonad.StackSet qualified as W
 import XMonad.Util.ExtensibleState qualified as XS
-
-import XMonad.Custom.Hooks.Layout (layoutNames)
-import XMonad.Custom.Scratchpads
-import XMonad.Custom.Theme
-import XMonad.Custom.Utils.Loggers
 
 -- | State type for layout name cache
 newtype LayoutNameCache = LayoutNameCache {unLayoutNameCache :: Map.Map String String}
@@ -72,15 +71,15 @@ boldFont = xmobarFont 2
 topBarPP :: PP
 topBarPP =
   def
-    { ppCurrent = xmobarColor white2 "" . boldFont . wrap "=" "="
-    , ppVisible = xmobarColor white1 "" . wrap "~" "~"
-    , ppHidden = xmobarColor white1 "" . wrap "-" "-"
-    , ppHiddenNoWindows = xmobarColor white1 "" . wrap "_" "_"
-    , ppUrgent = xmobarColor red2 "" . wrap "!" "!"
+    { ppCurrent = xmobarColor white' "" . boldFont . wrap "=" "="
+    , ppVisible = xmobarColor white "" . wrap "~" "~"
+    , ppHidden = xmobarColor white "" . wrap "-" "-"
+    , ppHiddenNoWindows = xmobarColor white "" . wrap "_" "_"
+    , ppUrgent = xmobarColor red' "" . wrap "!" "!"
     , ppSep = " / "
     , ppWsSep = " "
-    , ppTitle = boldFont . xmobarColor white1 "" . shorten 100
-    , ppLayout = xmobarColor white1 "" . layoutNamePure
+    , ppTitle = boldFont . xmobarColor white "" . shorten 100
+    , ppLayout = xmobarColor white "" . layoutNamePure
     , ppOrder = \(ws : l : t : ex) -> [ws, l] ++ ex ++ [t]
     , ppSort = (namedScratchpadFilterOutWorkspace .) <$> getSortByIndex
     , ppExtras = [windowsLogger]
@@ -92,17 +91,17 @@ topBarPP' = do
 
   let copiesCurrent ws
         | ws `elem` c =
-            xmobarColor yellow2 "" . boldFont . wrap "*" "=" $ ws
+            xmobarColor yellow' "" . boldFont . wrap "*" "=" $ ws
         | otherwise =
-            xmobarColor white2 "" . boldFont . wrap "=" "=" $ ws
+            xmobarColor white' "" . boldFont . wrap "=" "=" $ ws
   let copiesHidden ws
-        | ws `elem` c = xmobarColor yellow1 "" . wrap "*" "-" $ ws
-        | otherwise = xmobarColor white1 "" . wrap "-" "-" $ ws
+        | ws `elem` c = xmobarColor yellow "" . wrap "*" "-" $ ws
+        | otherwise = xmobarColor white "" . wrap "-" "-" $ ws
   let copiesUrgent ws
-        | ws `elem` c = xmobarColor yellow2 "" . wrap "*" "!" $ ws
-        | otherwise = xmobarColor white2 "" . wrap "!" "!" $ ws
+        | ws `elem` c = xmobarColor yellow' "" . wrap "*" "!" $ ws
+        | otherwise = xmobarColor white' "" . wrap "!" "!" $ ws
 
-  let copiesCurrentPP = xmobarColor yellow1 "" . wrap "*" "-"
+  let copiesCurrentPP = xmobarColor yellow "" . wrap "*" "-"
 
   copiesPP copiesCurrentPP $
     topBarPP
