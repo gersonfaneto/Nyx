@@ -154,3 +154,6 @@ if vim.g.loaded_session == nil then
     'Mkssession',
   }, 'plugin.session', setup)
 end
+
+require('plugin.compile-mode').setup()
+require('plugin.sql-runner').setup()

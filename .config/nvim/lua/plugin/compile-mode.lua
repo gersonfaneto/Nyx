@@ -222,25 +222,27 @@ function M.scroll_to_bottom()
   scroll_to_bottom(win, buf)
 end
 
-vim.api.nvim_create_user_command('C', function(opts)
-  local cmd = opts.args
-  if cmd and cmd ~= '' then
-    send_command(cmd, true)
-  else
-    M.compile(false)
-  end
-end, {
-  nargs = '+', -- Accept any number of arguments
-  complete = 'shellcmd', -- Enable shell command completion
-  desc = 'Run command in compile terminal',
-})
+function M.setup()
+  vim.api.nvim_create_user_command('C', function(opts)
+    local cmd = opts.args
+    if cmd and cmd ~= '' then
+      send_command(cmd, true)
+    else
+      M.compile(false)
+    end
+  end, {
+    nargs = '+', -- Accept any number of arguments
+    complete = 'shellcmd', -- Enable shell command completion
+    desc = 'Run command in compile terminal',
+  })
 
--- stylua: ignore start
-vim.keymap.set('n', '<leader>Cc', M.command, { desc = 'Run a command' })
-vim.keymap.set('n', '<leader>Cr', M.recompile, { desc = 'Re-run last command' })
-vim.keymap.set('n', '<leader>Cb', M.scroll_to_bottom, { desc = 'Scroll compilation buffer to bottom' })
-vim.keymap.set('n', '<leader>Ct', M.toggle_window, { desc = 'Toggle compilation buffer' })
-vim.keymap.set('n', '<leader>CR', M.reset, { desc = 'Reset' })
--- stylua: ignore end
+  -- stylua: ignore start
+  vim.keymap.set('n', '<leader>Cc', M.command, { desc = 'Run a command' })
+  vim.keymap.set('n', '<leader>Cr', M.recompile, { desc = 'Re-run last command' })
+  vim.keymap.set('n', '<leader>Cb', M.scroll_to_bottom, { desc = 'Scroll compilation buffer to bottom' })
+  vim.keymap.set('n', '<leader>Ct', M.toggle_window, { desc = 'Toggle compilation buffer' })
+  vim.keymap.set('n', '<leader>CR', M.reset, { desc = 'Reset' })
+  -- stylua: ignore end
+end
 
 return M

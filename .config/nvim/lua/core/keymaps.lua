@@ -130,6 +130,13 @@ require('utils.load').on_events(
     map({ 'x', 'n' }, '<C-w>,', 'v:count ? "<C-w><" : "2<C-w><"', { expr = true, desc = 'Resize window left' })
     map({ 'x', 'n' }, '<C-w>+', 'v:count ? "<C-w>+" : "2<C-w>+"', { expr = true, desc = 'Increase window height' })
     map({ 'x', 'n' }, '<C-w>-', 'v:count ? "<C-w>-" : "2<C-w>-"', { expr = true, desc = 'Decrease window height' })
+
+    map({'x', 'n'}, "<Leader>m", "<Plug>Zoom", { desc = "Toggle zoom" })
+
+    map({ 'n', 'x' }, '<M-h>', '<Plug>WinMoveLeft', { desc = 'Move to left window', remap = true, silent = true })
+    map({ 'n', 'x' }, '<M-j>', '<Plug>WinMoveDown', { desc = 'Move to window below', remap = true, silent = true })
+    map({ 'n', 'x' }, '<M-k>', '<Plug>WinMoveUp', { desc = 'Move to window above', remap = true, silent = true })
+    map({ 'n', 'x' }, '<M-l>', '<Plug>WinMoveRight', { desc = 'Move to right window', remap = true, silent = true })
     -- stylua: ignore end
 
     -- Search within visual selection, see:
@@ -154,11 +161,23 @@ require('utils.load').on_events(
       { desc = 'Delete trailing whitespaces' }
     )
 
+    -- Faster indenting in visual mode
+    map('v', '<', '<gv', { desc = 'Indent left and reselect' })
+    map('v', '>', '>gv', { desc = 'Indent right and reselect' })
+
+    -- Move lines with simple arrow keys (can be held down)
+    -- stylua: ignore start
+    map('n', '<Up>', '<cmd>m .-2<cr>==', { desc = 'Move line up' })
+    map('n', '<Down>', '<cmd>m .+1<cr>==', { desc = 'Move line down' })
+    map('v', '<Up>', ":m '<-2<cr>gv=gv", { desc = 'Move selection up', silent = true })
+    map('v', '<Down>', ":m '>+1<cr>gv=gv", { desc = 'Move selection down', silent = true })
+    -- stylua: ignore end
+
     -- Select previously changed/yanked text, useful for selecting pasted text
+    -- stylua: ignore start
     map('n', 'gz', '`[v`]', { desc = 'Select previously changed/yanked text' })
-    map('o', 'gz', '<Cmd>normal! `[v`]<CR>', {
-      desc = 'Select previously changed/yanked text',
-    })
+    map('o', 'gz', '<Cmd>normal! `[v`]<CR>', { desc = 'Select previously changed/yanked text' })
+    -- stylua: ignore end
 
     -- Go to file under cursor, with line number
     map('n', 'gf', 'gF', { desc = 'Go to file under cursor' })
@@ -254,6 +273,61 @@ require('utils.load').on_events(
       desc = 'Yank text with joined paragraphs',
     })
 
+    map({ 'v' }, '<leader>y', function()
+      local mode = vim.fn.mode()
+
+      if mode ~= 'v' and mode ~= 'V' then
+        return
+      end
+
+      vim.cmd([[silent normal! "xy]])
+      local text = vim.fn.getreg('x')
+      ---@diagnostic disable-next-line: param-type-mismatch
+      local lines = vim.split(text, '\n', { plain = true })
+
+      local converted = {}
+      for _, line in ipairs(lines) do
+        local l = line:gsub('\t', ' ')
+        table.insert(converted, l)
+      end
+
+      local min_indent = math.huge
+      for _, line in ipairs(converted) do
+        if line:match('[^%s]') then
+          local indent = #(line:match('^%s*'))
+          min_indent = math.min(min_indent, indent)
+        end
+      end
+
+      min_indent = min_indent == math.huge and 0 or min_indent
+
+      local result = {}
+      for _, line in ipairs(converted) do
+        if line:match('^%s*$') then
+          table.insert(result, '')
+        else
+          local processed = line:sub(min_indent + 1)
+          processed = processed:gsub('^%s+', function(spaces)
+            return string.rep('  ', math.floor(#spaces / 2))
+          end)
+          table.insert(result, processed)
+        end
+      end
+
+      local normalized = table.concat(result, '\n')
+      vim.fn.setreg('+', normalized)
+      vim.notify('Copied normalized text to clipboard')
+    end, { desc = 'Copy and normalize' })
+
+    -- Better search with regexes
+    map({ 'n' }, '?', '?\\v')
+    map({ 'n' }, '/', '/\\v')
+    map({ 'c' }, '%s/', '%sm/')
+
+    -- Navigate between buffers
+    map({ 'n', 'x' }, '<Left>', ':bp<cr>')
+    map({ 'n', 'x' }, '<Right>', ':bn<cr>')
+
     -- More consistent behavior when &wrap is set
     -- stylua: ignore start
     map({ 'n', 'x' }, 'j', 'v:count ? "j" : "gj"', { expr = true, desc = 'Move down' })
@@ -262,6 +336,10 @@ require('utils.load').on_events(
     map({ 'n', 'x' }, '<Up>',   'v:count ? "<Up>"   : "g<Up>"',   { expr = true, replace_keycodes = false, desc = 'Move up' })
     map({ 'i' }, '<Down>', '<Cmd>norm! g<Down><CR>', { desc = 'Move down' })
     map({ 'i' }, '<Up>',   '<Cmd>norm! g<Up><CR>',   { desc = 'Move up' })
+    map({ 'n' }, 'j', 'v:count == 0 ? "gj" : "j"', { expr = true, desc = 'Move down (wrap friendly)' })
+    map({ 'n' }, 'k', 'v:count == 0 ? "gk" : "k"', { expr = true, desc = 'Move up (wrap friendly)' })
+    map({ 'n' }, '^', 'v:count == 0 ? "g^" :  "^"', { expr = true, desc = 'Start of line (wrap friendly)' })
+    map({ 'n' }, '$', 'v:count == 0 ? "g$" : "$"', { expr = true, desc = 'End of line (wrap friendly)' })
     -- stylua: ignore end
 
     -- Correct misspelled word / mark as correct
@@ -387,6 +465,12 @@ require('utils.load').on_events(
     map({ 'n', 'x' }, '<M-A>', 'A<Space><Left>', { desc = 'Append at end of line or selection with a space after the cursor' })
     -- stylua: ignore end
 
+    -- Text object: current line
+    -- stylua: ignore start
+    map({ 'x', 'o' }, 'il', ':<c-u>normal! g_v^<cr>', { desc = 'Select inside current line' })
+    map({ 'v', 'o' }, 'al', ':<c-u>normal! $v0<cr>', { desc = 'Select around current line' })
+    -- stylua: ignore end
+
     -- Text object: current buffer
     -- stylua: ignore start
     map('x', 'af', ':<C-u>silent! keepjumps normal! ggVG<CR>', { silent = true, noremap = false, desc = 'Select current buffer' })
@@ -421,6 +505,17 @@ require('utils.load').on_events(
     map('x', 'az', [[':<C-u>silent! keepjumps normal! ' . v:lua._textobj_fold('a') . '<CR>']], { silent = true, expr = true, noremap = false, desc = 'Select around current fold' })
     map('o', 'iz', '<Cmd>silent! normal Viz<CR>', { silent = true, noremap = false, desc = 'Select inside current fold' })
     map('o', 'az', '<Cmd>silent! normal Vaz<CR>', { silent = true, noremap = false, desc = 'Select around current fold' })
+    -- stylua: ignore end
+
+    -- Wrap visual selection in provided wrapper
+    -- stylua: ignore start
+    map({ 'v' }, '$(', '<esc>`>a)<esc>`<i(<esc>', { desc = 'Wrap in parentheses' })
+    map({ 'v' }, '$[', '<esc>`>a]<esc>`<i[<esc>', { desc = 'Wrap in brackets' })
+    map({ 'v' }, '${', '<esc>`>a}<esc>`<i{<esc>', { desc = 'Wrap in braces' })
+    map({ 'v' }, "$'", "<esc>`>a'<esc>`<i'<esc>", { desc = 'Wrap in single quotes' })
+    map({ 'v' }, '$"', '<esc>`>a"<esc>`<i"<esc>', { desc = 'Wrap in double quotes' })
+    map({ 'v' }, '$\\', '<esc>`>o*/<esc>`<O/*<esc>', { desc = 'Wrap in C-style comment' })
+    map({ 'v' }, '$<', '<esc>`>a><esc>`<i<<esc>', { desc = 'Wrap in angle brackets' })
     -- stylua: ignore end
 
     ---Go to the first line of current paragraph
@@ -520,6 +615,17 @@ require('utils.load').on_events(
       desc = 'Toggle undotree',
     })
 
+    -- stylua: ignore start
+    map({ 'n', 'x' }, '<leader>0', '<Plug>ClearInterestingWord', { desc = 'Clear interesting word', remap = true })
+    map({ 'n', 'x' }, '<leader>1', '<Plug>HiInterestingWord1', { desc = 'Highlight interesting word 1', remap = true })
+    map({ 'n', 'x' }, '<leader>2', '<Plug>HiInterestingWord2', { desc = 'Highlight interesting word 2', remap = true })
+    map({ 'n', 'x' }, '<leader>3', '<Plug>HiInterestingWord3', { desc = 'Highlight interesting word 3', remap = true })
+    map({ 'n', 'x' }, '<leader>4', '<Plug>HiInterestingWord4', { desc = 'Highlight interesting word 4', remap = true })
+    map({ 'n', 'x' }, '<leader>5', '<Plug>HiInterestingWord5', { desc = 'Highlight interesting word 5', remap = true })
+    map({ 'n', 'x' }, '<leader>6', '<Plug>HiInterestingWord6', { desc = 'Highlight interesting word 6', remap = true })
+    -- stylua: ignore end
+
+    -- Plugin Management
     map('n', '<Leader>Pu', vim.pack.update, { desc = 'Update plugins' })
     map('n', '<Leader>Pr', function()
       vim.pack.update(nil, { target = 'lockfile' })
@@ -543,8 +649,39 @@ require('utils.load').on_events(
         end
       )
     end, { desc = 'Delete plugin' })
+
+    -- Editor Options
+    vim.keymap.set('n', '<Leader>eb', function()
+      local current = vim.api.nvim_get_option_value('background', {})
+      local next = current == 'dark' and 'light' or 'dark'
+      vim.api.nvim_set_option_value('background', next, {})
+    end, { desc = 'Toggle background' })
   end)
 )
+
+vim.api.nvim_create_user_command('R', function(opts)
+  -- Expand % and # BEFORE opening new buffer
+  local current = vim.fn.expand('%:p')
+  local alt = vim.fn.expand('#:p')
+  local cmd =
+    opts.args:gsub('%%:p', current):gsub('%%', current):gsub('#', alt)
+  vim.cmd('new')
+  vim.bo.buftype = 'nofile'
+  vim.bo.bufhidden = 'hide'
+  vim.bo.swapfile = false
+  vim.b.no_auto_close = true
+  vim.fn.termopen(cmd, {
+    on_stdout = function()
+      vim.schedule(function()
+        vim.cmd([[ stopinsert ]])
+        vim.api.nvim_feedkeys('G', 't', false)
+      end)
+    end,
+  })
+  -- stylua: ignore start
+  vim.api.nvim_buf_set_keymap( 0, 'n', 'q', ':q!<CR>', { noremap = true, silent = true })
+  -- stylua: ignore end
+end, { nargs = '+', complete = 'shellcmdline' })
 
 require('utils.load').on_events(
   'CmdlineEnter',
