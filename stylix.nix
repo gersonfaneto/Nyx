@@ -20,16 +20,16 @@ in
 
   stylix.fonts = {
     serif = {
-      package = pkgs.maple-mono.NF-CN;
-      name = "Maple Mono NF CN";
+      package = pkgs.aporetic-bin;
+      name = "Aporetic Serif";
     };
     sansSerif = {
-      package = pkgs.maple-mono.NF-CN;
-      name = "Maple Mono NF CN";
+      package = pkgs.aporetic-bin;
+      name = "Aporeric Sans";
     };
     monospace = {
-      package = pkgs.maple-mono.NF-CN;
-      name = "Maple Mono NF CN";
+      package = pkgs.aporetic-bin;
+      name = "Aporetic Sans Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;

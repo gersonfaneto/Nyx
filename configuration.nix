@@ -398,19 +398,16 @@
       # Emojis
       noto-fonts-color-emoji
 
-      # Text
-      maple-mono.NF
-      maple-mono.NF-CN
-      maple-mono.truetype
-      maple-mono.variable
+      # Classic
+      aporetic-bin
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "Maple Mono NF CN" ];
-        sansSerif = [ "Maple Mono NF CN" ];
-        monospace = [ "Maple Mono NF CN" ];
+        serif = [ "Aporetic Sans" ];
+        sansSerif = [ "Aporetic Serif" ];
+        monospace = [ "Aporetic Sans Mono" ];
       };
     };
   };
