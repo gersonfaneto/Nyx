@@ -7,7 +7,7 @@ import Graphics.X11.Xlib.Types
 import XMonad.Layout.Decoration
 
 font :: String
-font = "xft:monospace:style=Regular:size=14:antialias=true"
+font = "xft:monospace:style=Regular:size=10:antialias=true"
 
 black, black' :: String
 (black, black') = ("#0b0806", "#2f2b2a")
