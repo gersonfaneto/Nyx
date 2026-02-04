@@ -385,6 +385,11 @@
       tinymist
       websocat
 
+      # ...
+      vscode-json-languageserver
+      yaml-language-server
+      taplo
+
       # General
       niv
       efm-langserver
