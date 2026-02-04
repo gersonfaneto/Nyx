@@ -3,7 +3,6 @@ name: xmonad-nyx
 version: 0.1.0
 
 common base
-  -- ghc-options: -Wall
   default-language: GHC2021
 
 library xmonad-lib
