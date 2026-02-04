@@ -403,13 +403,13 @@ c.fonts.tabs.selected = "default_size default_family"
 c.fonts.tabs.unselected = "default_size default_family"
 c.fonts.tooltip = None
 
-c.fonts.web.family.cursive = ""
-c.fonts.web.family.fantasy = ""
-c.fonts.web.family.fixed = ""
+# c.fonts.web.family.cursive = ""
+# c.fonts.web.family.fantasy = ""
+# c.fonts.web.family.fixed = ""
 
-c.fonts.web.family.sans_serif = ""
-c.fonts.web.family.serif = ""
-c.fonts.web.family.standard = ""
+c.fonts.web.family.sans_serif = "Aporetic Sans"
+c.fonts.web.family.serif = "Aporetic Serif"
+c.fonts.web.family.standard = "Aporetic Sans Mono"
 
 c.fonts.web.size.default = 16
 c.fonts.web.size.default_fixed = 13

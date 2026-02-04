@@ -298,8 +298,8 @@
 ;; --- Popper ---
 (use-package popper
   :bind
-  (("C-`"   . popper-toggle)
-   ("M-`"   . popper-cycle)
+  (("M-`"   . popper-toggle)
+   ("M-~"   . popper-cycle)
    ("C-M-`" . popper-toggle-type))
   :init
   (setq popper-reference-buffers
