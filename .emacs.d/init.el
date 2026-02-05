@@ -393,18 +393,10 @@
 ;; --- Haskell Mode ---
 (use-package haskell-mode
   :mode
-  "\\.hs\\'"                            ;; Apply to .hs files
+  "\\.hs\\'"
   :hook
-  ((haskell-mode . interactive-haskell-mode) ;; Enable interactive Haskell mode
-   (haskell-mode . turn-on-haskell-doc-mode) ;; Enable Haskell doc mode
-   (haskell-mode . haskell-setup-outline-mode)) ;; Setup outline for Haskell
-  :config
-  (setq haskell-stylish-on-save t)     ;; Use stylish-haskell on save
-  ;; Custom function to set outline regexp for Haskell.
-  (defun haskell-setup-outline-mode ()
-    "Set up outline-regexp for Haskell mode."
-    (make-local-variable 'outline-regexp)
-    (setq outline-regexp "\\`\\|\\s-+\\S-")))
+  ((haskell-mode . interactive-haskell-mode)
+   (haskell-mode . turn-on-haskell-doc-mode)))
 
 ;; --- Nix Mode ---
 ;; Configuration for Nix language files.

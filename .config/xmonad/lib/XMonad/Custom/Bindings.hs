@@ -40,6 +40,24 @@ import XMonad.Actions.UpdatePointer
 import XMonad.Actions.WindowGo
 import XMonad.Actions.WindowMenu
 import XMonad.Actions.WithAll
+import XMonad.Custom.Actions.ApplicationChooser
+import XMonad.Custom.Actions.Calculator
+import XMonad.Custom.Actions.DoActions
+import XMonad.Custom.Actions.DoPrompt
+import XMonad.Custom.Actions.JumpWorkspaces
+import XMonad.Custom.Actions.Keyboard
+import XMonad.Custom.Actions.LayoutChooser
+import XMonad.Custom.Actions.Minimize
+import XMonad.Custom.Actions.RecentWindows
+import XMonad.Custom.Actions.RecentWorkspaces
+import XMonad.Custom.Actions.ScratchpadChooser
+import XMonad.Custom.Actions.Screen.Screencast
+import XMonad.Custom.Actions.Screen.Screenshot
+import XMonad.Custom.Actions.TmuxPrompt
+import XMonad.Custom.Hooks.Layout
+import XMonad.Custom.Prompt
+import XMonad.Custom.Scratchpads
+import XMonad.Custom.Search
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.BinarySpacePartition
@@ -68,29 +86,9 @@ import XMonad.Util.WorkspaceCompare
 
 import Data.Map qualified as M
 import XMonad.Actions.FlexibleManipulate qualified as Flex
+import XMonad.Custom.Misc qualified as C
 import XMonad.Layout.Magnifier qualified as Mag
 import XMonad.StackSet qualified as S
-
-import XMonad.Custom.Actions.ApplicationChooser
-import XMonad.Custom.Actions.Calculator
-import XMonad.Custom.Actions.DoActions
-import XMonad.Custom.Actions.DoPrompt
-import XMonad.Custom.Actions.JumpWorkspaces
-import XMonad.Custom.Actions.Keyboard
-import XMonad.Custom.Actions.LayoutChooser
-import XMonad.Custom.Actions.Minimize
-import XMonad.Custom.Actions.RecentWindows
-import XMonad.Custom.Actions.RecentWorkspaces
-import XMonad.Custom.Actions.ScratchpadChooser
-import XMonad.Custom.Actions.Screen.Screencast
-import XMonad.Custom.Actions.Screen.Screenshot
-import XMonad.Custom.Actions.TmuxPrompt
-import XMonad.Custom.Hooks.Layout
-import XMonad.Custom.Prompt
-import XMonad.Custom.Scratchpads
-import XMonad.Custom.Search
-
-import XMonad.Custom.Misc qualified as C
 
 type Keybinding = (String, X ())
 
@@ -195,6 +193,7 @@ myKeys config = mkKeymap config keys
       rememberActions "M-a r" $
         mconcat
           [ keysBase
+          , keysMedia
           , keysWindows
           , keysWorkspaces
           , keysSystem
@@ -209,31 +208,41 @@ flash' = flashText def 0.5
 
 keysBase :: Keybindings
 keysBase =
-  [ ("M-S-<Space>", spawn $ C.appmenu C.applications)
-  , ("M-r", wrapKbdLayout $ runOrRaisePrompt promptTheme)
+  [ ("M-r", wrapKbdLayout $ runOrRaisePrompt promptTheme)
   , ("M-<Space>", wrapKbdLayout $ shellPrompt $ promptNoCompletion promptTheme)
-  , ("M-x", systemSubmap)
+  , ("M-C-<Space>", spawn $ C.appmenu C.applications)
+  , ("M-S-<Space>", spawn "rofimoji")
   ]
-  where
-    systemSubmap =
-      namedSubmapP "System" $
-        [ ("s", spawn "silence")
-        , ("c", spawn "caffeine")
-        , ("b", spawn "background alt")
-        , ("d", spawn "dunstctl close-all")
-        , ("x", spawn "xmonad --recompile && xmonad --restart")
-        , ("q", confirmPrompt hotPromptTheme "Quit XMonad?" $ io exitSuccess)
-        ]
+
+keysMedia :: Keybindings
+keysMedia =
+  [ ("M-m k", spawn "volume up")
+  , ("M-m j", spawn "volume down")
+  , ("M-m m", spawn "volume mute")
+  , ("M-m v", spawn "volume mute")
+  , ("M-m h", spawn "playerctl previous")
+  , ("M-m l", spawn "playerctl next")
+  , ("M-m p", spawn "playerctl play-pause")
+  ]
 
 keysSystem :: Keybindings
 keysSystem =
-  [ ("M-<Print>", spawn "capture")
+  [ ("<XF86MonBrightnessDown>", spawn "brightness down")
+  , ("<XF86MonBrightnessUp>", spawn "brightness up")
+  , ("M-<Escape>", spawn "system")
+  , ("M-x p", spawn "capture")
+  , ("M-x s", spawn "silence")
+  , ("M-x c", spawn "caffeine")
+  , ("M-x b", spawn "background alt")
+  , ("M-x d", spawn "dunstctl close-all")
+  , ("M-x x", confirmPrompt hotPromptTheme "Recompile XMonad?" $ spawn "xmonad --recompile && xmonad --restart")
+  , ("M-x q", confirmPrompt hotPromptTheme "Quit XMonad?" $ io exitSuccess)
   ]
 
 keysSpawnables :: Keybindings
 keysSpawnables =
   [ ("M-<Return>", spawn $ C.term C.applications)
-  , ("M-S-<Return>", spawn $ C.term C.applications ++ " -e tmux")
+  , ("M-S-<Return>", spawn $ C.term C.applications ++ " -e tmux attach -t Home")
   , ("M-o b", spawn $ C.browser C.applications)
   , ("M-o S-b", wrapKbdLayout $ selectBrowserByNameAndSpawn promptTheme)
   , ("M-o e", spawn "$TERM --hold -e nvim")
