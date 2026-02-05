@@ -174,19 +174,6 @@ withOthers f = withWindowSet $ mapM_ f <. others
         <. S.workspace
         <. S.current
 
-setSubmap :: String -> X ()
-setSubmap name = io $ writeFile "/home/gerson/.cache/xmonad-submap" name
-
-submapP :: [(String, X ())] -> X ()
-submapP =
-  submap . mkKeymap def
-
-namedSubmapP :: String -> [(String, X ())] -> X ()
-namedSubmapP name ks = do
-  setSubmap name
-  submapP ks
-  setSubmap ""
-
 myKeys config = mkKeymap config keys
   where
     keys =
@@ -230,13 +217,14 @@ keysSystem =
   [ ("<XF86MonBrightnessDown>", spawn "brightness down")
   , ("<XF86MonBrightnessUp>", spawn "brightness up")
   , ("M-<Escape>", spawn "system")
+  , ("M-x r", spawn "rofi-rbw")
   , ("M-x p", spawn "capture")
   , ("M-x s", spawn "silence")
   , ("M-x c", spawn "caffeine")
   , ("M-x b", spawn "background alt")
   , ("M-x d", spawn "dunstctl close-all")
-  , ("M-x x", confirmPrompt hotPromptTheme "Recompile XMonad?" $ spawn "xmonad --recompile && xmonad --restart")
-  , ("M-x q", confirmPrompt hotPromptTheme "Quit XMonad?" $ io exitSuccess)
+  , ("M-x x", spawn "xmonad --recompile && xmonad --restart")
+  , ("M-x q", confirmPrompt hotPromptTheme "Quit?" $ io exitSuccess)
   ]
 
 keysSpawnables :: Keybindings

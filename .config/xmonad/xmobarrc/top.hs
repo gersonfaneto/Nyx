@@ -19,9 +19,8 @@ Config
       [ Run Date "%d.%m.%y / %A / %H:%M" "date" 10
       , Run ComX "caffeinatestatus" [] "" "caffeine" 20
       , Run XPropertyLog "_XMONAD_LOG_1"
-      , Run Com "cat" ["/home/gerson/.cache/xmonad-submap"] "submap" 1
       ]
   , sepChar = "%"
   , alignSep = "}{"
-  , template = "  %_XMONAD_LOG_1% } %submap% { %caffeinatestatus%  %date%  "
+  , template = "  %_XMONAD_LOG_1% } { %caffeinatestatus%  %date%  "
   }
