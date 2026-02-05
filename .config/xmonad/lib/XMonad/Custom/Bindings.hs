@@ -210,6 +210,10 @@ keysMedia =
   , ("M-m h", spawn "playerctl previous")
   , ("M-m l", spawn "playerctl next")
   , ("M-m p", spawn "playerctl play-pause")
+  , ("<XF86AudioRaiseVolume>", spawn "volume up")
+  , ("<XF86AudioLowerVolume>", spawn "volume down")
+  , ("<XF86AudioMute>", spawn "volume mute")
+  , ("M-<XF86AudioMute>", spawn "volume mute")
   ]
 
 keysSystem :: Keybindings
@@ -230,7 +234,7 @@ keysSystem =
 keysSpawnables :: Keybindings
 keysSpawnables =
   [ ("M-<Return>", spawn $ C.term C.applications)
-  , ("M-S-<Return>", spawn $ C.term C.applications ++ " -e tmux attach -t Home")
+  , ("M-S-<Return>", spawn $ C.term C.applications ++ " -e tmux new-session -A -s Home")
   , ("M-o b", spawn $ C.browser C.applications)
   , ("M-o S-b", wrapKbdLayout $ selectBrowserByNameAndSpawn promptTheme)
   , ("M-o e", spawn "$TERM --hold -e nvim")

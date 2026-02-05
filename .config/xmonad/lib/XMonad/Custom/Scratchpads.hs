@@ -22,7 +22,7 @@ spawnTerminalWith :: String -> String -> String
 spawnTerminalWith className command = unwords $ terminal : options
   where
     terminal = term applications
-    options = ["--class", className, "-e", command]
+    options = ["--class", className, "--command", command]
 
 -- class' = className ++ "," ++ className
 
@@ -36,7 +36,7 @@ floatingNSP = centerFloat w h
 
 scratchpads :: [NamedScratchpad]
 scratchpads =
-  [ NS "console" (spawnTerminalWith "NSPConsole" "$XMONAD_CONFIG_DIR/scripts/nsp-console.sh") (className =? "NSPConsole") doFullCenterFloat
+  [ NS "console" (spawnTerminalWith "NSPConsole" "tmux new-session -A -s Home") (className =? "NSPConsole") doFullCenterFloat
   , NS "volume" (spawnTerminalWith "NSPVolume" (C.mixer C.applications)) (className =? "NSPVolume") floatingNSP
   , NS "soundEffects" (C.soundEffects C.applications) (appName =? "easyeffects") (centerFloat 0.6 0.6)
   , NS "music" (C.player C.applications) (className =? "Spotify") doFullCenterFloat
@@ -45,8 +45,8 @@ scratchpads =
   , NS "cpupower" "cpupower-gui" (className =? "Cpupower-gui") (centerFloat 0.7 0.7)
   , NS "reader" "readest" (className =? "Readest") doFullCenterFloat
   , NS "notes" "obsidian" (className =? "obsidian") (centerFloat 0.9 0.9)
-  , NS "notes-nvim" (spawnTerminalWith "NSPNotes" "--hold -e nvim ~/Notes/") (className =? "NSPNotes") doFullCenterFloat
-  , NS "logs" (spawnTerminalWith "NSPLogs" "--hold -e journalctl -f") (className =? "NSPLogs") doFullCenterFloat
+  , NS "notes-nvim" (spawnTerminalWith "NSPNotes" "nvim ~/Notes/") (className =? "NSPNotes") doFullCenterFloat
+  , NS "logs" (spawnTerminalWith "NSPLogs" "journalctl -f") (className =? "NSPLogs") doFullCenterFloat
   , NS "calculator" (spawnTerminalWith "NSPCalc" "qalc") (className =? "NSPCalc") (centerFloat 0.4 0.4)
   , NS "calendar" (spawnTerminalWith "NSPCalendar" "khal interactive") (className =? "NSPCalendar") (centerFloat 0.4 0.4)
   , NS "translate" (spawnTerminalWith "NSPTrans" "trans :ru -I") (className =? "NSPTrans") (centerFloat 0.5 0.5)
