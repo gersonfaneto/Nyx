@@ -52,7 +52,6 @@ in
     kew
     zathura
     rofimoji
-    nautilus
   ];
 
   services.kdeconnect = {
