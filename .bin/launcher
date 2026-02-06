@@ -2,4 +2,4 @@
 
 rofi -show drun \
   -theme "$HOME/.config/rofi/styles/style-01.rasi" \
-  -theme-str 'element-text { font: "Aporetic Sans Mono 10";  }'
+  -theme-str 'element-text { font: "Aporetic Serif Mono 10";  }'

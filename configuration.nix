@@ -412,7 +412,7 @@
         emoji = [ "Noto Emoji" ];
         serif = [ "Aporetic Sans" ];
         sansSerif = [ "Aporetic Serif" ];
-        monospace = [ "Aporetic Sans Mono" ];
+        monospace = [ "Aporetic Serif Mono" ];
       };
     };
   };

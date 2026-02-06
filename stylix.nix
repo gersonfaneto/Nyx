@@ -29,7 +29,7 @@ in
     };
     monospace = {
       package = pkgs.aporetic-bin;
-      name = "Aporetic Sans Mono";
+      name = "Aporetic Serif Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;

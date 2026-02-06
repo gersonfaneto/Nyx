@@ -387,7 +387,7 @@ c.fonts.completion.category = "bold default_size default_family"
 c.fonts.completion.entry = "default_size default_family"
 c.fonts.contextmenu = None
 c.fonts.debug_console = "default_size default_family"
-c.fonts.default_family = ["Aporetic Sans Mono"]
+c.fonts.default_family = ["Aporetic Serif Mono"]
 c.fonts.default_size = "10pt"
 
 c.fonts.downloads = "default_size default_family"
@@ -409,7 +409,7 @@ c.fonts.tooltip = None
 
 c.fonts.web.family.sans_serif = "Aporetic Sans"
 c.fonts.web.family.serif = "Aporetic Serif"
-c.fonts.web.family.standard = "Aporetic Sans Mono"
+c.fonts.web.family.standard = "Aporetic Serif Mono"
 
 c.fonts.web.size.default = 16
 c.fonts.web.size.default_fixed = 13
