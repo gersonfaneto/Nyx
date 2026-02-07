@@ -122,9 +122,11 @@ elif [[ -n "$query" ]]; then
       # Inside tmux, create detached and switch
       tmux new-session -d -s "$query"
       tmux switch-client -t "$query"
+      tmux send-keys -c "$query" "z $query" Enter
     else
       # Outside tmux, create and attach directly
       tmux new-session -s "$query"
+      tmux send-keys -c "$query" "z $query" Enter
     fi
   fi
 fi
