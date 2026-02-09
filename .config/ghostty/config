@@ -8,7 +8,7 @@ cursor-style-blink = false
 shell-integration-features = no-cursor
 
 font-size   = 10
-font-family = Aporetic Serif Mono
+font-family = MonacoLigaturized Nerd Font Mono
 
 window-padding-x = 8
 window-padding-y = 8

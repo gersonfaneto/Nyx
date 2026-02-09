@@ -225,6 +225,7 @@
       alsa-utils
       ani-cli
       arandr
+      autorandr
       bat
       beets
       bluetui
@@ -402,17 +403,14 @@
 
       # Emojis
       noto-fonts-color-emoji
-
-      # Classic
-      aporetic-bin
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "Aporetic Sans" ];
-        sansSerif = [ "Aporetic Serif" ];
-        monospace = [ "Aporetic Serif Mono" ];
+        serif = [ "Monaco Nerd Font Mono" ];
+        sansSerif = [ "Monaco Nerd Font Mono" ];
+        monospace = [ "MonacoLigaturized Nerd Font Mono" ];
       };
     };
   };

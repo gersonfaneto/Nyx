@@ -1,5 +1,5 @@
 Config
-  { font = "Aporeti Serif Mono Bold 10"
+  { font = "Monaco Nerd Font Mono 10"
   , bgColor = "#0B0806"
   , fgColor = "#A19782"
   , alpha = 255

@@ -1,8 +1,4 @@
-{ lib, pkgs, config, inputs, ... }:
-let
-  colors = config.lib.stylix.colors.withHashtag;
-  scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-in
+{ pkgs, inputs, ... }:
 {
   imports = [ inputs.stylix.homeModules.stylix ];
 
@@ -10,7 +6,7 @@ in
   stylix.autoEnable = true;
   stylix.enableReleaseChecks = false;
 
-  stylix.base16Scheme = scheme;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
 
   stylix.polarity = "dark";
 
@@ -20,26 +16,26 @@ in
 
   stylix.fonts = {
     serif = {
-      package = pkgs.aporetic-bin;
-      name = "Aporetic Serif";
+      # package = null;
+      name = "Monaco Nerd Font Mono";
     };
     sansSerif = {
-      package = pkgs.aporetic-bin;
-      name = "Aporeric Sans";
+      # package = null;
+      name = "Monaco Nerd Font Mono";
     };
     monospace = {
-      package = pkgs.aporetic-bin;
-      name = "Aporetic Serif Mono";
+      # package = null;
+      name = "MonacoLigaturized Nerd Font Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;
       name = "Noto Color Emoji";
     };
     sizes = {
-      applications = 10; # Size for GUI applications
-      desktop = 10; # Size for desktop environment elements
-      popups = 10; # Size for notifications and menus
-      terminal = 10; # Size for terminal/text editors
+      applications = 10;
+      desktop = 10;
+      popups = 10;
+      terminal = 10;
     };
   };
 
@@ -55,15 +51,4 @@ in
     dark = "Numix-Square";
     light = "Numix-Square-Light";
   };
-
-  # Declare all 16 base16 colors as session variables to be used by applications
-  # not controlled by Home Manager.
-  home.sessionVariables = builtins.listToAttrs (
-    builtins.genList
-      (x: {
-        name = "STYLIX_BASE_0${lib.toHexString x}";
-        value = colors."base0${lib.toHexString x}";
-      })
-      15
-  );
 }
