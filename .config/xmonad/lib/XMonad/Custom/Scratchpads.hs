@@ -7,6 +7,8 @@ module XMonad.Custom.Scratchpads
 where
 
 import XMonad.Core
+import XMonad.Custom.Manage.ManageHelpers
+import XMonad.Custom.Misc as C
 import XMonad.ManageHook
 import XMonad.Util.NamedScratchpad hiding
   ( namedScratchpadFilterOutWorkspace
@@ -15,13 +17,16 @@ import XMonad.Util.WorkspaceCompare
 
 import XMonad.StackSet qualified as S
 
-import XMonad.Custom.Manage.ManageHelpers
-import XMonad.Custom.Misc as C
-
 spawnTerminalWith :: String -> String -> String
 spawnTerminalWith className command = unwords $ terminal : options
   where
     terminal = term applications
+    options = ["--class", className, "--command", command]
+
+spawnTerminalWith' :: String -> String -> String
+spawnTerminalWith' className command = unwords $ terminal : options
+  where
+    terminal = term' applications
     options = ["--class", className, "--command", command]
 
 -- class' = className ++ "," ++ className
@@ -36,7 +41,7 @@ floatingNSP = centerFloat w h
 
 scratchpads :: [NamedScratchpad]
 scratchpads =
-  [ NS "console" (spawnTerminalWith "NSPConsole" "tmux new-session -A -s Home") (className =? "NSPConsole") doFullCenterFloat
+  [ NS "console" (spawnTerminalWith' "NSPConsole" "tmux new-session -A -s Home") (className =? "NSPConsole") doFullCenterFloat
   , NS "volume" (spawnTerminalWith "NSPVolume" (C.mixer C.applications)) (className =? "NSPVolume") floatingNSP
   , NS "soundEffects" (C.soundEffects C.applications) (appName =? "easyeffects") (centerFloat 0.6 0.6)
   , NS "music" (C.player C.applications) (className =? "Spotify") doFullCenterFloat

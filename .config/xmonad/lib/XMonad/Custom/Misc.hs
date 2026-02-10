@@ -13,7 +13,7 @@ data Applications = Applications
   , player :: !String
   , soundEffects :: !String
   , term :: !String
-  , termSmallFont :: !String
+  , term' :: !String
   , top :: !String
   , reader :: !String
   , editor :: !String
@@ -26,16 +26,16 @@ data Applications = Applications
 applications :: Applications
 applications =
   Applications
-    { browser = "$BROWSER"
+    { browser = "alacritty"
     , mixer = "wiremix"
     , notify = "notify-send"
     , player = "spotify"
     , soundEffects = "easyeffects"
-    , term = "$TERM"
-    , termSmallFont = "$TERM -o font.size=8"
+    , term = "alacritty"
+    , term' = "ghostty"
     , top = "btm"
     , reader = "zathura"
-    , editor = "$EDITOR"
+    , editor = "emacsclient --create-frame --alternate-editor 'emacs'"
     , appmenu = "launcher"
     , virtualMachinesManger = "virt-manager"
     , screenZoomer = "boomer"
