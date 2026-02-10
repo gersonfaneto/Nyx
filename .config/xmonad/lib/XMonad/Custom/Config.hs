@@ -14,7 +14,6 @@ import XMonad.Actions.MostRecentlyUsed
 import XMonad.Actions.Navigation2D (withNavigation2DConfig)
 import XMonad.Actions.Submap
 import XMonad.Core
-import XMonad.Custom.Scratchpads
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
@@ -46,6 +45,11 @@ import XMonad.Util.WindowProperties
 import XMonad.Util.WorkspaceCompare
 
 import Data.Map qualified as M
+import XMonad.StackSet qualified as S
+import XMonad.Util.Hacks qualified as Hacks
+
+import XMonad.Custom.Scratchpads
+
 import XMonad.Custom.Actions.RecentWindows qualified as C
 import XMonad.Custom.Actions.RecentWorkspaces qualified as C
 import XMonad.Custom.Bindings qualified as C
@@ -62,8 +66,6 @@ import XMonad.Custom.Navigation qualified as C
 import XMonad.Custom.Scratchpads qualified as C
 import XMonad.Custom.Theme qualified as C
 import XMonad.Custom.Workspaces qualified as C
-import XMonad.StackSet qualified as S
-import XMonad.Util.Hacks qualified as Hacks
 
 mConfig =
   def
