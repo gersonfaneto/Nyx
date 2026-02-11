@@ -23,26 +23,10 @@
 (global-set-key (kbd "M-o") 'other-window) ;; Cycle to the next window
 
 ;; --- Editing and Navigation Keybindings ---
-(global-set-key (kbd "M-s s") 'flyspell-mode)       ;; Toggle spell checking
-(global-set-key (kbd "M-g l") 'browse-url)          ;; Browse URL at point
+(global-set-key (kbd "M-j") 'duplicate-dwim)
 
-;; Function to duplicate the current line.
-(defun minimal/duplicate-line ()
-  "Duplicates current line"
-  (interactive)
-  (let ((column (- (point) (point-at-bol))) ;; Store current column
-        (line (let ((s (thing-at-point 'line t))) ;; Get current line content
-                (if s (string-remove-suffix "\n" s) ""))))
-    (move-end-of-line 1) ;; Move to end of line
-    (newline)            ;; Insert a newline
-    (insert line)        ;; Insert the duplicated line
-    (move-beginning-of-line 1) ;; Move back to the start of the buffer
-    (forward-char column)))   ;; Restore original column
-
-(global-set-key (kbd "C-.") 'minimal/duplicate-line) ;; Duplicate current line
-
-(global-set-key (kbd "M-j") 'forward-paragraph)       ;; Move to next paragraph
-(global-set-key (kbd "M-k") 'backward-paragraph)      ;; Move to previous paragraph
+(global-set-key (kbd "M-g l") 'browse-url)
+(global-set-key (kbd "M-s s") 'flyspell-mode)
 
 ;; --- Buffer Management ---
 (defun kill-all-buffers ()
