@@ -32,10 +32,6 @@
       "rev": "20e2d3099ba99f37f9a7c7d9ed2a9d83c3b20618",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
-    "ghcid": {
-      "rev": "b7dc5c4ee640b6c8137ecfd0a2b50df278015221",
-      "src": "https://github.com/ndmitchell/ghcid"
-    },
     "gitsigns.nvim": {
       "rev": "abf82a65f185bd54adc0679f74b7d6e1ada690c9",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
@@ -52,15 +48,6 @@
       "rev": "87b1a3506211538f460786c23f98ec63ad9af4e5",
       "src": "https://github.com/theprimeagen/harpoon",
       "version": "'harpoon2'"
-    },
-    "haskell-tools.nvim": {
-      "rev": "2bbe8a03145d8e798f4ca0c2694016714de2bdd0",
-      "src": "https://github.com/mrcjkb/haskell-tools.nvim",
-      "version": "6.0.0 - 7.0.0"
-    },
-    "haskell-vim": {
-      "rev": "f35d02204b4813d1dbe8b0e98cc39701a4b8e15e",
-      "src": "https://github.com/neovimhaskell/haskell-vim"
     },
     "img-clip.nvim": {
       "rev": "b6ddfb97b5600d99afe3452d707444afda658aca",
