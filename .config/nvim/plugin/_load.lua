@@ -84,13 +84,21 @@ end)
 
 -- session
 if vim.g.loaded_session == nil then
-  vim.keymap.set('n', '<Leader>w', function()
+  vim.keymap.set('n', '<Leader>ww', function()
     require('plugin.session').select(true)
   end, { desc = 'Load session (workspace) interactively' })
 
-  vim.keymap.set('n', '<Leader>W', function()
+  vim.keymap.set('n', '<Leader>wW', function()
     require('plugin.session').load(nil, true)
   end, { desc = 'Load session (workspace) for cwd' })
+
+  vim.keymap.set('n', '<Leader>ws', function()
+    require('plugin.session').save(nil, true)
+  end, { desc = 'Save session (workspace) at cwd' })
+
+  vim.keymap.set('n', '<Leader>wr', function()
+    require('plugin.session').remove(nil)
+  end, { desc = 'Remove session (workspace) at cwd' })
 
   local function setup()
     require('plugin.session').setup({
