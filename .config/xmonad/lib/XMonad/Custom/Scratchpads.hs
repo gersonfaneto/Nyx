@@ -6,17 +6,16 @@ module XMonad.Custom.Scratchpads
   )
 where
 
-import XMonad.Core
-import XMonad.ManageHook
-import XMonad.Util.NamedScratchpad hiding
-  ( namedScratchpadFilterOutWorkspace
-  )
-import XMonad.Util.WorkspaceCompare
+import           XMonad.Core
+import           XMonad.ManageHook
+import           XMonad.Util.NamedScratchpad        hiding
+                                                    (namedScratchpadFilterOutWorkspace)
+import           XMonad.Util.WorkspaceCompare
 
-import XMonad.StackSet qualified as S
+import qualified XMonad.StackSet                    as S
 
-import XMonad.Custom.Manage.ManageHelpers
-import XMonad.Custom.Misc as C
+import           XMonad.Custom.Manage.ManageHelpers
+import           XMonad.Custom.Misc                 as C
 
 spawnTerminalWith :: String -> String -> String
 spawnTerminalWith className command = unwords $ terminal : options

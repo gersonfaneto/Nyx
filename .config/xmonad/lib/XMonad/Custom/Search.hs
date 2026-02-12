@@ -6,18 +6,18 @@ module XMonad.Custom.Search
   )
 where
 
-import Data.Foldable
-import Data.List
-import Data.Maybe (fromMaybe)
-import XMonad
-import XMonad.Actions.Search
-import XMonad.Actions.Search (searchEngine)
-import XMonad.Actions.ShowText
-import XMonad.Prompt
+import           Data.Foldable
+import           Data.List
+import           Data.Maybe              (fromMaybe)
+import           XMonad
+import           XMonad.Actions.Search
+import           XMonad.Actions.Search   (searchEngine)
+import           XMonad.Actions.ShowText
+import           XMonad.Prompt
 
-import Data.Map.Strict qualified as M
+import qualified Data.Map.Strict         as M
 
-import XMonad.Custom.Prompt
+import           XMonad.Custom.Prompt
 
 myEngines :: [SearchEngine]
 myEngines =

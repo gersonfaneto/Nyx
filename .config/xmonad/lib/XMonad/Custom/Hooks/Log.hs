@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveDataTypeable  #-}
 {-# LANGUAGE ImportQualifiedPost #-}
 
 module XMonad.Custom.Hooks.Log
@@ -8,39 +8,35 @@ module XMonad.Custom.Hooks.Log
   )
 where
 
-import Data.List
-  ( find
-  , isInfixOf
-  )
-import Data.Maybe (fromMaybe)
-import Data.Typeable (Typeable)
-import System.IO
-import XMonad hiding (logHook)
-import XMonad.Actions.CopyWindow
-import XMonad.Actions.Minimize
-import XMonad.Actions.SwapPromote
-import XMonad.Actions.UpdatePointer
-import XMonad.Hooks.CurrentWorkspaceOnTop
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.RefocusLast
-import XMonad.Hooks.ShowWName
-import XMonad.Hooks.StatusBar.PP
-import XMonad.Util.Loggers
-import XMonad.Util.Loggers.NamedScratchpad
-import XMonad.Util.Minimize
-import XMonad.Util.NamedScratchpad hiding
-  ( namedScratchpadFilterOutWorkspace
-  )
-import XMonad.Util.WorkspaceCompare
+import           Data.List                           (find, isInfixOf)
+import           Data.Maybe                          (fromMaybe)
+import           Data.Typeable                       (Typeable)
+import           System.IO
+import           XMonad                              hiding (logHook)
+import           XMonad.Actions.CopyWindow
+import           XMonad.Actions.Minimize
+import           XMonad.Actions.SwapPromote
+import           XMonad.Actions.UpdatePointer
+import           XMonad.Hooks.CurrentWorkspaceOnTop
+import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Hooks.RefocusLast
+import           XMonad.Hooks.ShowWName
+import           XMonad.Hooks.StatusBar.PP
+import           XMonad.Util.Loggers
+import           XMonad.Util.Loggers.NamedScratchpad
+import           XMonad.Util.Minimize
+import           XMonad.Util.NamedScratchpad         hiding
+                                                     (namedScratchpadFilterOutWorkspace)
+import           XMonad.Util.WorkspaceCompare
 
-import Data.Map qualified as Map
-import XMonad.StackSet qualified as W
-import XMonad.Util.ExtensibleState qualified as XS
+import qualified Data.Map                            as Map
+import qualified XMonad.StackSet                     as W
+import qualified XMonad.Util.ExtensibleState         as XS
 
-import XMonad.Custom.Hooks.Layout (layoutNames)
-import XMonad.Custom.Scratchpads
-import XMonad.Custom.Theme
-import XMonad.Custom.Utils.Loggers
+import           XMonad.Custom.Hooks.Layout          (layoutNames)
+import           XMonad.Custom.Scratchpads
+import           XMonad.Custom.Theme
+import           XMonad.Custom.Utils.Loggers
 
 -- | State type for layout name cache
 newtype LayoutNameCache = LayoutNameCache {unLayoutNameCache :: Map.Map String String}

@@ -1,9 +1,9 @@
 module XMonad.Custom.Utils.Keyboard where
 
-import Data.Char (toLower, toUpper)
-import XMonad
-import XMonad.Actions.ShowText
-import XMonad.Hooks.StatusBar.PP (wrap)
+import           Data.Char                 (toLower, toUpper)
+import           XMonad
+import           XMonad.Actions.ShowText
+import           XMonad.Hooks.StatusBar.PP (wrap)
 
 -- | Formats a list of keyboard layouts into a single string, highlighting the current layout.
 --

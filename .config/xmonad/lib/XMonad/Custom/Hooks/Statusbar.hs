@@ -3,14 +3,14 @@ module XMonad.Custom.Hooks.Statusbar
   )
 where
 
-import Control.Monad
-import Data.Maybe
-import Text.Printf
-import XMonad
-import XMonad.Hooks.StatusBar
-import XMonad.Util.ClickableWorkspaces
+import           Control.Monad
+import           Data.Maybe
+import           Text.Printf
+import           XMonad
+import           XMonad.Hooks.StatusBar
+import           XMonad.Util.ClickableWorkspaces
 
-import XMonad.Custom.Hooks.Log
+import           XMonad.Custom.Hooks.Log
 
 barCommand :: Int -> String -> String
 barCommand = printf command

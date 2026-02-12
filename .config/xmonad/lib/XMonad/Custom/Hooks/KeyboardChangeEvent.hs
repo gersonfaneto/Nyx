@@ -22,15 +22,15 @@ module XMonad.Custom.Hooks.KeyboardChangeEvent
   )
 where
 
-import Data.Char (toLower, toUpper)
-import XMonad
-import XMonad.Actions.ShowText
-import XMonad.Hooks.ServerMode
-import XMonad.Hooks.StatusBar.PP (wrap)
-import XMonad.Prelude
+import           Data.Char                      (toLower, toUpper)
+import           XMonad
+import           XMonad.Actions.ShowText
+import           XMonad.Hooks.ServerMode
+import           XMonad.Hooks.StatusBar.PP      (wrap)
+import           XMonad.Prelude
 
-import XMonad.Custom.Actions.Keyboard
-import XMonad.Custom.Utils.Keyboard
+import           XMonad.Custom.Actions.Keyboard
+import           XMonad.Custom.Utils.Keyboard
 
 -- | Main event hook that listens for keyboard layout change events
 -- To be used in the handleEventHook of your XMonad configuration

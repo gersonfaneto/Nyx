@@ -16,3 +16,4 @@ repl:
 .PHONY: format
 format:
 	find . -type f -name '*.hs' ! \( -path '*dist-newstyle*' -o -path '*xmobarrc*' \)  | paste -sd ' ' | xargs fourmolu --mode inplace
+	find . -type f -name '*.hs' ! \( -path '*dist-newstyle*' -o -path '*xmobarrc*' \)  | paste -sd ' ' | xargs stylish-haskell --inplace

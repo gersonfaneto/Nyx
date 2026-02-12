@@ -1,9 +1,9 @@
-{-# LANGUAGE BangPatterns #-}
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE BangPatterns        #-}
+{-# LANGUAGE DeriveGeneric       #-}
 {-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE StrictData #-}
-{-# LANGUAGE TupleSections #-}
+{-# LANGUAGE StrictData          #-}
+{-# LANGUAGE TupleSections       #-}
 
 -- |
 -- Module      :  XMonad.Custom.Utils.ChordKeys
@@ -33,26 +33,26 @@ module XMonad.Custom.Utils.ChordKeys
   )
 where
 
-import Control.DeepSeq (NFData (..), force)
-import Control.Monad (guard)
-import Data.Char (isSpace)
-import Data.List (sort, sortOn)
-import Data.Map.Strict (Map)
-import Data.Maybe (fromMaybe)
-import Data.Text (Text)
-import Data.Vector (Vector)
-import GHC.Generics (Generic)
-import XMonad hiding (workspaces)
+import           Control.DeepSeq (NFData (..), force)
+import           Control.Monad   (guard)
+import           Data.Char       (isSpace)
+import           Data.List       (sort, sortOn)
+import           Data.Map.Strict (Map)
+import           Data.Maybe      (fromMaybe)
+import           Data.Text       (Text)
+import           Data.Vector     (Vector)
+import           GHC.Generics    (Generic)
+import           XMonad          hiding (workspaces)
 
-import Data.Map.Strict qualified as M
-import Data.Text qualified as T
-import Data.Vector qualified as V
+import qualified Data.Map.Strict as M
+import qualified Data.Text       as T
+import qualified Data.Vector     as V
 
 -- | Configuration for chord generation with validation
 data ChordScheme = ChordScheme
   { chordLabels :: {-# UNPACK #-} !(Vector Char)
-  , chordOrder :: !ChordOrderStrategy
-  , labelCount :: {-# UNPACK #-} !Int
+  , chordOrder  :: !ChordOrderStrategy
+  , labelCount  :: {-# UNPACK #-} !Int
   -- ^ Cached value of labels length for better performance
   }
   deriving (Show, Eq, Generic)
@@ -165,7 +165,7 @@ generateChords scheme@ChordScheme {chordLabels, chordOrder, labelCount} elements
       -- Apply ordering strategy - use seq to evaluate baseChords early
       !sortedChords = take numElements $ case chordOrder of
         FrequencyBased -> optimizeChords costMap baseChords
-        AlphaNumeric -> sort baseChords
+        AlphaNumeric   -> sort baseChords
 
       -- Create the final mapping with strict evaluation
       !result = M.fromList $! zip sortedChords elements
@@ -207,7 +207,7 @@ extractChordFromBracket :: String -> Maybe String
 extractChordFromBracket str = case break (== '[') str of
   (_, '[' : rest) -> case break (== ']') rest of
     (chord, ']' : _) -> Just $ trim chord
-    _ -> Nothing -- Missing closing bracket
+    _                -> Nothing -- Missing closing bracket
   _ -> Nothing -- No opening bracket
   where
     -- Trim whitespace from both ends of a string

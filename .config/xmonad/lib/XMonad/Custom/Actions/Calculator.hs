@@ -1,12 +1,12 @@
 module XMonad.Custom.Actions.Calculator where
 
-import Control.Monad
-import Data.Char
-import Data.List
-import XMonad
-import XMonad.Prompt
-import XMonad.Prompt.Input
-import XMonad.Util.Run (runProcessWithInput)
+import           Control.Monad
+import           Data.Char
+import           Data.List
+import           XMonad
+import           XMonad.Prompt
+import           XMonad.Prompt.Input
+import           XMonad.Util.Run     (runProcessWithInput)
 
 calcPrompt :: XPConfig -> String -> X ()
 calcPrompt config answer =

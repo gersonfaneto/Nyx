@@ -1,11 +1,11 @@
 module XMonad.Custom.Actions.ScratchpadChooser where
 
-import XMonad
-import XMonad.Prompt
-import XMonad.Util.NamedScratchpad
+import           XMonad
+import           XMonad.Prompt
+import           XMonad.Util.NamedScratchpad
 
-import XMonad.Custom.Prompt
-import XMonad.Custom.Scratchpads (scratchpads)
+import           XMonad.Custom.Prompt
+import           XMonad.Custom.Scratchpads   (scratchpads)
 
 -- Prompt
 data ScratchpadByName = ScratchpadByName

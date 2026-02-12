@@ -1,13 +1,13 @@
 module XMonad.Custom.Actions.LayoutChooser where
 
-import XMonad
-import XMonad.Actions.GridSelect
-import XMonad.Prompt
+import           XMonad
+import           XMonad.Actions.GridSelect
+import           XMonad.Prompt
 
-import Data.Map qualified as M
+import qualified Data.Map                   as M
 
-import XMonad.Custom.Hooks.Layout (layoutMap, layoutNames)
-import XMonad.Custom.Prompt
+import           XMonad.Custom.Hooks.Layout (layoutMap, layoutNames)
+import           XMonad.Custom.Prompt
 
 -- Prompt
 data LayoutByName = LayoutByName

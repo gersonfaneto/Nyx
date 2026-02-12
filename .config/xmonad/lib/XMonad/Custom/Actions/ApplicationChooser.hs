@@ -1,22 +1,22 @@
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveGeneric       #-}
+{-# LANGUAGE DerivingStrategies  #-}
 {-# LANGUAGE ImportQualifiedPost #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TupleSections #-}
+{-# LANGUAGE LambdaCase          #-}
+{-# LANGUAGE OverloadedStrings   #-}
+{-# LANGUAGE TupleSections       #-}
 
 module XMonad.Custom.Actions.ApplicationChooser where
 
-import Data.List (intercalate, nub)
-import Data.Maybe (fromMaybe)
-import GHC.Generics (Generic)
-import XMonad
-import XMonad.Prompt
-import XMonad.Prompt.Shell
+import           Data.List            (intercalate, nub)
+import           Data.Maybe           (fromMaybe)
+import           GHC.Generics         (Generic)
+import           XMonad
+import           XMonad.Prompt
+import           XMonad.Prompt.Shell
 
-import Data.Map.Strict qualified as Map
+import qualified Data.Map.Strict      as Map
 
-import XMonad.Custom.Prompt
+import           XMonad.Custom.Prompt
 
 data AppCategory
   = Browsers
@@ -27,14 +27,14 @@ data AppCategory
 
 data Application = Application
   { applicationCategory :: !AppCategory
-  , applicationName :: !String
-  , applicationCommand :: !String
+  , applicationName     :: !String
+  , applicationCommand  :: !String
   }
   deriving stock (Eq, Show, Generic)
 
 -- A more efficient structure for storing application data
 data AppRegistry = AppRegistry
-  { appsByCategory :: !(Map.Map AppCategory [Application])
+  { appsByCategory   :: !(Map.Map AppCategory [Application])
   , appNameToCommand :: !(Map.Map String String)
   }
   deriving stock (Generic)

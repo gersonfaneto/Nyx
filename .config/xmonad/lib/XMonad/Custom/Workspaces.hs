@@ -1,38 +1,38 @@
 {-# LANGUAGE ImportQualifiedPost #-}
-{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE RecordWildCards     #-}
 
 module XMonad.Custom.Workspaces where
 
-import Data.List (find)
-import Data.Maybe (fromMaybe)
-import XMonad hiding (workspaces)
-import XMonad.Actions.DynamicProjects
-import XMonad.Actions.WindowGo
-import XMonad.Util.NamedScratchpad
+import           Data.List                                (find)
+import           Data.Maybe                               (fromMaybe)
+import           XMonad                                   hiding (workspaces)
+import           XMonad.Actions.DynamicProjects
+import           XMonad.Actions.WindowGo
+import           XMonad.Util.NamedScratchpad
 
-import XMonad.Custom.Actions.ApplicationChooser
-import XMonad.Custom.Actions.DoActions
-import XMonad.Custom.Actions.Keyboard
-import XMonad.Custom.Prompt
-import XMonad.Custom.Scratchpads
+import           XMonad.Custom.Actions.ApplicationChooser
+import           XMonad.Custom.Actions.DoActions
+import           XMonad.Custom.Actions.Keyboard
+import           XMonad.Custom.Prompt
+import           XMonad.Custom.Scratchpads
 
-import XMonad.Custom.Misc qualified as C
+import qualified XMonad.Custom.Misc                       as C
 
 data WorkspaceNames = WorkspaceNames
-  { generic :: String
-  , code :: String
-  , web :: String
-  , wsread :: String
-  , sys :: String
-  , tmp :: String
-  , wsWRK :: String
+  { generic  :: String
+  , code     :: String
+  , web      :: String
+  , wsread   :: String
+  , sys      :: String
+  , tmp      :: String
+  , wsWRK    :: String
   , template :: String
   , graphics :: String
-  , sound :: String
-  , vm :: String
-  , write :: String
-  , note :: String
-  , git :: String
+  , sound    :: String
+  , vm       :: String
+  , write    :: String
+  , note     :: String
+  , git      :: String
   , messages :: String
   }
 
@@ -83,7 +83,7 @@ spawnAppByName category appName = do
       maybeApp = find (\app -> applicationName app == appName) apps
   case maybeApp of
     Just app -> spawn (applicationCommand app)
-    Nothing -> return ()
+    Nothing  -> return ()
 
 -- All projects are either long lived (workspaces) or dynamic workspaces for specific
 -- use-cases, or dynamic projects used for starting something from use-case workspace `template`

@@ -1,9 +1,9 @@
 module XMonad.Custom.Actions.Screen.Screencast where
 
-import Data.Foldable
-import Text.Read (readMaybe)
-import XMonad
-import XMonad.Prompt
+import           Data.Foldable
+import           Text.Read     (readMaybe)
+import           XMonad
+import           XMonad.Prompt
 
 data ScreencastOption
   = RecordToMP4

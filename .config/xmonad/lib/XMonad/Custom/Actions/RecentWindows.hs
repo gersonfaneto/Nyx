@@ -1,9 +1,9 @@
-{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE BangPatterns               #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE ImportQualifiedPost #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE StrictData #-}
+{-# LANGUAGE ImportQualifiedPost        #-}
+{-# LANGUAGE LambdaCase                 #-}
+{-# LANGUAGE NamedFieldPuns             #-}
+{-# LANGUAGE StrictData                 #-}
 
 -- |
 -- Module      :  XMonad.Custom.Actions.RecentWindows
@@ -35,35 +35,37 @@ module XMonad.Custom.Actions.RecentWindows
   )
 where
 
-import Control.Monad.Trans.Maybe (MaybeT (..))
-import Data.Char (toLower)
-import Data.List (isInfixOf, isPrefixOf, length, lines, take)
-import Data.Monoid (getAll)
-import Data.Ratio ((%))
-import Graphics.X11.Types
-import Graphics.X11.Xlib.Event
-import Graphics.X11.Xlib.Extras
-import XMonad
-import XMonad.Actions.MostRecentlyUsed (Location (..))
-import XMonad.Actions.ShowText
-import XMonad.Core
-import XMonad.Hooks.StatusBar.PP
-import XMonad.Prelude
-import XMonad.Prompt
-import XMonad.Prompt.Window
-import XMonad.Util.History (History, erase, event, ledger, origin)
-import XMonad.Util.NamedWindows (getName)
-import XMonad.Util.XSelection (getSelection)
+import           Control.Monad.Trans.Maybe       (MaybeT (..))
+import           Data.Char                       (toLower)
+import           Data.List                       (isInfixOf, isPrefixOf, length,
+                                                  lines, take)
+import           Data.Monoid                     (getAll)
+import           Data.Ratio                      ((%))
+import           Graphics.X11.Types
+import           Graphics.X11.Xlib.Event
+import           Graphics.X11.Xlib.Extras
+import           XMonad
+import           XMonad.Actions.MostRecentlyUsed (Location (..))
+import           XMonad.Actions.ShowText
+import           XMonad.Core
+import           XMonad.Hooks.StatusBar.PP
+import           XMonad.Prelude
+import           XMonad.Prompt
+import           XMonad.Prompt.Window
+import           XMonad.Util.History             (History, erase, event, ledger,
+                                                  origin)
+import           XMonad.Util.NamedWindows        (getName)
+import           XMonad.Util.XSelection          (getSelection)
 
-import Data.List.NonEmpty qualified as NE
-import Data.Map.Strict qualified as M
-import XMonad.StackSet qualified as W
-import XMonad.Util.ExtensibleConf qualified as XC
-import XMonad.Util.ExtensibleState qualified as XS
-import XMonad.Util.Timer qualified as Timer
+import qualified Data.List.NonEmpty              as NE
+import qualified Data.Map.Strict                 as M
+import qualified XMonad.StackSet                 as W
+import qualified XMonad.Util.ExtensibleConf      as XC
+import qualified XMonad.Util.ExtensibleState     as XS
+import qualified XMonad.Util.Timer               as Timer
 
-import XMonad.Custom.Prompt
-import XMonad.Custom.Utils.ChordKeys
+import           XMonad.Custom.Prompt
+import           XMonad.Custom.Utils.ChordKeys
 
 -- --< Interface >-- {{{
 
@@ -97,9 +99,9 @@ newtype RecentWindows = RecentWindows () deriving (Semigroup)
 
 -- | State for tracking window history
 data RecentWindowsState = RecentWindowsState
-  { busy :: !Bool
+  { busy        :: !Bool
   -- ^ Flag to prevent recursive updates
-  , hist :: !(History Window Location)
+  , hist        :: !(History Window Location)
   , lastFocused :: !(Maybe Window)
   -- ^ Cache of focused window to avoid redundant updates
   }
@@ -111,8 +113,8 @@ instance ExtensionClass RecentWindowsState where
 
 -- | Represents a window with its display information
 data WindowInfo = WindowInfo
-  { winId :: !Window
-  , winName :: !String
+  { winId    :: !Window
+  , winName  :: !String
   , winIndex :: !(Maybe Int)
   , winChord :: !(Maybe String)
   }
@@ -272,7 +274,7 @@ withWindowSelection selType maxWindows xpconfig action = do
         matchChord input = \name ->
           case extractChordFromBracket name of
             Just chord -> input `isPrefixOf` chord
-            Nothing -> False
+            Nothing    -> False
 
     -- Number matching completer
     mkNumberCompleter names xpc input = case input of

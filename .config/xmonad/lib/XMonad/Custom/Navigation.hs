@@ -3,7 +3,7 @@ module XMonad.Custom.Navigation
   )
 where
 
-import XMonad.Actions.Navigation2D
+import           XMonad.Actions.Navigation2D
 
 navigation :: Navigation2DConfig
 navigation =

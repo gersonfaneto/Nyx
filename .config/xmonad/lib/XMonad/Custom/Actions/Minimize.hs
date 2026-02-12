@@ -1,17 +1,17 @@
 module XMonad.Custom.Actions.Minimize where
 
-import Control.Monad
-import Data.Foldable
-import Data.Functor
-import Data.Maybe
-import Graphics.X11.Types
-import XMonad
-import XMonad.Actions.GridSelect
-import XMonad.Actions.Minimize
-import XMonad.Core
-import XMonad.Prompt
+import           Control.Monad
+import           Data.Foldable
+import           Data.Functor
+import           Data.Maybe
+import           Graphics.X11.Types
+import           XMonad
+import           XMonad.Actions.GridSelect
+import           XMonad.Actions.Minimize
+import           XMonad.Core
+import           XMonad.Prompt
 
-import XMonad.Custom.Prompt
+import           XMonad.Custom.Prompt
 
 getWinTitle :: Window -> X String
 getWinTitle w =

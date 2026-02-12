@@ -2,18 +2,18 @@
 
 module XMonad.Custom.Utils.Loggers where
 
-import Control.Monad
-import Data.List (intersect)
-import XMonad
-import XMonad.Actions.Minimize
-import XMonad.Hooks.StatusBar.PP
-import XMonad.Util.Loggers
-import XMonad.Util.Minimize
+import           Control.Monad
+import           Data.List                   (intersect)
+import           XMonad
+import           XMonad.Actions.Minimize
+import           XMonad.Hooks.StatusBar.PP
+import           XMonad.Util.Loggers
+import           XMonad.Util.Minimize
 
-import XMonad.StackSet qualified as W
-import XMonad.Util.ExtensibleState qualified as UXS
+import qualified XMonad.StackSet             as W
+import qualified XMonad.Util.ExtensibleState as UXS
 
-import XMonad.Custom.Theme
+import           XMonad.Custom.Theme
 
 -- | A logger that displays the count of visible and minimized windows in the current workspace.
 --   The format is:

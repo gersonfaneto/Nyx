@@ -6,15 +6,15 @@ module XMonad.Custom.Actions.DoPrompt
   )
 where
 
-import Data.Char (toLower)
-import XMonad
-import XMonad.Prompt
+import           Data.Char                       (toLower)
+import           XMonad
+import           XMonad.Prompt
 
-import Data.Map qualified as M
+import qualified Data.Map                        as M
 
-import XMonad.Custom.Actions.DoActions
-import XMonad.Custom.Actions.Keyboard (wrapKbdLayout)
-import XMonad.Custom.Prompt
+import           XMonad.Custom.Actions.DoActions
+import           XMonad.Custom.Actions.Keyboard  (wrapKbdLayout)
+import           XMonad.Custom.Prompt
 
 data DoPrompt = DoPrompt
 

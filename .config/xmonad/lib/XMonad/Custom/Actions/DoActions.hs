@@ -11,34 +11,34 @@ module XMonad.Custom.Actions.DoActions
   )
 where
 
-import Control.Monad (unless)
-import Data.Char (toLower)
-import Data.Function (on)
-import Data.List (sortBy)
-import XMonad
-import XMonad.Actions.DynamicProjects
-import XMonad.Actions.Minimize
-import XMonad.Hooks.ManageDocks
-import XMonad.Layout.Hidden
-import XMonad.Layout.MultiToggle
-import XMonad.Layout.MultiToggle.Instances
-import XMonad.Util.NamedScratchpad
-import XMonad.Util.Run
+import           Control.Monad                            (unless)
+import           Data.Char                                (toLower)
+import           Data.Function                            (on)
+import           Data.List                                (sortBy)
+import           XMonad
+import           XMonad.Actions.DynamicProjects
+import           XMonad.Actions.Minimize
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Layout.Hidden
+import           XMonad.Layout.MultiToggle
+import           XMonad.Layout.MultiToggle.Instances
+import           XMonad.Util.NamedScratchpad
+import           XMonad.Util.Run
 
-import XMonad.Custom.Actions.ApplicationChooser
-import XMonad.Custom.Actions.Keyboard
-import XMonad.Custom.Actions.Screen.Screencast
-import XMonad.Custom.Actions.Screen.Screenshot
-import XMonad.Custom.Prompt
-import XMonad.Custom.Scratchpads
+import           XMonad.Custom.Actions.ApplicationChooser
+import           XMonad.Custom.Actions.Keyboard
+import           XMonad.Custom.Actions.Screen.Screencast
+import           XMonad.Custom.Actions.Screen.Screenshot
+import           XMonad.Custom.Prompt
+import           XMonad.Custom.Scratchpads
 
-import XMonad.Custom.Hooks.Layout qualified as L
-import XMonad.Custom.Misc qualified as C
+import qualified XMonad.Custom.Hooks.Layout               as L
+import qualified XMonad.Custom.Misc                       as C
 
 -- | Simple data type for actions
 --   The Eq/Ord instances are based on the action name for easy sorting and comparison.
 data Action = Action
-  { actionName :: String -- Human-readable name
+  { actionName     :: String -- Human-readable name
   , actionFunction :: X () -- The XMonad action to execute
   }
 

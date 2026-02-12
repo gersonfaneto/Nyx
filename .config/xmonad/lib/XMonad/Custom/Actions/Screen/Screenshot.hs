@@ -1,9 +1,9 @@
 module XMonad.Custom.Actions.Screen.Screenshot where
 
-import Data.Foldable
-import Text.Read (readMaybe)
-import XMonad
-import XMonad.Prompt
+import           Data.Foldable
+import           Text.Read     (readMaybe)
+import           XMonad
+import           XMonad.Prompt
 
 data ScreenshotOption
   = Fullscreen
@@ -13,9 +13,9 @@ data ScreenshotOption
   deriving (Enum, Bounded, Read, Show)
 
 screenshot :: ScreenshotOption -> X ()
-screenshot Fullscreen = spawn "xshot full"
-screenshot FullscreenClipboard = spawn "xshot full-clipboard"
-screenshot Select = spawn "xshot select"
+screenshot Fullscreen            = spawn "xshot full"
+screenshot FullscreenClipboard   = spawn "xshot full-clipboard"
+screenshot Select                = spawn "xshot select"
 screenshot SelectCopyToClipboard = spawn "xshot select-clipboard"
 
 data ScreenshotPrompt = ScreenshotPrompt

@@ -3,8 +3,8 @@ module XMonad.Custom.Hooks.Screens
   )
 where
 
-import XMonad.Actions.ShowText
-import XMonad.Core
+import           XMonad.Actions.ShowText
+import           XMonad.Core
 
 flash' = flashText def 0.5
 

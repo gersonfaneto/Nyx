@@ -3,21 +3,21 @@ module XMonad.Custom.Manage.ManageHook
   )
 where
 
-import XMonad hiding (manageHook)
-import XMonad.Actions.SpawnOn
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.InsertPosition
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.UrgencyHook
-import XMonad.Layout.Fullscreen
-import XMonad.Layout.NoBorders
-import XMonad.StackSet as W
-import XMonad.Util.NamedScratchpad
+import           XMonad                             hiding (manageHook)
+import           XMonad.Actions.SpawnOn
+import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Hooks.InsertPosition
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.ManageHelpers
+import           XMonad.Hooks.UrgencyHook
+import           XMonad.Layout.Fullscreen
+import           XMonad.Layout.NoBorders
+import           XMonad.StackSet                    as W
+import           XMonad.Util.NamedScratchpad
 
-import XMonad.Custom.Manage.ManageHelpers
-import XMonad.Custom.Scratchpads
-import XMonad.Custom.Workspaces (git, wsNames)
+import           XMonad.Custom.Manage.ManageHelpers
+import           XMonad.Custom.Scratchpads
+import           XMonad.Custom.Workspaces           (git, wsNames)
 
 composeActions :: [MaybeManageHook]
 composeActions =

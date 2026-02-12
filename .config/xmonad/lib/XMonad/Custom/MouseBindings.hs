@@ -5,18 +5,15 @@ module XMonad.Custom.MouseBindings
   )
 where
 
-import XMonad hiding
-  ( keys
-  , modMask
-  , mouseBindings
-  )
-import XMonad.Actions.Minimize
-import XMonad.Actions.TiledWindowDragging
-import XMonad.Util.EZConfig
+import           XMonad                             hiding (keys, modMask,
+                                                     mouseBindings)
+import           XMonad.Actions.Minimize
+import           XMonad.Actions.TiledWindowDragging
+import           XMonad.Util.EZConfig
 
-import Data.Map qualified as M
-import XMonad.Actions.FlexibleManipulate qualified as Flex
-import XMonad.StackSet qualified as S
+import qualified Data.Map                           as M
+import qualified XMonad.Actions.FlexibleManipulate  as Flex
+import qualified XMonad.StackSet                    as S
 
 type Mousebindings = M.Map (ButtonMask, Button) (Window -> X ())
 

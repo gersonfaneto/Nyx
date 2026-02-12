@@ -13,21 +13,21 @@ module XMonad.Custom.Prompt
   )
 where
 
-import Control.Arrow ((***))
-import Data.Char
-import Data.List
-import Data.Ratio
-import XMonad
-import XMonad.Actions.GridSelect
-import XMonad.Actions.ShowText
+import           Control.Arrow             ((***))
+import           Data.Char
+import           Data.List
+import           Data.Ratio
+import           XMonad
+import           XMonad.Actions.GridSelect
+import           XMonad.Actions.ShowText
 -- import XMonad.Custom.Prompt.FuzzyMatch
 
-import XMonad.Prompt
-import XMonad.Prompt.FuzzyMatch
+import           XMonad.Prompt
+import           XMonad.Prompt.FuzzyMatch
 
-import Data.Map.Strict qualified as M
+import qualified Data.Map.Strict           as M
 
-import XMonad.Custom.Theme qualified as T
+import qualified XMonad.Custom.Theme       as T
 
 promptNoHistory :: XPConfig -> XPConfig
 promptNoHistory ptheme = ptheme {historyFilter = const [], historySize = 0}

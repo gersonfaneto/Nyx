@@ -1,8 +1,8 @@
-{-# LANGUAGE BangPatterns #-}
-{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE BangPatterns               #-}
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE ImportQualifiedPost #-}
-{-# LANGUAGE StrictData #-}
+{-# LANGUAGE ImportQualifiedPost        #-}
+{-# LANGUAGE StrictData                 #-}
 
 -- |
 -- Module      :  XMonad.Custom.Actions.RecentWorkspaces
@@ -22,23 +22,24 @@ module XMonad.Custom.Actions.RecentWorkspaces
   )
 where
 
-import Data.Char (toLower)
-import Data.List (intercalate, isPrefixOf)
-import Data.Ratio ((%))
-import XMonad
-import XMonad.Actions.MostRecentlyUsed (Location (..))
-import XMonad.Actions.ShowText
-import XMonad.Prelude
-import XMonad.Prompt
-import XMonad.Util.History (History, erase, event, ledger, origin)
+import           Data.Char                           (toLower)
+import           Data.List                           (intercalate, isPrefixOf)
+import           Data.Ratio                          ((%))
+import           XMonad
+import           XMonad.Actions.MostRecentlyUsed     (Location (..))
+import           XMonad.Actions.ShowText
+import           XMonad.Prelude
+import           XMonad.Prompt
+import           XMonad.Util.History                 (History, erase, event,
+                                                      ledger, origin)
 
-import Data.Map.Strict qualified as M
-import XMonad.StackSet qualified as W
-import XMonad.Util.ExtensibleConf qualified as XC
-import XMonad.Util.ExtensibleState qualified as XS
+import qualified Data.Map.Strict                     as M
+import qualified XMonad.StackSet                     as W
+import qualified XMonad.Util.ExtensibleConf          as XC
+import qualified XMonad.Util.ExtensibleState         as XS
 
-import XMonad.Custom.Actions.RecentWindows
-import XMonad.Custom.Utils.ChordKeys
+import           XMonad.Custom.Actions.RecentWindows
+import           XMonad.Custom.Utils.ChordKeys
 
 -- --< Interface >-- {{{
 
@@ -74,8 +75,8 @@ instance XPrompt ChordWorkspacePrompt where
 
 -- | Represents a workspace with its display information
 data WorkspaceInfo = WorkspaceInfo
-  { wsId :: !WorkspaceId
-  , wsName :: !String
+  { wsId    :: !WorkspaceId
+  , wsName  :: !String
   , wsChord :: !(Maybe String)
   }
 
@@ -138,7 +139,7 @@ withChordWorkspaceSelectionFrecency numWorkspaces xpconfig action = do
         matchChord !inp !name =
           case extractChordFromBracket name of
             Just chord -> inp `isPrefixOf` chord
-            Nothing -> False
+            Nothing    -> False
 
     selectWorkspace !displayMap !str =
       whenJust (M.lookup str displayMap) action

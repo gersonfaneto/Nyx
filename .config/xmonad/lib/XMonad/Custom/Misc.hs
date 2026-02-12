@@ -7,19 +7,19 @@ module XMonad.Custom.Misc
 where
 
 data Applications = Applications
-  { browser :: !String
-  , mixer :: !String
-  , notify :: !String
-  , player :: !String
-  , soundEffects :: !String
-  , term :: !String
-  , term' :: !String
-  , top :: !String
-  , reader :: !String
-  , editor :: !String
-  , appmenu :: !String
+  { browser               :: !String
+  , mixer                 :: !String
+  , notify                :: !String
+  , player                :: !String
+  , soundEffects          :: !String
+  , term                  :: !String
+  , term'                 :: !String
+  , top                   :: !String
+  , reader                :: !String
+  , editor                :: !String
+  , appmenu               :: !String
   , virtualMachinesManger :: !String
-  , screenZoomer :: !String
+  , screenZoomer          :: !String
   }
   deriving (Eq, Show)
 
