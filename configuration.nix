@@ -32,6 +32,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Tapping power button should do nothing
+  services.logind.settings.Login.HandlePowerKey = "ignore";
+
   networking.hostName = "Nyx";
   networking.networkmanager.enable = true;
 
