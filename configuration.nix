@@ -295,6 +295,7 @@
       tree-sitter
       unzip
       vim
+      vim-startuptime
       vlc
       w3m
       wget
