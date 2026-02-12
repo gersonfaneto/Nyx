@@ -29,7 +29,7 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "20e2d3099ba99f37f9a7c7d9ed2a9d83c3b20618",
+      "rev": "739330f48ca64b4283f5228e9dc9c0c8f9a37110",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -124,7 +124,7 @@
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
     },
     "opencode.nvim": {
-      "rev": "5e9142a1ac522c5de2640b3f8baa21746cd291f1",
+      "rev": "bb87caa9272dd8f5d60913df5724b5a4c11e2b25",
       "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "otter.nvim": {
