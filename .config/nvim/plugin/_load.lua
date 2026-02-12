@@ -1,11 +1,5 @@
 -- Lazy-load builtin plugins
 
--- vscode-neovim
-if vim.g.vscode then
-  vim.fn['plugin#vscode#setup']()
-  return
-end
-
 local load = require('utils.load')
 
 -- expandtab
