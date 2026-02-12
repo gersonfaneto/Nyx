@@ -130,13 +130,6 @@ require('utils.load').on_events(
     map({ 'x', 'n' }, '<C-w>,', 'v:count ? "<C-w><" : "2<C-w><"', { expr = true, desc = 'Resize window left' })
     map({ 'x', 'n' }, '<C-w>+', 'v:count ? "<C-w>+" : "2<C-w>+"', { expr = true, desc = 'Increase window height' })
     map({ 'x', 'n' }, '<C-w>-', 'v:count ? "<C-w>-" : "2<C-w>-"', { expr = true, desc = 'Decrease window height' })
-
-    map({'x', 'n'}, "<Leader>m", "<Plug>Zoom", { desc = "Toggle zoom" })
-
-    map({ 'n', 'x' }, '<M-h>', '<Plug>WinMoveLeft', { desc = 'Move to left window', remap = true, silent = true })
-    map({ 'n', 'x' }, '<M-j>', '<Plug>WinMoveDown', { desc = 'Move to window below', remap = true, silent = true })
-    map({ 'n', 'x' }, '<M-k>', '<Plug>WinMoveUp', { desc = 'Move to window above', remap = true, silent = true })
-    map({ 'n', 'x' }, '<M-l>', '<Plug>WinMoveRight', { desc = 'Move to right window', remap = true, silent = true })
     -- stylua: ignore end
 
     -- Search within visual selection, see:
@@ -146,6 +139,18 @@ require('utils.load').on_events(
     map('x', '<M-/>',  '<C-\\><C-n>`</\\%V\\(\\)<Left><Left>', { desc = 'Search forward within visual selection' })
     map('x', '<M-?>',  '<C-\\><C-n>`>?\\%V\\(\\)<Left><Left>', { desc = 'Search backward within visual selection' })
     -- stylua: ignore end
+
+    if vim.fn.executable('rg') == 1 then
+      vim.o.grepprg = 'rg --vimgrep --smart-case --hidden'
+      vim.o.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+
+      vim.keymap.set(
+        'n',
+        '\\',
+        ":silent grep! '' | cwindow | cfirst" .. string.rep('<Left>', 20),
+        { desc = 'Grep' }
+      )
+    end
 
     -- Delete trailing whitespaces
     map(
@@ -614,16 +619,6 @@ require('utils.load').on_events(
     map('n', '<Leader>u', '<Cmd>packadd nvim.undotree|Undotree<CR>', {
       desc = 'Toggle undotree',
     })
-
-    -- stylua: ignore start
-    map({ 'n', 'x' }, '<leader>0', '<Plug>ClearInterestingWord', { desc = 'Clear interesting word', remap = true })
-    map({ 'n', 'x' }, '<leader>1', '<Plug>HiInterestingWord1', { desc = 'Highlight interesting word 1', remap = true })
-    map({ 'n', 'x' }, '<leader>2', '<Plug>HiInterestingWord2', { desc = 'Highlight interesting word 2', remap = true })
-    map({ 'n', 'x' }, '<leader>3', '<Plug>HiInterestingWord3', { desc = 'Highlight interesting word 3', remap = true })
-    map({ 'n', 'x' }, '<leader>4', '<Plug>HiInterestingWord4', { desc = 'Highlight interesting word 4', remap = true })
-    map({ 'n', 'x' }, '<leader>5', '<Plug>HiInterestingWord5', { desc = 'Highlight interesting word 5', remap = true })
-    map({ 'n', 'x' }, '<leader>6', '<Plug>HiInterestingWord6', { desc = 'Highlight interesting word 6', remap = true })
-    -- stylua: ignore end
 
     -- Plugin Management
     map('n', '<Leader>Pu', vim.pack.update, { desc = 'Update plugins' })
