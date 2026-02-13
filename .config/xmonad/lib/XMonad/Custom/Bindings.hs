@@ -197,6 +197,7 @@ keysBase =
   , ("M-<Space>", wrapKbdLayout $ shellPrompt $ promptNoCompletion promptTheme)
   , ("M-C-<Space>", spawn "rofilauncher")
   , ("M-S-<Space>", spawn "rofimoji")
+  , ("M-M1-<Space>", spawn "rofi-rbw")
   ]
 
 keysMedia :: Keybindings
@@ -219,7 +220,6 @@ keysSystem =
   [ ("<XF86MonBrightnessDown>", spawn "brightness down")
   , ("<XF86MonBrightnessUp>", spawn "brightness up")
   , ("M-<Escape>", spawn "system")
-  , ("M-x r", spawn "rofi-rbw")
   , ("M-x p", spawn "capture")
   , ("M-x s", spawn "silence")
   , ("M-x c", spawn "caffeine")

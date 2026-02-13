@@ -1,6 +1,6 @@
-selector-args="rofi -theme .config/rofi/styles/style-01.rasi"
-prompt="󰌆"
-no-help=true
-no-cache=true
-no-folder=true
-clear-after=30
+clear-after = 30
+no-cache = true
+no-folder = true
+no-help = true
+prompt = "󰌆"
+selector-args = "-theme ~/.config/rofi/styles/style-01.rasi -kb-row-left Alt-h -kb-row-down Alt+j -kb-row-up Alt+k -kb-row-right Alt+l"
