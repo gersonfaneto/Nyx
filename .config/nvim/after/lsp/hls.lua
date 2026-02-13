@@ -1,4 +1,4 @@
----@type vim.lsp.Config
+---@type minimal.lsp.config
 return {
   cmd = { 'haskell-language-server-wrapper', '--lsp' },
   filetypes = { 'haskell', 'lhaskell' },
