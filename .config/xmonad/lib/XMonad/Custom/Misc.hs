@@ -36,7 +36,7 @@ applications =
     , top = "btm"
     , reader = "zathura"
     , editor = "emacsclient --create-frame --alternate-editor 'emacs'"
-    , appmenu = "launcher"
+    , appmenu = "rofilauncher"
     , virtualMachinesManger = "virt-manager"
     , screenZoomer = "boomer"
     }

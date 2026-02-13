@@ -195,7 +195,7 @@ keysBase :: Keybindings
 keysBase =
   [ ("M-r", wrapKbdLayout $ runOrRaisePrompt promptTheme)
   , ("M-<Space>", wrapKbdLayout $ shellPrompt $ promptNoCompletion promptTheme)
-  , ("M-C-<Space>", spawn $ C.appmenu C.applications)
+  , ("M-C-<Space>", spawn "rofilauncher")
   , ("M-S-<Space>", spawn "rofimoji")
   ]
 
