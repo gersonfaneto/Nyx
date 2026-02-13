@@ -561,11 +561,10 @@ local is_text = {
   ['text'] = true,
 }
 
----Check if current buffer is a python/jupyter notebook buffer
+---Check if current buffer is a python buffer
 ---@return boolean
 local function is_python()
   return vim.startswith(vim.bo.ft, 'python')
-    or vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':e') == 'ipynb'
 end
 
 ---Additional info for the current buffer enclosed in parentheses

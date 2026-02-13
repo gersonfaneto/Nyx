@@ -8,10 +8,6 @@
       "rev": "820f1ddf634ec267412e403711bf74be26cac677",
       "src": "https://github.com/saghen/blink.cmp"
     },
-    "cellular-automaton.nvim": {
-      "rev": "1606e9d5d04ff254023c3f3c62842d065708d6d3",
-      "src": "https://github.com/Eandrju/cellular-automaton.nvim"
-    },
     "conjure": {
       "rev": "403639610bcb9b6a5dfc494dc3179cc19773a471",
       "src": "https://github.com/Olical/conjure"
@@ -19,10 +15,6 @@
     "crates.nvim": {
       "rev": "ac9fa498a9edb96dc3056724ff69d5f40b898453",
       "src": "https://github.com/saecki/crates.nvim"
-    },
-    "diffview.nvim": {
-      "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
-      "src": "https://github.com/sindrets/diffview.nvim"
     },
     "fugitive-gitlab.vim": {
       "rev": "3584cf7e607ba7822f991d407a8d780e05aae287",
@@ -43,23 +35,6 @@
     "gruvbox-material": {
       "rev": "790afe9dd085aa04eccd1da3626c5fa05c620e53",
       "src": "https://github.com/sainnhe/gruvbox-material"
-    },
-    "harpoon": {
-      "rev": "87b1a3506211538f460786c23f98ec63ad9af4e5",
-      "src": "https://github.com/theprimeagen/harpoon",
-      "version": "'harpoon2'"
-    },
-    "img-clip.nvim": {
-      "rev": "b6ddfb97b5600d99afe3452d707444afda658aca",
-      "src": "https://github.com/HakonHarnes/img-clip.nvim"
-    },
-    "markdown-preview.nvim": {
-      "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
-      "src": "https://github.com/iamcco/markdown-preview.nvim"
-    },
-    "molten-nvim": {
-      "rev": "4fd7be6a12b5efda5179db642f13bad60893acca",
-      "src": "https://github.com/benlubas/molten-nvim"
     },
     "no-neck-pain.nvim": {
       "rev": "4bc52782524fd50c5658685d584df6fa48fe49f9",
@@ -123,14 +98,6 @@
       "rev": "1af6ffb9b5229a856e8090fa2f690e0931a5aace",
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
     },
-    "opencode.nvim": {
-      "rev": "bb87caa9272dd8f5d60913df5724b5a4c11e2b25",
-      "src": "https://github.com/sudo-tee/opencode.nvim"
-    },
-    "otter.nvim": {
-      "rev": "6b75433f2c3c77999f94de0daf2e629d3f727b80",
-      "src": "https://github.com/jmbuhr/otter.nvim"
-    },
     "plenary.nvim": {
       "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
       "src": "https://github.com/nvim-lua/plenary.nvim"
@@ -154,11 +121,6 @@
     "ts-autotag.nvim": {
       "rev": "35f79f6253dff5cc43cf943d74c4b2734370a81d",
       "src": "https://github.com/tronikelis/ts-autotag.nvim"
-    },
-    "typst-preview.nvim": {
-      "rev": "e123a7ab64e52d836e00dea9251e85b201f38966",
-      "src": "https://github.com/chomosuke/typst-preview.nvim",
-      "version": "1.0.0 - 2.0.0"
     },
     "ultimate-autopair.nvim": {
       "rev": "72e160cb1ce8c0db2ac4315f77d97420a2f4223d",
