@@ -1,5 +1,3 @@
-{-# LANGUAGE ImportQualifiedPost #-}
-
 module XMonad.Custom.Search
   ( mySearch
   , selectAndSearchPrompt
@@ -11,7 +9,6 @@ import           Data.List
 import           Data.Maybe              (fromMaybe)
 import           XMonad
 import           XMonad.Actions.Search
-import           XMonad.Actions.Search   (searchEngine)
 import           XMonad.Actions.ShowText
 import           XMonad.Prompt
 

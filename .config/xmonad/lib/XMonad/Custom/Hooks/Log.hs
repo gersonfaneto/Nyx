@@ -1,5 +1,4 @@
-{-# LANGUAGE DeriveDataTypeable  #-}
-{-# LANGUAGE ImportQualifiedPost #-}
+{-# LANGUAGE DeriveDataTypeable #-}
 
 module XMonad.Custom.Hooks.Log
   ( logHook

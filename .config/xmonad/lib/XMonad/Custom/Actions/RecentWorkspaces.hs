@@ -1,7 +1,5 @@
 {-# LANGUAGE BangPatterns               #-}
-{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE ImportQualifiedPost        #-}
 {-# LANGUAGE StrictData                 #-}
 
 -- |

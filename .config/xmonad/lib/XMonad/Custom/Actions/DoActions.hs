@@ -1,5 +1,3 @@
-{-# LANGUAGE ImportQualifiedPost #-}
-
 module XMonad.Custom.Actions.DoActions
   ( Action (..)
   , doAction
@@ -204,20 +202,16 @@ allActions =
       Action "Toggle Fullscreen" $
         sendMessage $
           Toggle NBFULL
-    , Action "Toggle Gaps" $
-        L.toggleGaps
-    , Action "Toggle Statusbar" $
-        L.toggleStatusBar
-    , Action "Toggle Zen Mode" $
-        L.toggleZen
+    , Action "Toggle Gaps" L.toggleGaps
+    , Action "Toggle Statusbar" L.toggleStatusBar
+    , Action "Toggle Zen Mode" L.toggleZen
     , Action "Minimize Window" $
         withFocused minimizeWindow
     , Action "Restore Last Minimized" $
         withLastMinimized maximizeWindowAndFocus
     , Action "Hide Window" $
         withFocused hideWindow
-    , Action "Unhide Last" $
-        popNewestHiddenWindow
+    , Action "Unhide Last" popNewestHiddenWindow
     , -- Screenshot and screencast actions
       Action "Screenshot Full" $
         screenshot Fullscreen

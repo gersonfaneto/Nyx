@@ -1,9 +1,7 @@
 {-# LANGUAGE BangPatterns        #-}
 {-# LANGUAGE DeriveGeneric       #-}
-{-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE StrictData          #-}
-{-# LANGUAGE TupleSections       #-}
 
 -- |
 -- Module      :  XMonad.Custom.Utils.ChordKeys

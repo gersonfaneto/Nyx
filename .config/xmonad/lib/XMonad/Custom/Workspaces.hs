@@ -1,6 +1,3 @@
-{-# LANGUAGE ImportQualifiedPost #-}
-{-# LANGUAGE RecordWildCards     #-}
-
 module XMonad.Custom.Workspaces where
 
 import           Data.List                                (find)
@@ -74,7 +71,7 @@ makeProject' name dir hook =
 -- | Helper function to find and execute an action by name
 -- Returns a no-op if the action isn't found
 doActionByName :: String -> X ()
-doActionByName name = fromMaybe (return ()) $ fmap doAction (findActionByName name)
+doActionByName name = maybe (return ()) doAction (findActionByName name)
 
 -- | Helper function to spawn an application by name using the ApplicationChooser
 spawnAppByName :: AppCategory -> String -> X ()

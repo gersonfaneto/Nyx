@@ -1,5 +1,4 @@
-{-# LANGUAGE ImportQualifiedPost #-}
-{-# LANGUAGE LambdaCase          #-}
+{-# LANGUAGE LambdaCase #-}
 {-# OPTIONS_GHC -Wno-deprecations #-}
 
 module XMonad.Custom.Bindings

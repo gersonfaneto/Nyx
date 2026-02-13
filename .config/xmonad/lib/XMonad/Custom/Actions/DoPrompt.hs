@@ -1,5 +1,3 @@
-{-# LANGUAGE ImportQualifiedPost #-}
-
 module XMonad.Custom.Actions.DoPrompt
   ( doPrompt
   , doSomethingPrompt

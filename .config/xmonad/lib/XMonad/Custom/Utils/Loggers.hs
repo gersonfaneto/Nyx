@@ -1,5 +1,3 @@
-{-# LANGUAGE ImportQualifiedPost #-}
-
 module XMonad.Custom.Utils.Loggers where
 
 import           Control.Monad

@@ -1,3 +1,6 @@
+FIND_HS_FILES=find . -type f -name '*.hs' ! \( -path '*dist-newstyle*' -o -path '*xmobarrc*' \)  | paste -sd ' '
+
+
 .PHONY: help
 help:
 	@echo 'Usage: make [build|repl|format]'
@@ -11,6 +14,11 @@ build:
 .PHONY: repl
 repl:
 	cabal repl
+
+
+.PHONY: lint
+lint:
+	hlint -j lib src
 
 
 .PHONY: format

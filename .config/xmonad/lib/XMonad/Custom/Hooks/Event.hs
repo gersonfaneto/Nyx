@@ -1,5 +1,3 @@
-{-# LANGUAGE ImportQualifiedPost #-}
-
 module XMonad.Custom.Hooks.Event
   ( handleEventHook
   )

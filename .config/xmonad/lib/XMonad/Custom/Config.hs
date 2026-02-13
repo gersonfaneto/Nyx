@@ -34,8 +34,6 @@ import           XMonad.Layout.ResizableTile
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.Spiral
 import           XMonad.Util.EZConfig
-import           XMonad.Util.EZConfig                   (additionalKeysP,
-                                                         mkKeymap)
 import           XMonad.Util.Loggers
 import           XMonad.Util.Loggers.NamedScratchpad
 import           XMonad.Util.SpawnOnce

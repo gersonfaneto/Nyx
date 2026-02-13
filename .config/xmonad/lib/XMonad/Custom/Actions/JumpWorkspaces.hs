@@ -1,5 +1,3 @@
-{-# LANGUAGE ImportQualifiedPost #-}
-
 -- |
 -- Module      :  XMonad.Custom.Actions.JumpWorkspaces
 -- Description :  Functions for working with recently used workspaces.
