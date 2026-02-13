@@ -36,6 +36,8 @@ in
     ".config/zathura/" = mkSymlink ".config/zathura/";
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/rofimoji.rc" = mkSymlink ".config/rofimoji.rc";
+    ".config/rofi-rbw.rc" = mkSymlink ".config/rofi-rbw.rc";
+    ".config/rofimoji.rc" = mkSymlink ".config/rofimoji.rc";
     ".emacs.d/" = mkSymlink ".emacs.d/";
     ".local/share/fonts/" = mkSymlink ".local/share/fonts/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
