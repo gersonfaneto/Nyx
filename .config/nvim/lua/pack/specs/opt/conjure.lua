@@ -2,6 +2,10 @@
 return {
   src = 'https://github.com/Olical/conjure',
   data = {
+    events = {
+      event = 'FileType',
+      pattern = 'clojure',
+    },
     preload = function()
       vim.g['conjure#filetypes'] = { 'clojure' }
       vim.g['conjure#mapping#prefix'] = ',c'

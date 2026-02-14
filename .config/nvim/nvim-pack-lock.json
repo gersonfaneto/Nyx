@@ -64,6 +64,10 @@
       "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
       "src": "https://github.com/nvim-neotest/nvim-nio"
     },
+    "nvim-paredit": {
+      "rev": "b6ba636874a3115d944e35746444724240568aca",
+      "src": "https://github.com/julienvincent/nvim-paredit"
+    },
     "nvim-surround": {
       "rev": "1098d7b3c34adcfa7feb3289ee434529abd4afd1",
       "src": "https://github.com/kylechui/nvim-surround"
