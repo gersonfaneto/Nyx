@@ -2,7 +2,6 @@
 return {
   src = 'https://github.com/saghen/blink.cmp',
   data = {
-    optional = vim.g.vscode,
     deps = {
       {
         src = 'https://github.com/L3MON4D3/LuaSnip',
@@ -10,7 +9,7 @@ return {
       },
       {
         src = 'https://github.com/kyazdani42/nvim-web-devicons',
-        -- data = { optional = true },
+        data = { optional = true },
       },
     },
     build = 'nix run .#build-plugin',
