@@ -26,7 +26,7 @@ data Applications = Applications
 applications :: Applications
 applications =
   Applications
-    { browser = "alacritty"
+    { browser = "qutebrowser"
     , mixer = "wiremix"
     , notify = "notify-send"
     , player = "spotify"
