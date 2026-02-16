@@ -352,13 +352,14 @@
 
           stack
           cabal-fmt
-          cabal-gild
           cabal-install
+
+          fourmolu
+          stylish-haskell
 
           cabal2nix
 
           hlint
-          fourmolu
 
           hasktags
           haskell-language-server
