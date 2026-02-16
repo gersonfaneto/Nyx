@@ -351,12 +351,15 @@
           ghcid
 
           stack
-          cabal-fmt
           cabal-install
 
           fourmolu
           stylish-haskell
 
+          cabal-fmt
+          cabal-gild
+
+          niv
           cabal2nix
 
           hlint

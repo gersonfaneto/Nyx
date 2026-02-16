@@ -1,7 +1,8 @@
 :set prompt "λ :: "
 :set prompt-cont "| "
 :set editor nvim
-:def hoogle \x -> pure $ ":!hoogle search \"" ++ x ++ "\""
+:def hoogle \s -> return $ ":! hoogle search -cl --count=15 \"" ++ s ++ "\""
+:def doc \s -> return $ ":! hoogle search -cl --info \"" ++ s ++ "\""
 :set +t
 :set -XArrows
 :set -XBangPatterns
