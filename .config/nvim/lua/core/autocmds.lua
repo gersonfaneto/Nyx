@@ -194,58 +194,58 @@ augroup('minimal.last_pos_jmp', {
 })
 
 -- NOTE: This is really annoying sometimes...
--- do
---   augroup('minimal.auto_cwd', {
---     'BufEnter',
---     {
---       desc = 'Automatically change local current directory.',
---       nested = true,
---       callback = function(args)
---         local file = args.file
---         local buf = args.buf
---
---         -- Don't automatically change cwd in special buffers, e.g. help buffers
---         -- or oil preview buffers
---         if file == '' or vim.bo[buf].bt ~= '' then
---           return
---         end
---
---         local fs_utils = require('utils.fs')
---         local root_dir =
---           fs_utils.root(file, vim.b.root_markers or fs_utils.root_markers)
---
---         if
---           not root_dir
---           or fs_utils.is_home_dir(root_dir)
---           or fs_utils.is_root_dir(root_dir)
---         then
---           root_dir = vim.fs.dirname(file)
---         end
---
---         if not root_dir then
---           return
---         end
---
---         for _, win in ipairs(vim.fn.win_findbuf(buf)) do
---           vim.api.nvim_win_call(win, function()
---             -- Prevent unnecessary directory change, which triggers
---             -- DirChanged autocmds that may update winbar unexpectedly
---             if root_dir == vim.fn.getcwd(0) then
---               return
---             end
---             pcall(vim.cmd.lcd, {
---               root_dir,
---               mods = {
---                 silent = true,
---                 emsg_silent = true,
---               },
---             })
---           end)
---         end
---       end,
---     },
---   })
--- end
+do
+  augroup('minimal.auto_cwd', {
+    'BufEnter',
+    {
+      desc = 'Automatically change local current directory.',
+      nested = true,
+      callback = function(args)
+        local file = args.file
+        local buf = args.buf
+
+        -- Don't automatically change cwd in special buffers, e.g. help buffers
+        -- or oil preview buffers
+        if file == '' or vim.bo[buf].bt ~= '' then
+          return
+        end
+
+        local fs_utils = require('utils.fs')
+        local root_dir =
+          fs_utils.root(file, vim.b.root_markers or fs_utils.root_markers)
+
+        if
+          not root_dir
+          or fs_utils.is_home_dir(root_dir)
+          or fs_utils.is_root_dir(root_dir)
+        then
+          root_dir = vim.fs.dirname(file)
+        end
+
+        if not root_dir then
+          return
+        end
+
+        for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+          vim.api.nvim_win_call(win, function()
+            -- Prevent unnecessary directory change, which triggers
+            -- DirChanged autocmds that may update winbar unexpectedly
+            if root_dir == vim.fn.getcwd(0) then
+              return
+            end
+            pcall(vim.cmd.lcd, {
+              root_dir,
+              mods = {
+                silent = true,
+                emsg_silent = true,
+              },
+            })
+          end)
+        end
+      end,
+    },
+  })
+end
 
 augroup('minimal.prompt_keymaps', {
   'BufEnter',
