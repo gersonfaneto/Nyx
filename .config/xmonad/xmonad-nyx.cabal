@@ -4,9 +4,6 @@ version: 0.1.0
 
 common base
   default-language: GHC2021
-  ghc-options:
-    -Wall
-    -Werror
 
 library xmonad-lib
   import: base

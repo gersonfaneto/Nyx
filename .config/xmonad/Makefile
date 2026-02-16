@@ -13,7 +13,7 @@ build:
 
 .PHONY: repl
 repl:
-	cabal repl
+	cabal repl --ghc-options "$(GHC_OPTIONS)"
 
 
 .PHONY: lint
