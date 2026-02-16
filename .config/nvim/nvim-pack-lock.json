@@ -5,11 +5,11 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "820f1ddf634ec267412e403711bf74be26cac677",
+      "rev": "cd79f572971c58784ca72551af29af3a63da9168",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "conjure": {
-      "rev": "403639610bcb9b6a5dfc494dc3179cc19773a471",
+      "rev": "42048ce74a7d86dd85091d7d8cebb78d25761da3",
       "src": "https://github.com/Olical/conjure"
     },
     "crates.nvim": {
@@ -21,11 +21,11 @@
       "src": "https://github.com/shumphrey/fugitive-gitlab.vim"
     },
     "fzf-lua": {
-      "rev": "739330f48ca64b4283f5228e9dc9c0c8f9a37110",
+      "rev": "5921997472574fca3880b62949eb8679dc6f5afc",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "abf82a65f185bd54adc0679f74b7d6e1ada690c9",
+      "rev": "9f3c6dd7868bcc116e9c1c1929ce063b978fa519",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "goyo.vim": {
@@ -73,7 +73,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "ec034813775d7e2974c7551c8c34499a828963f8",
+      "rev": "4d9466677a5ceadef104eaa0fe08d60d91c4e9a7",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -111,7 +111,7 @@
       "src": "https://github.com/stevearc/quicker.nvim"
     },
     "rustaceanvim": {
-      "rev": "d09c0639e7f68615db6845570241947198234cd6",
+      "rev": "ec517a0d223060b79e040e4a187e031b76b307ea",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "snacks.nvim": {
