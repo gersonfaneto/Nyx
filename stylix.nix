@@ -25,7 +25,7 @@
     };
     monospace = {
       # package = null;
-      name = "MonacoLigaturized Nerd Font Mono";
+      name = "Monaco Nerd Font Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;

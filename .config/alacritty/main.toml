@@ -17,7 +17,7 @@ transparent_background_colors = true
 size = 10
 
 [font.normal]
-family = 'MonacoLigaturized Nerd Font Mono'
+family = 'Monaco Nerd Font Mono'
 
 [scrolling]
 history = 0

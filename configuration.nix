@@ -311,7 +311,6 @@
       xsel
       xss-lock
       yt-dlp
-      zed-editor-fhs
       zoxide
     ])
     ++ (with pkgs; [
@@ -418,7 +417,7 @@
         emoji = [ "Noto Emoji" ];
         serif = [ "Monaco Nerd Font Mono" ];
         sansSerif = [ "Monaco Nerd Font Mono" ];
-        monospace = [ "MonacoLigaturized Nerd Font Mono" ];
+        monospace = [ "Monaco Nerd Font Mono" ];
       };
     };
   };
