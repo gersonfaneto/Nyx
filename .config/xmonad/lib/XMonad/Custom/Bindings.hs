@@ -236,7 +236,7 @@ keysSpawnables =
   , ("M-o S-b", wrapKbdLayout $ selectBrowserByNameAndSpawn promptTheme)
   , ("M-o e", spawn $ C.term C.applications ++ " -e nvim")
   , ("M-o S-e", wrapKbdLayout $ selectEditorByNameAndSpawn promptTheme)
-  , ("M-o f f", spawn $ C.term C.applications ++ " -e ranger")
+  , ("M-o f", namedScratchpadAction scratchpads "files")
   , ("M-o c", namedScratchpadAction scratchpads "console")
   , ("M-o m", namedScratchpadAction scratchpads "music")
   , ("M-o t", namedScratchpadAction scratchpads "top")

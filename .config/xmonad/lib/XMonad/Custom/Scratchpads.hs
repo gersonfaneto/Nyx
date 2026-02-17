@@ -30,6 +30,7 @@ floatingNSP = centerFloat w h
 scratchpads :: [NamedScratchpad]
 scratchpads =
   [ NS "console" (spawnTerminalWith "NSPConsole" "tmux new-session -A -s Home") (className =? "NSPConsole") doFullCenterFloat
+  , NS "files" (spawnTerminalWith "NSPFiles" "ranger") (className =? "NSPFiles") doFullCenterFloat
   , NS "volume" (spawnTerminalWith "NSPVolume" (C.mixer C.applications)) (className =? "NSPVolume") floatingNSP
   , NS "soundEffects" (C.soundEffects C.applications) (appName =? "easyeffects") (centerFloat 0.6 0.6)
   , NS "music" (C.player C.applications) (className =? "Spotify") doFullCenterFloat
