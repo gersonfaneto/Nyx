@@ -311,6 +311,7 @@
       xsel
       xss-lock
       yt-dlp
+      zed-editor-fhs
       zoxide
     ])
     ++ (with pkgs; [
