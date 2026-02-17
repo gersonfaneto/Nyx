@@ -251,9 +251,7 @@ keysSpawnables =
 
 keysDo :: Keybindings
 keysDo =
-  [ ("M-d s s", wrapKbdLayout . screenshotPrompt $ promptNoCompletion promptTheme)
-  , ("M-d s r", wrapKbdLayout . screencastPrompt $ promptNoCompletion promptTheme)
-  , ("M-d s z", spawn $ C.screenZoomer C.applications)
+  [ ("M-d s z", spawn $ C.screenZoomer C.applications)
   , ("M-d d", wrapKbdLayout $ doSomethingPrompt promptTheme)
   , ("M-d w c", workspacePrompt promptTheme $ windows . copy)
   , ("M-d c <Backspace>", spawn "clipcatctl clear")

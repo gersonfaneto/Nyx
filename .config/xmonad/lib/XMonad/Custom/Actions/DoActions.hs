@@ -25,8 +25,6 @@ import           XMonad.Util.Run
 
 import           XMonad.Custom.Actions.ApplicationChooser
 import           XMonad.Custom.Actions.Keyboard
-import           XMonad.Custom.Actions.Screen.Screencast
-import           XMonad.Custom.Actions.Screen.Screenshot
 import           XMonad.Custom.Prompt
 import           XMonad.Custom.Scratchpads
 
@@ -212,17 +210,6 @@ allActions =
     , Action "Hide Window" $
         withFocused hideWindow
     , Action "Unhide Last" popNewestHiddenWindow
-    , -- Screenshot and screencast actions
-      Action "Screenshot Full" $
-        screenshot Fullscreen
-    , Action "Screenshot Selection" $
-        screenshot Select
-    , Action "Screenshot to Clipboard" $
-        screenshot SelectCopyToClipboard
-    , Action "Screencast mp4" $
-        screencast RecordToMP4
-    , Action "Screencast gif" $
-        screencast RecordToGIF
     , Action "System Health Check" $ do
         spawnTerminalWith "-e btop"
         spawnTerminalWith "-e htop"

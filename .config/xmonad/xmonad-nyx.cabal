@@ -33,8 +33,6 @@ library xmonad-lib
     XMonad.Custom.Actions.RecentWindows
     XMonad.Custom.Actions.RecentWorkspaces
     XMonad.Custom.Actions.ScratchpadChooser
-    XMonad.Custom.Actions.Screen.Screencast
-    XMonad.Custom.Actions.Screen.Screenshot
     XMonad.Custom.Actions.TmuxPrompt
     XMonad.Custom.Bindings
     XMonad.Custom.Config
