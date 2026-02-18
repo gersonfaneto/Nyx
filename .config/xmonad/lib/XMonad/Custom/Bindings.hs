@@ -77,8 +77,6 @@ import           XMonad.Custom.Actions.Minimize
 import           XMonad.Custom.Actions.RecentWindows
 import           XMonad.Custom.Actions.RecentWorkspaces
 import           XMonad.Custom.Actions.ScratchpadChooser
-import           XMonad.Custom.Actions.Screen.Screencast
-import           XMonad.Custom.Actions.Screen.Screenshot
 import           XMonad.Custom.Actions.TmuxPrompt
 import           XMonad.Custom.Hooks.Layout
 import           XMonad.Custom.Prompt

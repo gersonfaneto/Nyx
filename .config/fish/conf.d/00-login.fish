@@ -17,6 +17,9 @@ fish_add_path --move \
     $HOME/.go/bin \
     $HOME/.cargo/bin
 
+fish_add_path --move \
+    $HOME/.scripts
+
 if test -f $HOME/.envvars
     source $HOME/.envvars
 end

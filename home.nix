@@ -15,7 +15,6 @@ in
   home.homeDirectory = "/home/gerson";
 
   home.file = {
-    ".bin/" = mkSymlink ".bin/";
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
@@ -37,9 +36,10 @@ in
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/rofi-rbw.rc" = mkSymlink ".config/rofi-rbw.rc";
     ".config/rofimoji.rc" = mkSymlink ".config/rofimoji.rc";
+    ".emacs.d/" = mkSymlink ".emacs.d/";
     ".local/share/fonts/" = mkSymlink ".local/share/fonts/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
-    ".emacs.d/" = mkSymlink ".emacs.d/";
+    ".scripts/" = mkSymlink ".scripts/";
     ".bash_profile" = mkSymlink ".bash_profile";
     ".bashrc" = mkSymlink ".bashrc";
     ".dir_colors" = mkSymlink ".dir_colors";
