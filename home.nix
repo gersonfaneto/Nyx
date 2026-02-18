@@ -39,6 +39,7 @@ in
     ".config/rofimoji.rc" = mkSymlink ".config/rofimoji.rc";
     ".local/share/fonts/" = mkSymlink ".local/share/fonts/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
+    ".emacs.d/" = mkSymlink ".emacs.d/";
     ".bash_profile" = mkSymlink ".bash_profile";
     ".bashrc" = mkSymlink ".bashrc";
     ".dir_colors" = mkSymlink ".dir_colors";
