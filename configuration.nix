@@ -239,6 +239,7 @@
       diff-so-fancy
       dragon-drop
       dunst
+      emacs-pgtk
       fastfetch
       fd
       feh
