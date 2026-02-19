@@ -1,4 +1,4 @@
----@type minimal.pack.spec
+---@type my.pack.spec
 return {
   src = 'https://github.com/tpope/vim-projectionist',
   data = {
@@ -19,12 +19,14 @@ return {
         endif
 
         " Remove first slash separated component
-        function! g:projectionist_transformations.tail(input, o) abort
+        " a/b/c -> b/c
+        function! g:projectionist_transformations.longtail(input, o) abort
           return substitute(a:input, '\(\/\)*[^/]\+\/*', '\1', '')
         endfunction
 
-        " Remove all but first slash separated component
-        function! g:projectionist_transformations.head(input, o) abort
+        " Remove all but first slash separated component (project root)
+        " a/b/c -> a
+        function! g:projectionist_transformations.projroot(input, o) abort
           return matchstr(a:input, '\(\/\)*[^/]\+')
         endfunction
 
@@ -40,8 +42,8 @@ return {
       ]=])
 
       -- Lazy load projections for each filetype
-      require('utils.load').ft_auto_load_once(
-        'pack.res.vim-projectionist.projections',
+      require('my.utils.load').ft_auto_load_once(
+        'my.pack.res.vim-projectionist.projections',
         function(_, projections)
           if not projections then
             return
