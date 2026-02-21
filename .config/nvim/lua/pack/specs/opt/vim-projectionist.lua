@@ -1,4 +1,4 @@
----@type my.pack.spec
+---@type minimal.pack.spec
 return {
   src = 'https://github.com/tpope/vim-projectionist',
   data = {
@@ -42,8 +42,8 @@ return {
       ]=])
 
       -- Lazy load projections for each filetype
-      require('my.utils.load').ft_auto_load_once(
-        'my.pack.res.vim-projectionist.projections',
+      require('utils.load').ft_auto_load_once(
+        'minimal.pack.res.vim-projectionist.projections',
         function(_, projections)
           if not projections then
             return
