@@ -45,6 +45,7 @@ in
     ".dir_colors" = mkSymlink ".dir_colors";
     ".ghci" = mkSymlink ".ghci";
     ".gitconfig" = mkSymlink ".gitconfig";
+    ".gitignore" = mkSymlink ".gitignore.global";
     ".profile" = mkSymlink ".profile";
     ".vimrc" = mkSymlink ".vimrc";
   };

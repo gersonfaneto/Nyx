@@ -28,6 +28,7 @@
   fsync = none
   compression = 9
   preloadindex = true
+  excludesFile = ~/.gitignore
 
 [advice]
   addEmptyPathSpec = false
