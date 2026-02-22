@@ -16,16 +16,16 @@
 
   stylix.fonts = {
     serif = {
-      # package = null;
-      name = "Monaco Nerd Font Mono";
+      package = pkgs.fantasque-sans-mono;
+      name = "Fantasque Sans Mono";
     };
     sansSerif = {
-      # package = null;
-      name = "Monaco Nerd Font Mono";
+      package = pkgs.fantasque-sans-mono;
+      name = "Fantasque Sans Mono";
     };
     monospace = {
-      # package = null;
-      name = "Monaco Nerd Font Mono";
+      package = pkgs.fantasque-sans-mono;
+      name = "Fantasque Sans Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;

@@ -387,7 +387,7 @@ c.fonts.completion.category = "bold default_size default_family"
 c.fonts.completion.entry = "default_size default_family"
 c.fonts.contextmenu = None
 c.fonts.debug_console = "default_size default_family"
-c.fonts.default_family = ["Monaco Nerd Font Mono"]
+c.fonts.default_family = ["Fantasque Sans Mono"]
 c.fonts.default_size = "10pt"
 
 c.fonts.downloads = "default_size default_family"
@@ -407,9 +407,9 @@ c.fonts.web.family.cursive = ""
 c.fonts.web.family.fantasy = ""
 c.fonts.web.family.fixed = ""
 
-c.fonts.web.family.sans_serif = "Monaco Nerd Font Mono"
-c.fonts.web.family.serif = "Monaco Nerd Font Mono"
-c.fonts.web.family.standard = "Monaco Nerd Font Mono"
+c.fonts.web.family.sans_serif = "Fantasque Sans Mono"
+c.fonts.web.family.serif = "Fantasque Sans Mono"
+c.fonts.web.family.standard = "Fantasque Sans Mono"
 
 c.fonts.web.size.default = 16
 c.fonts.web.size.default_fixed = 13

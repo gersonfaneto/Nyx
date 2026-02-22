@@ -411,14 +411,17 @@
 
       # Emojis
       noto-fonts-color-emoji
+
+      # General
+      fantasque-sans-mono
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "Monaco Nerd Font Mono" ];
-        sansSerif = [ "Monaco Nerd Font Mono" ];
-        monospace = [ "Monaco Nerd Font Mono" ];
+        serif = [ "Fantasque Sans Mono" ];
+        sansSerif = [ "Fantasque Sans Mono" ];
+        monospace = [ "Fantasque Sans Mono" ];
       };
     };
   };
