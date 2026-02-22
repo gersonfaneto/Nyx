@@ -1,9 +1,7 @@
 module XMonad.Custom.Utils.Loggers where
 
-import           Control.Monad
 import           Data.List                   (intersect)
 import           XMonad
-import           XMonad.Actions.Minimize
 import           XMonad.Hooks.StatusBar.PP
 import           XMonad.Util.Loggers
 import           XMonad.Util.Minimize

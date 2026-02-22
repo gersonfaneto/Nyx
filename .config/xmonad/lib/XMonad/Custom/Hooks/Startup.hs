@@ -3,12 +3,7 @@ module XMonad.Custom.Hooks.Startup
   )
 where
 
-import           Data.Maybe
 import           XMonad                         hiding (startupHook)
-import           XMonad.Hooks.SetWMName
-import           XMonad.Hooks.StatusBar
-import           XMonad.Util.Cursor
-import           XMonad.Util.SpawnOnce
 
 import           XMonad.Custom.Actions.Keyboard
 

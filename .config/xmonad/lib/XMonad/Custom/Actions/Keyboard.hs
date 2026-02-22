@@ -26,15 +26,11 @@ where
 import           Control.Monad                (unless, void, when)
 import           Data.Char                    (isSpace, toLower)
 import           Data.List                    (find, nub)
-import           Data.Maybe                   (fromMaybe)
-import           Data.Typeable                (Typeable)
 import           XMonad
-import           XMonad.Actions.ShowText
 import           XMonad.Prompt
 import           XMonad.Util.ExtensibleState  as XS
 import           XMonad.Util.Run              (runProcessWithInput)
 
-import           XMonad.Custom.Prompt
 import           XMonad.Custom.Utils.Keyboard (flashKeyboardChange,
                                                formatLayouts)
 import           XMonad.Custom.Utils.Strings  (trim)

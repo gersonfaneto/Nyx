@@ -10,8 +10,6 @@ import           XMonad.Util.NamedScratchpad        hiding
                                                     (namedScratchpadFilterOutWorkspace)
 import           XMonad.Util.WorkspaceCompare
 
-import qualified XMonad.StackSet                    as S
-
 import           XMonad.Custom.Manage.ManageHelpers
 import           XMonad.Custom.Misc                 as C
 

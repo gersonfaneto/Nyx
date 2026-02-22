@@ -4,7 +4,6 @@ import           XMonad
 import           XMonad.Prompt
 import           XMonad.Util.NamedScratchpad
 
-import           XMonad.Custom.Prompt
 import           XMonad.Custom.Scratchpads   (scratchpads)
 
 -- Prompt

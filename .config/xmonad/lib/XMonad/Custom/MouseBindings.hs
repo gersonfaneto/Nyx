@@ -7,7 +7,6 @@ import           XMonad                             hiding (keys, modMask,
                                                      mouseBindings)
 import           XMonad.Actions.Minimize
 import           XMonad.Actions.TiledWindowDragging
-import           XMonad.Util.EZConfig
 
 import qualified Data.Map                           as M
 import qualified XMonad.Actions.FlexibleManipulate  as Flex

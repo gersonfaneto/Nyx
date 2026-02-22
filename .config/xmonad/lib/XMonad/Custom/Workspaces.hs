@@ -1,17 +1,13 @@
 module XMonad.Custom.Workspaces where
 
 import           Data.List                                (find)
-import           Data.Maybe                               (fromMaybe)
 import           XMonad                                   hiding (workspaces)
 import           XMonad.Actions.DynamicProjects
-import           XMonad.Actions.WindowGo
-import           XMonad.Util.NamedScratchpad
 
 import           XMonad.Custom.Actions.ApplicationChooser
 import           XMonad.Custom.Actions.DoActions
 import           XMonad.Custom.Actions.Keyboard
 import           XMonad.Custom.Prompt
-import           XMonad.Custom.Scratchpads
 
 import qualified XMonad.Custom.Misc                       as C
 

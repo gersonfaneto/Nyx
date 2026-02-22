@@ -18,20 +18,16 @@ import           XMonad                              hiding (layoutHook)
 -- import XMonad.Actions.MouseResize
 
 import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.RefocusLast
 import           XMonad.Layout.Accordion
 import           XMonad.Layout.BinarySpacePartition
 import           XMonad.Layout.BoringWindows         hiding (Replace)
 import           XMonad.Layout.CenteredIfSingle
 import           XMonad.Layout.CenterMainFluid
 import           XMonad.Layout.CircleEx
-import           XMonad.Layout.DraggingVisualizer
 import           XMonad.Layout.Fullscreen
 import           XMonad.Layout.GridVariants
 import           XMonad.Layout.Hidden
 import           XMonad.Layout.IfMax
-import           XMonad.Layout.LayoutCombinators
-import           XMonad.Layout.LayoutHints
 import           XMonad.Layout.LayoutModifier
 import           XMonad.Layout.LimitWindows
 import           XMonad.Layout.Magnifier             hiding (Toggle)
@@ -42,12 +38,10 @@ import           XMonad.Layout.MultiToggle.Instances
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.OneBig
 import           XMonad.Layout.PerScreen
-import           XMonad.Layout.PerWorkspace
 import           XMonad.Layout.Reflect
 import           XMonad.Layout.Renamed
 import           XMonad.Layout.ResizableTile
 import           XMonad.Layout.Roledex
-import           XMonad.Layout.ShowWName
 import           XMonad.Layout.Simplest
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.SubLayouts
@@ -161,7 +155,9 @@ layoutNames = description <$> snd layoutsInfo
 
 layoutMap = M.fromList $ zip layoutNames layoutNames
 
-defaultLayout = head layoutNames
+defaultLayout = case layoutNames of
+  [x : _] -> x
+  _       -> undefined
 
 applyCentering layouts =
   ifWider

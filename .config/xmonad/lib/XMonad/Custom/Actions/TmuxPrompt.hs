@@ -1,6 +1,5 @@
 module XMonad.Custom.Actions.TmuxPrompt (tmuxPrompt) where
 
-import           Data.List       (lines)
 import           XMonad
 import           XMonad.Prompt
 import           XMonad.Util.Run (runInTerm, runProcessWithInput)

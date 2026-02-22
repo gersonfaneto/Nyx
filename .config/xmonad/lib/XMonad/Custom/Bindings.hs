@@ -7,10 +7,8 @@ module XMonad.Custom.Bindings
   )
 where
 
-import           Data.Foldable
 import           Flow
 import           System.Exit
-import           XMonad                                   (spawn)
 import           XMonad                                   hiding (keys, modMask)
 import           XMonad.Actions.CopyWindow
 import           XMonad.Actions.CycleRecentWS
@@ -21,33 +19,21 @@ import           XMonad.Actions.DynamicWorkspaces
 import           XMonad.Actions.EasyMotion                (selectWindow)
 import           XMonad.Actions.FloatSnap
 import           XMonad.Actions.GridSelect
-import           XMonad.Actions.GroupNavigation
 import           XMonad.Actions.MessageFeedback
 import           XMonad.Actions.Minimize
-import           XMonad.Actions.MostRecentlyUsed
 import           XMonad.Actions.Navigation2D
-import           XMonad.Actions.PerLayoutKeys
 import           XMonad.Actions.RepeatAction
 import           XMonad.Actions.ShowText
-import           XMonad.Actions.Submap
 import           XMonad.Actions.SwapPromote
-import           XMonad.Actions.TiledWindowDragging
-import           XMonad.Actions.UpdatePointer
-import           XMonad.Actions.WindowGo
-import           XMonad.Actions.WindowMenu
 import           XMonad.Actions.WithAll
-import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.UrgencyHook
 import           XMonad.Layout.BinarySpacePartition
-import           XMonad.Layout.Hidden
 import           XMonad.Layout.Maximize
 import           XMonad.Layout.MultiToggle
 import           XMonad.Layout.MultiToggle.Instances
 import           XMonad.Layout.Reflect
 import           XMonad.Layout.ResizableTile
 import           XMonad.Layout.SubLayouts
-import           XMonad.Operations                        (restart)
-import           XMonad.Prompt                            (XPConfig (..))
 import           XMonad.Prompt.ConfirmPrompt
 import           XMonad.Prompt.Man
 import           XMonad.Prompt.Pass
@@ -56,26 +42,21 @@ import           XMonad.Prompt.Shell
 import           XMonad.Prompt.Window
 import           XMonad.Prompt.Workspace
 import           XMonad.Util.EZConfig
-import           XMonad.Util.NamedActions
 import           XMonad.Util.NamedScratchpad              hiding
                                                           (namedScratchpadFilterOutWorkspace)
 import           XMonad.Util.WorkspaceCompare
 
 import qualified Data.Map                                 as M
-import qualified XMonad.Actions.FlexibleManipulate        as Flex
 import qualified XMonad.Layout.Magnifier                  as Mag
 import qualified XMonad.StackSet                          as S
 
 import           XMonad.Custom.Actions.ApplicationChooser
-import           XMonad.Custom.Actions.Calculator
-import           XMonad.Custom.Actions.DoActions
 import           XMonad.Custom.Actions.DoPrompt
 import           XMonad.Custom.Actions.JumpWorkspaces
 import           XMonad.Custom.Actions.Keyboard
 import           XMonad.Custom.Actions.LayoutChooser
 import           XMonad.Custom.Actions.Minimize
 import           XMonad.Custom.Actions.RecentWindows
-import           XMonad.Custom.Actions.RecentWorkspaces
 import           XMonad.Custom.Actions.ScratchpadChooser
 import           XMonad.Custom.Actions.TmuxPrompt
 import           XMonad.Custom.Hooks.Layout

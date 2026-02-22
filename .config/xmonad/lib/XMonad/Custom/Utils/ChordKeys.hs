@@ -37,13 +37,10 @@ import           Data.Char       (isSpace)
 import           Data.List       (sort, sortOn)
 import           Data.Map.Strict (Map)
 import           Data.Maybe      (fromMaybe)
-import           Data.Text       (Text)
 import           Data.Vector     (Vector)
 import           GHC.Generics    (Generic)
-import           XMonad          hiding (workspaces)
 
 import qualified Data.Map.Strict as M
-import qualified Data.Text       as T
 import qualified Data.Vector     as V
 
 -- | Configuration for chord generation with validation

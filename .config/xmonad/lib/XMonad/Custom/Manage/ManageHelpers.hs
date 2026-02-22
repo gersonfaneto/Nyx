@@ -1,9 +1,8 @@
 module XMonad.Custom.Manage.ManageHelpers where
 
-import           XMonad                      hiding (manageHook)
+import           XMonad                     hiding (manageHook)
 import           XMonad.Hooks.ManageHelpers
-import           XMonad.StackSet             as W
-import           XMonad.Util.NamedScratchpad
+import           XMonad.StackSet            as W
 
 isRole :: Query String
 isRole = stringProperty "WM_WINDOW_ROLE"

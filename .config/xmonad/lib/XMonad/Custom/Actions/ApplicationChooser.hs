@@ -4,7 +4,6 @@
 
 module XMonad.Custom.Actions.ApplicationChooser where
 
-import           Data.List            (intercalate, nub)
 import           Data.Maybe           (fromMaybe)
 import           GHC.Generics         (Generic)
 import           XMonad

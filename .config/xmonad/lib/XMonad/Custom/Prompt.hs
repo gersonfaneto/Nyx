@@ -11,19 +11,13 @@ module XMonad.Custom.Prompt
   )
 where
 
-import           Control.Arrow             ((***))
-import           Data.Char
 import           Data.List
 import           Data.Ratio
 import           XMonad
 import           XMonad.Actions.GridSelect
 import           XMonad.Actions.ShowText
--- import XMonad.Custom.Prompt.FuzzyMatch
-
 import           XMonad.Prompt
 import           XMonad.Prompt.FuzzyMatch
-
-import qualified Data.Map.Strict           as M
 
 import qualified XMonad.Custom.Theme       as T
 

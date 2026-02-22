@@ -34,36 +34,24 @@ module XMonad.Custom.Actions.RecentWindows
   )
 where
 
-import           Control.Monad.Trans.Maybe       (MaybeT (..))
-import           Data.Char                       (toLower)
-import           Data.List                       (isInfixOf, isPrefixOf, length,
-                                                  lines, take)
-import           Data.Monoid                     (getAll)
 import           Data.Ratio                      ((%))
 import           Graphics.X11.Types
-import           Graphics.X11.Xlib.Event
 import           Graphics.X11.Xlib.Extras
 import           XMonad
 import           XMonad.Actions.MostRecentlyUsed (Location (..))
 import           XMonad.Actions.ShowText
-import           XMonad.Core
 import           XMonad.Hooks.StatusBar.PP
 import           XMonad.Prelude
 import           XMonad.Prompt
-import           XMonad.Prompt.Window
 import           XMonad.Util.History             (History, erase, event, ledger,
                                                   origin)
 import           XMonad.Util.NamedWindows        (getName)
-import           XMonad.Util.XSelection          (getSelection)
 
-import qualified Data.List.NonEmpty              as NE
 import qualified Data.Map.Strict                 as M
 import qualified XMonad.StackSet                 as W
 import qualified XMonad.Util.ExtensibleConf      as XC
 import qualified XMonad.Util.ExtensibleState     as XS
-import qualified XMonad.Util.Timer               as Timer
 
-import           XMonad.Custom.Prompt
 import           XMonad.Custom.Utils.ChordKeys
 
 -- --< Interface >-- {{{

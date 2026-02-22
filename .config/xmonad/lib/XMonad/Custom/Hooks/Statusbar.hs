@@ -3,12 +3,9 @@ module XMonad.Custom.Hooks.Statusbar
   )
 where
 
-import           Control.Monad
-import           Data.Maybe
 import           Text.Printf
 import           XMonad
 import           XMonad.Hooks.StatusBar
-import           XMonad.Util.ClickableWorkspaces
 
 import           XMonad.Custom.Hooks.Log
 

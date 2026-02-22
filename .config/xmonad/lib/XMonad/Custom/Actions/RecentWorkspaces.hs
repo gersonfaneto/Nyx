@@ -20,16 +20,13 @@ module XMonad.Custom.Actions.RecentWorkspaces
   )
 where
 
-import           Data.Char                           (toLower)
-import           Data.List                           (intercalate, isPrefixOf)
 import           Data.Ratio                          ((%))
 import           XMonad
 import           XMonad.Actions.MostRecentlyUsed     (Location (..))
 import           XMonad.Actions.ShowText
 import           XMonad.Prelude
 import           XMonad.Prompt
-import           XMonad.Util.History                 (History, erase, event,
-                                                      ledger, origin)
+import           XMonad.Util.History                 (ledger)
 
 import qualified Data.Map.Strict                     as M
 import qualified XMonad.StackSet                     as W

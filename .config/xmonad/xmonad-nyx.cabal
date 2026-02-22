@@ -4,6 +4,17 @@ version: 0.1.0
 
 common base
   default-language: GHC2021
+  ghc-options:
+    -Wall
+    -Werror
+    -Wno-error=orphans
+    -Wno-error=type-defaults
+    -Wno-error=name-shadowing
+    -Wno-error=incomplete-uni-patterns
+    -Wno-error=unused-binds
+    -Wno-error=unused-matches
+    -Wno-error=missing-signatures
+    -threaded
 
 library xmonad-lib
   import: base

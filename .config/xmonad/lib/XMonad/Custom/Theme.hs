@@ -1,8 +1,5 @@
 module XMonad.Custom.Theme where
 
-import           Data.Char
-import           Data.Function
-import           Data.List
 import           Graphics.X11.Xlib.Types
 import           XMonad.Layout.Decoration
 

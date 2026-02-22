@@ -11,23 +11,13 @@ module XMonad.Custom.Actions.JumpWorkspaces
   )
 where
 
-import           Data.Char                           (toLower)
-import           Data.List                           (intercalate, isPrefixOf)
-import           Data.Ratio                          ((%))
 import           XMonad
-import           XMonad.Actions.MostRecentlyUsed     (Location (..))
-import           XMonad.Actions.ShowText
 import           XMonad.Prelude
 import           XMonad.Prompt
-import           XMonad.Util.History                 (History, erase, event,
-                                                      ledger, origin)
 
-import qualified Data.Map.Strict                     as M
-import qualified XMonad.StackSet                     as W
-import qualified XMonad.Util.ExtensibleConf          as XC
-import qualified XMonad.Util.ExtensibleState         as XS
+import qualified Data.Map.Strict               as M
+import qualified XMonad.StackSet               as W
 
-import           XMonad.Custom.Actions.RecentWindows
 import           XMonad.Custom.Utils.ChordKeys
 
 data ChordWorkspacePrompt = ChordWorkspacePrompt

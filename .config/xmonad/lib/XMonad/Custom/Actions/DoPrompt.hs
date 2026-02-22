@@ -4,7 +4,6 @@ module XMonad.Custom.Actions.DoPrompt
   )
 where
 
-import           Data.Char                       (toLower)
 import           XMonad
 import           XMonad.Prompt
 
@@ -12,7 +11,6 @@ import qualified Data.Map                        as M
 
 import           XMonad.Custom.Actions.DoActions
 import           XMonad.Custom.Actions.Keyboard  (wrapKbdLayout)
-import           XMonad.Custom.Prompt
 
 data DoPrompt = DoPrompt
 

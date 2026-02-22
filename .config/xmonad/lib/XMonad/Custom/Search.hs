@@ -4,8 +4,6 @@ module XMonad.Custom.Search
   )
 where
 
-import           Data.Foldable
-import           Data.List
 import           Data.Maybe              (fromMaybe)
 import           XMonad
 import           XMonad.Actions.Search
