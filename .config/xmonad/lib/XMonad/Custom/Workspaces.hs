@@ -6,7 +6,6 @@ import           XMonad.Actions.DynamicProjects
 
 import           XMonad.Custom.Actions.ApplicationChooser
 import           XMonad.Custom.Actions.DoActions
-import           XMonad.Custom.Actions.Keyboard
 import           XMonad.Custom.Prompt
 
 import qualified XMonad.Custom.Misc                       as C
@@ -97,11 +96,11 @@ projects =
   , makeProject (note wsNames) $ Just $ do
       doActionByName "Notes"
   , makeProject (code wsNames) $ Just $ do
-      wrapKbdLayout $ selectEditorByNameAndDo promptTheme spawn
+      selectEditorByNameAndDo promptTheme spawn
   , makeProject (web wsNames) $ Just $ do
-      wrapKbdLayout $ selectBrowserByNameAndDo promptTheme spawn
+      selectBrowserByNameAndDo promptTheme spawn
   , makeProject (wsread wsNames) $ Just $ do
-      wrapKbdLayout $ selectReaderByNameAndDo promptTheme spawn
+      selectReaderByNameAndDo promptTheme spawn
   , makeProject (sys wsNames) $ Just $ do
       doActionByName "Terminal"
       doActionByName "Terminal"

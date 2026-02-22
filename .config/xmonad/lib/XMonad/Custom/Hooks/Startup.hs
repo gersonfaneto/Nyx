@@ -3,19 +3,16 @@ module XMonad.Custom.Hooks.Startup
   )
 where
 
-import           XMonad                         hiding (startupHook)
-
-import           XMonad.Custom.Actions.Keyboard
+import           XMonad                hiding (startupHook)
+import           XMonad.Util.SpawnOnce (spawnOnce)
 
 startupHook :: X ()
 startupHook = do
-  spawn "pkill dunst; dunst -config $HOME/.config/dunst/dunstrc &"
-  spawn "feh --bg-fill $HOME/.local/share/wallpapers/1920x1080.jpg &"
-  spawn "battery -L 20 -n &"
-  spawn "xset s 600 &"
-  spawn "xset r rate 200 100"
-  spawn "xss-lock -l -- xsecurelock &"
-  spawn "xsetroot -cursor_name left_ptr &"
-  spawn "xrandr --output HDMI-1 --same-as eDP-1 &"
-  spawn "setxkbmap -option ctrl:nocaps -layout br -variant thinkpad &"
-  keyboardStartupHook
+  spawnOnce "dunst -config $HOME/.config/dunst/dunstrc"
+  spawnOnce "feh --bg-fill $HOME/.local/share/wallpapers/1920x1080.jpg"
+  spawnOnce "battery -L 20 -n"
+  spawnOnce "xset s 600"
+  spawnOnce "xset r rate 200 100"
+  spawnOnce "xss-lock -l -- xsecurelock"
+  spawnOnce "xsetroot -cursor_name left_ptr"
+  spawnOnce "setxkbmap -option ctrl:nocaps -layout br -variant thinkpad"

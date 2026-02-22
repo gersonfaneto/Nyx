@@ -38,7 +38,6 @@ library xmonad-lib
     XMonad.Custom.Actions.DoActions
     XMonad.Custom.Actions.DoPrompt
     XMonad.Custom.Actions.JumpWorkspaces
-    XMonad.Custom.Actions.Keyboard
     XMonad.Custom.Actions.LayoutChooser
     XMonad.Custom.Actions.Minimize
     XMonad.Custom.Actions.RecentWindows
@@ -48,7 +47,6 @@ library xmonad-lib
     XMonad.Custom.Bindings
     XMonad.Custom.Config
     XMonad.Custom.Hooks.Event
-    XMonad.Custom.Hooks.KeyboardChangeEvent
     XMonad.Custom.Hooks.Layout
     XMonad.Custom.Hooks.Log
     XMonad.Custom.Hooks.Screens
@@ -65,7 +63,6 @@ library xmonad-lib
     XMonad.Custom.Theme
     XMonad.Custom.Utils.Array
     XMonad.Custom.Utils.ChordKeys
-    XMonad.Custom.Utils.Keyboard
     XMonad.Custom.Utils.Loggers
     XMonad.Custom.Utils.Strings
     XMonad.Custom.Workspaces

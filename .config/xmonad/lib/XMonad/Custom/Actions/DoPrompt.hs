@@ -10,7 +10,6 @@ import           XMonad.Prompt
 import qualified Data.Map                        as M
 
 import           XMonad.Custom.Actions.DoActions
-import           XMonad.Custom.Actions.Keyboard  (wrapKbdLayout)
 
 data DoPrompt = DoPrompt
 
@@ -21,7 +20,7 @@ instance XPrompt DoPrompt where
 
 -- | Show a prompt with available actions and execute the selected one
 doPrompt :: XPConfig -> X ()
-doPrompt config = wrapKbdLayout $ doPromptRaw config
+doPrompt config = doPromptRaw config
 
 -- | Internal function to avoid nesting wrapKbdLayout calls
 doPromptRaw :: XPConfig -> X ()

@@ -53,11 +53,9 @@ import qualified XMonad.StackSet                          as S
 import           XMonad.Custom.Actions.ApplicationChooser
 import           XMonad.Custom.Actions.DoPrompt
 import           XMonad.Custom.Actions.JumpWorkspaces
-import           XMonad.Custom.Actions.Keyboard
 import           XMonad.Custom.Actions.LayoutChooser
 import           XMonad.Custom.Actions.Minimize
 import           XMonad.Custom.Actions.RecentWindows
-import           XMonad.Custom.Actions.ScratchpadChooser
 import           XMonad.Custom.Actions.TmuxPrompt
 import           XMonad.Custom.Hooks.Layout
 import           XMonad.Custom.Prompt
@@ -150,6 +148,7 @@ withOthers f = withWindowSet $ mapM_ f <. others
         <. S.workspace
         <. S.current
 
+myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys config = mkKeymap config keys
   where
     keys =
@@ -167,12 +166,13 @@ myKeys config = mkKeymap config keys
           , keysLayout config
           ]
 
+flash' :: String -> X ()
 flash' = flashText def 0.5
 
 keysBase :: Keybindings
 keysBase =
-  [ ("M-r", wrapKbdLayout $ runOrRaisePrompt promptTheme)
-  , ("M-<Space>", wrapKbdLayout $ shellPrompt $ promptNoCompletion promptTheme)
+  [ ("M-r", runOrRaisePrompt promptTheme)
+  , ("M-<Space>", shellPrompt $ promptNoCompletion promptTheme)
   , ("M-C-<Space>", spawn "rofilauncher")
   , ("M-S-<Space>", spawn "rofimoji")
   , ("M-M1-<Space>", spawn "rofi-rbw")
@@ -212,9 +212,9 @@ keysSpawnables =
   [ ("M-<Return>", spawn $ C.term' C.applications)
   , ("M-S-<Return>", spawn $ C.term' C.applications ++ " -e tmux new-session -A -s Home")
   , ("M-o b", spawn $ C.browser C.applications)
-  , ("M-o S-b", wrapKbdLayout $ selectBrowserByNameAndSpawn promptTheme)
+  , ("M-o S-b", selectBrowserByNameAndSpawn promptTheme)
   , ("M-o e", spawn $ C.term C.applications ++ " -e nvim")
-  , ("M-o S-e", wrapKbdLayout $ selectEditorByNameAndSpawn promptTheme)
+  , ("M-o S-e", selectEditorByNameAndSpawn promptTheme)
   , ("M-o f", namedScratchpadAction scratchpads "files")
   , ("M-o c", namedScratchpadAction scratchpads "console")
   , ("M-o m", namedScratchpadAction scratchpads "music")
@@ -231,7 +231,7 @@ keysSpawnables =
 keysDo :: Keybindings
 keysDo =
   [ ("M-d s z", spawn $ C.screenZoomer C.applications)
-  , ("M-d d", wrapKbdLayout $ doSomethingPrompt promptTheme)
+  , ("M-d d", doSomethingPrompt promptTheme)
   , ("M-d w c", workspacePrompt promptTheme $ windows . copy)
   , ("M-d c <Backspace>", spawn "clipcatctl clear")
   , ("M-d l", spawn "dm-tool lock")
@@ -269,12 +269,12 @@ keysWindows :: Keybindings
 keysWindows =
   [ ("M-w k", kill)
   , ("M-w w", spawn "skippy-xd --expose")
-  , ("M-w S-k", wrapKbdLayout $ confirmPrompt hotPromptTheme "Kill all" killAll)
-  , ("M-w C-S-k", wrapKbdLayout $ confirmPrompt hotPromptTheme "Kill others" $ withOthers killWindow)
-  , ("M-w g", wrapKbdLayout $ windowPrompt promptTheme Goto allWindows)
-  , ("M-w /", wrapKbdLayout $ windowPrompt promptTheme Goto wsWindows)
-  , ("M-w b", wrapKbdLayout $ windowPrompt promptTheme Bring allWindows)
-  , ("M-d w S-c", wrapKbdLayout $ windowPrompt promptTheme BringCopy allWindows)
+  , ("M-w S-k",  confirmPrompt hotPromptTheme "Kill all" killAll)
+  , ("M-w C-S-k", confirmPrompt hotPromptTheme "Kill others" $ withOthers killWindow)
+  , ("M-w g", windowPrompt promptTheme Goto allWindows)
+  , ("M-w /", windowPrompt promptTheme Goto wsWindows)
+  , ("M-w b", windowPrompt promptTheme Bring allWindows)
+  , ("M-d w S-c", windowPrompt promptTheme BringCopy allWindows)
   , ("M-w c", toggleCopyToAll)
   , ("M-w o", sendMessage Mag.Toggle)
   , ("M-w S-c", kill1)
@@ -282,7 +282,7 @@ keysWindows =
   , ("M-w h", withFocused minimizeWindow)
   , ("M-w M1-h", withOthers minimizeWindow)
   , ("M-w S-h", withLastMinimized maximizeWindowAndFocus)
-  , ("M-w C-S-h", wrapKbdLayout $ selectMaximizeWindowPrompt $ promptNoCompletion promptTheme)
+  , ("M-w C-S-h", selectMaximizeWindowPrompt $ promptNoCompletion promptTheme)
   , ("M-w r", sendMessage $ Toggle REFLECTX)
   , ("M-w t", withFocused $ sendMessage . MergeAll)
   , ("M-w S-t", withFocused $ sendMessage . UnMerge)
@@ -299,7 +299,7 @@ keysWindows =
   , ("M-i", onGroup S.focusUp')
   , ("M-S-u", windows S.swapDown)
   , ("M-S-i", windows S.swapUp)
-  , ("M-'", wrapKbdLayout $ withChordSelection 15 promptTheme (windows . S.focusWindow))
+  , ("M-'", withChordSelection 15 promptTheme (windows . S.focusWindow))
   ]
     ++ zipKeys' "M-" vimKeys directions windowGo True
     ++ zipKeys' "M-S-" vimKeys directions windowSwap True
@@ -316,20 +316,20 @@ keysWindows =
 
 keysWorkspaces :: Keybindings
 keysWorkspaces =
-  [ ("M-p /", wrapKbdLayout $ switchProjectPrompt promptTheme)
-  , ("M-p c", wrapKbdLayout . switchProjectPrompt $ promptNoCompletion promptTheme)
-  , ("M-p s", wrapKbdLayout $ gridselectWorkspace gridSelectTheme S.greedyView)
-  , ("M-p S-s", wrapKbdLayout $ shiftToProjectPrompt promptTheme)
-  , ("M-p n", wrapKbdLayout $ renameProjectPrompt hotPromptTheme)
+  [ ("M-p /", switchProjectPrompt promptTheme)
+  , ("M-p c", switchProjectPrompt $ promptNoCompletion promptTheme)
+  , ("M-p s", gridselectWorkspace gridSelectTheme S.greedyView)
+  , ("M-p S-s", shiftToProjectPrompt promptTheme)
+  , ("M-p n", renameProjectPrompt hotPromptTheme)
   , ("M-p <Backspace>", removeWorkspace)
   , ("M-p S-<Backspace>", confirmPrompt hotPromptTheme "Kill workspace?" $ killAll >> removeWorkspace)
   , ("M-.", nextNonEmptyWS)
   , ("M-,", prevNonEmptyWS)
   , ("M-;", toggleWS' ["NSP"])
-  , ("M-n", wrapKbdLayout $ workspacePrompt promptTheme $ windows . S.shift)
+  , ("M-n", workspacePrompt promptTheme $ windows . S.shift)
   , ("M-p p", spawn "skippy-xd --paging")
   , ("M-<Tab>", cycleRecentNonEmptyWS [xK_Alt_L, xK_Alt_R, xK_Escape] xK_comma xK_period)
-  , ("M-S-;", wrapKbdLayout $ withChordWorkspaceSelection 40 promptTheme (windows . S.greedyView))
+  , ("M-S-;", withChordWorkspaceSelection 40 promptTheme (windows . S.greedyView))
   ]
     ++ zipKeys "M-" wsKeys [0 ..] (withNthWorkspace S.greedyView)
     ++ zipKeys "M-S-" wsKeys [0 ..] (withNthWorkspace S.shift)
@@ -339,17 +339,14 @@ keysWorkspaces =
 
 keysSearch :: Keybindings
 keysSearch =
-  [ ("M-s e", wrapKbdLayout . selectAndSearchPrompt $ promptNoCompletion promptTheme)
-  , ("M-s m", wrapKbdLayout . manPrompt $ simplestSearch promptTheme)
-  , ("M-s t", wrapKbdLayout $ tmuxPrompt promptTheme)
-  , ("M-s p", wrapKbdLayout $ passPrompt passPromptTheme)
-  , ("M-s w", wrapKbdLayout $ switchProjectPrompt promptTheme)
-  , ("M-s s", wrapKbdLayout $ windowPrompt promptTheme Goto allWindows)
-  , ("M-s k", selectKbdLayout promptTheme)
-  , ("M-s l", wrapKbdLayout $ selectLayoutByName promptTheme)
-  , ("M-s S-l", switchToMRUKbdLayout)
+  [ ("M-s e", selectAndSearchPrompt $ promptNoCompletion promptTheme)
+  , ("M-s m", manPrompt $ simplestSearch promptTheme)
+  , ("M-s t", tmuxPrompt promptTheme)
+  , ("M-s p", passPrompt passPromptTheme)
+  , ("M-s w", switchProjectPrompt promptTheme)
+  , ("M-s s", windowPrompt promptTheme Goto allWindows)
+  , ("M-s l", selectLayoutByName promptTheme)
   , ("M-s c", spawn "xcolor | tr -d '[:space:]' | xclip -selection clipboard")
-  , ("M-s o", wrapKbdLayout $ selectScratchpadByName promptTheme)
   ]
   where
     passPromptTheme = promptTheme
