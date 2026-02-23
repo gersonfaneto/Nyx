@@ -13,7 +13,6 @@ where
 import           Data.Ratio                          ((%))
 import           Flow
 import           XMonad                              hiding (layoutHook)
-
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Layout.Accordion
 import           XMonad.Layout.BinarySpacePartition

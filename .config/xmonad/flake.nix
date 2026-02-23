@@ -46,6 +46,7 @@
                   final.pango
                   final.cabal-install
                   final.haskellPackages.fourmolu
+                  final.haskellPackages.cabal-fmt
                   final.haskellPackages.haskell-language-server
                 ];
               };

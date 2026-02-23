@@ -25,6 +25,7 @@ lint:
 format:
 	find . -type f -name '*.hs' ! \( -path '*dist-newstyle*' -o -path '*xmobarrc*' \)  | paste -sd ' ' | xargs fourmolu --mode inplace
 	find . -type f -name '*.hs' ! \( -path '*dist-newstyle*' -o -path '*xmobarrc*' \)  | paste -sd ' ' | xargs stylish-haskell --inplace
+	find . -type f -name '*.cabal' | paste -sd ' ' | xargs cabal-fmt --tabular --inplace
 
 
 .PHONY: clean

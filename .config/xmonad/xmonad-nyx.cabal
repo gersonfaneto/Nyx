@@ -1,46 +1,39 @@
 cabal-version: 3.0
-name: xmonad-nyx
-version: 0.1.0
+name:          xmonad-nyx
+version:       0.1.0
 
 common base
-  default-language: GHC2021
+  default-language:   GHC2021
   default-extensions:
+    DeriveDataTypeable
     DeriveGeneric
     DerivingStrategies
-    OverloadedStrings
-    LambdaCase
     FlexibleInstances
-    DeriveDataTypeable
+    LambdaCase
+    OverloadedStrings
+
   ghc-options:
-    -Wall
-    -Werror
-    -Wno-error=orphans
-    -Wno-error=type-defaults
-    -Wno-error=name-shadowing
-    -Wno-error=unused-binds
-    -Wno-error=unused-matches
-    -Wno-error=unused-imports
-    -Wno-error=missing-signatures
-    -Wno-error=warnings-deprecations
-    -Wno-error=incomplete-uni-patterns
-    -threaded
-    -funbox-strict-fields
+    -Wall -Werror -Wno-error=orphans -Wno-error=type-defaults
+    -Wno-error=name-shadowing -Wno-error=unused-binds
+    -Wno-error=unused-matches -Wno-error=unused-imports
+    -Wno-error=missing-signatures -Wno-error=warnings-deprecations
+    -Wno-error=incomplete-uni-patterns -threaded -funbox-strict-fields
 
 library xmonad-lib
-  import: base
-  hs-source-dirs: lib
+  import:          base
+  hs-source-dirs:  lib
   build-depends:
-    X11,
-    base,
-    containers,
-    deepseq,
-    flow,
-    text,
-    transformers,
-    vector,
-    xmonad,
-    xmonad-contrib,
-    xmonad-extras,
+    , base
+    , containers
+    , deepseq
+    , flow
+    , text
+    , transformers
+    , vector
+    , X11
+    , xmonad
+    , xmonad-contrib
+    , xmonad-extras
 
   exposed-modules:
     XMonad.Custom.Actions.ApplicationChooser
@@ -71,11 +64,11 @@ library xmonad-lib
     XMonad.Custom.Workspaces
 
 executable xmonad
-  import: base
+  import:         base
   hs-source-dirs: src
   build-depends:
-    base,
-    xmonad,
-    xmonad-lib,
+    , base
+    , xmonad
+    , xmonad-lib
 
-  main-is: Main.hs
+  main-is:        Main.hs
