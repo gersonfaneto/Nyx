@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -Wno-warnings-deprecations #-}
-
 module XMonad.Custom.Config
   ( mConfig
   )

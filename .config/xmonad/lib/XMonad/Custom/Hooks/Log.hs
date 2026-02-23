@@ -1,5 +1,3 @@
-{-# LANGUAGE DeriveDataTypeable #-}
-
 module XMonad.Custom.Hooks.Log
   ( logHook
   , topBarPP'

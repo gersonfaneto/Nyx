@@ -4,18 +4,27 @@ version: 0.1.0
 
 common base
   default-language: GHC2021
+  default-extensions:
+    DeriveGeneric
+    DerivingStrategies
+    OverloadedStrings
+    LambdaCase
+    FlexibleInstances
+    DeriveDataTypeable
   ghc-options:
     -Wall
     -Werror
     -Wno-error=orphans
     -Wno-error=type-defaults
     -Wno-error=name-shadowing
-    -Wno-error=incomplete-uni-patterns
     -Wno-error=unused-binds
     -Wno-error=unused-matches
     -Wno-error=unused-imports
     -Wno-error=missing-signatures
+    -Wno-error=warnings-deprecations
+    -Wno-error=incomplete-uni-patterns
     -threaded
+    -funbox-strict-fields
 
 library xmonad-lib
   import: base

@@ -1,5 +1,3 @@
-{-# LANGUAGE FlexibleInstances #-}
-
 module XMonad.Custom.Hooks.Layout
   ( layoutHook
   , layoutNames
@@ -15,7 +13,6 @@ where
 import           Data.Ratio                          ((%))
 import           Flow
 import           XMonad                              hiding (layoutHook)
--- import XMonad.Actions.MouseResize
 
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Layout.Accordion

@@ -1,7 +1,3 @@
-{-# LANGUAGE DeriveGeneric      #-}
-{-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE OverloadedStrings  #-}
-
 module XMonad.Custom.Actions.ApplicationChooser where
 
 import           Data.Maybe           (fromMaybe)
