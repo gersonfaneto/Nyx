@@ -7,30 +7,28 @@ where
 
 import           Flow
 import           XMonad
-import           XMonad.Actions.DynamicProjects         (dynamicProjects)
-import           XMonad.Actions.Navigation2D            (withNavigation2DConfig)
+import           XMonad.Actions.DynamicProjects  (dynamicProjects)
+import           XMonad.Actions.Navigation2D     (withNavigation2DConfig)
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.Rescreen
 import           XMonad.Hooks.StatusBar
 
-import qualified XMonad.Util.Hacks                      as Hacks
+import qualified XMonad.Util.Hacks               as Hacks
 
-import qualified XMonad.Custom.Actions.RecentWindows    as C
-import qualified XMonad.Custom.Actions.RecentWorkspaces as C
-import qualified XMonad.Custom.Bindings                 as C
-import qualified XMonad.Custom.Hooks.Event              as C
-import qualified XMonad.Custom.Hooks.Layout             as C
-import qualified XMonad.Custom.Hooks.Log                as C
-import qualified XMonad.Custom.Hooks.Screens            as C
-import qualified XMonad.Custom.Hooks.Startup            as C
-import qualified XMonad.Custom.Hooks.Statusbar          as C
-import qualified XMonad.Custom.Manage.ManageHook        as C
-import qualified XMonad.Custom.Misc                     as C
-import qualified XMonad.Custom.MouseBindings            as C
-import qualified XMonad.Custom.Navigation               as C
-import qualified XMonad.Custom.Theme                    as C
-import qualified XMonad.Custom.Workspaces               as C
+import qualified XMonad.Custom.Bindings          as C
+import qualified XMonad.Custom.Hooks.Event       as C
+import qualified XMonad.Custom.Hooks.Layout      as C
+import qualified XMonad.Custom.Hooks.Log         as C
+import qualified XMonad.Custom.Hooks.Screens     as C
+import qualified XMonad.Custom.Hooks.Startup     as C
+import qualified XMonad.Custom.Hooks.Statusbar   as C
+import qualified XMonad.Custom.Manage.ManageHook as C
+import qualified XMonad.Custom.Misc              as C
+import qualified XMonad.Custom.MouseBindings     as C
+import qualified XMonad.Custom.Navigation        as C
+import qualified XMonad.Custom.Theme             as C
+import qualified XMonad.Custom.Workspaces        as C
 
 mConfig =
   def
@@ -54,8 +52,6 @@ mConfig =
     |> addRandrChangeHook C.myRandrChangeHook
     |> dynamicProjects C.projects
     |> dynamicSBs C.barSpawner
-    |> C.configureRecentWindows
-    |> C.configureRecentWorkspaces
     |> ewmh
     |> ewmhFullscreen
     |> docks

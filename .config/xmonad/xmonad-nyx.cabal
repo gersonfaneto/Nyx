@@ -13,6 +13,7 @@ common base
     -Wno-error=incomplete-uni-patterns
     -Wno-error=unused-binds
     -Wno-error=unused-matches
+    -Wno-error=unused-imports
     -Wno-error=missing-signatures
     -threaded
 
@@ -34,14 +35,10 @@ library xmonad-lib
 
   exposed-modules:
     XMonad.Custom.Actions.ApplicationChooser
-    XMonad.Custom.Actions.Calculator
     XMonad.Custom.Actions.DoActions
     XMonad.Custom.Actions.DoPrompt
-    XMonad.Custom.Actions.JumpWorkspaces
     XMonad.Custom.Actions.LayoutChooser
     XMonad.Custom.Actions.Minimize
-    XMonad.Custom.Actions.RecentWindows
-    XMonad.Custom.Actions.RecentWorkspaces
     XMonad.Custom.Actions.ScratchpadChooser
     XMonad.Custom.Actions.TmuxPrompt
     XMonad.Custom.Bindings
@@ -61,10 +58,7 @@ library xmonad-lib
     XMonad.Custom.Scratchpads
     XMonad.Custom.Search
     XMonad.Custom.Theme
-    XMonad.Custom.Utils.Array
-    XMonad.Custom.Utils.ChordKeys
     XMonad.Custom.Utils.Loggers
-    XMonad.Custom.Utils.Strings
     XMonad.Custom.Workspaces
 
 executable xmonad

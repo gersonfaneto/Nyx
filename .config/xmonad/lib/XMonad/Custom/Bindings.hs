@@ -36,7 +36,6 @@ import           XMonad.Layout.ResizableTile
 import           XMonad.Layout.SubLayouts
 import           XMonad.Prompt.ConfirmPrompt
 import           XMonad.Prompt.Man
-import           XMonad.Prompt.Pass
 import           XMonad.Prompt.RunOrRaise
 import           XMonad.Prompt.Shell
 import           XMonad.Prompt.Window
@@ -52,10 +51,9 @@ import qualified XMonad.StackSet                          as S
 
 import           XMonad.Custom.Actions.ApplicationChooser
 import           XMonad.Custom.Actions.DoPrompt
-import           XMonad.Custom.Actions.JumpWorkspaces
 import           XMonad.Custom.Actions.LayoutChooser
 import           XMonad.Custom.Actions.Minimize
-import           XMonad.Custom.Actions.RecentWindows
+import           XMonad.Custom.Actions.ScratchpadChooser  (selectScratchpadByName)
 import           XMonad.Custom.Actions.TmuxPrompt
 import           XMonad.Custom.Hooks.Layout
 import           XMonad.Custom.Prompt
@@ -203,7 +201,7 @@ keysSystem =
   , ("M-x c", spawn "caffeine")
   , ("M-x b", spawn "background alt")
   , ("M-x d", spawn "dunstctl close-all")
-  , ("M-x x", spawn "xmonad --recompile && xmonad --restart")
+  , ("M-x x", confirmPrompt hotPromptTheme "Recompile?" $ spawn "xmonad --recompile && xmonad --restart")
   , ("M-x q", confirmPrompt hotPromptTheme "Quit?" $ io exitSuccess)
   ]
 
@@ -211,21 +209,17 @@ keysSpawnables :: Keybindings
 keysSpawnables =
   [ ("M-<Return>", spawn $ C.term' C.applications)
   , ("M-S-<Return>", spawn $ C.term' C.applications ++ " -e tmux new-session -A -s Home")
-  , ("M-o b", spawn $ C.browser C.applications)
-  , ("M-o S-b", selectBrowserByNameAndSpawn promptTheme)
+  , ("M-o w", spawn $ C.browser C.applications)
+  , ("M-o S-w", selectBrowserByNameAndSpawn promptTheme)
   , ("M-o e", spawn $ C.term C.applications ++ " -e nvim")
   , ("M-o S-e", selectEditorByNameAndSpawn promptTheme)
-  , ("M-o f", namedScratchpadAction scratchpads "files")
   , ("M-o c", namedScratchpadAction scratchpads "console")
+  , ("M-o f", namedScratchpadAction scratchpads "files")
+  , ("M-o v", namedScratchpadAction scratchpads "volume")
   , ("M-o m", namedScratchpadAction scratchpads "music")
   , ("M-o t", namedScratchpadAction scratchpads "top")
-  , ("M-o v", namedScratchpadAction scratchpads "volume")
-  , ("M-o s", namedScratchpadAction scratchpads "soundEffects")
-  , ("M-o d", namedScratchpadAction scratchpads "discord")
-  , ("M-s b", namedScratchpadAction scratchpads "bluetooth")
-  , ("M-o r", namedScratchpadAction scratchpads "reader")
-  , ("M-o n", namedScratchpadAction scratchpads "notes")
-  , ("M-o S-n", namedScratchpadAction scratchpads "notes-nvim")
+  , ("M-o b", namedScratchpadAction scratchpads "bluetooth")
+  , ("M-o M-o", selectScratchpadByName promptTheme)
   ]
 
 keysDo :: Keybindings
@@ -233,9 +227,7 @@ keysDo =
   [ ("M-d s z", spawn $ C.screenZoomer C.applications)
   , ("M-d d", doSomethingPrompt promptTheme)
   , ("M-d w c", workspacePrompt promptTheme $ windows . copy)
-  , ("M-d c <Backspace>", spawn "clipcatctl clear")
-  , ("M-d l", spawn "dm-tool lock")
-  , ("M-d m r", spawn "autorandr -c --force")
+  , ("M-d m r", spawn "autorandr --change --force")
   , ("M-d a", doSomethingPrompt promptTheme)
   ]
 
@@ -268,8 +260,7 @@ keysLayout c =
 keysWindows :: Keybindings
 keysWindows =
   [ ("M-w k", kill)
-  , ("M-w w", spawn "skippy-xd --expose")
-  , ("M-w S-k",  confirmPrompt hotPromptTheme "Kill all" killAll)
+  , ("M-w S-k", confirmPrompt hotPromptTheme "Kill all" killAll)
   , ("M-w C-S-k", confirmPrompt hotPromptTheme "Kill others" $ withOthers killWindow)
   , ("M-w g", windowPrompt promptTheme Goto allWindows)
   , ("M-w /", windowPrompt promptTheme Goto wsWindows)
@@ -299,7 +290,6 @@ keysWindows =
   , ("M-i", onGroup S.focusUp')
   , ("M-S-u", windows S.swapDown)
   , ("M-S-i", windows S.swapUp)
-  , ("M-'", withChordSelection 15 promptTheme (windows . S.focusWindow))
   ]
     ++ zipKeys' "M-" vimKeys directions windowGo True
     ++ zipKeys' "M-S-" vimKeys directions windowSwap True
@@ -327,9 +317,7 @@ keysWorkspaces =
   , ("M-,", prevNonEmptyWS)
   , ("M-;", toggleWS' ["NSP"])
   , ("M-n", workspacePrompt promptTheme $ windows . S.shift)
-  , ("M-p p", spawn "skippy-xd --paging")
   , ("M-<Tab>", cycleRecentNonEmptyWS [xK_Alt_L, xK_Alt_R, xK_Escape] xK_comma xK_period)
-  , ("M-S-;", withChordWorkspaceSelection 40 promptTheme (windows . S.greedyView))
   ]
     ++ zipKeys "M-" wsKeys [0 ..] (withNthWorkspace S.greedyView)
     ++ zipKeys "M-S-" wsKeys [0 ..] (withNthWorkspace S.shift)
@@ -342,11 +330,9 @@ keysSearch =
   [ ("M-s e", selectAndSearchPrompt $ promptNoCompletion promptTheme)
   , ("M-s m", manPrompt $ simplestSearch promptTheme)
   , ("M-s t", tmuxPrompt promptTheme)
-  , ("M-s p", passPrompt passPromptTheme)
   , ("M-s w", switchProjectPrompt promptTheme)
   , ("M-s s", windowPrompt promptTheme Goto allWindows)
   , ("M-s l", selectLayoutByName promptTheme)
+  , ("M-s S-l", selectLayoutGrid)
   , ("M-s c", spawn "xcolor | tr -d '[:space:]' | xclip -selection clipboard")
   ]
-  where
-    passPromptTheme = promptTheme

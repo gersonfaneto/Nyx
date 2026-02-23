@@ -30,21 +30,15 @@ scratchpads =
   [ NS "console" (spawnTerminalWith "NSPConsole" "tmux new-session -A -s Home") (className =? "NSPConsole") doFullCenterFloat
   , NS "files" (spawnTerminalWith "NSPFiles" "ranger") (className =? "NSPFiles") doFullCenterFloat
   , NS "volume" (spawnTerminalWith "NSPVolume" (C.mixer C.applications)) (className =? "NSPVolume") floatingNSP
-  , NS "soundEffects" (C.soundEffects C.applications) (appName =? "easyeffects") (centerFloat 0.6 0.6)
-  , NS "music" (C.player C.applications) (className =? "Spotify") doFullCenterFloat
   , NS "top" (spawnTerminalWith "NSPTop" (C.top C.applications)) (className =? "NSPTop") doFullCenterFloat
-  , NS "discord" "legcord" (className =? "legcord") doFullCenterFloat
-  , NS "cpupower" "cpupower-gui" (className =? "Cpupower-gui") (centerFloat 0.7 0.7)
-  , NS "reader" "readest" (className =? "Readest") doFullCenterFloat
-  , NS "notes" "obsidian" (className =? "obsidian") (centerFloat 0.9 0.9)
-  , NS "notes-nvim" (spawnTerminalWith "NSPNotes" "nvim ~/Notes/") (className =? "NSPNotes") doFullCenterFloat
+  , NS "notes" (spawnTerminalWith "NSPNotes" "nvim ~/Notes/") (className =? "NSPNotes") doFullCenterFloat
   , NS "logs" (spawnTerminalWith "NSPLogs" "journalctl -f") (className =? "NSPLogs") doFullCenterFloat
   , NS "calculator" (spawnTerminalWith "NSPCalc" "qalc") (className =? "NSPCalc") (centerFloat 0.4 0.4)
-  , NS "calendar" (spawnTerminalWith "NSPCalendar" "khal interactive") (className =? "NSPCalendar") (centerFloat 0.4 0.4)
-  , NS "translate" (spawnTerminalWith "NSPTrans" "trans :ru -I") (className =? "NSPTrans") (centerFloat 0.5 0.5)
-  , NS "bluetooth" (spawnTerminalWith "NSPTrans" "bluetuith") (className =? "NSPBluetooth") (centerFloat 0.5 0.5)
+  , NS "music" (spawnTerminalWith "NSPMusic" "kew") (className =? "NSPMusic") (centerFloat 0.4 0.4)
+  , NS "bluetooth" (spawnTerminalWith "NSPTrans" "bluetui") (className =? "NSPBluetooth") (centerFloat 0.5 0.5)
   ]
   where
     doFullCenterFloat = centerFloat 0.85 0.85
 
+namedScratchpadFilterOutWorkspace :: WorkspaceSort
 namedScratchpadFilterOutWorkspace = filterOutWs [scratchpadWorkspaceTag]

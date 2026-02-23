@@ -216,6 +216,8 @@
     TERM = "alacritty";
     BROWSER = "qutebrowser";
 
+    DOTFILES = "$HOME/.nyx";
+
     XSECURELOCK_AUTH_TIMEOUT = 5;
     XSECURELOCK_BLANK_DPMS_STATE = "suspend";
     XSECURELOCK_BLANK_TIMEOUT = 5;
