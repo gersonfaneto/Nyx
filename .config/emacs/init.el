@@ -69,29 +69,38 @@
 
 ;; Bootstrap straight.el if it's not already installed.
 (defvar bootstrap-version)
+
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
+       (expand-file-name
+	"straight/repos/straight.el/bootstrap.el"
+	(or (bound-and-true-p straight-base-dir)
+	    user-emacs-directory)))
+      (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
-    ;; Download and evaluate the straight.el bootstrap script.
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage)) ;; Load straight.el after bootstrapping
+  (load bootstrap-file nil 'nomessage))
 
 ;; Enable use-package and set its behavior.
 (straight-use-package 'use-package)
 
-(setq use-package-verbose nil             ;; Suppress verbose output from use-package
-      use-package-always-ensure t)         ;; Automatically install packages if not present
-
 ;; Configure straight.el itself.
-(use-package straight :straight (:type built-in)
+(use-package straight
   :custom
-  (straight-use-package-by-default t)) ;; Ensure all packages are managed by straight.el
+  (use-package-verbose nil)
+  (use-package-always-ensure t)
+  (straight-current-profile 'base)
+  (straight-use-package-by-default t)
+  (straight-vc-git-default-protocol 'ssh)
+  :config
+  (let ((nixdir (file-name-as-directory (getenv "DOTFILES"))))
+    (setq straight-profiles
+	  `((base . ,(file-name-concat nixdir ".config/emacs/straight.lockfile.default.el"))
+	    (programming . ,(file-name-concat nixdir ".config/emacs/straight.lockfile.programming.el"))))))
 
 ;; --- Server Mode ---
 ;; Start Emacs server if not already running, for emacsclient.ee
@@ -325,8 +334,7 @@
         company-minimum-prefix-length 1)) ;; Minimum characters to trigger completion
 
 ;; Flycheck for syntax checking.
-(use-package flycheck
-  :ensure t)                           ;; Ensure flycheck is installed
+(use-package flycheck)
 
 ;; --- Eglot ---
 (use-package eglot :straight (:type built-in)
@@ -412,7 +420,6 @@
 
 ;; --- Rust Mode ---
 (use-package rust-mode
-  :ensure t
   :hook (rust-mode . eglot-ensure))
 
 ;; --- Lua Mode ---
