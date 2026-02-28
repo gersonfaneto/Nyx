@@ -18,6 +18,7 @@ in
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
+    ".config/emacs/" = mkSymlink ".config/emacs/";
     ".config/fastfetch/" = mkSymlink ".config/fastfetch/";
     ".config/fd/" = mkSymlink ".config/fd/";
     ".config/feh/" = mkSymlink ".config/feh/";
@@ -36,7 +37,6 @@ in
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/rofi-rbw.rc" = mkSymlink ".config/rofi-rbw.rc";
     ".config/rofimoji.rc" = mkSymlink ".config/rofimoji.rc";
-    ".emacs.d/" = mkSymlink ".emacs.d/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
     ".scripts/" = mkSymlink ".scripts/";
     ".bash_profile" = mkSymlink ".bash_profile";

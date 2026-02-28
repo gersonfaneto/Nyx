@@ -25,6 +25,10 @@
 ;; --- Editing and Navigation Keybindings ---
 (global-set-key (kbd "M-j") 'duplicate-dwim)
 
+(global-set-key (kbd "M-u") 'upcase-dwim)
+(global-set-key (kbd "M-l") 'downcase-dwim)
+(global-set-key (kbd "M-c") 'capitalize-dwim)
+
 (global-set-key (kbd "M-g l") 'browse-url)
 (global-set-key (kbd "M-s s") 'flyspell-mode)
 

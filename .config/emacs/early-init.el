@@ -100,7 +100,7 @@
 
 ;; --- Custom File and Theme Definitions ---
 ;; Define paths and initial settings for custom files, font, and theme.
-(setq minimal/local-file            "~/.emacs.d/local.el"
+(setq minimal/local-file            (concat user-emacs-directory "local.el")
       minimal/default-font-family   "Fantasque Sans Mono"
       minimal/default-font-size     10
       minimal/default-theme         'gruvbox-material
@@ -109,7 +109,7 @@
 
 ;; --- Custom File Loading ---
 ;; Path to the custom file.
-(setq minimal/custom-file "~/.emacs.d/custom.el")
+(setq minimal/custom-file (concat user-emacs-directory "custom.el"))
 
 ;; Create the custom file if it doesn't exist.
 (if (not (file-exists-p minimal/custom-file))
