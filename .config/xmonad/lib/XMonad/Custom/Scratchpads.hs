@@ -29,8 +29,8 @@ scratchpads :: [NamedScratchpad]
 scratchpads =
   [ NS "console" (spawnTerminalWith "NSPConsole" "tmux new-session -A -s Home") (className =? "NSPConsole") doFullCenterFloat
   , NS "files" (spawnTerminalWith "NSPFiles" "ranger") (className =? "NSPFiles") doFullCenterFloat
-  , NS "volume" (spawnTerminalWith "NSPVolume" (C.mixer C.applications)) (className =? "NSPVolume") floatingNSP
-  , NS "top" (spawnTerminalWith "NSPTop" (C.top C.applications)) (className =? "NSPTop") doFullCenterFloat
+  , NS "volume" (spawnTerminalWith "NSPVolume" "wiremix") (className =? "NSPVolume") floatingNSP
+  , NS "top" (spawnTerminalWith "NSPTop" "btm") (className =? "NSPTop") doFullCenterFloat
   , NS "notes" (spawnTerminalWith "NSPNotes" "nvim ~/Notes/") (className =? "NSPNotes") doFullCenterFloat
   , NS "logs" (spawnTerminalWith "NSPLogs" "journalctl -f") (className =? "NSPLogs") doFullCenterFloat
   , NS "calculator" (spawnTerminalWith "NSPCalc" "qalc") (className =? "NSPCalc") (centerFloat 0.4 0.4)

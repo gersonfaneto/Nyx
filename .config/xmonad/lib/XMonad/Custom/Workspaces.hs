@@ -8,8 +8,6 @@ import           XMonad.Custom.Actions.ApplicationChooser
 import           XMonad.Custom.Actions.DoActions
 import           XMonad.Custom.Prompt
 
-import qualified XMonad.Custom.Misc                       as C
-
 data WorkspaceNames = WorkspaceNames
   { generic  :: String
   , code     :: String
@@ -21,7 +19,6 @@ data WorkspaceNames = WorkspaceNames
   , template :: String
   , graphics :: String
   , sound    :: String
-  , vm       :: String
   , write    :: String
   , note     :: String
   , git      :: String
@@ -41,7 +38,6 @@ wsNames =
     , template = "TEMPLATE"
     , graphics = "GRAPH"
     , sound = "SOUND"
-    , vm = "VM"
     , write = "WRITE"
     , note = "NOTE"
     , git = "GIT"
@@ -89,8 +85,6 @@ projects =
   , makeProject (sound wsNames) $ Just $ do
       doActionByName "Sound Effects"
       spawn "pavucontrol"
-  , makeProject (vm wsNames) $ Just $ do
-      spawn (C.virtualMachinesManger C.applications)
   , makeProject (write wsNames) $ Just $ do
       spawn "emacs_lets_write"
   , makeProject (note wsNames) $ Just $ do

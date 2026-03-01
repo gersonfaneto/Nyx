@@ -221,7 +221,7 @@ keysSpawnables =
 
 keysDo :: Keybindings
 keysDo =
-  [ ("M-d s z", spawn $ C.screenZoomer C.applications)
+  [ ("M-d z", spawn "boomer")
   , ("M-d d", doSomethingPrompt promptTheme)
   , ("M-d w c", workspacePrompt promptTheme $ windows . copy)
   , ("M-d m r", spawn "autorandr --change --force")
