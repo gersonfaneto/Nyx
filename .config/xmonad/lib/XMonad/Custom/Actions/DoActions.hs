@@ -84,7 +84,7 @@ allActions =
         selectEditorByNameAndDo promptTheme spawn
     , Action "File Manager" $
         spawn $
-          C.term C.applications ++ " -e yazi"
+          C.term C.applications ++ " -e ranger"
     , Action "Console Scratchpad" $
         namedScratchpadAction scratchpads "console"
     , Action "Music Scratchpad" $

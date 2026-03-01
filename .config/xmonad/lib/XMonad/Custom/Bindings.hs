@@ -204,8 +204,8 @@ keysSystem =
 
 keysSpawnables :: Keybindings
 keysSpawnables =
-  [ ("M-<Return>", spawn $ C.term' C.applications)
-  , ("M-S-<Return>", spawn $ C.term' C.applications ++ " -e tmux new-session -A -s Home")
+  [ ("M-<Return>", spawn $ C.term C.applications)
+  , ("M-S-<Return>", spawn $ C.term C.applications ++ " -e tmux new-session -A -s Home")
   , ("M-o w", spawn $ C.browser C.applications)
   , ("M-o S-w", selectBrowserByNameAndSpawn promptTheme)
   , ("M-o e", spawn $ C.term C.applications ++ " -e nvim")

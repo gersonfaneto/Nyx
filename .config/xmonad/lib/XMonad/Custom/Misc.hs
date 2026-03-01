@@ -11,7 +11,6 @@ data Applications = Applications
   , player                :: !String
   , soundEffects          :: !String
   , term                  :: !String
-  , term'                 :: !String
   , top                   :: !String
   , reader                :: !String
   , editor                :: !String
@@ -29,8 +28,7 @@ applications =
     , notify = "notify-send"
     , player = "spotify"
     , soundEffects = "easyeffects"
-    , term = "alacritty"
-    , term' = "ghostty"
+    , term = "ghostty"
     , top = "btm"
     , reader = "zathura"
     , editor = "emacsclient --create-frame --alternate-editor 'emacs'"
