@@ -16,11 +16,32 @@
 (global-set-key (kbd "C--") '(lambda nil (interactive) (minimal/scale-font -1))) ;; Decrease font size
 
 ;; --- Window Management Keybindings ---
-(global-set-key (kbd "M-0") 'delete-window) ;; Delete the current window
-(global-set-key (kbd "M-1") 'delete-other-windows) ;; Delete all windows except the current one
-(global-set-key (kbd "M-2") '(lambda nil (interactive) (split-window-below) (other-window 1))) ;; Split window below and switch to the new window
-(global-set-key (kbd "M-3") '(lambda nil (interactive) (split-window-right) (other-window 1))) ;; Split window to the right and switch to the new window
-(global-set-key (kbd "M-o") 'other-window) ;; Cycle to the next window
+(defun minimal/split-window-vertically-and-switch ()
+  (interactive)
+  (split-window-vertically)
+  (other-window 1))
+
+(defun minimal/split-window-horizontally-and-switch ()
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1))
+
+(defun minimal/toggle-maximize-buffer ()
+  (interactive)
+  (if (and (= 1 (length (window-list)))
+           (assoc ?_ register-alist))
+      (jump-to-register ?_)
+    (progn
+      (window-configuration-to-register ?_)
+      (delete-other-windows))))
+
+(global-set-key (kbd "M-0") 'delete-window)
+(global-set-key (kbd "M-1") 'delete-other-windows)
+(global-set-key (kbd "M-2") 'minimal/split-window-horizontally-and-switch)
+(global-set-key (kbd "M-3") 'minimal/split-window-vertically-and-switch)
+(global-set-key (kbd "M-4") 'find-file-other-window)
+(global-set-key (kbd "M-z") 'minimal/toggle-maximize-buffer)
+(global-set-key (kbd "M-o") 'other-window)
 
 ;; --- Editing and Navigation Keybindings ---
 (global-set-key (kbd "M-j") 'duplicate-dwim)
