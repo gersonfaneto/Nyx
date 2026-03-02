@@ -22,12 +22,12 @@ c.aliases = {
     "wqa": "quit --save",
 }
 c.auto_save.interval = 15000
-c.auto_save.session = True
+c.auto_save.session = False
 c.backend = "webengine"
 
 c.bindings.key_mappings = {
     "<Ctrl-[>": "<Escape>",
-    "<Ctrl-6>": "<Ctrl-^>",
+    "<Alt-Tab>": "<Ctrl-^>",
     "<Ctrl-M>": "<Return>",
     "<Ctrl-J>": "<Return>",
     "<Ctrl-I>": "<Tab>",
@@ -661,7 +661,7 @@ c.tabs.wrap = True
 # URL SETTINGS
 
 c.url.auto_search = "naive"
-c.url.default_page = "https://start.duckduckgo.com/"
+c.url.default_page = "https://gersonfaneto.dev/"
 c.url.incdec_segments = ["path", "query"]
 c.url.open_base_url = False
 c.url.searchengines = {
@@ -693,7 +693,7 @@ c.url.searchengines = {
     "@no": "https://search.nixos.org/options?channel=unstable&query={}",
     "@nh": "https://home-manager-options.extranix.com/?query={}",
 }
-c.url.start_pages = ["https://start.duckduckgo.com"]
+c.url.start_pages = ["https://gersonfaneto.dev/"]
 c.url.yank_ignored_parameters = [
     "ref",
     "utm_source",
