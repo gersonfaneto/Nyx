@@ -16,14 +16,13 @@
 (global-set-key (kbd "C--") '(lambda nil (interactive) (minimal/scale-font -1))) ;; Decrease font size
 
 ;; --- Window Management Keybindings ---
-(defun minimal/split-window-vertically-and-switch ()
+(defun minimal/split-window-and-switch (&optional horizontal)
+  "Split window and switch to the new window.
+Optional argument HORIZONTAL splits horizontally if non-nil, otherwise vertically."
   (interactive)
-  (split-window-vertically)
-  (other-window 1))
-
-(defun minimal/split-window-horizontally-and-switch ()
-  (interactive)
-  (split-window-horizontally)
+  (if horizontal
+      (split-window-horizontally)
+    (split-window-vertically))
   (other-window 1))
 
 (defun minimal/toggle-maximize-buffer ()
@@ -37,8 +36,8 @@
 
 (global-set-key (kbd "M-0") 'delete-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
-(global-set-key (kbd "M-2") 'minimal/split-window-horizontally-and-switch)
-(global-set-key (kbd "M-3") 'minimal/split-window-vertically-and-switch)
+(global-set-key (kbd "M-2") '(lambda () (interactive) (minimal/split-window-and-switch t)))
+(global-set-key (kbd "M-3") '(lambda () (interactive) (minimal/split-window-and-switch nil)))
 (global-set-key (kbd "M-4") 'find-file-other-window)
 (global-set-key (kbd "M-z") 'minimal/toggle-maximize-buffer)
 (global-set-key (kbd "M-o") 'other-window)
@@ -338,7 +337,7 @@
   ;; Configure GPTel to use Gemini and stream responses.
   (setq gptel-model 'gemini-2.5-flash-lite
 	gptel-backend (gptel-make-gemini "Gemini"
-			:key GEMINI_API_KEY ;; Ensure GEMINI_API_KEY is set in your environment or Emacs variables
+			:key (getenv "GEMINI_API_KEY") ;; Ensure GEMINI_API_KEY is set in your environment or Emacs variables
 			:stream t))
   :bind (("C-c j" . gptel-menu)        ;; Open GPTel menu
          ("C-c C-g" . gptel-abort)     ;; Abort current GPTel request
