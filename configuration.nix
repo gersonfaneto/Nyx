@@ -238,6 +238,7 @@
       brightnessctl
       cached-nix-shell
       chafa
+      codex
       diff-so-fancy
       dragon-drop
       dunst
