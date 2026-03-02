@@ -415,8 +415,8 @@
       noto-fonts-color-emoji
 
       # General
-      aporetic-bin
       fantasque-sans-mono
+      nerd-fonts.fantasque-sans-mono
     ];
     fontconfig = {
       enable = true;
