@@ -134,6 +134,7 @@ return {
         { '<Leader>t', group = 'Test' },
         { '<Leader>P', group = 'Plugin' },
         { '<Leader><Tab>', group = 'Table mode' },
+        { '<LocalLeader>c', group = 'Conjure' },
         { '<Leader><Tab>d', group = 'Delete' },
         { '<Leader><Tab>i', group = 'Insert' },
         { '<Leader><Tab>f', group = 'Formula' },

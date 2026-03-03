@@ -345,6 +345,7 @@
 
       # Clojure
       boot
+      babashka
       clojure
       clojure-lsp
       leiningen

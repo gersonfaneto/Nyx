@@ -11,10 +11,5 @@ return {
       vim.g['conjure#mapping#prefix'] = ',c'
       vim.g['conjure#mapping#doc_word'] = false
     end,
-    postload = function()
-      require('which-key').add({
-        { '<LocalLeader>c', group = 'Conjure' },
-      })
-    end,
   },
 }
