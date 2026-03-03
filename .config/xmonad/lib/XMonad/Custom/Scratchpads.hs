@@ -35,7 +35,7 @@ scratchpads =
   , NS "logs" (spawnTerminalWith "NSPLogs" "journalctl -f") (className =? "NSPLogs") doFullCenterFloat
   , NS "calculator" (spawnTerminalWith "NSPCalc" "qalc") (className =? "NSPCalc") (centerFloat 0.4 0.4)
   , NS "music" (spawnTerminalWith "NSPMusic" "kew") (className =? "NSPMusic") (centerFloat 0.4 0.4)
-  , NS "bluetooth" (spawnTerminalWith "NSPTrans" "bluetui") (className =? "NSPBluetooth") (centerFloat 0.5 0.5)
+  , NS "bluetooth" (spawnTerminalWith "NSPBluetooth" "bluetui") (className =? "NSPBluetooth") (centerFloat 0.5 0.5)
   ]
   where
     doFullCenterFloat = centerFloat 0.85 0.85

@@ -116,10 +116,8 @@ getSortByIndexNonSP :: X ([WindowSpace] -> [WindowSpace])
 getSortByIndexNonSP = (. namedScratchpadFilterOutWorkspace) <$> getSortByIndex
 
 nextNonEmptyWS, prevNonEmptyWS :: X ()
-nextNonEmptyWS =
-  findWorkspace getSortByIndexNonSP Next HiddenNonEmptyWS 1 >>= windows <. S.view
-prevNonEmptyWS =
-  findWorkspace getSortByIndexNonSP Prev HiddenNonEmptyWS 1 >>= windows <. S.view
+nextNonEmptyWS = findWorkspace getSortByIndexNonSP Next (hiddenWS :&: Not emptyWS) 1 >>= windows <. S.view
+prevNonEmptyWS = findWorkspace getSortByIndexNonSP Prev (hiddenWS :&: Not emptyWS) 1 >>= windows <. S.view
 
 toggleFloat :: Window -> X ()
 toggleFloat win = windows $ \windowSet ->
@@ -205,11 +203,8 @@ keysSystem =
 keysSpawnables :: Keybindings
 keysSpawnables =
   [ ("M-<Return>", spawn $ C.term C.applications)
-  , ("M-S-<Return>", spawn $ C.term C.applications ++ " -e tmux new-session -A -s Home")
   , ("M-o w", spawn $ C.browser C.applications)
-  , ("M-o S-w", selectBrowserByNameAndSpawn promptTheme)
-  , ("M-o e", spawn $ C.term C.applications ++ " -e nvim")
-  , ("M-o S-e", selectEditorByNameAndSpawn promptTheme)
+  , ("M-o e", spawn $ C.editor C.applications)
   , ("M-o c", namedScratchpadAction scratchpads "console")
   , ("M-o f", namedScratchpadAction scratchpads "files")
   , ("M-o v", namedScratchpadAction scratchpads "volume")
