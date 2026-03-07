@@ -43,7 +43,7 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
 (global-set-key (kbd "M-o") 'other-window)
 
 ;; --- Editing and Navigation Keybindings ---
-(global-set-key (kbd "M-j") 'duplicate-dwim)
+(global-set-key (kbd "M-j") '(lambda () (interactive) (duplicate-dwim) (next-line)))
 
 (global-set-key (kbd "M-u") 'upcase-dwim)
 (global-set-key (kbd "M-l") 'downcase-dwim)
