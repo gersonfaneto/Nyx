@@ -1,0 +1,3 @@
+configuration {
+    cache-dir: "/tmp";
+}

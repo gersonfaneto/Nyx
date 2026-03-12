@@ -1,5 +1,6 @@
 @import "../shared/colors.rasi"
 @import "../shared/fonts.rasi"
+@import "../shared/configuration.rasi"
 
 * {
     border-colour:               var(selected);
