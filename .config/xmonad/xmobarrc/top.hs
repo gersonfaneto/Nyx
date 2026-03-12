@@ -1,5 +1,5 @@
 Config
-  { font = "Fantasque Sans Mono 10"
+  { font = "Maple Mono NF 10"
   , bgColor = "#0B0806"
   , fgColor = "#A19782"
   , alpha = 255

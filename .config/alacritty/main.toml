@@ -17,7 +17,7 @@ transparent_background_colors = true
 size = 10
 
 [font.normal]
-family = 'FantasqueSansM Nerd Font'
+family = 'Maple Mono NF'
 
 [scrolling]
 history = 0

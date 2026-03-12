@@ -417,16 +417,16 @@
       noto-fonts-color-emoji
 
       # General
-      fantasque-sans-mono
-      nerd-fonts.fantasque-sans-mono
+      maple-mono.NF
+      maple-mono.truetype
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "Fantasque Sans Mono" ];
-        sansSerif = [ "Fantasque Sans Mono" ];
-        monospace = [ "Fantasque Sans Mono" ];
+        serif = [ "Maple Mono NF" ];
+        sansSerif = [ "Maple Mono NF" ];
+        monospace = [ "Maple Mono NF" ];
       };
     };
   };
