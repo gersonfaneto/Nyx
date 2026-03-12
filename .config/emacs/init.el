@@ -6,9 +6,9 @@
 (defun minimal/scale-font (n)
   "With positive N, increase the font size; with negative N, decrease it; with N=0, reset to default height."
   (set-face-attribute 'default (selected-frame) :height
-                      (cond ((> n 0) (+ (face-attribute 'default :height) 5))
-                            ((< n 0) (- (face-attribute 'default :height) 5))
-                            (t (* minimal/default-font-size 10))))) ;; Reset to the standard size
+		      (cond ((> n 0) (+ (face-attribute 'default :height) 5))
+			    ((< n 0) (- (face-attribute 'default :height) 5))
+			    (t (* minimal/default-font-size 10))))) ;; Reset to the standard size
 
 ;; Define keybindings for font scaling.
 (global-set-key (kbd "C-0") '(lambda nil (interactive) (minimal/scale-font  0))) ;; Reset font size
@@ -28,7 +28,7 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
 (defun minimal/toggle-maximize-buffer ()
   (interactive)
   (if (and (= 1 (length (window-list)))
-           (assoc ?_ register-alist))
+	   (assoc ?_ register-alist))
       (jump-to-register ?_)
     (progn
       (window-configuration-to-register ?_)
@@ -61,7 +61,7 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
     (delete-other-windows) ;; Close all but the active window
     (save-some-buffers)    ;; Prompt to save modified buffers
     (let
-        ((kill-buffer-query-functions '())) ;; Disable confirmation for killing buffers
+	((kill-buffer-query-functions '())) ;; Disable confirmation for killing buffers
       (mapc 'kill-buffer (buffer-list))))) ;; Kill all listed buffers
 
 ;; Keybindings for buffer navigation and management.
@@ -78,14 +78,21 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
 (global-set-key (kbd "C-c C-c r") 'restart-emacs)
 (global-set-key (kbd "C-c C-c k") 'kill-emacs)
 
+(defun minimal/insert-jitsi-link ()
+  (interactive)
+  "Insert a Jitsi link."
+  (insert (concat "https://meet.jit.si/" (format-time-string "%Y%m%dT%H%M%S"))))
+
+(global-set-key (kbd "C-c m l") 'minimal/insert-jitsi-link)
+
 ;; --- Straight.el Configuration ---
 ;; Specify the branch for straight.el.
 (setq straight-repository-branch "develop")
 
 ;; Configure package archives for package installation.
 (setq package-archives '(("elpa"	.	"https://elpa.gnu.org/packages/")
-                         ("melpa"	.	"https://melpa.org/packages/")
-                         ("nongnu"	.	"https://elpa.nongnu.org/nongnu/")))
+			 ("melpa"	.	"https://melpa.org/packages/")
+			 ("nongnu"	.	"https://elpa.nongnu.org/nongnu/")))
 
 ;; Bootstrap straight.el if it's not already installed.
 (defvar bootstrap-version)
@@ -301,17 +308,6 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
   :config
   (direnv-mode))                      ;; Enable direnv mode
 
-;; --- Terminal ---
-;; Shell with a nearly universal compatibility with terminal applications.
-(use-package vterm
-  :bind
-  (("s-v" . vterm-yank)
-   ("M-y" . vterm-yank)))
-
-(use-package vterm-toggle
-  :bind*
-  ("C-t" . vterm-toggle)) ; "Intelligent" switching to vterm; eg creates it if it's not open, non-intrusive windowing, saves window setup, etc.
-
 ;; --- Popper ---
 (use-package popper
   :bind
@@ -320,11 +316,11 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
    ("C-M-`" . popper-toggle-type))
   :init
   (setq popper-reference-buffers
-        '("\\*Messages\\*"
-          "Output\\*$"
-          "\\*Async Shell Command\\*"
-          help-mode
-          compilation-mode))
+	'("\\*Messages\\*"
+	  "Output\\*$"
+	  "\\*Async Shell Command\\*"
+	  help-mode
+	  compilation-mode))
   (popper-mode 1)
   (popper-echo-mode 1))
 
@@ -340,7 +336,7 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
 			:key (getenv "GEMINI_API_KEY") ;; Ensure GEMINI_API_KEY is set in your environment or Emacs variables
 			:stream t))
   :bind (("C-c j" . gptel-menu)        ;; Open GPTel menu
-         ("C-c C-g" . gptel-abort)     ;; Abort current GPTel request
+	 ("C-c C-g" . gptel-abort)     ;; Abort current GPTel request
 	 ("C-c <return>" . gptel-send)  ;; Send prompt to GPTel
 	 ("C-c C-<return>" . gptel-menu))) ;; Send prompt and show menu
 
@@ -351,7 +347,7 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
   (prog-mode . company-mode)            ;; Enable company-mode in programming modes
   :config
   (setq company-idle-delay 0.1         ;; Delay before showing completion candidates
-        company-minimum-prefix-length 1)) ;; Minimum characters to trigger completion
+	company-minimum-prefix-length 1)) ;; Minimum characters to trigger completion
 
 ;; Flycheck for syntax checking.
 (use-package flycheck)
@@ -359,12 +355,12 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
 ;; --- Eglot ---
 (use-package eglot :straight (:type built-in)
   :hook (eglot-managed-mode
-         . (lambda ()
-             (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
-             (setq indent-region-function 'eglot-format)))
+	 . (lambda ()
+	     (add-hook 'flymake-diagnostic-functions 'eglot-flymake-backend)
+	     (setq indent-region-function 'eglot-format)))
   :bind (:map eglot-mode-map
-              ("C-c l r" . eglot-rename)
-              ("C-c l f" . eglot-format-buffer)
+	      ("C-c l r" . eglot-rename)
+	      ("C-c l f" . eglot-format-buffer)
 	      ("C-c l a" . eglot-code-actions)
 	      ("C-c l d" . eglot-code-find-declaration)
 	      ("C-c l D" . eglot-code-find-typeDefinition)
@@ -375,7 +371,7 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
   ("C-c e S" . eglot-shutdown-all)
   :config
   (setq-default eglot-stay-out-of '(flymake-diagnostic-functions
-                                    eldoc-documentation-strategy)))
+				    eldoc-documentation-strategy)))
 
 ;; --- Lisp ---
 (use-package paredit
@@ -404,7 +400,7 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
   ("README\\.md\\'" . gfm-mode)       ;; Use GFM mode for README.md files
   :bind
   (:map markdown-mode-map
-        ("C-c C-e" . markdown-do)))     ;; Export Markdown
+	("C-c C-e" . markdown-do)))     ;; Export Markdown
 
 ;; --- Haskell Mode ---
 (use-package haskell-mode
@@ -455,12 +451,6 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
   ("C-c m d" . ready-player-download-album-artwork-and-set-metadata)
   :custom
   (ready-player-my-media-collection-location "~/Music/"))
-
-;; --- Extras ---
-(defun minimal/insert-jitsi-link ()
-  (interactive)
-  "Insert a Jitsi link."
-  (insert (concat "https://meet.jit.si/" (format-time-string "%Y%m%dT%H%M%S"))))
 
 ;; --- Frame Setup ---
 ;; Function to set up fonts and theme for new frames.
