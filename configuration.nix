@@ -416,7 +416,10 @@
       # Emojis
       noto-fonts-color-emoji
 
-      # General
+      # Writing
+      aporetic-bin
+
+      # All the things...
       maple-mono.NF
       maple-mono.truetype
     ];
