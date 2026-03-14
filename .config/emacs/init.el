@@ -151,39 +151,7 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
 (require 'minimal-modules-colors)
 
 ;; Use custom modeline
-;; (require 'minimal-modules-modeline)
-
-;; Use custom welcome message
-(require 'minimal-modules-intro)
-
-(use-package nano-modeline
-  :init
-  (setq nano-modeline-position 'nano-modeline-footer)
-  :config
-  (progn
-    (defun minimal/nano-modeline-update (&rest _)
-      "Update nano-modeline active face."
-      (interactive)
-      (custom-set-faces
-       `(nano-modeline-active
-	 ((t (:foreground ,(face-foreground 'default)
-			  :background ,(face-background 'default nil t)
-			  :box (:line-width 1 :color ,(face-background 'default))))))))
-    (add-hook 'enable-theme-functions #'minimal/nano-modeline-update))
-  :hook
-  ((prog-mode-hook . nano-modeline-prog-mode)
-   (text-mode-hook . nano-modeline-text-mode)
-   (org-mode-hook . nano-modeline-org-mode)
-   (pdf-view-mode-hook . nano-modeline-pdf-mode)
-   (mu4e-headers-mode-hook . nano-modeline-mu4e-headers-mode)
-   (mu4e-view-mode-hook  . nano-modeline-mu4e-message-mode)
-   (elfeed-show-mode-hook . nano-modeline-elfeed-entry-mode)
-   (elfeed-search-mode-hook . nano-modeline-elfeed-search-mode)
-   (term-mode-hook . nano-modeline-term-mode)
-   (xwidget-webkit-mode-hook . nano-modeline-xwidget-mode)
-   (messages-buffer-mode-hook . nano-modeline-message-mode)
-   (org-capture-mode-hook . nano-modeline-org-capture-mode)
-   (org-agenda-mode-hook . nano-modeline-org-agenda-mode)))
+(require 'minimal-modules-modeline)
 
 ;; --- UI Enhancements ---
 ;; Enable which-key to show keybindings.
@@ -392,6 +360,12 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
     slime-repl-mode)
    . paredit-mode))
 
+(use-package emacs-lisp-mode :straight (:type built-in)
+  :mode
+  "\\.el\\'"
+  :bind
+  (("C-c C-j" . eval-print-last-sexp)))
+
 ;; --- Markdown Mode ---
 (use-package markdown-mode
   :init
@@ -430,9 +404,9 @@ Optional argument HORIZONTAL splits horizontally if non-nil, otherwise verticall
 				 (:formatting (:command ["alejandra"])))))))
 
 ;; --- C/C++ Mode ---
-(use-package cc-mode :straight (:type built-in)
-  :hook
-  (c-mode . eglot-ensure))
+(use-package simpc-mode
+  :straight (:host github :repo "rexim/simpc-mode")
+  :mode "\\.[hc]\\(pp\\)?\\'")
 
 ;; --- Rust Mode ---
 (use-package rust-mode
