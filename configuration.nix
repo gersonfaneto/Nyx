@@ -416,9 +416,6 @@
       # Emojis
       noto-fonts-color-emoji
 
-      # Writing
-      aporetic-bin
-
       # All the things...
       maple-mono.NF
       maple-mono.truetype
