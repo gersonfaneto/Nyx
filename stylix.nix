@@ -16,16 +16,16 @@
 
   stylix.fonts = {
     serif = {
-      package = pkgs.maple-mono.NF;
-      name = "Maple Mono NF";
+      package = pkgs.aporetic-bin;
+      name = "Aporetic Serif";
     };
     sansSerif = {
-      package = pkgs.maple-mono.NF;
-      name = "Maple Mono NF";
+      package = pkgs.aporetic-bin;
+      name = "Aporetic Sans";
     };
     monospace = {
-      package = pkgs.maple-mono.NF;
-      name = "Maple Mono NF";
+      package = pkgs.aporetic-bin;
+      name = "Aporetic Sans Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;

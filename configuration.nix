@@ -417,16 +417,15 @@
       noto-fonts-color-emoji
 
       # All the things...
-      maple-mono.NF
-      maple-mono.truetype
+      aporetic-bin
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "Maple Mono NF" ];
-        sansSerif = [ "Maple Mono NF" ];
-        monospace = [ "Maple Mono NF" ];
+        serif = [ "Aporetic Serif" ];
+        sansSerif = [ "Aporetic Sans" ];
+        monospace = [ "Aporetic Sans Mono" ];
       };
     };
   };
