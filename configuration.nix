@@ -423,9 +423,9 @@
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "Aporetic Serif" ];
-        sansSerif = [ "Aporetic Sans" ];
-        monospace = [ "Aporetic Sans Mono" ];
+        serif = [ "Ioskeley Mono" ];
+        sansSerif = [ "Ioskeley Mono" ];
+        monospace = [ "Ioskeley Mono" ];
       };
     };
   };

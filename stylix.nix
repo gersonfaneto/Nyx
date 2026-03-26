@@ -16,16 +16,16 @@
 
   stylix.fonts = {
     serif = {
-      package = pkgs.aporetic-bin;
-      name = "Aporetic Serif";
+      # package = null;
+      name = "Ioskeley Mono";
     };
     sansSerif = {
-      package = pkgs.aporetic-bin;
-      name = "Aporetic Sans";
+      # package = null;
+      name = "Ioskeley Mono";
     };
     monospace = {
-      package = pkgs.aporetic-bin;
-      name = "Aporetic Sans Mono";
+      # package = null;
+      name = "Ioskeley Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;
