@@ -387,7 +387,7 @@ c.fonts.completion.category = "bold default_size default_family"
 c.fonts.completion.entry = "default_size default_family"
 c.fonts.contextmenu = None
 c.fonts.debug_console = "default_size default_family"
-c.fonts.default_family = ["Ioskeley Mono"]
+c.fonts.default_family = ["MonaspiceKr Nerd Font Mono"]
 c.fonts.default_size = "10pt"
 
 c.fonts.downloads = "default_size default_family"
@@ -407,9 +407,9 @@ c.fonts.web.family.cursive = ""
 c.fonts.web.family.fantasy = ""
 c.fonts.web.family.fixed = ""
 
-c.fonts.web.family.sans_serif = "Ioskeley Mono"
-c.fonts.web.family.serif = "Ioskeley Mono"
-c.fonts.web.family.standard = "Ioskeley Mono"
+c.fonts.web.family.sans_serif = "MonaspiceKr Nerd Font Mono"
+c.fonts.web.family.serif = "MonaspiceKr Nerd Font Mono"
+c.fonts.web.family.standard = "MonaspiceKr Nerd Font Mono"
 
 c.fonts.web.size.default = 16
 c.fonts.web.size.default_fixed = 13

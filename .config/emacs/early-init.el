@@ -101,7 +101,7 @@
 ;; --- Custom File and Theme Definitions ---
 ;; Define paths and initial settings for custom files, font, and theme.
 (setq minimal/local-file            (concat user-emacs-directory "local.el")
-      minimal/default-font-family   "Ioskeley Mono"
+      minimal/default-font-family   "MonaspiceKr Nerd Font Mono"
       minimal/default-font-size     10
       minimal/default-theme         'gruvbox-material
       minimal/default-contrast      'hard

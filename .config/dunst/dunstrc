@@ -1,8 +1,8 @@
 [global]
-font = Ioskeley Mono 10  # Font family and size
-format = "<b>%s</b>\n%b" # Formatting of the notification text
-alignment = center       # Text alignment
-allow_markup = yes       # Allow html-like styling...
+font = MonaspiceKr Nerd Font Mono 10 # Font family and size
+format = "<b>%s</b>\n%b"             # Formatting of the notification text
+alignment = center                   # Text alignment
+allow_markup = yes                   # Allow html-like styling...
 
 frame_width = 1
 frame_color = "#A19782"

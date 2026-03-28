@@ -17,7 +17,11 @@ transparent_background_colors = true
 size = 10
 
 [font.normal]
-family = 'IoskeleyMono Nerd Font'
+family = 'MonaspiceKr Nerd Font Mono'
+
+[font.offset]
+x = 0
+y = 2
 
 [scrolling]
 history = 0

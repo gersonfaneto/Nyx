@@ -37,7 +37,6 @@ in
     ".config/mimeapps.list" = mkSymlink ".config/mimeapps.list";
     ".config/rofi-rbw.rc" = mkSymlink ".config/rofi-rbw.rc";
     ".config/rofimoji.rc" = mkSymlink ".config/rofimoji.rc";
-    ".local/share/fonts/" = mkSymlink ".local/share/fonts/";
     ".local/share/wallpapers/" = mkSymlink ".local/share/wallpapers/";
     ".scripts/" = mkSymlink ".scripts/";
     ".bash_profile" = mkSymlink ".bash_profile";

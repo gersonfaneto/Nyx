@@ -16,16 +16,16 @@
 
   stylix.fonts = {
     serif = {
-      # package = null;
-      name = "Ioskeley Mono";
+      package = pkgs.nerd-fonts.monaspace;
+      name = "MonaspiceKr Nerd Font Mono";
     };
     sansSerif = {
-      # package = null;
-      name = "Ioskeley Mono";
+      package = pkgs.nerd-fonts.monaspace;
+      name = "MonaspiceKr Nerd Font Mono";
     };
     monospace = {
-      # package = null;
-      name = "Ioskeley Mono";
+      package = pkgs.nerd-fonts.monaspace;
+      name = "MonaspiceKr Nerd Font Mono";
     };
     emoji = {
       package = pkgs.noto-fonts-color-emoji;

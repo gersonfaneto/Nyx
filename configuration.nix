@@ -417,15 +417,15 @@
       noto-fonts-color-emoji
 
       # All the things...
-      aporetic-bin
+      nerd-fonts.monaspace
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        serif = [ "Ioskeley Mono" ];
-        sansSerif = [ "Ioskeley Mono" ];
-        monospace = [ "Ioskeley Mono" ];
+        serif = [ "MonaspiceKr Nerd Font Mono" ];
+        sansSerif = [ "MonaspiceKr Nerd Font Mono" ];
+        monospace = [ "MonaspiceKr Nerd Font Mono" ];
       };
     };
   };
