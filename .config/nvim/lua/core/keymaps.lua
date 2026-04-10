@@ -616,6 +616,9 @@ require('utils.load').on_events(
       desc = 'Toggle undotree',
     })
 
+    -- ...
+    map({ 'n' }, 'r<Backspace>', '<CMD>restart<CR>', { desc = 'Restart' })
+
     -- Plugin Management
     map('n', '<Leader>Pu', vim.pack.update, { desc = 'Update plugins' })
     map('n', '<Leader>Pr', function()
