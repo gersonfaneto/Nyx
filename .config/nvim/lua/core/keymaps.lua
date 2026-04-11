@@ -617,7 +617,13 @@ require('utils.load').on_events(
     })
 
     -- ...
-    map({ 'n' }, 'r<Backspace>', '<CMD>restart<CR>', { desc = 'Restart' })
+    map({ 'n' }, 'r<Backspace>', '<CMD>restart<CR>', { desc = 'Restart :: Hard' })
+
+    map({ 'n' }, 'R<Backspace>', function()
+      local session = vim.fn.stdpath('state') .. '/restart_session.vim'
+      vim.cmd('mksession! ' .. vim.fn.fnameescape(session))
+      vim.cmd('restart source ' .. vim.fn.fnameescape(session))
+    end, { desc = 'Restart :: Soft' })
 
     -- Plugin Management
     map('n', '<Leader>Pu', vim.pack.update, { desc = 'Update plugins' })
