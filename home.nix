@@ -18,6 +18,7 @@ in
     ".config/alacritty/" = mkSymlink ".config/alacritty/";
     ".config/beets/" = mkSymlink ".config/beets/";
     ".config/dunst/" = mkSymlink ".config/dunst/";
+    ".config/emacs/" = mkSymlink ".config/emacs/";
     ".config/fastfetch/" = mkSymlink ".config/fastfetch/";
     ".config/fd/" = mkSymlink ".config/fd/";
     ".config/feh/" = mkSymlink ".config/feh/";

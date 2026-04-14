@@ -127,6 +127,17 @@ update_alacritty() {
   )
 }
 
+update_emacs() {
+  if [ -z "$1" ]; then
+    emacsclient --eval "(progn \
+                         (setq frame-background-mode '$1) \
+                         (setq gruvbox-material-style '$1)
+                         (load-theme minimal/default-theme))"
+  else
+    emacsclient --eval "(minimal/set-background-from-script '$bg)"
+  fi
+}
+
 update_zathura() {
   ( 
     cd "$CONFIG_HOME/zathura" || return
@@ -208,6 +219,7 @@ main() {
   update_nvim "$bg" &
   update_ghostty "$bg" &
   update_alacritty "$bg" &
+  update_emacs "$bg" &
   update_zathura "$bg" &
 
   wait
